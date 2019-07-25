@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
-using VikingVault.DataAccess.Repositories.Abstractions;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
 {
     public class BankService : IBankService
     {
-        private readonly IBankRepository _bankRepository;
+        private readonly VikingVaultDbContext _dbContext;
 
-        public BankService(IBankRepository bankRepository)
+        public BankService(VikingVaultDbContext dbContext)
         {
-            _bankRepository = bankRepository;
+            _dbContext = dbContext;
         }
 
         public IEnumerable<Bank> GetBanks()
         {
-            return _bankRepository.FindAll();
+            return _dbContext.Banks.ToList();
         }
     }
 }

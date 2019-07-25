@@ -7,9 +7,9 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.DataAccess
 {
-    public class MyDbContext: DbContext
+    public class VikingVaultDbContext: DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options)
+        public VikingVaultDbContext(DbContextOptions<VikingVaultDbContext> options)
             : base(options)
         { }
 

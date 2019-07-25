@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VikingVault.DataAccess;
-using VikingVault.DataAccess.Repositories;
-using VikingVault.DataAccess.Repositories.Abstractions;
 using VikingVault.Services;
 using VikingVault.Services.Abstractions;
 
@@ -26,10 +24,9 @@ namespace VikingVault.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<MyDbContext>
+            services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IBankRepository, BankRepository>();
             services.AddScoped<IBankService, BankService>();
         }
 
