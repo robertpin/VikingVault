@@ -27,6 +27,7 @@ namespace VikingVault.API
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserProfilePageService, UserProfilePageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
