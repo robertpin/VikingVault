@@ -13,6 +13,13 @@ namespace VikingVault.DataAccess
             : base(options)
         { }
 
-        public DbSet<Bank> Banks { get; set; }
+        public DbSet<User> User { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasAlternateKey(c => c.Email)
+                .HasName("Email");
+        }
     }
 }

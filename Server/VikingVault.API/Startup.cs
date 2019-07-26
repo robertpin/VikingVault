@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using VikingVault.DataAccess;
 using VikingVault.Services;
 using VikingVault.Services.Abstractions;
-
 namespace VikingVault.API
 {
     public class Startup
@@ -27,7 +26,7 @@ namespace VikingVault.API
             services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IBankService, BankService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

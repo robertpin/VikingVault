@@ -18,19 +18,41 @@ namespace VikingVault.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.Bank", b =>
+            modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Iban");
+                    b.Property<string>("Address")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Cnp")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Firstname")
+                        .IsRequired();
+
+                    b.Property<string>("Lastname")
+                        .IsRequired();
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.Property<string>("PictureLink");
+
+                    b.Property<string>("Role")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks");
+                    b.HasAlternateKey("Email")
+                        .HasName("Email");
+
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }
