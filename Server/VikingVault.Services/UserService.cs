@@ -28,5 +28,10 @@ namespace VikingVault.Services
                 return null;
             }
         }
+
+        public User GetById(int userId)
+        {
+            return _dbContext.User.Find(userId);
+        }
     }
 }
