@@ -12,7 +12,7 @@ namespace VikingVault.DataAccess
         public VikingVaultDbContext(DbContextOptions<VikingVaultDbContext> options)
             : base(options)
         { }
-
+        
         public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,5 +21,6 @@ namespace VikingVault.DataAccess
                 .HasAlternateKey(c => c.Email)
                 .HasName("Email");
         }
+        public DbSet<UserProfilePageViewModel> UsersProfilePages { get; set; }
     }
 }

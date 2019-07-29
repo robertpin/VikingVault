@@ -60,6 +60,8 @@ namespace VikingVault.API
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IUserProfilePageService, UserProfilePageService>();
+            services.AddScoped<IUniqueEmailService, UniqueEmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
