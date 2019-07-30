@@ -22,7 +22,6 @@ namespace VikingVault.DataAccess.Models
         public string Address { get; set; }
         [Required]
         public string Cnp { get; set; }
-        [Required]
         public string Role { get; set; }
         public string Token { get; set; }
     }

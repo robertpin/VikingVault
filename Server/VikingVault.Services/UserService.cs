@@ -17,6 +17,7 @@ namespace VikingVault.Services
         }
         public User CreateUser(User user)
         {
+            user.Role = "user";
             try
             {
                 _dbContext.Add(user);

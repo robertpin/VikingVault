@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using VikingVault.Services.Abstractions;
 using VikingVault.DataAccess.Models;
 
-
 namespace VikingVault.API.Controllers
 {
     [Route("api/[controller]")]
@@ -21,8 +20,14 @@ namespace VikingVault.API.Controllers
         {
             _uniqueEmailService = uniqueEmailService;
         }
+        
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return Ok("good job");
+        }
 
-      
+
         // POST: api/UniqueEmail
         [HttpPost]
         public ActionResult Post([FromBody] UserEmail userEmail)
