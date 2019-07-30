@@ -23,7 +23,6 @@ namespace VikingVault.API.Controllers
         }
 
       
-        // POST: api/UniqueEmail
         [HttpPost]
         public ActionResult Post([FromBody] UserEmail userEmail)
         {
@@ -38,17 +37,6 @@ namespace VikingVault.API.Controllers
                 return Ok("not-unique");
 
         }   
-
-        // PUT: api/UniqueEmail/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+ 
     }
 }
