@@ -27,11 +27,12 @@ namespace VikingVault.Services
 
         public User Authenticate(string email, string password)
             {
-                var user = _context.User.SingleOrDefault(x => x.Email == email && x.Password == password);
+                var user = _context.User.SingleOrDefault(u => u.Email == email && u.Password == password);
 
-                // return null if user not found
                 if (user == null)
+                {
                     return null;
+                }
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -47,9 +48,8 @@ namespace VikingVault.Services
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 user.Token = tokenHandler.WriteToken(token);
 
-            // authentication successful so return user details without password
-            user.Password = null;
+                user.Password = null;
                 return user;
-            }
+           }
     }
 }

@@ -9,6 +9,5 @@ namespace VikingVault.Services.Abstractions
     public interface ILoginService
     {
         User Authenticate(string email, string password);
-
     }
 }
