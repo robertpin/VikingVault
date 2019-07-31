@@ -1,7 +1,5 @@
 import * as React from "react";
-import logo from './login_resources/logo_wirtek.png'
-import footer from './login_resources/footer_login_page.png'
-import white_logo from './login_resources/logo_wirtek_white.png'
+import {Redirect} from 'react-router-dom';
 
 // eslint-disable-next-line
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -11,6 +9,8 @@ interface ILoginFormState {
   password: string;
   emailLabel: string;
   passwordLabel: string;
+  errorLabel: string;
+  redirect: boolean;
 }
 
 class LoginForm extends React.Component<any, ILoginFormState> {
@@ -21,12 +21,14 @@ class LoginForm extends React.Component<any, ILoginFormState> {
       email: "",
       password: "",
       emailLabel: "",
-      passwordLabel: ""
+      passwordLabel: "",
+      errorLabel: "",
+      redirect: false
     };
   }
 
   validateEmail() {
-    if(emailRegex.test(this.state.email))
+    if(emailRegex.test(this.state.email) || this.state.email === "admin")
       return true;
     return false;
   }
@@ -47,9 +49,10 @@ class LoginForm extends React.Component<any, ILoginFormState> {
       if(this.validateEmail() === false)
         validEmail = "Please enter a valid email!";
       this.setState({
-        emailLabel: validEmail})
-      });
-    };
+        emailLabel: validEmail
+      })
+    });
+  };
 
   changedPasswordHandler = (e: any) => {
     this.setState({
@@ -62,60 +65,72 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         validPassword = "The password field can't be empty!";
       this.setState({
         passwordLabel: validPassword})
-      });
+    });
   };
+  
+  private loginClickHandler = () => {
+    var data = {
+      "email": this.state.email,
+      "password": this.state.password
+    }
+  
+    console.log("Sending login data: ");
+    console.log(data);
 
-  private async sendLoginData(){ 
-      var data = {
-        "email": this.state.email,
-        "password": this.state.password
+    fetch("https://localhost:44323/api/login", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+
+      if(response.status === 400) {
+        this.setState({
+          errorLabel: "Incorrect email or password!"
+        });
+        setTimeout(() => {
+          this.setState({
+            errorLabel: ""
+          });
+        }, 1500);
+        return null;
       }
-    
-      console.log("Sending login data: ");
-      console.log(data);
 
-      fetch("https://localhost:44323/api/login", {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-      })
-      .then(response => {
-        if(response.status === 400) {
-          // user not found error
-          return null;
-        }
-        if(response.status === 500) {
-          // internal error
-          return null;
-        }
-        return response.json();
-      }).then(result => {
+      if(response.status === 500) {
+        this.setState({
+          errorLabel: "Error. Please try again later!"
+        });
+        setTimeout(() => {
+          this.setState({
+            errorLabel: ""
+          });
+        }, 2500);
+        return null;
+      }
+
+      return response.json();
+
+    }).then(result => {
+      if(result !== null)
+      {
+        // correct email + password => redirect to user/admin page 
+        console.log("Receiving data: ");
         console.log(result);
         sessionStorage.setItem('Authentication-Token', result.token);
-    });
-  }
-
-  
-
-  private loginClickHandler = () => {
-    // send data
-    this.sendLoginData();
-    // receive response
-    // "Incorrect email or password."
-    //  correct email + password => redirect to user/admin page   
-    console.log("Click Handler End.");
+        this.setState({
+          redirect: true
+        })
+      }
+  });
   }
 
   render() {
     return (
-      <div>
-        <header className="header">
-        <img src={logo} className="vikingImage" alt="Logo Wirtek" />
-        </header>
-        <form className="loginForm">
+      <div  className="container">
+        <div>
           <div>
             <input
               className="field"
@@ -148,15 +163,9 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               Log In
             </button>
           </div>
-        </form>
-        <footer>
-          <img className="footer" src={footer} alt="Footer Login" />
-          <img className="whiteLogo" src={white_logo} alt="Wirtek White Logo" />
-          <p className="descriptionText">
-            Wirtek is a Denmark-based software development center with business operations in Cluj-Napoca and Bucharest,<br/>
-            having strong competencies in software solutions development and telecom product testing <br/>
-            requiring a high level of technical expertise in knowledge-intensive fields. </p>
-        </footer>
+          <div id="errorLabel" className="validationText">{this.state.errorLabel}</div>
+        </div>
+        {this.state.redirect? <Redirect to="/user"/> : null}
       </div>
     );
   }

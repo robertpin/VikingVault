@@ -30,6 +30,8 @@
   height: 50px;
   background: #084c59;
   width: 100%;
+  position: fixed;
+  top: 0;
 }
 
 .loginForm {
