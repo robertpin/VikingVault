@@ -89,7 +89,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
     })
     .then(response => {
 
-      if(response.status === 400) {
+      if(response.status === 404) {
         this.setState({
           errorLabel: "Incorrect email or password!"
         });
