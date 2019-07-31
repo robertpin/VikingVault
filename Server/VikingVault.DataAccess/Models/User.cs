@@ -13,16 +13,14 @@ namespace VikingVault.DataAccess.Models
         [Required]
         public string Password { get; set; }
         [Required]
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
         [Required]
-        public string Lastname { get; set; }
-
+        public string LastName { get; set; }
         public string PictureLink { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]
         public string Cnp { get; set; }
-        [Required]
         public string Role { get; set; }
         public string Token { get; set; }
     }

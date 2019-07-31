@@ -26,8 +26,8 @@ namespace VikingVault.Services
             if (returnedUser != null)
             {
                 userPage.Id = returnedUser.Id;
-                userPage.Firstname = returnedUser.Firstname;
-                userPage.Lastname = returnedUser.Lastname;
+                userPage.Firstname = returnedUser.FirstName;
+                userPage.Lastname = returnedUser.LastName;
                 userPage.Address = returnedUser.Address;
                 userPage.Cnp = returnedUser.Cnp;
                 userPage.Email = returnedUser.Email;
