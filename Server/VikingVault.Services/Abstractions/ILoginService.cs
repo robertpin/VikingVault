@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IUserService
+    public interface ILoginService
     {
-        User CreateUser(User user);
-        User GetById(int userId);
+        User Authenticate(string email, string password);
     }
 }

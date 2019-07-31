@@ -54,5 +54,10 @@ namespace VikingVault.Services
 
             return encryptedPassword;
         }
+
+        public User GetById(int userId)
+        {
+            return _dbContext.User.Find(userId);
+        }
     }
 }

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190729094216_tokenFieldAdded")]
+    partial class tokenFieldAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +35,10 @@ namespace VikingVault.DataAccess.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Firstname")
                         .IsRequired();
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Lastname")
                         .IsRequired();
 
                     b.Property<string>("Password")
@@ -55,29 +57,6 @@ namespace VikingVault.DataAccess.Migrations
                         .HasName("Email");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("VikingVault.DataAccess.Models.UserProfilePageViewModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Cnp");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
-
-                    b.Property<string>("PictureLink");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UsersProfilePages");
                 });
 #pragma warning restore 612, 618
         }
