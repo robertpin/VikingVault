@@ -129,8 +129,8 @@ class LoginForm extends React.Component<any, ILoginFormState> {
 
   render() {
     return (
-      <div  className="container">
-        <div>
+      <div>
+        <div className="loginForm">
           <div>
             <input
               className="field"

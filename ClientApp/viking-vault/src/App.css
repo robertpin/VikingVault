@@ -8,14 +8,14 @@
   background-color: #084c59;
   color: white;
   padding: 14px 20px;
-  margin: 8px;
-  border: none;
+  border-style: solid;
+  border-width: 5px;
+  border-color: white;
   cursor: pointer;
   width: 50%;
 }
 
 .field {
-
   text-align: center;
   border-radius: 15px;
   width: 50%;
@@ -37,7 +37,7 @@
 .loginForm {
   position: absolute;
   top: 30%;
-  left: 10%;
+  left: 30%;
   width: 80%;
 }
 
@@ -69,12 +69,14 @@
 .descriptionText {
   color:white;
   position: fixed;
-  left: 31%;
+  left: 33%;
   top: 85%;
   font-size: 65%;
 }
 
 .validationText {
   color:#d64259;
-  font-size: 50%;
+  font-size: 80%;
+  text-align: center;
+  width: 50%;
 }
