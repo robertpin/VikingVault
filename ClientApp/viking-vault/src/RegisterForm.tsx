@@ -178,10 +178,14 @@ class RegisterForm extends React.Component<any, IFormState> {
             }
             return response.json();
         }).then(result => {
+            setTimeout(() => {
+                this.setState({
+                    redirect: true
+                });
+            }, 1500);
             this.setState({
                 response: "Account created",
-                openModal: true,
-                redirect: true
+                openModal: true
             })
         });
     }
@@ -228,10 +232,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.execute()}>Create account</button>
             <Router>
-                {this.state.redirect? setTimeout(() => {
-                    return <Redirect to="/asd" />;
-                }, 1500) : null} 
-                {/* to do redirect */}
+                {this.state.redirect? <Redirect to="/asd" /> : null} 
             </Router>
             
         </div>);
