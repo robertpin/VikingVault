@@ -11,12 +11,13 @@ const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 interface IUserProperties {
     email: string;
     password: string;
-    cpassword: string;
+    confirmPassword: string;
     firstName: string;
     lastName: string;
     pictureLink: string;
     address: string;
     cnp: string;
+    [key: string]: string;
 }
 
 interface IFormState {
@@ -37,7 +38,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             user: {
                 email: "",
                 password: "",
-                cpassword: "",
+                confirmPassword: "",
                 firstName: "",
                 lastName: "",
                 pictureLink: "",
@@ -128,13 +129,13 @@ class RegisterForm extends React.Component<any, IFormState> {
         this.setState({
             user: {
                 ...this.state.user,
-                cpassword: e.target.value
+                confirmPassword: e.target.value
             }
         }, this.checkPasswordMatch)
     }
 
     private checkPasswordMatch = () => {
-        if(this.state.user.password === this.state.user.cpassword)
+        if(this.state.user.password === this.state.user.confirmPassword)
             return  {
                 message: "Passwords match",
                 class: "alert alert-success"
@@ -153,18 +154,21 @@ class RegisterForm extends React.Component<any, IFormState> {
         if(this.checkPasswordMatch().message !== "Passwords match") {
             val = false;
         }
-        if(!(["address", "cnp", "firstName", "lastName", "password"].every(keyName => this.state[keyName] !== ""))) {
+        if(!(["address", "cnp", "firstName", "lastName", "password"].every(keyName => this.state.user[keyName] !== ""))) {
                 val = false;
         }
         return val;
     }
 
-    private sendDataAndShowResponse = async () => {
+    private setLoadingState = () => {
         this.setState({
             openModal: true,
             response: "Please wait..."
         });
-        const user = {
+    }
+
+    private getUser = () => {
+        return {
             email: this.state.user.email,
             password: this.state.user.password,
             firstName: this.state.user.firstName,
@@ -173,6 +177,18 @@ class RegisterForm extends React.Component<any, IFormState> {
             cnp: this.state.user.cnp,
             pictureLink: this.state.user.pictureLink
         };
+    }
+
+    private openModalWithMessage(message: string) {
+        this.setState({
+            response: message,
+            open: true
+        });
+    }
+
+    private sendDataAndShowResponse = async () => {
+        this.setLoadingState();
+        const user = this.getUser();
         fetch(baseUrl+"user", {
             method: "POST",
             headers: {
@@ -182,10 +198,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             body: JSON.stringify(user)
         },).then(response => {
             if(response.status !== 200) {
-                this.setState({
-                    response: "Error. Please Try again",
-                    openModal: true
-                });
+                this.openModalWithMessage("Error. Please Try again");
             }
             return response.json();
         }).then(result => {
@@ -194,10 +207,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                     redirect: true
                 });
             }, 1500);
-            this.setState({
-                response: "Account created",
-                openModal: true
-            })
+            this.openModalWithMessage("Account created");
         });
     }
 
@@ -210,7 +220,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     render() {
         return (
             <div>
-                {/* <HeaderForm /> */}
+                <HeaderForm />
         <div className="container col-md-6">
             <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
             <div className="form-group">
@@ -222,7 +232,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 <label>Password*</label>
                 <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control"></input>
                 <label>Confirm Password*</label>
-                <input type="password" value={this.state.user.cpassword} onChange={this.handleConfirmPasswordChange} required className="form-control"></input>
+                <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control"></input>
                 <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
             </div>
             <div className="form-group">
@@ -248,7 +258,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.sendDataAndShowResponse()}>Create account</button>
             {this.state.redirect? <Redirect to="/login" /> : null}
         </div>
-        {/* <FooterForm/> */}
+        <FooterForm/>
             </div>
             );
     }
