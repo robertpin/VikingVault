@@ -10,6 +10,7 @@ interface ILoginFormState {
   emailLabel: string;
   passwordLabel: string;
   errorLabel: string;
+  userType: string;
   redirect: boolean;
 }
 
@@ -23,6 +24,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
       emailLabel: "",
       passwordLabel: "",
       errorLabel: "",
+      userType: "",
       redirect: false
     };
   }
@@ -120,9 +122,20 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         console.log("Receiving data: ");
         console.log(result);
         sessionStorage.setItem('Authentication-Token', result.token);
-        this.setState({
-          redirect: true
-        })
+        if(result.email === "admin"){
+          console.log("An admin has logged in.");
+          this.setState({
+            redirect: true,
+            userType: "admin"
+          })
+        }
+        else{
+          console.log("An user has logged in.");
+          this.setState({
+            redirect: true,
+            userType: "user"
+          })
+        }
       }
   });
   }
@@ -165,7 +178,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
           </div>
           <div id="errorLabel" className="validationText">{this.state.errorLabel}</div>
         </div>
-        {this.state.redirect? <Redirect to="/user"/> : null}
+        {this.state.redirect? <Redirect to={this.state.userType}/> : null}
       </div>
     );
   }
