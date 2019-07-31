@@ -36,6 +36,7 @@ namespace VikingVault.API
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+            services.AddCors();
 
             ConfigureJWTAuthentication(appSettingsSection, services);
 
@@ -58,9 +59,15 @@ namespace VikingVault.API
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
 
         private void ConfigureJWTAuthentication(IConfigurationSection appSettingsSection, IServiceCollection services)

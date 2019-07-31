@@ -20,13 +20,15 @@ namespace VikingVault.API.Controllers
             _userProfilePageService = userProfilePageService;
         }
         
-        // GET: api/UserProfilePage/5
+        // GET: api/UserProfilePages/5
         [HttpGet("{id}", Name = "UserId")]
         public ActionResult<UserProfilePageViewModel> Get(int id)
         {
             var page = _userProfilePageService.GetUserProfileData(id);
+
             if (page == null)
                 return StatusCode(404, "User not found!");
+
             return Ok(page);
         }
     }

@@ -2,32 +2,77 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.buttonLogin {
+  text-align: center;
+  border-radius: 15px;
+  background-color: #084c59;
   color: white;
+  padding: 14px 20px;
+  margin: 8px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+.field {
+
+  text-align: center;
+  border-radius: 15px;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.header {
+  height: 50px;
+  background: #084c59;
+  width: 100%;
+}
+
+.loginForm {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 80%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 30%;
+}
+
+.vikingImage {
+  position: relative;
+  right: 35%;
+  top: 100%;
+  padding: 10px;
+  width: 20%;  
+}
+
+.whiteLogo {
+  z-index: 3;
+  position: fixed;
+  left:2%;
+  top:85%;
+  max-width: 250px;
+  max-height: 150px;
+}
+
+.descriptionText {
+  color:white;
+  position: fixed;
+  left: 31%;
+  top: 85%;
+  font-size: 65%;
+}
+
+.validationText {
+  color:#d64259;
+  font-size: 50%;
 }
