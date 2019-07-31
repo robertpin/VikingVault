@@ -31,7 +31,9 @@ namespace WebApi.Controllers
                 {
                     return StatusCode(404, "Email or password is incorrect");
                 }
+
                 return Ok(loggedUser);
+
             } catch(DatabaseException de)
             {
                 return StatusCode(500, "Internal Server Error");

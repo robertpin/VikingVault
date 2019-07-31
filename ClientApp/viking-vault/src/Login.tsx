@@ -29,29 +29,34 @@ class LoginForm extends React.Component<any, ILoginFormState> {
   }
 
   validateEmail() {
-    if(emailRegex.test(this.state.email) || this.state.email === "admin")
+    if(emailRegex.test(this.state.email) || this.state.email === "admin") {
       return true;
+    }
     return false;
   }
 
   validatePassword() {
-    if (this.state.password.length > 0)
+    if (this.state.password.length > 0) {
       return true;
+    }
     return false;
   }
 
   showInvalidPasswordLabel() {
     var validPassword = "";
     if(this.validatePassword() === false)
+    {
       validPassword = "The password field can't be empty!";
+    }
     this.setState({
       passwordLabel: validPassword})
   }
 
   showInvalidEmailLabel() {
     var validEmail = "";
-    if(this.validateEmail() === false)
+    if(this.validateEmail() === false) {
       validEmail = "Please enter a valid email!";
+    }
     this.setState({
       emailLabel: validEmail
     })
