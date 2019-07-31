@@ -1,6 +1,6 @@
 import React from "react";
 import {ResponseModal} from "./ReponseModal";
-import {Redirect, BrowserRouter as Router} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import { HeaderForm } from './HeaderForm';
 import { FooterForm } from './FooterForm';
 import {variables} from "./ConstantVariables";
@@ -20,9 +20,9 @@ interface IUserProperties {
 }
 
 interface IFormState {
-    [key: string]: string | number | boolean | IUserProperties;
+    [key: string]: string | number | boolean | IUserProperties | null;
     user: IUserProperties;
-    valid: string;
+    valid: boolean | null;
     status: number;
     response: string;
     openModal: boolean;
@@ -44,7 +44,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 address: "",
                 cnp: ""
             },
-            valid: "",
+            valid: false,
             status: -1,
             response: "",
             openModal: false,
@@ -65,17 +65,17 @@ class RegisterForm extends React.Component<any, IFormState> {
         },).then(response => response.json()).then(result => {
             if(result === true) { // email is unique
                 this.setState({
-                    valid: "valid"
+                    valid: true
                 })
             }
             else if(result === false) {
                 this.setState({
-                    valid: "invalid"
+                    valid: false
                 })
             }
             else {
                 this.setState({
-                    valid: "error"
+                    valid: null // internal server error
                 })
             }
         });
@@ -106,13 +106,13 @@ class RegisterForm extends React.Component<any, IFormState> {
                 class: "alert alert-danger"
             }
         }
-        if(this.state.valid === "invalid") {
+        if(this.state.valid === false) {
             return  {
                 message: "Email already exists",
                 class: "alert alert-danger"
             }
         }
-        if(this.state.valid === "valid") {
+        if(this.state.valid === true) {
             return  {
                 message: "Valid",
                 class: "alert alert-success"
