@@ -232,7 +232,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.execute()}>Create account</button>
             <Router>
-                {this.state.redirect? <Redirect to="/asd" /> : null} 
+                {this.state.redirect? <Redirect to="/login" /> : null} 
             </Router>
             
         </div>);
