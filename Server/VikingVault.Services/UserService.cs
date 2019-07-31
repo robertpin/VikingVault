@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using VikingVault.Services.Exceptions;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace VikingVault.Services
 {
@@ -15,18 +17,42 @@ namespace VikingVault.Services
         {
             _dbContext = dbContext;
         }
+
         public User CreateUser(User user)
         {
+            user.Role = "user";
+
             try
             {
+                user.Password = this.EncryptPassword(user.Password);
                 _dbContext.Add(user);
                 _dbContext.SaveChanges();
-                return user;
             }
             catch(Exception e)
             {
-                return null;
+                if (e is DbUpdateException || e is DbUpdateConcurrencyException) throw new UserServiceException();
             }
+
+            return user;
+        }
+
+        private String EncryptPassword(String password)
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+
+            string encryptedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+
+            return encryptedPassword;
         }
     }
 }
