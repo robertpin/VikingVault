@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.Services.Abstractions;
+using System.Web.Http;
+using System.Net;
+using System.Net.Http;
 
 namespace VikingVault.API.Controllers
 {
