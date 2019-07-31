@@ -26,14 +26,22 @@ class AccountPage extends React.Component<any, IAccountState>{
     componentDidMount(){
         fetch(url).then(
             (response)=> {
+                if(response.status === 404){
+                    this.setState(oldState => {
+                        return {
+                            isPresent: false
+                        }
+                    })
+                }
+                if(response.status === 200){
+                    this.setState(oldState => {
+                        return {
+                            isPresent: true
+                        }
+                    })
+                }
                 response.json();})
-            .then(data=>{
-                this.setState(oldState => {
-                    return {
-                        isPresent: false
-                    }
-                })
-            })
+            .then(data=>{})
             .catch(error => {
                 console.log("wrryyyyy");
                 this.setState(oldState => {
