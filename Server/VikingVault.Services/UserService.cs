@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using VikingVault.Services.Exceptions;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using VikingVault.Services.Utils;
 
 namespace VikingVault.Services
 {
     public class UserService : IUserService
     {
         private readonly VikingVaultDbContext _dbContext;
-
         public UserService(VikingVaultDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -24,7 +24,7 @@ namespace VikingVault.Services
 
             try
             {
-                user.Password = this.EncryptPassword(user.Password);
+                user.Password = EncryptPassword.ComputeSha256Hash(user.Password);
                 _dbContext.Add(user);
                 _dbContext.SaveChanges();
             }
@@ -34,24 +34,6 @@ namespace VikingVault.Services
             }
 
             return user;
-        }
-
-        private String EncryptPassword(String password)
-        {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            string encryptedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-            return encryptedPassword;
         }
 
         public User GetById(int userId)

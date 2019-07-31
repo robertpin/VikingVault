@@ -31,3 +31,5 @@ msbuild.err
 msbuild.wrn
 
 .vs/
+
+node_modules
