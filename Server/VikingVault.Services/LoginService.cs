@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
+using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Utils;
 
 namespace VikingVault.Services
 {
@@ -26,8 +28,11 @@ namespace VikingVault.Services
         }
 
         public User Authenticate(string email, string password)
-            {
-                var user = _context.User.SingleOrDefault(u => u.Email == email && u.Password == password);
+        {
+            try {
+                string hashedPassword = EncryptPassword.ComputeSha256Hash(password);
+
+                var user = _context.User.SingleOrDefault(u => u.Email == email && u.Password == hashedPassword);
 
                 if (user == null)
                 {
@@ -50,6 +55,10 @@ namespace VikingVault.Services
 
                 user.Password = null;
                 return user;
-           }
+            } catch(Exception e)
+            {
+                throw new DatabaseException("Database Error");
+            }
+        }
     }
 }
