@@ -2,7 +2,6 @@ import React from "react";
 import {ResponseModal} from "./ReponseModal";
 import {Redirect, BrowserRouter as Router} from "react-router-dom";
 
-const bcrypt = require("bcryptjs");
 const url = "https://localhost:44323/api/";
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -150,12 +149,7 @@ class RegisterForm extends React.Component<any, IFormState> {
         });
         const user = {
             Email: this.state.email,
-            Password: await new Promise((res, rej) => {
-                bcrypt.hash(this.state.password, 10, function(err: any, hash: any) {
-                    if( err) rej(err);
-                    res(hash);
-                })
-            }),
+            Password: this.state.password,
             FirstName: this.state.firstName,
             LastName: this.state.lastName,
             Address: this.state.address,
@@ -231,10 +225,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 <input type="text" value={this.state.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control"></input>
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.execute()}>Create account</button>
-            <Router>
-                {this.state.redirect? <Redirect to="/login" /> : null} 
-            </Router>
-            
+            {this.state.redirect? <Redirect to="/login" /> : null}
         </div>);
     }
 }
