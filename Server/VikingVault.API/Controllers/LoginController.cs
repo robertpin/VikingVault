@@ -20,9 +20,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]UserLogin userParam)
+        public IActionResult Authenticate([FromBody]UserLogin userLoginData)
         {
-            var user = _loginService.Authenticate(userParam.Email, userParam.Password);
+            var user = _loginService.Authenticate(userLoginData.Email, userLoginData.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Email or password is incorrect" });

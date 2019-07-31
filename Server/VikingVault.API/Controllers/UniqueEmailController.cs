@@ -13,7 +13,6 @@ namespace VikingVault.API.Controllers
     [ApiController]
     public class UniqueEmailController : ControllerBase
     {
-
         private readonly IUniqueEmailService _uniqueEmailService;
 
         public UniqueEmailController(IUniqueEmailService uniqueEmailService)
@@ -21,14 +20,6 @@ namespace VikingVault.API.Controllers
             _uniqueEmailService = uniqueEmailService;
         }
         
-        [HttpGet]
-        public ActionResult Get()
-        {
-            return Ok("good job");
-        }
-
-
-        // POST: api/UniqueEmail
         [HttpPost]
         public ActionResult Post([FromBody] UserEmail userEmail)
         {
@@ -38,22 +29,10 @@ namespace VikingVault.API.Controllers
                 return StatusCode(500, "Internal Server Error");
 
             if (isUnique == true)
-                return Ok("unique");
+                return Ok(true);
             else
-                return Ok("not-unique");
+                return Ok(false);
 
-        }   
-
-        // PUT: api/UniqueEmail/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

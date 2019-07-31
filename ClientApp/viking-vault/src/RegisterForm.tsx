@@ -1,8 +1,11 @@
 import React from "react";
 import {ResponseModal} from "./ReponseModal";
 import {Redirect, BrowserRouter as Router} from "react-router-dom";
+import { HeaderForm } from './HeaderForm';
+import { FooterForm } from './FooterForm';
+import {variables} from "./ConstantVariables";
 
-const url = "https://localhost:44323/api/";
+const baseUrl = variables.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 interface IFormState {
@@ -44,7 +47,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     }
 
     private validateEmail = () => {
-        fetch(url+"UniqueEmail", {
+        fetch(baseUrl+"UniqueEmail", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -54,27 +57,27 @@ class RegisterForm extends React.Component<any, IFormState> {
               email: this.state.email,
             })
         },).then(response => response.json()).then(result => {
-            if(result === "unique") {
+            if(result === true) { // email is unique
                 this.setState({
                     valid: "valid"
                 })
             }
-            else if(result === "not-unique") {
+            else if(result === false) {
                 this.setState({
                     valid: "invalid"
                 })
             }
             else {
                 this.setState({
-                    valid: "null"
+                    valid: "error"
                 })
             }
         });
     }
 
-    private handleChange = (val: string, inpName: string) => {
+    private handleChange = (inputValue: string, inputName: string) => {
         this.setState({
-            [inpName]: val
+            [inputName]: inputValue
         })
     }
 
@@ -84,59 +87,58 @@ class RegisterForm extends React.Component<any, IFormState> {
         }, this.validateEmail);
     }
 
-    private emailError = () => {
+    private returnEmailValidationMessageAndStyle = () => {
         if(!emailRegEx.test(this.state.email)) {
             return  {
-                msg: "Email format incorrect",
+                message: "Email format incorrect",
                 class: "alert alert-danger"
             }
         }
         if(this.state.valid === "invalid") {
             return  {
-                msg: "Email already exists",
+                message: "Email already exists",
                 class: "alert alert-danger"
             }
         }
         if(this.state.valid === "valid") {
             return  {
-                msg: "Valid",
+                message: "Valid",
                 class: "alert alert-success"
             }
         }
         return  {
-            msg: "Server error. Try again later",
+            message: "Server error. Try again later",
             class: "alert alert-danger"
         }
     }
 
-    private handleCPasswordChange = (e: any) => {
+    private handleConfirmPasswordChange = (e: any) => {
         this.setState({
             cpassword: e.target.value
-        }, this.passwordMatch)
+        }, this.checkPasswordMatch)
     }
 
-    private passwordMatch = () => {
+    private checkPasswordMatch = () => {
         if(this.state.password === this.state.cpassword)
             return  {
-                msg: "Passwords match",
+                message: "Passwords match",
                 class: "alert alert-success"
             }
         return  {
-            msg: "Password do not match",
+            message: "Password do not match",
             class: "alert alert-danger"
         }
     }
 
     private mandatoryFieldsCompletedCorrectly = () => {
         let val = true;
-        if(this.emailError().msg !== "Valid") {
+        if(this.returnEmailValidationMessageAndStyle().message !== "Valid") {
             val = false;
         }
-        if(this.passwordMatch().msg !== "Passwords match") {
+        if(this.checkPasswordMatch().message !== "Passwords match") {
             val = false;
         }
-        if(this.state.address === "" || this.state.cnp === "" || this.state.firstName === "" 
-            || this.state.lastName === "" || this.state.password === "") {
+        if(!(["address", "cnp", "firstName", "lastName", "password"].every(keyName => this.state[keyName] !== ""))) {
                 val = false;
         }
         return val;
@@ -148,15 +150,15 @@ class RegisterForm extends React.Component<any, IFormState> {
             response: "Please wait..."
         });
         const user = {
-            Email: this.state.email,
-            Password: this.state.password,
-            FirstName: this.state.firstName,
-            LastName: this.state.lastName,
-            Address: this.state.address,
-            Cnp: this.state.cnp,
-            PictureLink: this.state.pictureLink
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            address: this.state.address,
+            cnp: this.state.cnp,
+            pictureLink: this.state.pictureLink
         };
-        fetch(url+"user", {
+        fetch(baseUrl+"user", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -190,19 +192,22 @@ class RegisterForm extends React.Component<any, IFormState> {
     }
 
     render() {
-        return (<div className="container col-md-6">
+        return (
+            <div>
+                {/* <HeaderForm /> */}
+        <div className="container col-md-6">
             <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
             <div className="form-group">
                 <label>Email*</label>
                 <input type="email" value={this.state.email} onChange={this.handleEmailChange} required className="form-control"></input>
-                <pre className={this.emailError().class}>{this.emailError().msg}</pre>
+                <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre>
             </div>
             <div className="form-group">
                 <label>Password*</label>
                 <input type="password" value={this.state.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control"></input>
                 <label>Confirm Password*</label>
-                <input type="password" value={this.state.cpassword} onChange={this.handleCPasswordChange} required className="form-control"></input>
-                <pre className={this.passwordMatch().class}>{this.passwordMatch().msg}</pre>
+                <input type="password" value={this.state.cpassword} onChange={this.handleConfirmPasswordChange} required className="form-control"></input>
+                <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
             </div>
             <div className="form-group">
                 <label>First Name*</label>
@@ -226,7 +231,10 @@ class RegisterForm extends React.Component<any, IFormState> {
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.execute()}>Create account</button>
             {this.state.redirect? <Redirect to="/login" /> : null}
-        </div>);
+        </div>
+        {/* <FooterForm/> */}
+            </div>
+            );
     }
 }
 

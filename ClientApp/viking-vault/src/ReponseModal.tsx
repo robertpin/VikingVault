@@ -1,24 +1,24 @@
 import React from "react";
 
-const modalOpenStyle = {
-    display: "block",
-    opacity: 1,
-    backgroundColor: "rgba(0,0,0,0.5)"
+interface IModalProps {
+    text: string;
+    open: boolean;
+    modalClose: any; // function to comunicate with ParentElement
 }
 
-const modalCloseStyle = {
-    display: "none"
+interface IModalState {
+    open: boolean;
 }
 
-class ResponseModal extends React.Component<any, any> {
-    constructor(props: any) {
+class ResponseModal extends React.Component<IModalProps, IModalState> {
+    constructor(props: IModalProps) {
         super(props);
         this.state = {
             open: props.open
         }
     }
 
-    static getDerivedStateFromProps(props: any, state: any) {
+    static getDerivedStateFromProps(props: IModalProps, state: IModalState) {
         if(props.open !== state.open)
             return {
                 open: props.open
@@ -27,7 +27,6 @@ class ResponseModal extends React.Component<any, any> {
     }
 
     private closeModal = () => {
-        // console.log("trying to close modal");
         this.props.modalClose(false);
         this.setState({
             open: false
@@ -36,7 +35,7 @@ class ResponseModal extends React.Component<any, any> {
 
     render() {
         return (<div className="container">
-            <div className="modal" id="myModal" role="dialog" style={this.state.open?modalOpenStyle: modalCloseStyle}>
+            <div className={this.state.open? "modal open" : "modal close"}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
