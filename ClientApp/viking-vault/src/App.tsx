@@ -1,12 +1,21 @@
 import React from 'react';
+// import logo from './logo.svg';
 import './App.css';
-import { LoginForm } from './Login';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { LoginForm } from './Login'
+import { HeaderForm } from './HeaderForm';
+import { FooterForm } from './FooterForm';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <LoginForm />
-    </div>
+    <Router>
+      {/* <Route path="/register/" exact component={RegisterForm} /> */}
+      <Route path="/login/" exact component={LoginForm}/>
+      <div className="App">
+      <HeaderForm></HeaderForm>
+      <FooterForm></FooterForm>
+      </div>
+    </Router>
   );
 }
 
