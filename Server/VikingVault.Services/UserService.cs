@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using VikingVault.Services.Exceptions;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Text;
 
 namespace VikingVault.Services
 {
@@ -24,7 +25,7 @@ namespace VikingVault.Services
 
             try
             {
-                user.Password = this.EncryptPassword(user.Password);
+                user.Password = this.ComputeSha256Hash(user.Password);
                 _dbContext.Add(user);
                 _dbContext.SaveChanges();
             }
@@ -34,6 +35,24 @@ namespace VikingVault.Services
             }
 
             return user;
+        }
+
+        private string ComputeSha256Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
 
         private String EncryptPassword(String password)

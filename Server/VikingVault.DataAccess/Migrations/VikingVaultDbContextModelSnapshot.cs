@@ -44,10 +44,7 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("PictureLink");
 
-                    b.Property<string>("Role")
-                        .IsRequired();
-
-                    b.Property<string>("Token");
+                    b.Property<string>("Role");
 
                     b.HasKey("Id");
 
