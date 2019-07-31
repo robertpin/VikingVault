@@ -2,5 +2,6 @@
 {
     public class UserAccount
     {
+        int id;
     }
 }

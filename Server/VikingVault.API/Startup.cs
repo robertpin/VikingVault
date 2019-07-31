@@ -22,12 +22,14 @@ namespace VikingVault.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IBankService, BankService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +38,7 @@ namespace VikingVault.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            
             }
             else
             {
@@ -43,6 +46,11 @@ namespace VikingVault.API
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+                
             app.UseHttpsRedirection();
             app.UseMvc();
         }

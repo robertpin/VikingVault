@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using VikingVault.API.Controllers;
 using VikingVault.DataAccess.Models;
 
 namespace VikingVault.DataAccess
@@ -14,5 +15,6 @@ namespace VikingVault.DataAccess
         { }
 
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
     }
 }
