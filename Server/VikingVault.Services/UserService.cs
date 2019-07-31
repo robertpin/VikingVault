@@ -43,7 +43,6 @@ namespace VikingVault.Services
             {
                 rng.GetBytes(salt);
             }
-            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
 
             string encryptedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
