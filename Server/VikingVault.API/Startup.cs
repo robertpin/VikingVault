@@ -28,7 +28,6 @@ namespace VikingVault.API
             services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IBankService, BankService>();
             services.AddScoped<IAccountService, AccountService>();
         }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.Services.Abstractions;
-using VikingVault.API.DataAccess;
+using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services
 {
@@ -21,7 +21,7 @@ namespace VikingVault.Services
 
         public UserAccount FindById()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

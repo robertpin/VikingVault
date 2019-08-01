@@ -9,7 +9,7 @@ using VikingVault.Services.Abstractions;
 using System.Web.Http;
 using System.Net;
 using System.Net.Http;
-using VikingVault.API.DataAccess;
+using VikingVault.DataAccess.Models;
 
 namespace VikingVault.API.Controllers
 {
@@ -29,9 +29,13 @@ namespace VikingVault.API.Controllers
         {
             UserAccount userAccount = _accService.FindById();
             if (userAccount != null)
+            {
                 return Ok(userAccount);
+            }  
             else
+            {
                 return NotFound();
+            }
         }
 
     }
