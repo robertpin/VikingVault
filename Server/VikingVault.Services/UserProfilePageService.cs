@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
@@ -17,25 +15,24 @@ namespace VikingVault.Services
             _dbContext = dbContext;
         }
 
-        public UserProfilePageViewModel GetUserProfileData(int id)
+        public UserProfilePageViewModel GetUserProfileData(string token)
         {
-            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == id);
-
+            var tokenObject = new JwtSecurityToken(token);
+            int userId = (int)tokenObject.Payload["Id"];
+            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
             var userPage = new UserProfilePageViewModel();
 
             if (returnedUser != null)
             {
                 userPage.Id = returnedUser.Id;
-                userPage.Firstname = returnedUser.Firstname;
-                userPage.Lastname = returnedUser.Lastname;
+                userPage.Firstname = returnedUser.FirstName;
+                userPage.Lastname = returnedUser.LastName;
                 userPage.Address = returnedUser.Address;
                 userPage.Cnp = returnedUser.Cnp;
                 userPage.Email = returnedUser.Email;
                 userPage.PictureLink = returnedUser.PictureLink;
-
                 return userPage;
             }
-
             return null;
         }
     }

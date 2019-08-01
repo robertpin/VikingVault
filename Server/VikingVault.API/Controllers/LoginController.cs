@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using VikingVault.Services.Abstractions;
 using VikingVault.DataAccess.Models;
+using VikingVault.DataAccess.Models.Exceptions;
 
 namespace WebApi.Controllers
 {
@@ -19,15 +20,21 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]UserLogin userLoginData)
+        [HttpPost]
+        public IActionResult Authenticate([FromBody]UserLogin user)
         {
-            var user = _loginService.Authenticate(userLoginData.Email, userLoginData.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Email or password is incorrect" });
-
-            return Ok(user);
+            try
+            {
+                var loggedUser = _loginService.Authenticate(user.Email, user.Password);
+                if (loggedUser == null)
+                {
+                    return StatusCode(404, "Email or password is incorrect");
+                }
+                return Ok(loggedUser);
+            } catch(DatabaseException de)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
     }
 }

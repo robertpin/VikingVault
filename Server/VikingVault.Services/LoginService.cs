@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
+using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Utils;
 
 namespace VikingVault.Services
 {
@@ -26,12 +28,16 @@ namespace VikingVault.Services
         }
 
         public User Authenticate(string email, string password)
-            {
-                var user = _context.User.SingleOrDefault(x => x.Email == email && x.Password == password);
+        {
+            try {
+                string hashedPassword = PasswordEncryption.ComputeSha256Hash(password);
 
-                // return null if user not found
+                var user = _context.User.SingleOrDefault(u => u.Email == email && u.Password == hashedPassword);
+
                 if (user == null)
+                {
                     return null;
+                }
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -39,7 +45,7 @@ namespace VikingVault.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, user.Id.ToString())
+                        new Claim("Id", user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -47,9 +53,12 @@ namespace VikingVault.Services
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 user.Token = tokenHandler.WriteToken(token);
 
-            // authentication successful so return user details without password
-            user.Password = null;
+                user.Password = null;
                 return user;
+            } catch(Exception e)
+            {
+                throw new DatabaseException("Database Error");
             }
+        }
     }
 }

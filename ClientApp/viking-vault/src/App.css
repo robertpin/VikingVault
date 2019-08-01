@@ -1,7 +1,7 @@
-.container {
-  margin-top: 2em;
+.button-login {
+  background-color:#0D4450;
+  color: white;
   width: 100%;
-  height: 100%;
 }
 
 .accent-color {
@@ -17,34 +17,63 @@ body{
   pointer-events: none;
 }
 
+.button-login:hover {
+  color: white;
+  background-color:#206675;
+}
+
+.alert {
+  text-align: center;
+  font-size: 80%;
+  padding: 2mm;
+}
+
+.button-register {
+  background-color: #0054A6;
+  color: white;
+}
+
+.container {
+  margin-top: 8%;
+}
+
 .header {
   height: 50px;
-  background: #084c59;
+  background: #004450;
   width: 100%;
   top: 0;
 }
 
 footer {
-  position: relative;
+  text-align:center;
   width: 100%;
   overflow: hidden;
+}
+
+.footer-login {
+  position: fixed;
+  bottom:0;
+  left:0;
+}
+
+.footer-register {
+  position: relative;
 }
 
 .footer-img {
   left: 0;
   bottom: 0;
   width: 100%;
-  
-  }
+}
 
-.vikingImage {
+.viking-image {
   position: relative;
   top: 100%;
   padding: 10px;
   width: 20%;  
   }
 
-.whiteLogo {
+.white-logo {
   position: absolute;
   left: 2em;
   bottom: 0;
@@ -52,13 +81,14 @@ footer {
   max-height: 150px;
 }
 
-.descriptionText {
+.description-text {
   color:white;
   text-align: center;
   position: absolute;
   font-size: 65%;
-  left: 35%;
-  bottom: 5em;
+  left: 33%;
+  top: 65%;
+  font-size: 65%;
 }
 
 .modal.open {
