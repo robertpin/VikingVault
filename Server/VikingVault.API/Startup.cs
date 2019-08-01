@@ -13,6 +13,7 @@ using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services;
 using VikingVault.Services.Abstractions;
+using Microsoft.AspNetCore.Cors;
 
 namespace VikingVault.API
 {
@@ -29,6 +30,7 @@ namespace VikingVault.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
 
             services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -58,7 +60,6 @@ namespace VikingVault.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -67,7 +68,6 @@ namespace VikingVault.API
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-
         }
 
         private void ConfigureJWTAuthentication(IConfigurationSection appSettingsSection, IServiceCollection services)
