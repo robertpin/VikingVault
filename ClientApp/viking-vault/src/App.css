@@ -37,11 +37,18 @@
 
 footer {
   text-align:center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.footer-login {
   position: fixed;
   bottom:0;
   left:0;
-  width: 100%;
-  overflow: hidden;
+}
+
+.footer-register {
+  position: relative;
 }
 
 .footer-img {

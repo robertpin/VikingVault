@@ -2,8 +2,8 @@ import React from 'react';
 import white_logo from './login_resources/logo_wirtek_white.png'
 import footer from "./login_resources/footer_login_page.png"
 
-function FooterForm(){
-    return <footer>
+function FooterForm(props: any){
+    return <footer className={props.class}>
           <img className="footer-img" src={footer} alt="Footer Login" />
           <img className="white-logo" src={white_logo} alt="Wirtek White Logo" />
           <p className="description-text">
