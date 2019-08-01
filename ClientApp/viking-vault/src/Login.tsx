@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Redirect} from 'react-router-dom';
 
-// eslint-disable-next-line
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 interface ILoginFormState {
@@ -30,54 +29,60 @@ class LoginForm extends React.Component<any, ILoginFormState> {
   }
 
   validateEmail() {
-    if(emailRegex.test(this.state.email) || this.state.email === "admin")
+    if(emailRegex.test(this.state.email) || this.state.email === "admin") {
       return true;
+    }
     return false;
   }
 
   validatePassword() {
-    if (this.state.password.length > 0)
+    if (this.state.password.length > 0) {
       return true;
+    }
     return false;
   }
 
-  changedEmailHandler = (e: any) => {
+  showInvalidPasswordLabel() {
+    var validPassword = "";
+    if(this.validatePassword() === false)
+    {
+      validPassword = "The password field can't be empty!";
+    }
+    this.setState({
+      passwordLabel: validPassword})
+  }
+
+  showInvalidEmailLabel() {
+    var validEmail = "";
+    if(this.validateEmail() === false) {
+      validEmail = "Please enter a valid email!";
+    }
+    this.setState({
+      emailLabel: validEmail
+    })
+  }
+
+  handleChangedEmail = (e: any) => {
     this.setState({
       email: e.target.value
-    },
-    () => {
-      // show message if the mail is not valid
-      var validEmail = "";
-      if(this.validateEmail() === false)
-        validEmail = "Please enter a valid email!";
-      this.setState({
-        emailLabel: validEmail
-      })
+    }, () => {
+      this.showInvalidEmailLabel();
     });
   };
 
-  changedPasswordHandler = (e: any) => {
+  handleChangedPassword = (e: any) => {
     this.setState({
       password: e.target.value
-    },
-    () => {
-       // show message if the password is not valid
-      var validPassword = "";
-      if(this.validatePassword() === false)
-        validPassword = "The password field can't be empty!";
-      this.setState({
-        passwordLabel: validPassword})
+    }, () => {
+      this.showInvalidPasswordLabel();
     });
   };
-  
-  private loginClickHandler = () => {
+
+  handleLoginClicked = () => {
     var data = {
       "email": this.state.email,
       "password": this.state.password
     }
-  
-    console.log("Sending login data: ");
-    console.log(data);
 
     fetch("https://localhost:44323/api/login", {
         method: "POST",
@@ -88,7 +93,6 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         body: JSON.stringify(data)
     })
     .then(response => {
-
       if(response.status === 404) {
         this.setState({
           errorLabel: "Incorrect email or password!"
@@ -115,22 +119,20 @@ class LoginForm extends React.Component<any, ILoginFormState> {
 
       return response.json();
 
-    }).then(result => {
+    })
+    .then(result => {
       if(result !== null)
       {
         // correct email + password => redirect to user/admin page 
-        console.log("Receiving data: ");
-        console.log(result);
         sessionStorage.setItem('Authentication-Token', result.token);
+
         if(result.email === "admin"){
-          console.log("An admin has logged in.");
           this.setState({
             redirect: true,
             userType: "admin"
           })
         }
         else{
-          console.log("An user has logged in.");
           this.setState({
             redirect: true,
             userType: "user"
@@ -151,7 +153,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               type="email"
               placeholder="E-mail"
               value={this.state.email}
-              onChange={this.changedEmailHandler}
+              onChange={this.handleChangedEmail}
             />
           </div>
           <div id="emailValidationLabel" className="validationText">{this.state.emailLabel}</div>
@@ -162,7 +164,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               type="password"
               placeholder="Password"
               value={this.state.password}
-              onChange={this.changedPasswordHandler}
+              onChange={this.handleChangedPassword}
             />
           </div>
           <div id="passwordValidationLabel" className="validationText">{this.state.passwordLabel}</div>
@@ -171,7 +173,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               className="buttonLogin"
               id="loginButton"
               disabled={!(this.validateEmail()&&this.validatePassword())}
-              onClick={this.loginClickHandler}
+              onClick={this.handleLoginClicked}
             >
               Log In
             </button>
