@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using VikingVault.API.Controllers;
 using VikingVault.DataAccess.Models;
 
 namespace VikingVault.DataAccess
@@ -13,8 +12,15 @@ namespace VikingVault.DataAccess
         public VikingVaultDbContext(DbContextOptions<VikingVaultDbContext> options)
             : base(options)
         { }
+        
+        public DbSet<User> User { get; set; }
 
-        public DbSet<Bank> Banks { get; set; }
-        public DbSet<UserAccount> UserAccounts { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasAlternateKey(c => c.Email)
+                .HasName("Email");
+        }
+        public DbSet<UserProfilePageViewModel> UsersProfilePages { get; set; }
     }
 }

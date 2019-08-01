@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
-
-import {BrowserRouter as Router, Route} from "react-router-dom";
-import UserPage from './components/UserPage';
+import { RegisterForm } from "./RegisterForm";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App: React.FC = () => {
   return (
-    <div id="App" >
-          <Router>
-          <Route path = "/user" component = {UserPage}></Route>
-          </Router>    
-    </div>);
+    <div className="App">
+      <Router>
+        <Route path="/register/" exact component={RegisterForm} />
+      </Router>
+    </div>
+    
+  );
 }
 
 export default App;
