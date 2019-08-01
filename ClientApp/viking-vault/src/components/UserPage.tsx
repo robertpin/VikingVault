@@ -5,20 +5,21 @@ import AccountPage from './AccountPage'
 import UserIcon from './UserIcon';
 
 interface IUserPageState {
-    type:boolean;
+    viewProfile:boolean;
 }
+
 class UserPage extends React.Component<any, IUserPageState>{
     constructor(props:any){
         super(props)
 
         this.state = {
-            type: true
+            viewProfile: true
         } 
         this.callbackFunction = this.callbackFunction.bind(this);
     }
 
-    callbackFunction = (childData: boolean) =>{
-        this.setState({type: childData});
+    callbackFunction = (viewProfileValue: boolean) =>{
+        this.setState({viewProfile: viewProfileValue});
     }
 
     render(){
@@ -27,7 +28,7 @@ class UserPage extends React.Component<any, IUserPageState>{
                 <SideBar/>
                 <TopBar/>
                 <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
-                {this.state.type ?  <AccountPage /> : <div></div>}
+                {this.state.viewProfile ?  <AccountPage /> : <div></div>}
             </div>
          )   
     }
