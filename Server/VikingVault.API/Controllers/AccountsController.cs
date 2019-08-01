@@ -23,7 +23,6 @@ namespace VikingVault.API.Controllers
             _accService = accService;
         }
 
-        // GET: api/Accounts/5
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<UserAccount> Get(int id)
         {

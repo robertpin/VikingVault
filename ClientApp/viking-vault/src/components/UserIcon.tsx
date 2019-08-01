@@ -1,9 +1,11 @@
 import React from "react";
 import icon from "./images/user2.png";
 import "./styles.css";
+import {Redirect} from "react-router-dom";
 
 interface IUserIconState {
   clicked: boolean;
+  redirect: boolean;
 }
 
 class UserIcon extends React.Component<any, IUserIconState> {
@@ -12,11 +14,16 @@ class UserIcon extends React.Component<any, IUserIconState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      clicked: false
+      clicked: false,
+      redirect: false
     };
     this.megaMenu = React.createRef();
     this.handleClick = this.handleClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+  }
+
+  sendData = () =>{
+    this.props.parentCallBack(false);
   }
 
   componentWillMount() {
@@ -39,6 +46,13 @@ class UserIcon extends React.Component<any, IUserIconState> {
     }
   }
 
+  handleSignOut = () =>{
+      sessionStorage.removeItem("Authentication-Token");
+      this.setState({
+        redirect : true
+      });
+  }
+
   render() {
     return (
       <div className="dropdown" ref={this.megaMenu}>
@@ -50,10 +64,11 @@ class UserIcon extends React.Component<any, IUserIconState> {
         />
         <div className={"mega-menu" + " " + this.state.clicked}>
           <div className="mega-menu-content">
-            <a href="#">View profile</a>
-            <a href="#">Sign out</a>
+            <a href="#" onClick = {this.sendData}>View profile</a>
+            <a href="#" onClick = {this.handleSignOut}>Sign out</a>
           </div>
         </div>
+        {this.state.redirect ? <Redirect to ="/login"/> : null}
       </div>
     );
   }

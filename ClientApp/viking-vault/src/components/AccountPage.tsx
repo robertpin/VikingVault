@@ -1,6 +1,8 @@
 import React from 'react'
 import './styles.css'
 import account from './images/card.png'
+import { Redirect } from 'react-router';
+
 
 const url = "https://localhost:44323/api/Accounts/0"
 
@@ -9,6 +11,7 @@ interface IAccountState{
     card: any
     transactions: []
     isPresent: boolean
+    redirect: boolean
 } 
 
 class AccountPage extends React.Component<any, IAccountState>{
@@ -19,48 +22,68 @@ class AccountPage extends React.Component<any, IAccountState>{
             balance: 0,
             card: {},
             transactions: [],
-            isPresent: true
+            isPresent: true,
+            redirect:false
         }
     }
 
     componentDidMount(){
-        fetch(url).then(
-            (response)=> {
-                if(response.status === 404){
+
+        let token = sessionStorage.getItem("Authentication-Token");
+
+        if(token === null)
+        {
+            this.setState({
+                redirect:true
+            })
+        }
+        else
+        {
+            fetch(url, {
+                method:"GET",
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-token' : token.toString()
+                }})
+                .then((response)=> {
+                    if(response.status === 404){
+                        this.setState(oldState => {
+                            return {
+                                isPresent: false
+                            }
+                        })
+                    }
+                    if(response.status === 200){
+                        this.setState(oldState => {
+                            return {
+                                isPresent: true
+                            }
+                        })
+                    }
+                    response.json();})
+                .then(data=>{})
+                .catch(error => {
+                    console.log("Server error");
                     this.setState(oldState => {
                         return {
                             isPresent: false
                         }
                     })
-                }
-                if(response.status === 200){
-                    this.setState(oldState => {
-                        return {
-                            isPresent: true
-                        }
-                    })
-                }
-                response.json();})
-            .then(data=>{})
-            .catch(error => {
-                console.log("wrryyyyy");
-                this.setState(oldState => {
-                    return {
-                        isPresent: false
-                    }
-                })
-        })
+            })
+        }
     }
+        
 
     render(){
-        return(
+        return(            
             <div className="account" style={this.state.isPresent ? {display:'none'} : {display:'inline-flex'}}>
+                
                 <img className="cardUnavailable" src={account} alt=""></img>
                 <div className="info">
                     <h2>Accounts</h2>
                     <br/><br/><br/>
-                    <h5 className="pNew">Please contact your administrator to attach a card to your account <hr style={{width:'100%'}}></hr></h5>
-                    
+                    <h5 className="pNew">Please contact your administrator to attach a card to your account <hr></hr></h5>
                 </div>
             </div>
         )
