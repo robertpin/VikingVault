@@ -21,7 +21,7 @@ namespace VikingVault.Services
 
         public UserAccount FindById()
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }
