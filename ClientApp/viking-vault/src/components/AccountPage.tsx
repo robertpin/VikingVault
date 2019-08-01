@@ -76,7 +76,7 @@ class AccountPage extends React.Component<any, IAccountState>{
 
     render(){
         return(            
-            <div className="account" style={this.state.isPresent ? {display:'none'} : {display:'inline-flex'}}>
+            <div className={"account-"+this.state.isPresent}>
                 
                 <img className="cardUnavailable" src={account} alt=""></img>
                 <div className="info">
