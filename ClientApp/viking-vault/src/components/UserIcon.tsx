@@ -26,7 +26,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
     this.props.parentCallBack(false);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.handleOutsideClick, false);
   }
 
@@ -46,7 +46,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
     }
   }
 
-  handleSignOut = () =>{
+  handleSignOut = () => {
       sessionStorage.removeItem("Authentication-Token");
       this.setState({
         redirect : true
@@ -62,7 +62,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
           alt=""
           onClick={this.handleClick}
         />
-        <div className={"mega-menu" + " " + this.state.clicked}>
+        <div className={ `mega-menu ${this.state.clicked}`}>
           <div className="mega-menu-content">
             <button onClick = {this.sendData}>View profile</button>
             <button onClick = {this.handleSignOut}>Sign out</button>

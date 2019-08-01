@@ -18,8 +18,7 @@ class UserPage extends React.Component<any, IUserPageState>{
     }
 
     callbackFunction = (childData: boolean) =>{
-        this.setState({type: childData})
-        console.log(this.state.type)
+        this.setState({type: childData});
     }
 
     render(){
