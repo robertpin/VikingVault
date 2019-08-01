@@ -10,7 +10,7 @@ using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -20,7 +20,8 @@ namespace VikingVault.API.Controllers
         {
             _userService = userService;
         }
-        
+
+        [Route("api/register")]
         [HttpPost]
         public ActionResult Post([FromBody] User user)
         {
