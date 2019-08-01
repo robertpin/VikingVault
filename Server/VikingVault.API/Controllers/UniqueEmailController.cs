@@ -19,20 +19,16 @@ namespace VikingVault.API.Controllers
         {
             _uniqueEmailService = uniqueEmailService;
         }
-        
         [HttpPost]
         public ActionResult Post([FromBody] UserEmail userEmail)
         {
             bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail.email);
-
             if (isUnique == null)
                 return StatusCode(500, "Internal Server Error");
-
             if (isUnique == true)
                 return Ok(true);
             else
                 return Ok(false);
-
         }
     }
 }
