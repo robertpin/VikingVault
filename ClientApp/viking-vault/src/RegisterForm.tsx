@@ -189,7 +189,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     private sendDataAndShowResponse = async () => {
         this.setLoadingState();
         const user = this.getUser();
-        fetch(baseUrl+"user", {
+        fetch(baseUrl+"register", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
