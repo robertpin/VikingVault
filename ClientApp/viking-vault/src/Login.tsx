@@ -145,7 +145,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
   render() {
     return (
       <div>
-        <div className="loginForm">
+        <div className="login-form">
           <div>
             <input
               className="field"
@@ -156,7 +156,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               onChange={this.handleChangedEmail}
             />
           </div>
-          <div id="emailValidationLabel" className="validationText">{this.state.emailLabel}</div>
+          <div id="emailValidationLabel" className="validation-text">{this.state.emailLabel}</div>
           <div>
             <input
               className="field"
@@ -167,10 +167,10 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               onChange={this.handleChangedPassword}
             />
           </div>
-          <div id="passwordValidationLabel" className="validationText">{this.state.passwordLabel}</div>
+          <div id="passwordValidationLabel" className="validation-text">{this.state.passwordLabel}</div>
           <div>
             <button
-              className="buttonLogin"
+              className="button-login"
               id="loginButton"
               disabled={!(this.validateEmail()&&this.validatePassword())}
               onClick={this.handleLoginClicked}
@@ -178,7 +178,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               Log In
             </button>
           </div>
-          <div id="errorLabel" className="validationText">{this.state.errorLabel}</div>
+          <div id="errorLabel" className="validation-text">{this.state.errorLabel}</div>
         </div>
         {this.state.redirect? <Redirect to={this.state.userType}/> : null}
       </div>

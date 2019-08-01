@@ -26,8 +26,7 @@ namespace VikingVault.API.Controllers
         {
             try
             {
-                var returnedUser = _userService.CreateUser(user);
-                return Ok(returnedUser);
+                return Ok(_userService.CreateUser(user));
             }
             catch (UserServiceException e)
             {
