@@ -6,6 +6,8 @@
 
 .accent-color {
   border-color: #0b6678;
+}
+
 .button-login:hover {
   color: white;
   background-color:#206675;
@@ -46,7 +48,6 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  
 }
 
 .viking-image {
@@ -70,7 +71,7 @@ footer {
   position: absolute;
   font-size: 65%;
   left: 33%;
-  top: 85%;
+  top: 65%;
   font-size: 65%;
 }
 
