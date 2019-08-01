@@ -21,7 +21,6 @@ namespace VikingVault.Services
         public User CreateUser(User user)
         {
             user.Role = "user";
-
             try
             {
                 user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
@@ -32,7 +31,6 @@ namespace VikingVault.Services
             {
                 if (e is DbUpdateException || e is DbUpdateConcurrencyException) throw new UserServiceException();
             }
-
             return user;
         }
 
