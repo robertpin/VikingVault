@@ -1,9 +1,9 @@
 import React from 'react'
 import './styles.css'
 import dashboard from './images/dashboard.png'
-import sagetutza from './images/arrowGRIdeschis.png'
+import arrow from './images/arrowGRIdeschis.png'
 import placeholder from './images/placeholder.png'
-import paymentmethod from './images/payment-method.png';
+import paymentMethod from './images/payment-method.png';
 import block from './images/password.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
@@ -32,26 +32,26 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         return(
-            <div className={"sideBar-" + this.state.show} id="mySidebar">
-                <div className="regularDiv">
-                    <p> <img src={dashboard} alt=""/> My Dashboard  <img src={sagetutza} style={this.state.show ? {transform:'none'} : {transform:'scaleX(-1)'} } alt="" onClick={this.clickHandler}/></p>
+            <div className={"sidebar-" + this.state.show} id="mySidebar">
+                <div className="regular-div">
+                    <p> <img src={dashboard} alt=""/> My Dashboard  <img src={arrow} className = {this.state.show ? "transform-none" : "transform-reverse"} alt="" onClick={this.clickHandler}/></p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
+                <div className = {"side-menu-" + this.state.show}>
                 <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Transfer </p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
+                <div className = {"side-menu-" + this.state.show}>
                 <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Exchange </p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={paymentmethod} alt=""/> &nbsp; Automatic debit </p>
+                <div className = {"side-menu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={paymentMethod} alt=""/> &nbsp; Automatic debit </p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
+                <div className = {"side-menu-" + this.state.show}>
                 <p className = {"paragraph-" + this.state.show}> <img src={block} alt=""/> &nbsp; Block card </p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
+                <div className = {"side-menu-" + this.state.show}>
                 <p className = {"paragraph-" + this.state.show}> <img src={placeholder} alt=""/> &nbsp; Locations </p>
                 </div>
-                <div className = {"sideMenu-" + this.state.show}>
+                <div className = {"side-menu-" + this.state.show}>
                 <p className = {"paragraph-" + this.state.show}> <img src={card} alt=""/> &nbsp; Contact </p>
                 </div>
             </div>

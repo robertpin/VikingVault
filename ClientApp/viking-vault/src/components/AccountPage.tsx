@@ -2,7 +2,6 @@ import React from 'react'
 import './styles.css'
 import account from './images/card.png'
 
-
 const url = "https://localhost:44323/api/Accounts"
 
 interface IAccountState{
@@ -78,11 +77,11 @@ class AccountPage extends React.Component<any, IAccountState>{
         return(            
             <div className={"account-"+this.state.isPresent}>
                 
-                <img className="cardUnavailable" src={account} alt=""></img>
+                <img className="card-unavailable" src={account} alt=""></img>
                 <div className="info">
                     <h2>Accounts</h2>
                     <br/><br/><br/>
-                    <h5 className="pNew">Please contact your administrator to attach a card to your account <hr></hr></h5>
+                    <h5 className="p-new">Please contact your administrator to attach a card to your account <hr></hr></h5>
                 </div>
             </div>
         )

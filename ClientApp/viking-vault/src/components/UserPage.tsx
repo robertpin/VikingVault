@@ -24,10 +24,10 @@ class UserPage extends React.Component<any, IUserPageState>{
 
     render(){
         return(
-            <div className="userPage">
+            <div className="user-page">
                 <SideBar/>
                 <TopBar/>
-                <UserIcon className="uIcon" parentCallBack = {this.callbackFunction} />
+                <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
                 {this.state.type ?  <AccountPage /> : <div></div>}
             </div>
          )   
