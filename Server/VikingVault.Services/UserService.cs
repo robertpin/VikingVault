@@ -24,7 +24,7 @@ namespace VikingVault.Services
 
             try
             {
-                user.Password = EncryptPassword.ComputeSha256Hash(user.Password);
+                user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
                 _dbContext.Add(user);
                 _dbContext.SaveChanges();
             }
