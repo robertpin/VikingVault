@@ -123,26 +123,11 @@ p{
 
 .mega-menu-content {
     position: absolute;
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0);
     min-width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    border-radius: 10px;
-}
-
-a {
-    background-color: #ffffff;
-    color: #09424d;
-    display: block;
-    font-weight: lighter;
-    transition: 0.3s;
-    text-decoration: none;
-    text-align: center;
-}
-  
-a:hover {
-    color: #ffffff;
-    background-color: #09424d;
+    border-radius: 3px;
 }
 
 .side-menu-true {
@@ -176,4 +161,16 @@ hr{
 
 .transform-reverse{
     transform: scaleX(-1);
+}
+
+.button-user-icon{
+    width:100%;
+    background-color: #09424d;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
 }

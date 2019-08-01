@@ -62,7 +62,6 @@ class AccountPage extends React.Component<any, IAccountState>{
                     response.json();})
                 .then(data=>{})
                 .catch(error => {
-                    console.log("Server error");
                     this.setState(oldState => {
                         return {
                             isPresent: false
