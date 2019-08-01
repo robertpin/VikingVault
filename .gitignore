@@ -1,3 +1,5 @@
+note_modules
+
 *.swp
 *.*~
 project.lock.json
@@ -27,5 +29,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+node_modules
 
 .vs/
+
+node_modules
