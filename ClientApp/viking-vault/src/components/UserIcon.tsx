@@ -18,9 +18,10 @@ class UserIcon extends React.Component<any, IUserIconState> {
       redirect: false
     };
     this.megaMenu = React.createRef();
-    this.handleClick = this.handleClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
+
+
 
   sendData = () =>{
     this.props.parentCallBack(false);
@@ -34,7 +35,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
     document.removeEventListener("click", this.handleOutsideClick, false);
   }
 
-  handleClick() {
+  handleClick = () =>{
     this.setState({ clicked: !this.state.clicked });
   }
 

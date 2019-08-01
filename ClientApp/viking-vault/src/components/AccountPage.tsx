@@ -20,7 +20,7 @@ class AccountPage extends React.Component<any, IAccountState>{
             balance: 0,
             card: {},
             transactions: [],
-            isPresent: true,
+            isPresent: false,
             redirect:false
         }
     }
@@ -74,7 +74,7 @@ class AccountPage extends React.Component<any, IAccountState>{
 
     render(){
         return(            
-            <div className={"account-"+this.state.isPresent}>
+            <div className={this.state.isPresent ? "account-view" : "account-hide"}>
                 
                 <img className="card-unavailable" src={account} alt=""></img>
                 <div className="info">

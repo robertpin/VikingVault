@@ -55,7 +55,7 @@ p{
     margin-left: 5%;
 }
 
-.account-true{
+.account-view{
     background-color: white;
     margin-top: 10px;
     margin-left: 20%;
@@ -66,7 +66,7 @@ p{
     display: none;
 }
 
-.account-false{
+.account-hide{
     background-color: white;
     margin-top: 10px;
     margin-left: 20%;
@@ -164,6 +164,18 @@ hr{
 }
 
 .button-user-icon{
+    width:100%;
+    background-color: white;
+    border: none;
+    color: #09424d;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button-user-icon:hover{
     width:100%;
     background-color: #09424d;
     border: none;
