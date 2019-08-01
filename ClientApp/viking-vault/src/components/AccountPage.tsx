@@ -81,7 +81,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                 <div className="info">
                     <h2>Accounts</h2>
                     <br/><br/><br/>
-                    <h5 className="p-new">Please contact your administrator to attach a card to your account <hr></hr></h5>
+                    <h5 className="no-card-text">Please contact your administrator to attach a card to your account <hr></hr></h5>
                 </div>
             </div>
         )

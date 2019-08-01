@@ -1,4 +1,4 @@
-﻿namespace VikingVault.API.DataAccess
+﻿namespace VikingVault.DataAccess.Models
 {
     public class UserAccount
     {
