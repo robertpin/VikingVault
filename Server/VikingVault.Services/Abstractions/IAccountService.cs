@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VikingVault.API.Controllers;
+using VikingVault.API.DataAccess;
 
 namespace VikingVault.Services.Abstractions
 {

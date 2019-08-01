@@ -1,4 +1,4 @@
-﻿namespace VikingVault.API.Controllers
+﻿namespace VikingVault.API.DataAccess
 {
     public class UserAccount
     {

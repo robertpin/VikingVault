@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-using VikingVault.API.Controllers;
 using VikingVault.DataAccess;
 using VikingVault.Services.Abstractions;
+using VikingVault.API.DataAccess;
 
 namespace VikingVault.Services
 {

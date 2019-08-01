@@ -9,6 +9,7 @@ using VikingVault.Services.Abstractions;
 using System.Web.Http;
 using System.Net;
 using System.Net.Http;
+using VikingVault.API.DataAccess;
 
 namespace VikingVault.API.Controllers
 {

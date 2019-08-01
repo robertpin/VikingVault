@@ -64,8 +64,8 @@ class UserIcon extends React.Component<any, IUserIconState> {
         />
         <div className={"mega-menu" + " " + this.state.clicked}>
           <div className="mega-menu-content">
-            <a href="#" onClick = {this.sendData}>View profile</a>
-            <a href="" onClick = {this.handleSignOut}>Sign out</a>
+            <button onClick = {this.sendData}>View profile</button>
+            <button onClick = {this.handleSignOut}>Sign out</button>
           </div>
         </div>
         {this.state.redirect ? <Redirect to ="/login"/> : null}
