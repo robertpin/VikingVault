@@ -1,17 +1,29 @@
+.container {
+  margin-top: 2em;
+}
+
+.accent-color {
+  border-color: #0b6678;
+}
+
 .header {
   height: 50px;
   background: #084c59;
   width: 100%;
-  /* position: fixed; */
   top: 0;
 }
 
+footer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .footer-img {
-  /* position: fixed; */
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 30%;
+  
 }
 
 .vikingImage {
@@ -22,25 +34,20 @@
 }
 
 .whiteLogo {
-  z-index: 3;
-  position: relative;
-  /* left:2%;
-  top:85%; */
+  position: absolute;
+  left: 2em;
+  bottom: 0;
   max-width: 250px;
   max-height: 150px;
 }
 
 .descriptionText {
-  /* color:white;
-  position: fixed;
-  left: 31%;
-  top: 85%;
-  font-size: 65%; */
-}
-
-.validationText {
-  /* color:#d64259;
-  font-size: 50%; */
+  color:white;
+  text-align: center;
+  position: absolute;
+  font-size: 65%;
+  left: 35%;
+  bottom: 5em;
 }
 
 .modal.open {

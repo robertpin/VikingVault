@@ -63,7 +63,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             body: JSON.stringify({
               email: this.state.user.email,
             })
-        },).then(response => response.json()).then(result => {
+        }).then(response => response.json()).then(result => {
             if(result === true) { // email is unique
                 this.setState({
                     valid: true
@@ -225,37 +225,37 @@ class RegisterForm extends React.Component<any, IFormState> {
             <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
             <div className="form-group">
                 <label>Email*</label>
-                <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control"></input>
+                <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control accent-color"></input>
                 <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre>
             </div>
             <div className="form-group">
                 <label>Password*</label>
-                <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control"></input>
+                <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control accent-color"></input>
                 <label>Confirm Password*</label>
-                <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control"></input>
+                <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control accent-color"></input>
                 <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
             </div>
             <div className="form-group">
                 <label>First Name*</label>
-                <input type="text" value={this.state.user.firstName} onChange={(e) => this.handleChange(e.target.value, "firstName")} required className="form-control"></input>
+                <input type="text" value={this.state.user.firstName} onChange={(e) => this.handleChange(e.target.value, "firstName")} required className="form-control accent-color"></input>
             </div>
             <div className="form-group">
                 <label>Last Name*</label>
-                <input type="text" value={this.state.user.lastName} onChange={(e) => this.handleChange(e.target.value, "lastName")} required className="form-control"></input>
+                <input type="text" value={this.state.user.lastName} onChange={(e) => this.handleChange(e.target.value, "lastName")} required className="form-control accent-color"></input>
             </div>
             <div className="form-group">
                 <label>Picture Link</label>
-                <input type="text" value={this.state.user.pictureLink} onChange={(e) => this.handleChange(e.target.value, "pictureLink")} className="form-control"></input>
+                <input type="text" value={this.state.user.pictureLink} onChange={(e) => this.handleChange(e.target.value, "pictureLink")} className="form-control accent-color"></input>
             </div>
             <div className="form-group">
                 <label>Address*</label>
-                <input type="text" value={this.state.user.address} onChange={(e) => this.handleChange(e.target.value, "address")} required className="form-control"></input>
+                <input type="text" value={this.state.user.address} onChange={(e) => this.handleChange(e.target.value, "address")} required className="form-control accent-color"></input>
             </div>
             <div className="form-group">
                 <label>ID (CNP)*</label>
-                <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control"></input>
+                <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
             </div>
-            <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className="btn btn-primary" onClick={() => this.sendDataAndShowResponse()}>Create account</button>
+            <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
             {this.state.redirect? <Redirect to="/login" /> : null}
         </div>
         <FooterForm/>
