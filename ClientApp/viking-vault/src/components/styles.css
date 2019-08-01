@@ -1,4 +1,4 @@
-.sideBar{
+.sideBar-true{
     background-color: white;
     color: #09424d;
     font-weight: bold;
@@ -7,6 +7,19 @@
     transition: 0.5s;
     position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 150px;
+}
+
+.sideBar-false{
+    background-color: white;
+    color: #09424d;
+    font-weight: bold;
+    font-size: 13px;
+    height: 100%;
+    transition: 0.5s;
+    position: absolute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 250px;
 }
 
 .topBar{
@@ -30,7 +43,7 @@ img{
     height:20px;
 }
 
-img.vikLogo{
+img.vikingLogo{
     width: 224px;
     height: 55px;
     position: absolute;
@@ -83,10 +96,9 @@ p{
 }
   
 .dropdown {
-    position: relative;
     float: right;
     margin-right: 5%;
-    margin-top: 0.5%;
+    margin-top: -50px;
 }
   
 .mega-menu {
@@ -119,4 +131,24 @@ a {
 a:hover {
     color: #ffffff;
     background-color: #09424d;
+}
+
+.sideMenu-true {
+    padding: 0% 40%;
+}
+
+.sideMenu-false{
+    padding: 2% 20%;
+}
+
+.paragraph-true{
+    color: #ffff;
+}
+
+.paragraph-false{
+    color: #09424d;
+    font-weight: lighter;
+}
+hr{
+    width: 100%
 }

@@ -32,27 +32,27 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         return(
-            <div className="sideBar" id="mySidebar" style={this.state.show ? {width:'150px'} : {width:'250px'}}>
+            <div className={"sideBar-" + this.state.show} id="mySidebar">
                 <div className="regularDiv">
                     <p> <img src={dashboard} alt=""/> My Dashboard  <img src={sagetutza} style={this.state.show ? {transform:'none'} : {transform:'scaleX(-1)'} } alt="" onClick={this.clickHandler}/></p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '0% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={transfer} alt=""/> &nbsp; Transfer </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Transfer </p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '2% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={transfer} alt=""/> &nbsp; Exchange </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Exchange </p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '2% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={paymentmethod} alt=""/> &nbsp; Automatic debit </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={paymentmethod} alt=""/> &nbsp; Automatic debit </p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '2% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={block} alt=""/> &nbsp; Block card </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={block} alt=""/> &nbsp; Block card </p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '2% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={placeholder} alt=""/> &nbsp; Locations </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={placeholder} alt=""/> &nbsp; Locations </p>
                 </div>
-                <div style={this.state.show ? {padding: '0% 40%'} : {padding: '2% 20%'}}>
-                <p style={this.state.show ? {color: '#ffff'} : {color: '#09424d', fontWeight:'lighter'}}> <img src={card} alt=""/> &nbsp; Contact </p>
+                <div className = {"sideMenu-" + this.state.show}>
+                <p className = {"paragraph-" + this.state.show}> <img src={card} alt=""/> &nbsp; Contact </p>
                 </div>
             </div>
         )

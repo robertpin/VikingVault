@@ -19,7 +19,7 @@ namespace VikingVault.Services
             accountsList = new List<UserAccount>();
         }
 
-        public UserAccount FindById(int id)
+        public UserAccount FindById()
         {
             return null;
         }

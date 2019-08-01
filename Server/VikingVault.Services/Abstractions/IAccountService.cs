@@ -7,6 +7,6 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IAccountService
     {
-         UserAccount FindById(int id);
+         UserAccount FindById();
     }
 }

@@ -23,10 +23,10 @@ namespace VikingVault.API.Controllers
             _accService = accService;
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public ActionResult<UserAccount> Get(int id)
+        [HttpGet]
+        public ActionResult<UserAccount> Get()
         {
-            UserAccount userAccount = _accService.FindById(id);
+            UserAccount userAccount = _accService.FindById();
             if (userAccount != null)
                 return Ok(userAccount);
             else

@@ -1,10 +1,9 @@
 import React from 'react'
 import './styles.css'
 import account from './images/card.png'
-import { Redirect } from 'react-router';
 
 
-const url = "https://localhost:44323/api/Accounts/0"
+const url = "https://localhost:44323/api/Accounts"
 
 interface IAccountState{
     balance: number

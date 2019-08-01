@@ -18,7 +18,7 @@ namespace VikingVault.API.Controllers
             _bankService = bankService;
         }
         
-        // GET api/banks
+
         [HttpGet]
         public ActionResult<IEnumerable<Bank>> Get()
         {

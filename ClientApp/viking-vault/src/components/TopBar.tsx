@@ -8,8 +8,7 @@ class TopBar extends React.Component{
     render(){
         return(
             <div className="topBar">
-                <img className="vikLogo" src={logo} alt=''></img>
-                <UserIcon className="uIcon" />
+                <img className="vikingLogo" src={logo} alt=''></img>
             </div>
         )
     }
