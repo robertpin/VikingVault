@@ -28,7 +28,17 @@ namespace VikingVault.API
             services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IBankService, BankService>();
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            services.AddCors();
+
+            ConfigureJWTAuthentication(appSettingsSection, services);
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IUserProfilePageService, UserProfilePageService>();
+            services.AddScoped<IUniqueEmailService, UniqueEmailService>();
             services.AddScoped<IAccountService, AccountService>();
         }
 
@@ -53,6 +63,29 @@ namespace VikingVault.API
                 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private void ConfigureJWTAuthentication(IConfigurationSection appSettingsSection, IServiceCollection services)
+        {
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
     }
 }

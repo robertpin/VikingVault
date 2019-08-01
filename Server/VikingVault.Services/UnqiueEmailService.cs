@@ -22,12 +22,12 @@ namespace VikingVault.Services
 
             try
             {
-                var ReturnedEmail = _dbContext.User.SingleOrDefault(s => s.Email == email);
+                var userEmailFromDB = _dbContext.User.SingleOrDefault(s => s.Email == email);
 
-                if (ReturnedEmail == null) // No email found
+                if (userEmailFromDB == null) 
                     return true;
 
-                else // found it
+                else
                     return false;
             }
             catch(Exception e)
@@ -35,9 +35,6 @@ namespace VikingVault.Services
                 return null;
             }
 
-          
-            //Some Error Handling to be done
-            throw new NotImplementedException();
         }
     }
 }

@@ -258,7 +258,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
             {this.state.redirect? <Redirect to="/login" /> : null}
         </div>
-        <FooterForm/>
+        <FooterForm class="footer-register"/>
             </div>
             );
     }
