@@ -15,16 +15,18 @@ namespace VikingVault.API.Controllers
     {
         private readonly IUserProfilePageService _userProfilePageService;
 
+
         public UserProfilePagesController(IUserProfilePageService userProfilePageService)
         {
             _userProfilePageService = userProfilePageService;
         }
         
-        // GET: api/UserProfilePages/5
-        [HttpGet("{id}", Name = "UserId")]
-        public ActionResult<UserProfilePageViewModel> Get(int id)
+        // GET: api/UserProfilePages
+        [HttpGet]
+        public ActionResult<UserProfilePageViewModel> Get()
         {
-            var page = _userProfilePageService.GetUserProfileData(id);
+            var token = Request.Headers["x-access-token"];
+            var page = _userProfilePageService.GetUserProfileData(token);
 
             if (page == null)
                 return StatusCode(404, "User not found!");

@@ -7,6 +7,6 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IUserProfilePageService
     {
-        UserProfilePageViewModel GetUserProfileData(int id);
+        UserProfilePageViewModel GetUserProfileData(string token);
     }
 }
