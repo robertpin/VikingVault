@@ -3,6 +3,7 @@ import SideBar from './SideBar'
 import TopBar from './TopBar'
 import AccountPage from './AccountPage'
 import UserIcon from './UserIcon';
+import { ProfilePage } from "../ProfilePage";
 
 interface IUserPageState {
     viewProfile:boolean;
@@ -28,7 +29,7 @@ class UserPage extends React.Component<any, IUserPageState>{
                 <SideBar/>
                 <TopBar/>
                 <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
-                {this.state.viewProfile ?  <AccountPage /> : <div></div>}
+                {this.state.viewProfile ?  <AccountPage /> : <ProfilePage/>}
             </div>
          )   
     }

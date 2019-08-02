@@ -45,7 +45,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 address: "",
                 cnp: ""
             },
-            valid: false,
+            valid: null,
             status: -1,
             response: "",
             openModal: false,
@@ -220,7 +220,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     render() {
         return (
             <div>
-                <HeaderForm />
+                <HeaderForm/>
         <div className="container col-md-6">
             <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
             <div className="form-group">

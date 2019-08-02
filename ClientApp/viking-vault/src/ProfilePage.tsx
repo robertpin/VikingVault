@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { render } from "react-dom";
 import './ProfilePage.css';
 import { ProfilePicture } from './ProfilePicture';
 import { ProfileData } from './ProfileData';
