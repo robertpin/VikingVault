@@ -1,33 +1,93 @@
-.App {
+.button-login {
+  background-color:#0D4450;
+  color: white;
+  width: 100%;
+}
+
+.accent-color {
+  border-color: #0b6678;
+}
+
+.button-login:hover {
+  color: white;
+  background-color:#206675;
+}
+
+.alert {
   text-align: center;
+  font-size: 80%;
+  padding: 2mm;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.button-register {
+  background-color: #0054A6;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  margin-top: 8%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+  height: 50px;
+  background: #004450;
+  width: 100%;
+  top: 0;
+}
+
+footer {
+  text-align:center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.footer-login {
+  position: fixed;
+  bottom:0;
+  left:0;
+}
+
+.footer-register {
+  position: relative;
+}
+
+.footer-img {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.viking-image {
+  position: relative;
+  top: 100%;
+  padding: 10px;
+  width: 20%;  
+}
+
+.white-logo {
+  position: absolute;
+  left: 2em;
+  bottom: 0;
+  max-width: 250px;
+  max-height: 150px;
+}
+
+.description-text {
+  color:white;
+  text-align: center;
+  position: absolute;
+  font-size: 65%;
+  left: 33%;
+  top: 65%;
+  font-size: 65%;
+}
+
+.modal.open {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal.close {
+  display: none;
 }

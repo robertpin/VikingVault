@@ -1,0 +1,44 @@
+.html {
+    font-size: 62.5%;
+}
+
+.ProfileDataContainer
+{
+    position: relative;
+    float: left;
+    height: 100%;   
+}
+
+.ProfileDataSecondaryInfo
+{
+    text-align: left;
+    font-size: 1em;
+    opacity: 0.6;
+}
+
+.ProfileDataMainInfo
+{
+    margin-top: 15%;
+    text-align: left;
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+
+}
+
+.ProfileDataName
+{
+    text-align: left; 
+    color: #0e2e35;
+    font-size: 1.4em;
+    line-height: 30%;
+}
+
+hr
+{
+    position: absolute;
+    width: 150%;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 1%;
+}
+
