@@ -24,7 +24,9 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
 
   sendData = () =>{
-    this.props.parentCallBack(false);
+    setTimeout(() => {
+      this.props.parentCallBack(false);
+    }, 100);
   }
 
   componentDidMount() {
@@ -49,16 +51,19 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   handleSignOut = () => {
       sessionStorage.removeItem("Authentication-Token");
-      this.setState({
-        redirect : true
-      });
+      setTimeout(() => {
+        this.setState({
+          redirect : true
+        });
+      }, 100);
+      
   }
 
   render() {
     return (
       <div className="dropdown" ref={this.megaMenu}>
         <img
-          className="user-icon"
+          className="user-icon img"
           src={icon}
           alt=""
           onClick={this.handleClick}
