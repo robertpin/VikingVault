@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
@@ -18,15 +19,15 @@ namespace VikingVault.Services
         public UserProfilePageViewModel GetUserProfileData(string token)
         {
             var tokenObject = new JwtSecurityToken(token);
-            int userId = (int)tokenObject.Payload["Id"];
-            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
+            string userId = tokenObject.Payload["Id"].ToString();
+            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
             var userPage = new UserProfilePageViewModel();
 
             if (returnedUser != null)
             {
                 userPage.Id = returnedUser.Id;
-                userPage.Firstname = returnedUser.FirstName;
-                userPage.Lastname = returnedUser.LastName;
+                userPage.FirstName = returnedUser.FirstName;
+                userPage.LastName = returnedUser.LastName;
                 userPage.Address = returnedUser.Address;
                 userPage.Cnp = returnedUser.Cnp;
                 userPage.Email = returnedUser.Email;

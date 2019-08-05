@@ -34,25 +34,25 @@ class SideBar extends React.Component<any, ISideBarState> {
         return(
             <div className={"sidebar-" + this.state.show} id="mySidebar">
                 <div className="regular-div">
-                    <p> <img src={dashboard} alt=""/> My Dashboard  <img src={arrow} className = {this.state.show ? "transform-none" : "transform-reverse"} alt="" onClick={this.clickHandler}/></p>
+                    <p className="p"> <img className="img" src={dashboard} alt=""/> My Dashboard  <img src={arrow} className = {this.state.show ? "transform-none img" : "transform-reverse img"} alt="" onClick={this.clickHandler}/></p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Transfer </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={transfer} alt=""/> &nbsp; Transfer </p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={transfer} alt=""/> &nbsp; Exchange </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={transfer} alt=""/> &nbsp; Exchange </p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={paymentMethod} alt=""/> &nbsp; Automatic debit </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={paymentMethod} alt=""/> &nbsp; Automatic debit </p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={block} alt=""/> &nbsp; Block card </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={block} alt=""/> &nbsp; Block card </p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={placeholder} alt=""/> &nbsp; Locations </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={placeholder} alt=""/> &nbsp; Locations </p>
                 </div>
                 <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show}> <img src={card} alt=""/> &nbsp; Contact </p>
+                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={card} alt=""/> &nbsp; Contact </p>
                 </div>
             </div>
         )

@@ -2,8 +2,10 @@ import * as React from "react";
 import {Redirect, Link} from 'react-router-dom';
 import { FooterForm } from "./FooterForm";
 import { HeaderForm } from "./HeaderForm";
+import {variables} from "./ConstantVariables";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const baseUrl = variables.baseUrl;
 
 interface ILoginFormState {
   email: string;
@@ -86,7 +88,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
       "password": this.state.password
     }
 
-    fetch("https://localhost:44323/api/login", {
+    fetch(baseUrl+"login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

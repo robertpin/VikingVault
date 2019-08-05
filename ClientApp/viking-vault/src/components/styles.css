@@ -38,12 +38,12 @@
     height:46px;
 }
 
-img{
+.img{
     width:20px;
     height:20px;
 }
 
-img.viking-logo{
+.img.viking-logo{
     width: 224px;
     height: 55px;
     position: absolute;
@@ -51,7 +51,7 @@ img.viking-logo{
     margin-right: 50%;
 }
 
-p{
+.p{
     margin-left: 5%;
 }
 
@@ -139,7 +139,7 @@ p{
 }
 
 .paragraph-true{
-    color: #ffff;
+    color: #fff;
 }
 
 .paragraph-false{
