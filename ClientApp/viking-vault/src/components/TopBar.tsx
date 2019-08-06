@@ -1,21 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import './styles.css'
 import logo from './images/logo.png'
-import { Link } from 'react-router-dom';
-import {variables} from "../ConstantVariables";
+import {constants} from "../ConstantVariables";
 
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 
 interface IState {
     isAdmin: boolean;
 }
 
 class TopBar extends React.Component<any, IState>{
-    constructor(props:any) {
-        super(props);
-        this.state = {
-            isAdmin: false
-        }
+    state = {
+        isAdmin: false
     }
 
     private checkIfUserIsAdmin = () => {
@@ -24,7 +21,7 @@ class TopBar extends React.Component<any, IState>{
             token = "";
         }
         fetch(baseUrl+"admin", {
-            method: "POST",
+            method: "GET",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -32,16 +29,9 @@ class TopBar extends React.Component<any, IState>{
             }
         }).then(response => response.json())
         .then(result => {
-            if(result === true) {
-                this.setState({
-                    isAdmin: true
-                })
-            }
-            else {
-                this.setState({
-                    isAdmin: false
-                })
-            }
+            this.setState({
+                isAdmin: result
+            });
         });
     }
 
@@ -52,7 +42,7 @@ class TopBar extends React.Component<any, IState>{
     render(){
         return(
             <div className="top-bar">
-                <Link to={this.state.isAdmin? "/admin" : "/user"}><img className="img viking-logo" src={logo} alt=''></img></Link>
+                <Link to="/"><img className="img viking-logo" src={logo} alt=''></img></Link>
             </div>
         )
     }

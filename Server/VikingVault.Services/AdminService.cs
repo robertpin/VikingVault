@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
+using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
@@ -21,10 +22,8 @@ namespace VikingVault.Services
         {
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
-            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
-            if (returnedUser.Email == "admin")
-                return true;
-            return false;
+            User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+            return returnedUser.Email == "admin";
         }
     }
 }
