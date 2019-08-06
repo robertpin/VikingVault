@@ -34,36 +34,36 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         
-        let sidebar_visibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
-        let side_menu_visibility:string = "side-menu-" + this.state.show;
-        let span_visibility: string = "span-" + this.state.show;
-        let dashboard_visibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
+        let sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
+        let sidemenuVisibility:string = "side-menu-" + this.state.show;
+        let spanVisibility: string = "span-" + this.state.show;
+        let dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
-            <div className={sidebar_visibility}>
+            <div className={sidebarVisibility}>
 
                 <div className="dashboard-div">
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
-                        <span className = {dashboard_visibility}>Dashboard</span>
+                        <span className = {dashboardVisibility}>Dashboard</span>
                         <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={transfer} /> <span className = {span_visibility}>Transfer</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Transfer</span>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={transfer} /> <span className = {span_visibility}>Exchange</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Exchange</span>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={paymentMethod} /> <span className = {span_visibility}>Automatic debit</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={paymentMethod} /> <span className = {spanVisibility}>Automatic debit</span>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={block} /> <span className = {span_visibility}>Block card</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={block} /> <span className = {spanVisibility}>Block card</span>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={placeholder} /> <span className = {span_visibility}>Locations</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={placeholder} /> <span className = {spanVisibility}>Locations</span>
                 </div>
-                <div className = {side_menu_visibility}>
-                        <img className="menu-icon" src={card} /> <span className = {span_visibility}>Contact</span>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={card} /> <span className = {spanVisibility}>Contact</span>
                 </div>
             </div>
         )
