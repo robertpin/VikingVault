@@ -77,12 +77,14 @@ class AccountPage extends React.Component<any, IAccountState>{
     render(){
         return(            
             <div className={this.state.isPresent ? "account-view" : "account-hide"}>
-                
-                <img className="card-unavailable img" src={account} alt=""></img>
+                <img className="card-unavailable" src={account} alt=""></img>
                 <div className="info">
-                    <h2>Accounts</h2>
-                    <br/><br/><br/>
-                    <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+                    <div className="accounts-title">
+                        <h2 className="accounts-header">Accounts</h2>         
+                        <br/><br/><br/>
+                        <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+                    </div>
+                    
                 </div>
             </div>
         )
