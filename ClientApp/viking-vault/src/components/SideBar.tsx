@@ -8,6 +8,8 @@ import block from './images/password.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
 
+
+
 interface ISideBarState{
     show: boolean;
 }
@@ -31,31 +33,35 @@ class SideBar extends React.Component<any, ISideBarState> {
     }
 
     render(){
+        
+        let sidebar_visibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
+        let side_menu_visibility:string = "side-menu-" + this.state.show;
+        let span_visibility: string = "span-" + this.state.show;
         return(
-            <div className={"sidebar-" + this.state.show} id="mySidebar">
-                <div className="regular-div">
-                        <img className="img" src={dashboard} alt=""/> 
+            <div className={sidebar_visibility}>
+                <div className="dashboard-div">
+                        <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
                         <span className = {"dashboard-" + this.state.show}>Dashboard</span>
-                        <img src={arrow} className = {this.state.show ? "transform-none img" : "transform-reverse img"} alt="" onClick={this.clickHandler}/>
+                        <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={transfer} alt=""/> <span className = {"span-" + this.state.show}>Transfer</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={transfer} /> <span className = {span_visibility}>Transfer</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={transfer} alt=""/> <span className = {"span-" + this.state.show}>Exchange</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={transfer} /> <span className = {span_visibility}>Exchange</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={paymentMethod} alt=""/> <span className = {"span-" + this.state.show}>Automatic debit</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={paymentMethod} /> <span className = {span_visibility}>Automatic debit</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={block} alt=""/> <span className = {"span-" + this.state.show}>Block card</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={block} /> <span className = {span_visibility}>Block card</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={placeholder} alt=""/> <span className = {"span-" + this.state.show}>Locations</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={placeholder} /> <span className = {span_visibility}>Locations</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                        <img className="img" src={card} alt=""/> <span className = {"span-" + this.state.show}>Contact</span>
+                <div className = {side_menu_visibility}>
+                        <img className="menu-icon" src={card} /> <span className = {span_visibility}>Contact</span>
                 </div>
             </div>
         )
