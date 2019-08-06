@@ -77,7 +77,6 @@ class AccountPage extends React.Component<any, IAccountState>{
     render(){
         return(            
             <div className={this.state.isPresent ? "account-view" : "account-hide"}>
-                
                 <img className="card-unavailable" src={account} alt=""></img>
                 <div className="info">
                     <div className="accounts-title">
