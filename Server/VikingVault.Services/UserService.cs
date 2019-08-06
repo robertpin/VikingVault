@@ -26,43 +26,14 @@ namespace VikingVault.Services
             user.Role = "user";
             user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
 
-            BankAccount ronBankAccount = new BankAccount
-            {
-                User = user,
-                CurrencyType = "ron",
-                Balance = 0.0f,
-            };
-
-            BankAccount eurBankAccount = new BankAccount
-            {
-                User = user,
-                CurrencyType = "eur",
-                Balance = 0.0f,
-            };
-
-            BankAccount usdBankAccount = new BankAccount
-            {
-                User = user,
-                CurrencyType = "usd",
-                Balance = 0.0f,
-            };
-
-            BankAccount yenBankAccount = new BankAccount
-            {
-                User = user,
-                CurrencyType = "yen",
-                Balance = 0.0f,
-            };
-
-
             try
             {
                 _dbContext.Add(user);
 
-                _bankAccountService.createBankAccount(ronBankAccount);
-                _bankAccountService.createBankAccount(eurBankAccount);
-                _bankAccountService.createBankAccount(usdBankAccount);
-                _bankAccountService.createBankAccount(yenBankAccount);
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "ron"));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "eur"));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "usd"));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "yen"));
 
                 _dbContext.SaveChanges();
             }
@@ -77,6 +48,16 @@ namespace VikingVault.Services
         public User GetById(int userId)
         {
             return _dbContext.User.Find(userId);
+        }
+
+        private BankAccount CreateBankAccount(User user, String currencyType)
+        {
+            return new BankAccount
+            {
+                User = user,
+                CurrencyType = currencyType,
+                Balance = 0.0f
+            };
         }
     }
 }

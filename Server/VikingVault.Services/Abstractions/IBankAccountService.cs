@@ -7,6 +7,6 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IBankAccountService
     {
-        BankAccount createBankAccount(BankAccount account);
+        BankAccount CreateBankAccount(BankAccount account);
     }
 }

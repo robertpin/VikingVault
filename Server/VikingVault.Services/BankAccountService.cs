@@ -18,7 +18,7 @@ namespace VikingVault.Services
             _dbContext = dbContext;
         }
 
-        public BankAccount createBankAccount(BankAccount account)
+        public BankAccount CreateBankAccount(BankAccount account)
         {
             try
             {
