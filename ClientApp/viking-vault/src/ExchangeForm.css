@@ -1,0 +1,69 @@
+.exchange-page-text {
+    position: absolute;
+    margin-top: 40px;
+    margin-left: 275px;
+    font-family: Helvetica;
+    font-weight: 750;
+    max-width: 100%;
+    font-size: 200%;
+    color: #09424D;
+}
+
+#available-amount-div {
+    color: gray;
+    font-family: Helvetica;
+    font-size: 100%;
+}
+
+.exchange-container {
+    position: absolute;
+    margin-top: 120px;
+    margin-left: 280px;
+    width: 75%;
+    /* border-style: solid; */
+    height: 70%;
+}
+
+#conversion-div {
+    text-align: right;
+    background-color: #B0B2B6;
+    color:white;
+    width: 40%;
+}
+
+#exchange-button {
+    position: absolute;
+    top:75%;
+    left:4%;
+    width: 49%;
+    height: 10%;
+    background-color: #0054A6;
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+}
+
+.input-field {
+    width: 50%;
+    margin: 20px;
+}
+
+.available-amount-div {
+    position: absolute;
+    top:9%;
+    left: 55%;
+    font-size: 100%;
+    background-color: #B0B2B6;
+}
+
+.text-decoration {
+    color: #09424D;
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+}
+
+.fee-text {
+    position: absolute;
+    top:65%;
+}
