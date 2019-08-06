@@ -7,6 +7,7 @@ using VikingVault.Services.Exceptions;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
+using VikingVault.DataAccess.Enums;
 
 namespace VikingVault.Services
 {
@@ -30,17 +31,20 @@ namespace VikingVault.Services
             {
                 _dbContext.Add(user);
 
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "ron"));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "eur"));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "usd"));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, "yen"));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Ron.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Eur.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Usd.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Yen.ToString()));
 
                 _dbContext.SaveChanges();
             }
 
             catch(Exception e)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException) throw new UserServiceException();
+                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
+                {
+                    throw new UserServiceException();
+                }
             }
             return user;
         }
