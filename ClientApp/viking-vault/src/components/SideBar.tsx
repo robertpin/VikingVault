@@ -37,12 +37,14 @@ class SideBar extends React.Component<any, ISideBarState> {
         let sidebar_visibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
         let side_menu_visibility:string = "side-menu-" + this.state.show;
         let span_visibility: string = "span-" + this.state.show;
+        let dashboard_visibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
             <div className={sidebar_visibility}>
+
                 <div className="dashboard-div">
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
-                        <span className = {"dashboard-" + this.state.show}>Dashboard</span>
+                        <span className = {dashboard_visibility}>Dashboard</span>
                         <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
                 </div>
                 <div className = {side_menu_visibility}>

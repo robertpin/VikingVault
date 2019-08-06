@@ -146,11 +146,11 @@
     font-weight: lighter;
 }
 
-.dashboard-true{
+.dashboard-hide{
     display:none;
 }
 
-.dashboard-false{
+.dashboard-show{
     color: #09424d;
     font-weight: bold;
 }
