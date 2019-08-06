@@ -8,8 +8,6 @@ import block from './images/password.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
 
-
-
 interface ISideBarState{
     show: boolean;
 }
@@ -34,14 +32,14 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         
-        let sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
-        let sidemenuVisibility:string = "side-menu-" + this.state.show;
-        let spanVisibility: string = "span-" + this.state.show;
-        let dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
+        const sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
+        const sidemenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
+        const spanVisibility: string = this.state.show ? "span-hide" : "span-show";;
+        const dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
             <div className={sidebarVisibility}>
 
-                <div className="dashboard-div">
+                <div className="dashboard-title-container">
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
                         <span className = {dashboardVisibility}>Dashboard</span>

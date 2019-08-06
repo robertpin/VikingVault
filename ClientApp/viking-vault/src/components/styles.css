@@ -29,7 +29,7 @@
     vertical-align: middle;
 }
 
-.dashboard-div{
+.dashboard-title-container{
     padding-top: 15px;
     padding-left: 15%;
     border-bottom: 1px solid #09424d;
@@ -47,10 +47,6 @@
     position: absolute;
     margin-left: 45%;
     margin-right: 50%;
-}
-
-.p{
-    margin-left: 5%;
 }
 
 .account-view{
@@ -104,6 +100,8 @@
     height: 40px;
     border-radius: 100%;
 }
+
+
   
 .dropdown {
     float: right;
@@ -128,20 +126,30 @@
     border-radius: 3px;
 }
 
-.side-menu-true {
+.side-menu-hide {
     padding: 20% 25%;
     align-items: center;
 }
 
-.side-menu-false{
+.side-menu-hide:hover{
+    background-color: #c6e7ee;
+    transition: 0.4s;
+}
+
+.side-menu-show{
     padding: 7% 20%;
 }
 
-.span-true{
+.side-menu-show:hover{
+    background-color: #c6e7ee;
+    transition: 0.4s;
+}
+
+.span-hide{
     display:none;
 }
 
-.span-false{
+.span-show{
     color: #09424d;
     font-weight: lighter;
 }
