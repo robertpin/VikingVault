@@ -256,7 +256,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
-            {this.state.redirect? <Redirect to="/login" /> : null}
+            {this.state.redirect? <Redirect to="/" /> : null}
         </div>
         <FooterForm class="footer-register"/>
             </div>

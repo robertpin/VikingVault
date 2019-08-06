@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <div className="App">
       <Router>
         <Route path="/register/" exact component={RegisterForm} />
-        <Route path="/login/" exact component={LoginForm}/>
+        <Route path="/" exact component={LoginForm}/>
         <Route path="/user" component={UserPage} />
       </Router>
     </div>

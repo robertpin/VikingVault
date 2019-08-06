@@ -74,7 +74,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
             <button className="button-user-icon" onClick = {this.handleSignOut}>Sign out</button>
           </div>
         </div>
-        {this.state.redirect ? <Redirect to ="/login"/> : null}
+        {this.state.redirect ? <Redirect to ="/"/> : null}
       </div>
     );
   }
