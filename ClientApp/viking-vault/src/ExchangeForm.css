@@ -20,7 +20,6 @@
     margin-top: 120px;
     margin-left: 280px;
     width: 75%;
-    /* border-style: solid; */
     height: 70%;
 }
 
@@ -29,6 +28,10 @@
     background-color: #B0B2B6;
     color:white;
     width: 40%;
+    position: relative;
+    bottom: 14%;
+    height: 110%;
+
 }
 
 #exchange-button {
