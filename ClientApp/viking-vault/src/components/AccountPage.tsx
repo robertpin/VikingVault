@@ -9,7 +9,6 @@ const url = variables.baseUrl+"Accounts";
 interface IAccountState{
     balance: number
     card: any
-    transactions: []
     isPresent: boolean
     redirect: boolean
 } 
@@ -21,7 +20,6 @@ class AccountPage extends React.Component<any, IAccountState>{
         this.state={
             balance: 0,
             card: {},
-            transactions: [],
             isPresent: false,
             redirect:false
         }

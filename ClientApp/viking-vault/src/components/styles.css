@@ -7,7 +7,6 @@
     transition: 0.5s;
     position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    
 }
 
 .collapsed{
@@ -31,7 +30,7 @@
 
 .dashboard-title-container{
     padding-top: 15px;
-    padding-left: 15%;
+    padding-left: 18px;
     border-bottom: 1px solid #09424d;
     height:60px;
 }
@@ -101,8 +100,6 @@
     border-radius: 100%;
 }
 
-
-  
 .dropdown {
     float: right;
     margin-right: 5%;
@@ -123,16 +120,15 @@
     min-width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    border-radius: 3px;
 }
 
 .side-menu-hide {
-    padding: 20% 25%;
+    padding: 20% 30%;
     align-items: center;
 }
 
 .side-menu-hide:hover{
-    background-color: #c6e7ee;
+    background-color: #d4e3e6;
     transition: 0.4s;
 }
 
@@ -141,7 +137,7 @@
 }
 
 .side-menu-show:hover{
-    background-color: #c6e7ee;
+    background-color: #d4e3e6;
     transition: 0.4s;
 }
 
@@ -152,6 +148,43 @@
 .span-show{
     color: #09424d;
     font-weight: lighter;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .dashboard-hide{
@@ -161,6 +194,10 @@
 .dashboard-show{
     color: #09424d;
     font-weight: bold;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
 }
 
 .user-page{
@@ -170,10 +207,18 @@
 
 .transform-none{
     transform: none;
+    margin-left:30%;
+    position:absolute;
+    bottom:3%;
+    
 }
 
 .transform-reverse{
     transform: scaleX(-1);
+    align-self: center;
+    position:absolute; 
+    bottom:3%;
+    margin-left:80%;
 }
 
 .button-user-icon{
@@ -182,10 +227,9 @@
     border: none;
     color: #09424d;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     cursor: pointer;
+    font-size: 12px;
 }
 
 .button-user-icon:hover{
@@ -194,10 +238,10 @@
     border: none;
     color: white;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 12px;
     cursor: pointer;
+    transition: 0.4s;
 }
 
 .accounts-header{
