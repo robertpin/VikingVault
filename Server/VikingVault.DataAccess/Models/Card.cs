@@ -14,7 +14,6 @@ namespace VikingVault.DataAccess.Models
         public DateTime ExpirationDate { get; set; }
         [Required]
         public int CCV { get; set; }
-
         public int UserId { get; set; }
         public User User { get; set; }
     }
