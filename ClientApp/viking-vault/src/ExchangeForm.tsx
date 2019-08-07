@@ -8,11 +8,12 @@ import { throwStatement } from '@babel/types';
 interface IExchangeFormState {
     fromCurrency: string;
     toCurrency: string;
+    currencyToRon: Number;
+    currencyToEur: Number;
+    currencyToUsd: Number;
+    currencyToYen: Number;
     availableAmount: Number;
     toExchangeAmount: Number;
-    ronToEur: Number;
-    ronToUsd: Number;
-    ronToYen: Number;
     maximumValueToBeChanged: Number;
 
 }
@@ -24,11 +25,12 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.state = {
             fromCurrency: "RON",
             toCurrency: "EUR",
+            currencyToRon: 0.00,
+            currencyToEur: 0.00,
+            currencyToUsd: 0.00,
+            currencyToYen: 0.00,
             availableAmount: 0.00,
             toExchangeAmount: 0.00,
-            ronToEur: 0.00,
-            ronToUsd: 0.00,
-            ronToYen: 0.00,
             maximumValueToBeChanged: 0.00
         }
     }
@@ -41,13 +43,23 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     }
 
     getCurrencyRates() {
-        fetch('https://api.exchangeratesapi.io/latest?base=RON')
+        var base = this.state.fromCurrency;
+        if(base === "YEN") {
+            base = "JPY"
+        }
+        fetch("https://api.exchangeratesapi.io/latest?base="+base)
         .then(response => response.json())
-        .then(data => this.setState({ 
-            ronToEur: data.rates.EUR.toPrecision(3),
-            ronToUsd: data.rates.USD.toPrecision(3),
-            ronToYen: data.rates.JPY.toPrecision(3)
-         }));
+        .then(data => {
+            if(base === "EUR") {
+                data.rates.EUR = 1.00
+            }
+            this.setState({ 
+                currencyToRon: data.rates.RON.toPrecision(3),
+                currencyToEur: data.rates.EUR.toPrecision(3),
+                currencyToUsd: data.rates.USD.toPrecision(3),
+                currencyToYen: data.rates.JPY.toPrecision(3)
+             })
+        });
     }
  
     componentDidMount() {
@@ -67,6 +79,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.setState({
             fromCurrency: e.target.value
         });
+        this.getCurrencyRates();
     }
 
     setAmountOfMoneyToBeChanged = (e:any) => {
@@ -118,11 +131,12 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     <div id="conversion-div" className="col-3">
                         <h3>Conversion rates</h3>
                         Conversion rates for all available currencies.<br/><br/>
-                        <h3>1 Romanian RON</h3>
+                        <h3>1 {this.state.fromCurrency}</h3>
                         <div>
-                            = {this.state.ronToEur} EUR<br/>
-                            = {this.state.ronToUsd} USD<br/>
-                            = {this.state.ronToYen} YEN
+                            <p>{this.state.fromCurrency === "RON"? null : `= ${this.state.currencyToRon} RON`}</p>
+                            <p>{this.state.fromCurrency === "EUR"? null : `= ${this.state.currencyToEur} EUR`}</p>
+                            <p>{this.state.fromCurrency === "USD"? null : `= ${this.state.currencyToUsd} USD`}</p>
+                            <p>{this.state.fromCurrency === "YEN"? null : `= ${this.state.currencyToYen} YEN`}</p>
                         </div>
                     </div>
                 </div>
