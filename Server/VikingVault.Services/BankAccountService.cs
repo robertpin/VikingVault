@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
@@ -33,6 +35,15 @@ namespace VikingVault.Services
                 }
             }
             return account;
+        }
+
+        public float GetMaximumBalanceForCurrency(string token, string currency)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            string userId = tokenObject.Payload["Id"].ToString();
+            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+
+            return 0;
         }
     }
 }

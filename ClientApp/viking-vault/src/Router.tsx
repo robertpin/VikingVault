@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Redirect, BrowserRouter as BRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
+import { ExchangeForm } from './ExchangeForm'
 import UserPage from './components/UserPage';
 import {constants} from "./ConstantVariables";
 import "./App.css"
@@ -52,6 +53,7 @@ class Router extends React.Component<any, IState> {
         return <BRouter>
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
+            <Route path="/exchange" exact component={ExchangeForm}/>
             <Route path="/" exact render={() => this.makeRedirect()}/>
             <Route path="/user" component={UserPage} />
         </BRouter>
