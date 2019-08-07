@@ -32,7 +32,6 @@ class SideBar extends React.Component<any, ISideBarState> {
     }
 
     render(){
-        
         const sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
         const sidemenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
         const spanVisibility: string = this.state.show ? "span-hide" : "span-show";
