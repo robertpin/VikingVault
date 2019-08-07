@@ -31,16 +31,9 @@ class Router extends React.Component<any, IState> {
             }
         }).then(response => response.json())
         .then(result => {
-            if(result === true) {
-                this.setState({
-                    isAdmin: true
-                })
-            }
-            else {
-                this.setState({
-                    isAdmin: false
-                })
-            }
+            this.setState({
+                isAdmin: result
+            })
         });
     }
 
@@ -48,16 +41,18 @@ class Router extends React.Component<any, IState> {
         this.isUserAdmin();
     }
 
+    private makeRedirect() {
+        if(sessionStorage.getItem("Authentication-Token") === null)
+            return <Redirect to="/login" />;
+        else
+            return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+    }
+
     render() {
         return <BRouter>
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
-            <Route path="/" exact render={() => {
-                if(sessionStorage.getItem("Authentication-Token") === null)
-                    return <Redirect to="/login" />;
-                else
-                    return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
-            }}/>
+            <Route path="/" exact render={() => this.makeRedirect()}/>
             <Route path="/user" component={UserPage} />
         </BRouter>
     }
