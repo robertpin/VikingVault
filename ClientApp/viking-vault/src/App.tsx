@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { LoginForm } from './Login'
 import { RegisterForm } from "./RegisterForm";
+import { AdminPage } from './display_user_list/AdminPage';
 import "./ProfilePage.css"
 import UserPage from './components/UserPage';
 
@@ -14,6 +15,8 @@ const App: React.FC = () => {
         <Route path="/register/" exact component={RegisterForm} />
         <Route path="/login/" exact component={LoginForm}/>
         <Route path="/user" component={UserPage} />
+        <Route path="/admin" exact component={AdminPage} />
+        
       </Router>
     </div>
   );

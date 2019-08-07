@@ -1,33 +1,40 @@
 .sidebar-true{
+    position: relative;
+    float: left;
     background-color: white;
     color: #09424d;
     font-weight: bold;
     font-size: 13px;
     height: 100%;
     transition: 0.5s;
-    position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 150px;
+    clear: left;
+    z-index: 10;
 }
 
 .sidebar-false{
+    position: relative;
+    float: left;
     background-color: white;
     color: #09424d;
     font-weight: bold;
     font-size: 13px;
-    height: 100%;
+    height: 100vh;
     transition: 0.5s;
-    position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 250px;
+    clear: left;
+    z-index: 10;
 }
 
 .top-bar{
+    position: absolute;
     background-color: #09424d;
     font-weight: bold;
     font-size: 13px;
     height: 60px;
-    width: 100%;
+    min-width: 100%;
     max-width: 1920px;
     align-items: center;
     vertical-align: middle;
