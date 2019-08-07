@@ -18,6 +18,26 @@ namespace VikingVault.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Balance");
+
+                    b.Property<string>("CurrencyType")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BankAccount");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -54,27 +74,12 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.UserProfilePageViewModel", b =>
+            modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Cnp");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
-
-                    b.Property<string>("PictureLink");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UsersProfilePages");
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -78,7 +78,6 @@ class AccountPage extends React.Component<any, IAccountState>{
         return(            
             <div className={this.state.isPresent ? "account-view" : "account-hide"}>
                 
-                { this.state.redirect? <Redirect to = "/login" /> : null} 
                 <img className="card-unavailable img" src={account} alt=""></img>
                 <div className="info">
                     <h2>Accounts</h2>

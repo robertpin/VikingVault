@@ -226,14 +226,14 @@ class RegisterForm extends React.Component<any, IFormState> {
             <div className="form-group">
                 <label>Email*</label>
                 <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control accent-color"></input>
-                <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre>
+                {this.state.user.email!=="" ? <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre> : null}
             </div>
             <div className="form-group">
                 <label>Password*</label>
                 <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control accent-color"></input>
                 <label>Confirm Password*</label>
                 <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control accent-color"></input>
-                <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
+                {this.state.user.password!=="" ? <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre> : null}
             </div>
             <div className="form-group">
                 <label>First Name*</label>
