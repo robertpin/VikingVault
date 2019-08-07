@@ -1,10 +1,10 @@
 import React from 'react'
 import './styles.css'
 import account from './images/card.png'
-import {variables} from "../ConstantVariables";
+import {constants} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
 
-const url = variables.baseUrl+"Accounts";
+const url = constants.baseUrl+"Accounts";
 
 interface IAccountState{
     balance: number
