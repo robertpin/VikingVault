@@ -23,7 +23,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         super(props);
 
         this.state = {
-            fromCurrency: "RON",
+            fromCurrency: "EUR",
             toCurrency: "EUR",
             currencyToRon: 0.00,
             currencyToEur: 0.00,
@@ -42,31 +42,18 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         return date.toString().split(" ")[0];
     }
 
-    getMaximumValueToBeChanged() {
-        // pe asta tre s-o iau din baza de date, din accounts
-        let token = sessionStorage.getItem('Authentication-Token');
-        if(token == null) {
-            // smth
-        }
-        else {
-            fetch("", {
-                method: "POST",
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'x-access-token': token.toString()
-                },
-                body: JSON.stringify({
-                    CurrencyType: this.state.fromCurrency
-                })
-            }).then(response => response.json())
-            .then(result => {
-                //stuff
+    setFeeBasedOnDays() {
+        if(this.getCurrentDay() === "Fri" || this.getCurrentDay() === 'Sat' || this.getCurrentDay() === 'Sun')
+        {
+            this.setState({
+                fee: 10
             });
         }
-    }
-
-    exchange(){
+        else {
+            this.setState({
+                fee: 5
+            });
+        }
     }
 
     getCurrencyRates() {
@@ -89,28 +76,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         });
     }
 
-    setFeeBasedOnDays() {
-        if(this.getCurrentDay() === "Fri" || this.getCurrentDay() === 'Sat' || this.getCurrentDay() === 'Sun')
-        {
-            this.setState({
-                fee: 10
-            });
-        }
-        else {
-            this.setState({
-                fee: 5
-            });
-        }
-    }
- 
-    componentDidMount() {
-        this.setFeeBasedOnDays();
-        this.getCurrencyRates();
-        setInterval(() => {
-            this.getCurrencyRates();
-        }, 5000);
-    }
-
     setCurrencyToExchangeIn = (e:any) => {
         this.setState({
             toCurrency: e.target.value
@@ -128,6 +93,37 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.setState({
             toExchangeAmount: e.target.value
         });
+    }
+
+    getMaximumValueToBeChanged() {
+        // pe asta tre s-o iau din baza de date, din accounts
+        let token = sessionStorage.getItem('Authentication-Token');
+        if(token != null) {
+            fetch("https://localhost:44323/api/bankAccount", {
+                method: "GET",
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'x-access-token': token.toString()
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+               alert("HI!" + result.toString());
+            });
+        }
+    }
+
+    exchange(){
+    }
+ 
+    componentDidMount() {
+        this.setFeeBasedOnDays();
+        this.getCurrencyRates();
+        setInterval(() => {
+            this.getCurrencyRates();
+        }, 5000);
+        this.getMaximumValueToBeChanged();
     }
 
     render() {

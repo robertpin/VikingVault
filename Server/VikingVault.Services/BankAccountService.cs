@@ -37,13 +37,14 @@ namespace VikingVault.Services
             return account;
         }
 
-        public float GetMaximumBalanceForCurrency(string token, string currency)
+        public List<BankAccount> GetBankAccounts(string token)
         {
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
             var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
 
-            return 0;
+            var bankAccounts = _dbContext.BankAccount.Where(account => account.User == returnedUser).ToList();
+            return bankAccounts;
         }
     }
 }
