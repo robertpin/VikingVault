@@ -1,11 +1,11 @@
 import React from 'react'
 import './styles.css'
 import account from './images/card.png'
-import {variables} from "../ConstantVariables";
+import {constants} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
 import { TransactionList } from '../UserDashboard/TransactionList';
 
-const url = variables.baseUrl+"Accounts";
+const url = constants.baseUrl+"Accounts";
 
 interface IAccountState{
     balance: number
@@ -78,12 +78,14 @@ class AccountPage extends React.Component<any, IAccountState>{
     render(){
         return(            
             <div className={this.state.isPresent ? "account-view" : "account-hide"}>
-                
-                <img className="card-unavailable img" src={account} alt=""></img>
+                <img className="card-unavailable" src={account} alt=""></img>
                 <div className="info">
-                    <h2>Accounts</h2>
-                    <br/><br/><br/>
-                    <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+                    <div className="accounts-title">
+                        <h2 className="accounts-header">Accounts</h2>         
+                        <br/><br/><br/>
+                        <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+                    </div>
+                    
                 </div>
                 {this.state.redirect? <Redirect to="/login"/> : null}
             </div>
