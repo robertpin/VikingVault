@@ -1,11 +1,11 @@
 import  React  from 'react';
-import {variables} from "../ConstantVariables";
+import {constants} from "../ConstantVariables";
 import "./TransactionList.css";
 import shoppingCart from './shoppingcart.png';
 import userIcon from './profileWhite.png';
 import exchange from "./moneyExchange.png";
 
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 
 interface ITransaction {
     type: string;
