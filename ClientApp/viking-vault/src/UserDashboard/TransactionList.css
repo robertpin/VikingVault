@@ -13,7 +13,7 @@
     color: #004450;
 }
 
-.transactions img {
+.transactions .other-party-image {
     max-width: 30px;
     max-height: 30px;
 }

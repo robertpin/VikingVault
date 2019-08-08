@@ -16,9 +16,9 @@ namespace VikingVault.API.Controllers
     {
         private readonly ITransactionService _transactionService;
 
-        public TransactionController(ITransactionService ts)
+        public TransactionController(ITransactionService transactionService)
         {
-            _transactionService = ts;
+            _transactionService = transactionService;
         }
 
         [HttpGet]
