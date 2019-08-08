@@ -6,6 +6,7 @@ import TopBar from './components/TopBar';
 interface IExchangeFormState {
     fromCurrency: string;
     toCurrency: string;
+    successfullyExchanged: string;
     currencyToRon: Number;
     currencyToEur: Number;
     currencyToUsd: Number;
@@ -25,6 +26,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.state = {
             fromCurrency: "EUR",
             toCurrency: "EUR",
+            successfullyExchanged: "",
             currencyToRon: 0.00,
             currencyToEur: 0.00,
             currencyToUsd: 0.00,
@@ -68,10 +70,10 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                 data.rates.EUR = 1.00
             }
             this.setState({ 
-                currencyToRon: data.rates.RON.toPrecision(3),
-                currencyToEur: data.rates.EUR.toPrecision(3),
-                currencyToUsd: data.rates.USD.toPrecision(3),
-                currencyToYen: data.rates.JPY.toPrecision(3)
+                currencyToRon: data.rates.RON.toFixed(3),
+                currencyToEur: data.rates.EUR.toFixed(3),
+                currencyToUsd: data.rates.USD.toFixed(3),
+                currencyToYen: data.rates.JPY.toFixed(3)
              })
         });
     }
@@ -80,6 +82,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.setState({
             toCurrency: e.target.value
         });
+        this.getMaximumValueToChangeInto();
     }
 
     setCurrencyToBeExchanged = (e:any) => {
@@ -87,6 +90,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             fromCurrency: e.target.value
         });
         this.getCurrencyRates();
+        this.getMaximumValueToBeChanged();
     }
 
     setAmountOfMoneyToBeChanged = (e:any) => {
@@ -96,7 +100,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     }
 
     getMaximumValueToBeChanged() {
-        // pe asta tre s-o iau din baza de date, din accounts
         let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
             fetch("https://localhost:44323/api/bankAccount", {
@@ -109,12 +112,159 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             })
             .then(response => response.json())
             .then(result => {
-               alert("HI!" + result.toString());
+                if(this.state.fromCurrency === "RON") {
+                    this.setState({
+                        availableAmountFromCurrency: result[0].balance
+                    });
+                }
+                if(this.state.fromCurrency === "EUR") {
+                    this.setState({
+                        availableAmountFromCurrency: result[1].balance
+                    });
+                }
+                if(this.state.fromCurrency === "USD") {
+                    this.setState({
+                        availableAmountFromCurrency: result[2].balance
+                    });
+                }
+                if(this.state.fromCurrency === "YEN") {
+                    this.setState({
+                        availableAmountFromCurrency: result[3].balance
+                    });
+                }
             });
         }
     }
 
-    exchange(){
+    getMaximumValueToChangeInto() {
+        let token = sessionStorage.getItem('Authentication-Token');
+        if(token != null) {
+            fetch("https://localhost:44323/api/bankAccount", {
+                method: "GET",
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'x-access-token': token.toString()
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(this.state.toCurrency === "RON") {
+                    this.setState({
+                        availableAmountToCurrency: result[0].balance
+                    });
+                }
+                if(this.state.toCurrency === "EUR") {
+                    this.setState({
+                        availableAmountToCurrency: result[1].balance
+                    });
+                }
+                if(this.state.toCurrency === "USD") {
+                    this.setState({
+                        availableAmountToCurrency: result[2].balance
+                    });
+                }
+                if(this.state.toCurrency === "YEN") {
+                    this.setState({
+                        availableAmountToCurrency: result[3].balance
+                    });
+                }
+            });
+        }
+    }
+
+    getCurrencyExchangeRate = () => {
+        var value = "0";
+        if(this.state.toCurrency === "RON") {
+            value = this.state.currencyToRon.toString();
+        }
+        if(this.state.toCurrency === "EUR") {
+            value = this.state.currencyToEur.toString();
+        }
+        if(this.state.toCurrency === "USD") {
+            value = this.state.currencyToUsd.toString();
+        }
+        if(this.state.toCurrency === "YEN") {
+            value = this.state.currencyToYen.toString();
+        }
+        return Number(value);
+    }
+
+    calculateExchangedBalance = (exchangeRate: Number, amount: Number) => {
+        return +exchangeRate * +amount;
+    }
+
+    extractBanksFeeFromBalance = (balance: Number) => {
+        return +balance - (+this.state.fee/100);
+    }
+
+    hideExchangeResult = () => {
+        setTimeout(() => {
+            this.setState({
+                successfullyExchanged: ""
+            });
+          }, 3000);
+    }
+
+    exchange = () => {
+        var exchangeRate = this.getCurrencyExchangeRate();
+        var balance = this.calculateExchangedBalance(exchangeRate, this.state.toExchangeAmount);
+        balance = this.extractBanksFeeFromBalance(balance);
+
+        if(this.state.fromCurrency === this.state.toCurrency){
+            this.setState({
+                successfullyExchanged: "The sell and buy currency must be different!"
+            })
+            this.hideExchangeResult();
+        }
+        else if(this.state.toExchangeAmount < 1) {
+            this.setState({
+                successfullyExchanged: "The amount of money to exchange must be a positive number!"
+            })
+            this.hideExchangeResult();
+        }
+        else
+        {
+            let token = sessionStorage.getItem('Authentication-Token');
+            if(token != null) {
+                fetch("https://localhost:44323/api/exchange", {
+                    method: "POST",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-token': token.toString()
+                    },
+                    body: JSON.stringify([  
+                        {  
+                        "CurrencyType": this.state.fromCurrency,
+                        "Balance": +this.state.availableAmountFromCurrency - +this.state.toExchangeAmount
+                        },
+                        {  
+                        "CurrencyType": this.state.toCurrency,
+                        "Balance": +this.state.availableAmountToCurrency + +balance
+                        }
+                    ])
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if(result != null) {
+                        this.setState({
+                            successfullyExchanged: "Successfully exchanged " +
+                            this.state.toExchangeAmount + " " + this.state.fromCurrency + " into " + balance.toFixed(3) + " " + this.state.toCurrency + "!"
+                        })
+                        this.hideExchangeResult();
+                        this.getMaximumValueToBeChanged();
+                        this.getMaximumValueToChangeInto();
+                    }
+                    else {
+                        this.setState({
+                            successfullyExchanged: "Couldn't exchange the money!"
+                        })
+                    }
+                })
+            }
+        }
+        
     }
  
     componentDidMount() {
@@ -124,6 +274,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             this.getCurrencyRates();
         }, 5000);
         this.getMaximumValueToBeChanged();
+        this.getMaximumValueToChangeInto();
     }
 
     render() {
@@ -140,27 +291,27 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                             <div className="row"> 
                                 <div className="col"> {/* Sell column */}
                                     <p className="text-decoration">Sell</p>
-                                    <select className="form-control input-field" onChange={this.setCurrencyToBeExchanged}>
+                                    <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToBeExchanged}>
                                         <option value="EUR">EUR</option>
                                         <option value="RON">RON</option>
                                         <option value="YEN">YEN</option>
                                         <option value="USD">USD</option>
                                     </select>
                                     <div>
-                                        <p className="total-balance">{this.state.availableAmountFromCurrency.toPrecision(3)}</p>
+                                        <p className="total-balance">{this.state.availableAmountFromCurrency.toFixed(3)}</p>
                                         <p className="total-balance-text">Total balance</p>
                                     </div>
                                 </div>
                                 <div className="col"> {/* Buy column */}
                                     <p className="text-decoration">Buy</p>
-                                    <select className="form-control input-field" onChange={this.setCurrencyToExchangeIn}>
+                                    <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToExchangeIn}>
                                         <option value="EUR">EUR</option>
                                         <option value="RON">RON</option>
                                         <option value="YEN">YEN</option>
                                         <option value="USD">USD</option>
                                     </select>
                                     <div>
-                                        <p className="total-balance">{this.state.availableAmountFromCurrency.toPrecision(3)}</p>
+                                        <p className="total-balance">{this.state.availableAmountToCurrency.toFixed(3)}</p>
                                         <p className="total-balance-text">Total balance</p>
                                     </div>
                                 </div> 
@@ -169,11 +320,12 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                             <div id="amount-div">
                                 <p className="text-decoration">Amount</p>
                                 <input
-                                        className="form-control input-shadow"
+                                        className="form-control form-control-currency input-shadow"
                                         placeholder=""
                                         type="number"
                                         min="1"
-                                        max={this.state.maximumValueToBeChanged.toString()}
+                                        pattern="^[0-9]"
+                                        max={this.state.availableAmountFromCurrency.toString()}
                                         step="0.01"
                                         onChange={this.setAmountOfMoneyToBeChanged}
                                 />
@@ -181,6 +333,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                             
                             <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
                             <button id="exchange-button" className="btn btn-primary" onClick={this.exchange}>Exchange!</button>
+                            <span className="badge badge-info exchange-result">{this.state.successfullyExchanged}</span>
                         </div>
                         </div>
                             <div className="col-4 right-column">  {/* Right column */}

@@ -41,10 +41,34 @@ namespace VikingVault.Services
         {
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
-            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+            var returnedUser = _dbContext.User.Find(Int32.Parse(userId));
 
             var bankAccounts = _dbContext.BankAccount.Where(account => account.User == returnedUser).ToList();
             return bankAccounts;
+        }
+
+        public BankAccount UpdateBankAccount(string token, UpdateBankAccountModel updatedBankAccount)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            string userId = tokenObject.Payload["Id"].ToString();
+            var bankAccountOwner = _dbContext.User.Find(Int32.Parse(userId));
+
+            var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
+            oldBankAccount.Balance = updatedBankAccount.Balance;
+
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                if (e is DbUpdateException || e is DbUpdateConcurrencyException)
+                {
+                    throw new BankAccountServiceException();
+                }
+            }
+
+            return oldBankAccount;
         }
     }
 }

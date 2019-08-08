@@ -121,7 +121,8 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         return null;
       }
 
-      return response.json();
+      if(response != null)
+        return response.json();
 
     })
     .then(result => {
