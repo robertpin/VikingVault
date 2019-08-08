@@ -22,7 +22,7 @@ namespace VikingVault.API.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] UserEmail userEmail)
         {
-            bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail.email);
+            bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail.Email);
             if (isUnique == null)
                 return StatusCode(500, "Internal Server Error");
             if (isUnique == true)

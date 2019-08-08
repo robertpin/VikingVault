@@ -66,9 +66,9 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("Firstname");
+                    b.Property<string>("FirstName");
 
-                    b.Property<string>("Lastname");
+                    b.Property<string>("LastName");
 
                     b.Property<string>("PictureLink");
 
