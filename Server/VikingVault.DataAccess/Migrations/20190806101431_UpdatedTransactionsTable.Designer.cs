@@ -3,41 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190806101431_UpdatedTransactionsTable")]
+    partial class UpdatedTransactionsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Balance");
-
-                    b.Property<string>("CurrencyType")
-                        .IsRequired();
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BankAccount");
-                });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
@@ -47,19 +29,13 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<float>("Amount");
 
-                    b.Property<string>("Currency");
+                    b.Property<string>("Beneficiary");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("OtherParty");
-
                     b.Property<string>("Type");
 
-                    b.Property<int?>("userId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("Transactions");
                 });
@@ -100,19 +76,27 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
+            modelBuilder.Entity("VikingVault.DataAccess.Models.UserProfilePageViewModel", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
-                {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Cnp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("PictureLink");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersProfilePages");
                 });
 #pragma warning restore 612, 618
         }

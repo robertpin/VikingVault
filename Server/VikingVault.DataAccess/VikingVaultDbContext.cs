@@ -22,5 +22,6 @@ namespace VikingVault.DataAccess
                 .HasAlternateKey(c => c.Email)
                 .HasName("Email");
         }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }
