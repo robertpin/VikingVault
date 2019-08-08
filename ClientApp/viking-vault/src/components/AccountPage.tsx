@@ -1,6 +1,7 @@
 import React from 'react'
 import './styles.css'
-import account from './images/card.png'
+import inexistentCard from './images/card.png'
+import genericCard from './images/GENERICcard-01.png'
 import {variables} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
 
@@ -72,17 +73,33 @@ class AccountPage extends React.Component<any, IAccountState>{
     }
         
 
+    AccountsInformation(){
+        return <div>
+            <div className="balance-container">
+                <p className="balance-header">RON <span className="balance-value">3,689</span></p> 
+                <p className="balance-information">Total balance</p>
+            </div>
+            <br/>
+            <div className="balance-container">
+                <p className="accounts-container">RON <span className="account-value">0</span> &nbsp; &nbsp; EUR <span className="account-value">0</span> &nbsp; &nbsp; USD <span className="account-value">0</span> &nbsp; &nbsp; YEN <span className="account-value">0</span> </p> 
+            </div>
+        </div>
+    }
+
     render(){
         return(            
-            <div className={this.state.isPresent ? "account-view" : "account-hide"}>
-                <img className="card-unavailable" src={account} alt=""></img>
+            <div className={this.state.isPresent ? "account-view" : "account-hide"}>       
+                <div className="card-picture-container">
+                    <p className="card-number">0000 &nbsp; 0000 &nbsp; 0000 &nbsp; 0000</p>
+                    <p className="card-expiration-date">08/20</p>
+                    <p className="card-owner-name">HUNYADI CRISTINA</p>
+                    <img className="card-available" src={genericCard} alt=""></img>
+                </div>
                 <div className="info">
                     <div className="accounts-title">
-                        <h2 className="accounts-header">Accounts</h2>         
-                        <br/><br/><br/>
-                        <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+                        <h2 className="accounts-header">Accounts</h2>
                     </div>
-                    
+                    {this.state.isPresent ? <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5> : this.AccountsInformation()}
                 </div>
             </div>
         )
