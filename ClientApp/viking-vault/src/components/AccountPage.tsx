@@ -2,14 +2,21 @@ import React from 'react'
 import './styles.css'
 import inexistentCard from './images/card.png'
 import genericCard from './images/GENERICcard-01.png'
-import {variables} from "../ConstantVariables";
+import {constants} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
 
-const url = variables.baseUrl+"Accounts";
+const url = constants.baseUrl+"Accounts/";
 
 interface IAccountState{
-    balance: number
-    card: any
+    firstName: string
+    lastName: string
+    cardNumber: string
+    expirationDate: string
+    ronBalance: number
+    eurBalance: number
+    usdBalance: number
+    yenBalance: number
+    totalBalance: number
     isPresent: boolean
     redirect: boolean
 } 
@@ -19,17 +26,39 @@ class AccountPage extends React.Component<any, IAccountState>{
         super(props);
 
         this.state={
-            balance: 0,
-            card: {},
-            isPresent: false,
+            firstName: "",
+            lastName: "",
+            cardNumber: "",
+            expirationDate: "",
+            ronBalance: 0,
+            eurBalance: 0,
+            usdBalance: 0,
+            yenBalance: 0,
+            totalBalance:0,
+            isPresent: true,
             redirect:false
         }
     }
-
+    
+    updateExchangingRates=() => {
+        fetch("https://api.exchangeratesapi.io/latest?base=RON").
+        then(response =>{
+            return response.json();
+        }).then((data:any)=>{
+            if(data!=null){
+                this.setState({
+                    totalBalance: this.state.ronBalance + 
+                    this.state.eurBalance*data.rates.EUR + 
+                    this.state.usdBalance*data.rates.USD + 
+                    this.state.yenBalance*data.rates.JPY
+                })
+            }
+        })
+    }
+    
     componentDidMount(){
-
+       
         let token = sessionStorage.getItem("Authentication-Token");
-
         if(token === null)
         {
             this.setState({
@@ -38,6 +67,7 @@ class AccountPage extends React.Component<any, IAccountState>{
         }
         else
         {
+            setInterval(this.updateExchangingRates, 5000);
             fetch(url, {
                 method:"GET",
                 headers:{
@@ -49,57 +79,101 @@ class AccountPage extends React.Component<any, IAccountState>{
                     if(response.status === 404){
                         this.setState(oldState => {
                             return {
-                                isPresent: false
+                                isPresent: true
                             }
                         })
                     }
                     if(response.status === 200){
                         this.setState(oldState => {
                             return {
-                                isPresent: true
+                                isPresent: false
                             }
                         })
                     }
-                    response.json();})
-                .then(data=>{})
+                    return response.json();})
+                .then((userData:any)=>{
+                    console.log(userData)
+                    if(userData != null){
+                        this.setState(
+                            {
+                                firstName: userData.firstName,
+                                lastName: userData.lastName,
+                                cardNumber: userData.cardNumber,
+                                expirationDate: userData.expirationDate,
+                                ronBalance: userData.ronBalance,
+                                eurBalance: userData.eurBalance,
+                                usdBalance: userData.usdBalance,
+                                yenBalance: userData.yenBalance
+                            }
+                        )
+                    }
+                })
                 .catch(error => {
                     this.setState(oldState => {
                         return {
-                            isPresent: false
+                            isPresent: true
                         }
                     })
-            })
+                })
         }
     }
         
+    showCardInformations(){
+        return (
+        <div className="card-picture-container">
+            <p className="card-number">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
+            <p className="card-expiration-date">{this.state.expirationDate}</p>
+            <p className="card-owner-name">{this.state.firstName} {this.state.lastName}</p>
+            <img className="card-available" src={genericCard} alt=""></img>
+        </div>)
+    }
 
-    AccountsInformation(){
-        return <div>
+    showUnavailableCard(){
+        return (
+        <div className="card-picture-container">
+            <img className="card-available" src={inexistentCard} alt=""></img>
+        </div>)
+    }
+
+    accountsInformation(){
+        return <div>  
             <div className="balance-container">
-                <p className="balance-header">RON <span className="balance-value">3,689</span></p> 
+                <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
             </div>
             <br/>
             <div className="balance-container">
-                <p className="accounts-container">RON <span className="account-value">0</span> &nbsp; &nbsp; EUR <span className="account-value">0</span> &nbsp; &nbsp; USD <span className="account-value">0</span> &nbsp; &nbsp; YEN <span className="account-value">0</span> </p> 
+                <p className="accounts-container">
+                    RON <span className="account-value">{this.state.ronBalance}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.eurBalance}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.usdBalance}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.yenBalance}</span> </p> 
             </div>
         </div>
     }
 
+    inexistentCardNotification(){
+        return (
+        <div>
+            <br/><br/><br/>
+            <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5>
+        </div>
+        )
+    }
+
+    splitCardNumber(begin: number, end: number){
+        return this.state.cardNumber.substring(begin, end);
+    }
+
     render(){
         return(            
-            <div className={this.state.isPresent ? "account-view" : "account-hide"}>       
-                <div className="card-picture-container">
-                    <p className="card-number">0000 &nbsp; 0000 &nbsp; 0000 &nbsp; 0000</p>
-                    <p className="card-expiration-date">08/20</p>
-                    <p className="card-owner-name">HUNYADI CRISTINA</p>
-                    <img className="card-available" src={genericCard} alt=""></img>
-                </div>
+            <div className="account-view">       
+                {this.state.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
                 <div className="info">
                     <div className="accounts-title">
                         <h2 className="accounts-header">Accounts</h2>
                     </div>
-                    {this.state.isPresent ? <h5 className="no-card-text">Please contact your administrator to attach a card to your account</h5> : this.AccountsInformation()}
+                    {this.state.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                 </div>
             </div>
         )

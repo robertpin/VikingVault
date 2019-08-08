@@ -27,7 +27,10 @@ namespace VikingVault.API.Controllers
         [HttpGet]
         public ActionResult<UserAccount> Get()
         {
-            UserAccount userAccount = _accService.FindById();
+            var token = Request.Headers["x-access-token"];
+
+            UserAccount userAccount = _accService.GetUserAccount(token);
+
             if (userAccount != null)
             {
                 return Ok(userAccount);

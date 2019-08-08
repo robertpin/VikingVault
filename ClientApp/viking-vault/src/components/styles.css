@@ -50,10 +50,6 @@
 }
 
 .account-view{
-    display: none;
-}
-
-.account-hide{
     background-color: white;
     margin-top: 15px;
     width: 75%;
@@ -317,6 +313,7 @@
     margin-top: 210px;
     margin-left:40px;
     font-size: 10px;
+    text-transform: uppercase;
     font-weight: bold;
     user-select: none;
 }

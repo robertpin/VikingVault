@@ -25,5 +25,6 @@ namespace VikingVault.DataAccess.Models
         public string Role { get; set; }
         [NotMapped]
         public string Token { get; set; }
+        public Card Card { get; set; }
     }
 }
