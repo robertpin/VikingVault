@@ -1,23 +1,10 @@
 import React from 'react';
-import { ProfilePage } from './ProfilePage';
-import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { LoginForm } from './Login'
-import { RegisterForm } from "./RegisterForm";
-import { AdminPage } from './display_user_list/AdminPage';
-import "./ProfilePage.css"
-import UserPage from './components/UserPage';
+import { Router } from './Router';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Router>
-        <Route path="/register/" exact component={RegisterForm} />
-        <Route path="/login/" exact component={LoginForm}/>
-        <Route path="/user" component={UserPage} />
-        <Route path="/admin" exact component={AdminPage} />
-        
-      </Router>
+      <Router></Router>
     </div>
   );
 }

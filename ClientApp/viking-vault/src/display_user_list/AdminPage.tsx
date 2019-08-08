@@ -3,42 +3,102 @@ import SideBar from '../components/SideBar'
 import TopBar from '../components/TopBar'
 import '../components/styles.css';
 import './DisplayUsers.css';
-import SourceImg from '../UI/user2.png';
-import CardImg from '../UI/card-internship.png';
+import { constants } from "../ConstantVariables";
+import { UserData }  from './UserData';
+import { IUserData } from './UserData';
 
-class AdminPage extends React.Component<any, any>{
- 
+
+const API_URL = constants.baseUrl+"admin/getAllUsers";
+const LOGIN_ROUTE ="/login";
+
+interface IProfileData{
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    cardNumber: string;
+    expirationDate: string;
+    errorLabel: string;
+    redirect: boolean;
+}
+
+class AdminPage extends React.Component<any, IProfileData>{
+    
+    constructor(props: any)
+    {
+        super(props);
+
+        this.state = {
+            id: 0,
+            firstName: "no-data",
+            lastName: "no-data",
+            email: "no-data",
+            cardNumber: "no-data",
+            expirationDate: "no-data",
+            errorLabel: "no-data",
+            redirect: true
+        }
+    }
+
+    getAllUsers ()
+    {
+        /** 1) verify if we have admin token
+         *  2) if yes, go ahead and get the data, else redirect to login 
+         *  3) show the data 
+         */
+        
+        let token = sessionStorage.getItem("Authentication-Token");
+
+        if(token === null)
+        {
+            this.setState({
+                errorLabel: "Access Token Unavailable",
+                redirect: true
+            })
+        }
+        else{
+            //this is the fetch only for getting the data
+            fetch(API_URL, {
+                method: "GET",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                }})
+            .then( response => 
+                {
+                    if( response.status === 500)
+                    {
+                        this.setState({
+                            errorLabel: "Internal Server Error"
+                        })
+
+                        return null;
+                    }
+                    
+                    return response.json();
+                })
+            .then( usersData => {
+
+                if(usersData != null)
+                {
+                   usersData.map( (user: IUserData) => <UserData {...user} /> );
+                }
+                
+                return null;
+
+            }).catch( error => this.setState({ errorLabel: "Something went wrong" }));
+        }
+    }
+
     render(){
+        var users = this.getAllUsers();
+        
         return(
             <div className = "admin-page">
                 <TopBar/>
                 <SideBar/>  
                 <div className = "display-users-container">
-                   
-                    <div className = "user-container"> 
-                       <div className = "user-container-inside">
-                            
-                            <div className = "img-container">
-                                <img src = {SourceImg} className = "profile-img"/>
-                            </div>
-                            
-                            <div className = "profile-data-container">
-                                <span className = "profile-data-text" id = "user_name"> Radu Lambrino</span>
-                                <span className = "profile-data-text">Brasov, Brasov</span>
-                                <span className = "profile-data-text" id = "card_number">0000-0000-0000-0000</span>
-                            </div>
-
-                            <div className = "card-container">
-                                <img src = {CardImg} className = "card-img"></img>
-                            </div>
-
-                            <div className = "button-container">
-                                <button className = "button-style">Attach Card</button>
-                                <button className = "button-style">Delete</button>
-                                <button className = "button-style">Add Money</button>
-                            </div>
-                       </div>
-                    </div>           
+                    {users !== null ? users : 'No Users'};
                 </div>
             </div>
          );   

@@ -3,9 +3,9 @@ import {ResponseModal} from "./ReponseModal";
 import {Redirect} from "react-router-dom";
 import { HeaderForm } from './HeaderForm';
 import { FooterForm } from './FooterForm';
-import {variables} from "./ConstantVariables";
+import {constants} from "./ConstantVariables";
 
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 interface IUserProperties {
@@ -226,14 +226,14 @@ class RegisterForm extends React.Component<any, IFormState> {
             <div className="form-group">
                 <label>Email*</label>
                 <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control accent-color"></input>
-                <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre>
+                {this.state.user.email!=="" ? <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre> : null}
             </div>
             <div className="form-group">
                 <label>Password*</label>
                 <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control accent-color"></input>
                 <label>Confirm Password*</label>
                 <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control accent-color"></input>
-                <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
+                {this.state.user.password!=="" ? <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre> : null}
             </div>
             <div className="form-group">
                 <label>First Name*</label>
@@ -256,7 +256,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
-            {this.state.redirect? <Redirect to="/login" /> : null}
+            {this.state.redirect? <Redirect to="/" /> : null}
         </div>
         <FooterForm class="footer-register"/>
             </div>
