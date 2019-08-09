@@ -25,8 +25,7 @@ namespace VikingVault.Services
             string userId = tokenObject.Payload["Id"].ToString();
 
             User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == int.Parse(userId));
-            Card card = _dbContext.Card.SingleOrDefault(u => u.UserId == int.Parse(userId));
-
+            Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == int.Parse(userId));
             if(card == null)
             {
                 return null;
@@ -59,7 +58,6 @@ namespace VikingVault.Services
                         break;
                 }
             }
-       
             return userAccount;
         }
 

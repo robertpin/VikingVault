@@ -17,11 +17,11 @@ namespace VikingVault.API.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        IAccountService _accService;
+        IAccountService _accountService;
 
         public AccountsController(IAccountService accService)
         {
-            _accService = accService;
+            _accountService = accService;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace VikingVault.API.Controllers
         {
             var token = Request.Headers["x-access-token"];
 
-            UserAccount userAccount = _accService.GetUserAccount(token);
+            UserAccount userAccount = _accountService.GetUserAccount(token);
 
             if (userAccount != null)
             {

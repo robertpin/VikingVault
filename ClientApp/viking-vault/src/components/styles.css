@@ -41,6 +41,8 @@
     height:20px;
 }
 
+
+
 .img.viking-logo{
     width: 224px;
     height: 55px;
@@ -117,8 +119,13 @@
 }
 
 .side-menu-hide:hover{
-    background-color: #d4e3e6;
-    transition: 0.4s;
+    background-color: #09424d;
+    transition: 0.5s;
+}
+
+.side-menu-hide:hover .menu-icon{
+    filter: brightness(0) invert(1);
+    transition: 0.5s;
 }
 
 .side-menu-show{
@@ -126,8 +133,18 @@
 }
 
 .side-menu-show:hover{
-    background-color: #d4e3e6;
+    background-color: #09424d;
     transition: 0.4s;
+}
+
+.side-menu-show:hover .menu-icon{
+    filter: brightness(0) invert(1);
+    transition: 0.5s;
+}
+
+.side-menu-show:hover .span-show{
+    color: white;
+    transition: 0.5s;
 }
 
 .span-hide{
@@ -199,7 +216,6 @@
     margin-left:30%;
     position:absolute;
     bottom:3%;
-    
 }
 
 .transform-reverse{

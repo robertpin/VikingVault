@@ -25,7 +25,6 @@ interface IAccountState{
 class AccountPage extends React.Component<any, IAccountState>{
     constructor(props:any){
         super(props);
-
         this.state={
             firstName: "",
             lastName: "",
@@ -58,7 +57,6 @@ class AccountPage extends React.Component<any, IAccountState>{
     }
     
     componentDidMount(){
-       
         let token = sessionStorage.getItem("Authentication-Token");
         if(token === null)
         {
