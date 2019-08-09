@@ -4,23 +4,22 @@ import { variables } from './ConstantVariables';
 
 class DeleteUser extends React.Component<any,any>{
     state = {
-        openModal : false
+        openDeleteUserModal : false
     }
 
     private handleDeleteUser = () =>{
         this.setState((oldstate : any)=>({
-            openModal : !oldstate.openModal
+            openDeleteUserModal : !oldstate.openDeleteUserModal
         }));
     }
 
-    private closeModal = () =>{
+    private closeDeleteUserModal = () =>{
         this.setState({
-            openModal : false
+            openDeleteUserModal : false
         });
     }
 
     private deleteUser = () =>{
-        console.log("deleteUser was called");
         fetch(variables.baseUrl+"user", {
             method: "DELETE",
             headers: {
@@ -28,18 +27,18 @@ class DeleteUser extends React.Component<any,any>{
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email: "email8@gmail.com"
+              email: "email3@gmail.com"
             })});
 
         this.setState({
-            openModal : false
+            openDeleteUserModal : false
         });
     }
 
     render(){
         return(
             <div>
-                <DeleteUserModal open = {this.state.openModal} deletedUserName = "Vlad Buda" closeModal = {this.closeModal} deleteUser = {this.deleteUser}/>
+                <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = "Vlad Buda" closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
                 <button className = "btn btn-primary" onClick = {this.handleDeleteUser}>Push me!</button>
             </div>
         )
