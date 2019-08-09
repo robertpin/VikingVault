@@ -108,7 +108,6 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         }, 1500);
         return null;
       }
-
       if(response.status === 500) {
         this.setState({
           errorLabel: "Error. Please try again later!"

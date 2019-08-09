@@ -26,7 +26,5 @@ namespace VikingVault.API.Controllers
             var token = Request.Headers["x-access-token"];
             return _bankAccountService.GetBankAccounts(token);
         }
-
-        
     }
 }

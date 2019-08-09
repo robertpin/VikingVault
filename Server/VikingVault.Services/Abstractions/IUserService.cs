@@ -9,6 +9,5 @@ namespace VikingVault.Services.Abstractions
     {
         User CreateUser(User user);
         User GetById(int userId);
-
     }
 }
