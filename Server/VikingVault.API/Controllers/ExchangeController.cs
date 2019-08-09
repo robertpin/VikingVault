@@ -24,9 +24,11 @@ namespace VikingVault.API.Controllers
         public List<BankAccount> Post([FromBody] List<UpdateBankAccountModel> bankAccountModels)
         {
             string token = Request.Headers["x-access-token"];
+            
             UpdateBankAccountModel sellModel = bankAccountModels[0];
             UpdateBankAccountModel buyModel = bankAccountModels[1];
-            List<BankAccount> bankAccounts = _exchangeService.Exchange(token, sellModel, buyModel);
+            UpdateBankAccountModel exchangeInfo = bankAccountModels[2];
+            List<BankAccount> bankAccounts = _exchangeService.Exchange(token, sellModel, buyModel, exchangeInfo);
             return bankAccounts;
         }
     }

@@ -225,6 +225,9 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         }
         else
         {
+            var amount = this.state.toExchangeAmount;
+            var otherParty = balance.toFixed(3) + " " + this.state.toCurrency;
+
             let token = sessionStorage.getItem('Authentication-Token');
             if(token != null) {
                 fetch("https://localhost:44323/api/exchange", {
@@ -236,12 +239,16 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     },
                     body: JSON.stringify([  
                         {  
-                        "CurrencyType": this.state.fromCurrency,
-                        "Balance": +this.state.availableAmountFromCurrency - +this.state.toExchangeAmount
+                            "CurrencyType": this.state.fromCurrency,
+                            "Balance": +this.state.availableAmountFromCurrency - +this.state.toExchangeAmount
                         },
                         {  
-                        "CurrencyType": this.state.toCurrency,
-                        "Balance": +this.state.availableAmountToCurrency + +balance
+                            "CurrencyType": this.state.toCurrency,
+                            "Balance": +this.state.availableAmountToCurrency + +balance
+                        },
+                        {
+                            "CurrencyType": otherParty,
+                            "Balance": amount
                         }
                     ])
                 })

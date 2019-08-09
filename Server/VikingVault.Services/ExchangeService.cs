@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
-using VikingVault.Services.Exceptions;
 
 namespace VikingVault.Services
 {
@@ -15,20 +12,39 @@ namespace VikingVault.Services
     {
         private readonly VikingVaultDbContext _dbContext;
         private readonly IBankAccountService _bankAccountService;
+        private readonly ITransactionService _transactionService;
 
-        public ExchangeService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService)
+        public ExchangeService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService, ITransactionService transactionService)
         {
             _dbContext = dbContext;
             _bankAccountService = bankAccountService;
+            _transactionService = transactionService;
         }
 
-        public List<BankAccount> Exchange(string token, UpdateBankAccountModel bankAccountModelSell, UpdateBankAccountModel bankAccountModelBuy)
+        public List<BankAccount> Exchange(string token, UpdateBankAccountModel bankAccountModelSell, UpdateBankAccountModel bankAccountModelBuy, UpdateBankAccountModel exchangeInfo)
         {
             List<BankAccount> bankAccounts = new List<BankAccount>();
             BankAccount bankAccountSell = _bankAccountService.UpdateBankAccount(token, bankAccountModelSell);
             BankAccount bankAccountBuy = _bankAccountService.UpdateBankAccount(token, bankAccountModelBuy);
             bankAccounts.Add(bankAccountSell);
             bankAccounts.Add(bankAccountBuy);
+
+            var tokenObject = new JwtSecurityToken(token);
+            string userId = tokenObject.Payload["Id"].ToString();
+            var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+
+            Transaction transaction = new Transaction
+            {
+                user = returnedUser,
+                Type = "Exchange",
+                Currency = bankAccountSell.CurrencyType,
+                Date = DateTime.Now,
+                Amount = exchangeInfo.Balance,
+                OtherParty = exchangeInfo.CurrencyType
+            };
+
+            _transactionService.AddTransaction(transaction);
+
             return bankAccounts;
         }
     }

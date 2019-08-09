@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190726091326_UpdatedBank.cs" />
+    <Compile Remove="Migrations\20190806083115_AddedTransactionsTable.cs" />
+    <Compile Remove="Migrations\20190806101431_UpdatedTransactionsTable.cs" />
+    <Compile Remove="Migrations\20190806114557_AddedBankAccount.cs" />
+    <Compile Remove="Migrations\20190806114745_AddedBankAccountToTransactionsTable.cs" />
+    <Compile Remove="Migrations\20190807122701_bankAccount.cs" />
   </ItemGroup>
 
   <ItemGroup>

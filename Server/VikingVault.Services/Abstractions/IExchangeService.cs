@@ -7,7 +7,9 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IExchangeService
     {
-        List<BankAccount> Exchange(
-            string token, UpdateBankAccountModel bankAccountModelSell, UpdateBankAccountModel bankAccountModelBuy);
+        List<BankAccount> Exchange(string token,
+            UpdateBankAccountModel bankAccountModelSell,
+            UpdateBankAccountModel bankAccountModelBuy,
+            UpdateBankAccountModel exchangeInfo);
     }
 }
