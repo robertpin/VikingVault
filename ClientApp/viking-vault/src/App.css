@@ -95,3 +95,7 @@ footer {
 .modal.close {
   display: none;
 }
+
+.custom-button-size {
+  width: 80px;
+}
