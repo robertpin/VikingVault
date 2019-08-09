@@ -23,15 +23,15 @@ namespace VikingVault.Services
 
         public List<BankAccount> Exchange(string token, UpdateBankAccountModel bankAccountModelSell, UpdateBankAccountModel bankAccountModelBuy, UpdateBankAccountModel exchangeInfo)
         {
-            List<BankAccount> bankAccounts = new List<BankAccount>();
-            BankAccount bankAccountSell = _bankAccountService.UpdateBankAccount(token, bankAccountModelSell);
-            BankAccount bankAccountBuy = _bankAccountService.UpdateBankAccount(token, bankAccountModelBuy);
-            bankAccounts.Add(bankAccountSell);
-            bankAccounts.Add(bankAccountBuy);
-
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
             var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+
+            List<BankAccount> bankAccounts = new List<BankAccount>();
+            BankAccount bankAccountSell = _bankAccountService.UpdateBankAccount(returnedUser.Email, bankAccountModelSell);
+            BankAccount bankAccountBuy = _bankAccountService.UpdateBankAccount(returnedUser.Email, bankAccountModelBuy);
+            bankAccounts.Add(bankAccountSell);
+            bankAccounts.Add(bankAccountBuy);       
 
             Transaction transaction = new Transaction
             {

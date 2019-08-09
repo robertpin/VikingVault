@@ -47,11 +47,9 @@ namespace VikingVault.Services
             return bankAccounts;
         }
 
-        public BankAccount UpdateBankAccount(string token, UpdateBankAccountModel updatedBankAccount)
+        public BankAccount UpdateBankAccount(string email, UpdateBankAccountModel updatedBankAccount)
         {
-            var tokenObject = new JwtSecurityToken(token);
-            string userId = tokenObject.Payload["Id"].ToString();
-            var bankAccountOwner = _dbContext.User.Find(Int32.Parse(userId));
+            var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == email);
 
             var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
             oldBankAccount.Balance = updatedBankAccount.Balance;

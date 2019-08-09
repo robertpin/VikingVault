@@ -9,6 +9,6 @@ namespace VikingVault.Services.Abstractions
     {
         BankAccount CreateBankAccount(BankAccount account);
         List<BankAccount> GetBankAccounts(string token);
-        BankAccount UpdateBankAccount(string token, UpdateBankAccountModel updatedBankAccount);
+        BankAccount UpdateBankAccount(string email, UpdateBankAccountModel updatedBankAccount);
     }
 }
