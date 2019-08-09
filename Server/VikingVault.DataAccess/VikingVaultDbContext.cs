@@ -14,6 +14,7 @@ namespace VikingVault.DataAccess
         { }
         
         public DbSet<User> User { get; set; }
+        public DbSet<Card> Cards { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +22,10 @@ namespace VikingVault.DataAccess
             modelBuilder.Entity<User>()
                 .HasAlternateKey(c => c.Email)
                 .HasName("Email");
+
+            modelBuilder.Entity<Card>()
+                .HasAlternateKey(card => card.CardNumber)
+                .HasName("AlternateKey_CardNumber");
         }
     }
 }

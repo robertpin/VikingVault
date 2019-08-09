@@ -5,6 +5,7 @@ import { LoginForm } from "./Login";
 import UserPage from './components/UserPage';
 import {constants} from "./ConstantVariables";
 import "./App.css"
+import { AdminPage } from "./MockUpAdminPage";
 
 const baseUrl = constants.baseUrl;
 
@@ -54,6 +55,7 @@ class Router extends React.Component<any, IState> {
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
             <Route path="/user" component={UserPage} />
+            <Route path="/aaa" component={AdminPage} />
         </BRouter>
     }
 }
