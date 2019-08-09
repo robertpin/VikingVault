@@ -16,7 +16,6 @@ interface IExchangeFormState {
     toExchangeAmount: Number;
     maximumValueToBeChanged: Number;
     fee: Number;
-
 }
 
 class ExchangeForm extends React.Component<any, IExchangeFormState> {
@@ -271,7 +270,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                 })
             }
         }
-        
     }
  
     componentDidMount() {
@@ -289,60 +287,57 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             <div className="background-div">
                 <SideBar/>
                 <TopBar/>
-                <div className="containing-div">
-                <div className="container"> 
-                    <div className="row"> 
-                        <div className="col-4 left-column"> {/* Left column */}
-
-                        <div className="container"> 
-                            <div className="row"> 
-                                <div className="col"> {/* Sell column */}
-                                    <p className="text-decoration">Sell</p>
-                                    <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToBeExchanged}>
-                                        <option value="EUR">EUR</option>
-                                        <option value="RON">RON</option>
-                                        <option value="YEN">YEN</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                    <div>
-                                        <p className="total-balance">{this.state.availableAmountFromCurrency.toFixed(3)}</p>
-                                        <p className="total-balance-text">Total balance</p>
+                <div className="white-background-div">
+                    <div className="container"> 
+                        <div className="row"> 
+                            <div className="col-4 left-column"> {/* Left column */}
+                                <div className="container"> 
+                                    <div className="row"> 
+                                        <div className="col"> {/* Sell column */}
+                                            <p className="text-decoration">Sell</p>
+                                            <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToBeExchanged}>
+                                                <option value="EUR">EUR</option>
+                                                <option value="RON">RON</option>
+                                                <option value="YEN">YEN</option>
+                                                <option value="USD">USD</option>
+                                            </select>
+                                            <div>
+                                                <p className="total-balance">{this.state.availableAmountFromCurrency.toFixed(3)}</p>
+                                                <p className="total-balance-text">Total balance</p>
+                                            </div>
+                                        </div>
+                                        <div className="col"> {/* Buy column */}
+                                            <p className="text-decoration">Buy</p>
+                                            <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToExchangeIn}>
+                                                <option value="EUR">EUR</option>
+                                                <option value="RON">RON</option>
+                                                <option value="YEN">YEN</option>
+                                                <option value="USD">USD</option>
+                                            </select>
+                                            <div>
+                                                <p className="total-balance">{this.state.availableAmountToCurrency.toFixed(3)}</p>
+                                                <p className="total-balance-text">Total balance</p>
+                                            </div>
+                                        </div> 
+                                    </div> 
+                                    <div id="amount-div">
+                                        <p className="text-decoration">Amount</p>
+                                        <input
+                                                className="form-control form-control-currency input-shadow"
+                                                placeholder=""
+                                                type="number"
+                                                min="1"
+                                                pattern="^[0-9]"
+                                                max={this.state.availableAmountFromCurrency.toString()}
+                                                step="0.01"
+                                                onChange={this.setAmountOfMoneyToBeChanged}
+                                        />
                                     </div>
+                                    <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
+                                    <button id="exchange-button" className="btn btn-primary" onClick={this.exchange}>Exchange!</button>
+                                    <span className="badge badge-info exchange-result">{this.state.successfullyExchanged}</span>
                                 </div>
-                                <div className="col"> {/* Buy column */}
-                                    <p className="text-decoration">Buy</p>
-                                    <select className="form-control form-control-currency input-field" onChange={this.setCurrencyToExchangeIn}>
-                                        <option value="EUR">EUR</option>
-                                        <option value="RON">RON</option>
-                                        <option value="YEN">YEN</option>
-                                        <option value="USD">USD</option>
-                                    </select>
-                                    <div>
-                                        <p className="total-balance">{this.state.availableAmountToCurrency.toFixed(3)}</p>
-                                        <p className="total-balance-text">Total balance</p>
-                                    </div>
-                                </div> 
-                            </div> 
-                            
-                            <div id="amount-div">
-                                <p className="text-decoration">Amount</p>
-                                <input
-                                        className="form-control form-control-currency input-shadow"
-                                        placeholder=""
-                                        type="number"
-                                        min="1"
-                                        pattern="^[0-9]"
-                                        max={this.state.availableAmountFromCurrency.toString()}
-                                        step="0.01"
-                                        onChange={this.setAmountOfMoneyToBeChanged}
-                                />
                             </div>
-                            
-                            <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
-                            <button id="exchange-button" className="btn btn-primary" onClick={this.exchange}>Exchange!</button>
-                            <span className="badge badge-info exchange-result">{this.state.successfullyExchanged}</span>
-                        </div>
-                        </div>
                             <div className="col-4 right-column">  {/* Right column */}
                                 <table id="exchange-table">
                                     <tbody>
@@ -375,7 +370,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                         </div> 
                     </div> 
                 </div>
-        </div>
+            </div>
         )}
 }
 
