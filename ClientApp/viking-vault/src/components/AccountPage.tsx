@@ -8,33 +8,44 @@ import { TransactionList } from '../UserDashboard/TransactionList';
 
 const url = constants.baseUrl+"Accounts/";
 
+interface IAccountBalance{
+    ronBalance: number;
+    eurBalance: number;
+    usdBalance: number;
+    yenBalance: number;
+}
+
 interface IAccountState{
     firstName: string
     lastName: string
     cardNumber: string
     expirationDate: string
-    ronBalance: number
-    eurBalance: number
-    usdBalance: number
-    yenBalance: number
+    accountsBalance: IAccountBalance
     totalBalance: number
     isPresent: boolean
     redirect: boolean
 } 
 
 class AccountPage extends React.Component<any, IAccountState>{
+    
     constructor(props:any){
         super(props);
+        
+        let defaultBalances: IAccountBalance = {
+            ronBalance: 0,
+            eurBalance: 0,
+            usdBalance: 0,
+            yenBalance: 0
+    
+        };
+
         this.state={
             firstName: "",
             lastName: "",
             cardNumber: "",
             expirationDate: "",
-            ronBalance: 0,
-            eurBalance: 0,
-            usdBalance: 0,
-            yenBalance: 0,
-            totalBalance:0,
+            accountsBalance: defaultBalances,
+            totalBalance: 0,
             isPresent: true,
             redirect:false
         }
@@ -45,12 +56,12 @@ class AccountPage extends React.Component<any, IAccountState>{
         then(response =>{
             return response.json();
         }).then((data:any)=>{
-            if(data!=null){
+            if(data!==null){
                 this.setState({
-                    totalBalance: this.state.ronBalance + 
-                    this.state.eurBalance*data.rates.EUR + 
-                    this.state.usdBalance*data.rates.USD + 
-                    this.state.yenBalance*data.rates.JPY
+                    totalBalance: this.state.accountsBalance.ronBalance + 
+                    (this.state.accountsBalance.eurBalance/data.rates.EUR) + 
+                    (this.state.accountsBalance.usdBalance/data.rates.USD) + 
+                    (this.state.accountsBalance.yenBalance/data.rates.JPY)
                 })
             }
         })
@@ -66,7 +77,7 @@ class AccountPage extends React.Component<any, IAccountState>{
         }
         else
         {
-            setInterval(this.updateExchangingRates, 5000);
+            setInterval(this.updateExchangingRates, constants.timeoutInterval);
             fetch(url, {
                 method:"GET",
                 headers:{
@@ -76,10 +87,8 @@ class AccountPage extends React.Component<any, IAccountState>{
                 }})
                 .then((response)=> {
                     if(response.status === 404){
-                        this.setState(oldState => {
-                            return {
-                                isPresent: true
-                            }
+                        this.setState({
+                            isPresent: true
                         })
                     }
                     if(response.status === 200){
@@ -99,19 +108,19 @@ class AccountPage extends React.Component<any, IAccountState>{
                                 lastName: userData.lastName,
                                 cardNumber: userData.cardNumber,
                                 expirationDate: userData.expirationDate,
-                                ronBalance: userData.ronBalance,
-                                eurBalance: userData.eurBalance,
-                                usdBalance: userData.usdBalance,
-                                yenBalance: userData.yenBalance
+                                accountsBalance: {
+                                    ronBalance: userData.ronBalance,
+                                    eurBalance: userData.eurBalance,
+                                    usdBalance: userData.usdBalance,
+                                    yenBalance: userData.yenBalance,
+                                }
                             }
                         )
                     }
                 })
                 .catch(error => {
-                    this.setState(oldState => {
-                        return {
-                            isPresent: true
-                        }
+                    this.setState({
+                        isPresent: true
                     })
                 })
         }
@@ -143,10 +152,10 @@ class AccountPage extends React.Component<any, IAccountState>{
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountsBalance.ronBalance}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountsBalance.eurBalance}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountsBalance.usdBalance}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountsBalance.yenBalance}</span> </p> 
             </div>
         </div>
     }
