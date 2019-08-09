@@ -21,11 +21,10 @@ namespace VikingVault.Services
 
         public UserAccount GetUserAccount(StringValues token)
         {
-            var tokenObject = new JwtSecurityToken(token);
-            string userId = tokenObject.Payload["Id"].ToString();
 
-            User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == int.Parse(userId));
-            Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == int.Parse(userId));
+            int userId = FindUserIDByToken(token);
+            User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
+            Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == userId);
             if(card == null)
             {
                 return null;
@@ -59,6 +58,14 @@ namespace VikingVault.Services
                 }
             }
             return userAccount;
+        }
+
+
+        private int FindUserIDByToken(StringValues token)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            string userId = tokenObject.Payload["Id"].ToString();
+            return int.Parse(userId);
         }
 
         private string GenerateExpirationDate(DateTime expirationDate)

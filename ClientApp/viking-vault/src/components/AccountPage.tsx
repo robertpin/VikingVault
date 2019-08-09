@@ -20,7 +20,7 @@ interface IAccountState{
     lastName: string
     cardNumber: string
     expirationDate: string
-    accountsBalance: IAccountBalance
+    accountsBalances: IAccountBalance
     totalBalance: number
     isPresent: boolean
     redirect: boolean
@@ -30,21 +30,17 @@ class AccountPage extends React.Component<any, IAccountState>{
     
     constructor(props:any){
         super(props);
-        
-        let defaultBalances: IAccountBalance = {
-            ronBalance: 0,
-            eurBalance: 0,
-            usdBalance: 0,
-            yenBalance: 0
-    
-        };
-
         this.state={
             firstName: "",
             lastName: "",
             cardNumber: "",
             expirationDate: "",
-            accountsBalance: defaultBalances,
+            accountsBalances: { 
+                ronBalance: 0,
+                eurBalance: 0,
+                usdBalance: 0,
+                yenBalance: 0
+        },
             totalBalance: 0,
             isPresent: true,
             redirect:false
@@ -58,10 +54,10 @@ class AccountPage extends React.Component<any, IAccountState>{
         }).then((data:any)=>{
             if(data!==null){
                 this.setState({
-                    totalBalance: this.state.accountsBalance.ronBalance + 
-                    (this.state.accountsBalance.eurBalance/data.rates.EUR) + 
-                    (this.state.accountsBalance.usdBalance/data.rates.USD) + 
-                    (this.state.accountsBalance.yenBalance/data.rates.JPY)
+                    totalBalance: this.state.accountsBalances.ronBalance + 
+                    (this.state.accountsBalances.eurBalance/data.rates.EUR) + 
+                    (this.state.accountsBalances.usdBalance/data.rates.USD) + 
+                    (this.state.accountsBalances.yenBalance/data.rates.JPY)
                 })
             }
         })
@@ -77,7 +73,7 @@ class AccountPage extends React.Component<any, IAccountState>{
         }
         else
         {
-            setInterval(this.updateExchangingRates, constants.timeoutInterval);
+            setInterval(this.updateExchangingRates, constants.ratesRefreshInterval);
             fetch(url, {
                 method:"GET",
                 headers:{
@@ -108,7 +104,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                                 lastName: userData.lastName,
                                 cardNumber: userData.cardNumber,
                                 expirationDate: userData.expirationDate,
-                                accountsBalance: {
+                                accountsBalances: {
                                     ronBalance: userData.ronBalance,
                                     eurBalance: userData.eurBalance,
                                     usdBalance: userData.usdBalance,
@@ -152,10 +148,10 @@ class AccountPage extends React.Component<any, IAccountState>{
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.accountsBalance.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.accountsBalance.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.accountsBalance.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.accountsBalance.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance}</span> </p> 
             </div>
         </div>
     }
@@ -177,7 +173,7 @@ class AccountPage extends React.Component<any, IAccountState>{
         return(            
             <div className="account-view">       
                 {this.state.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
-                <div className="info">
+                <div className="accounts-information">
                     <div className="accounts-title">
                         <h2 className="accounts-header">Accounts</h2>
                     </div>
