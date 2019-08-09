@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class added_Card_BankAccountMigration : Migration
+    public partial class completeModelMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,30 @@ namespace VikingVault.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    userId = table.Column<int>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Currency = table.Column<string>(nullable: true),
+                    Amount = table.Column<float>(nullable: false),
+                    OtherParty = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_User_userId",
+                        column: x => x.userId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_UserId",
                 table: "BankAccount",
@@ -64,6 +88,11 @@ namespace VikingVault.DataAccess.Migrations
                 table: "Card",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_userId",
+                table: "Transactions",
+                column: "userId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -73,6 +102,9 @@ namespace VikingVault.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Card");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
 
             migrationBuilder.CreateTable(
                 name: "UsersProfilePages",

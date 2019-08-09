@@ -4,6 +4,7 @@ import inexistentCard from './images/card.png'
 import genericCard from './images/GENERICcard-01.png'
 import {constants} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
+import { TransactionList } from '../UserDashboard/TransactionList';
 
 const url = constants.baseUrl+"Accounts/";
 
@@ -175,6 +176,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                     </div>
                     {this.state.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                 </div>
+                {this.state.redirect? <Redirect to="/login"/> : null}
             </div>
         )
     }

@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190808073808_added_Card_BankAccountMigration")]
-    partial class added_Card_BankAccountMigration
+    [Migration("20190809073239_completeModelMigration")]
+    partial class completeModelMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,31 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Card");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Amount");
+
+                    b.Property<string>("Currency");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("OtherParty");
+
+                    b.Property<string>("Type");
+
+                    b.Property<int?>("userId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -114,6 +139,13 @@ namespace VikingVault.DataAccess.Migrations
                         .WithOne("Card")
                         .HasForeignKey("VikingVault.DataAccess.Models.Card", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }
