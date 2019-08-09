@@ -195,7 +195,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     }
 
     extractBanksFeeFromBalance = (balance: Number) => {
-        return +balance - (+this.state.fee/100);
+        return +balance - ((+this.state.fee*+balance)/100);
     }
 
     hideExchangeResult = () => {
