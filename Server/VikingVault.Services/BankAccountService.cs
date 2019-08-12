@@ -47,13 +47,19 @@ namespace VikingVault.Services
             return bankAccounts;
         }
 
-        public BankAccount UpdateBankAccount(string email, UpdateBankAccountModel updatedBankAccount)
+        public BankAccount ChangeBalance(string email, UpdateBankAccountModel updatedBankAccount)
         {
             var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == email);
 
             var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
-            oldBankAccount.Balance = updatedBankAccount.Balance;
+            oldBankAccount.Balance += updatedBankAccount.Balance;
+            UpdateBankAccount();
 
+            return oldBankAccount;
+        }
+
+        public void UpdateBankAccount()
+        {
             try
             {
                 _dbContext.SaveChanges();
@@ -65,8 +71,6 @@ namespace VikingVault.Services
                     throw new BankAccountServiceException();
                 }
             }
-
-            return oldBankAccount;
         }
     }
 }

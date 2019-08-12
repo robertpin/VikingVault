@@ -1,0 +1,32 @@
+.exchange-done-button {
+    height: 120%;
+    font-size: 100%;
+    font-family: Helvetica;
+    font-weight: 750;
+    background-color: rgb(29, 84, 95);
+    border: none;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+.exchange-modal-footer {
+    background-color: rgb(29, 84, 95);
+    margin: 0;
+    padding: 2%;
+}
+
+.exchange-modal-text {
+    color: rgb(29, 84, 95);
+    font-family: Helvetica;
+    font-weight: 550;
+    font-size: 80%;
+    text-align: center;
+    width: 100%;
+}
+
+.exchange-modal-content {
+    border-radius: 15px;
+    border:none;
+    text-align: center;
+}

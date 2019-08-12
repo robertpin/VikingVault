@@ -234,11 +234,11 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     body: JSON.stringify([  
                         {  
                             "CurrencyType": this.state.fromCurrency,
-                            "Balance": +this.state.availableAmountFromCurrency - +this.state.toExchangeAmount
+                            "Balance": -this.state.toExchangeAmount
                         },
                         {  
                             "CurrencyType": this.state.toCurrency,
-                            "Balance": +this.state.availableAmountToCurrency + +balance
+                            "Balance": +balance
                         },
                         {
                             "CurrencyType": otherParty,
