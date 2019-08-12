@@ -21,7 +21,7 @@ namespace VikingVault.API.Controllers
             _userService = userService;
         }
 
-        [Route("api/register")]
+        [Route("register")]
         [HttpPost]
         public ActionResult Post([FromBody] User user)
         {
