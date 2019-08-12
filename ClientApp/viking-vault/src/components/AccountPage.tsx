@@ -3,6 +3,7 @@ import './styles.css'
 import account from './images/card.png'
 import {constants} from "../ConstantVariables";
 import { Redirect } from 'react-router-dom';
+import { TransactionList } from '../UserDashboard/TransactionList';
 
 const url = constants.baseUrl+"Accounts";
 
@@ -86,6 +87,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                     </div>
                     
                 </div>
+                {this.state.redirect? <Redirect to="/login"/> : null}
             </div>
         )
     }

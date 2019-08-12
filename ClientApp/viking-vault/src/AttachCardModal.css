@@ -1,3 +1,7 @@
+.modal-content.attach-card {
+    border-radius: 0.95rem;
+}
+
 .form-group.attach-card {
     width: 86%;
     margin-left: 7%;
@@ -29,21 +33,29 @@
 
 .modal-footer.attach-card {
     padding: 0rem;
-    height: 100%;
+    height: 53px;
 }
 
 .btn.attach-card {
     width: 100%;
     min-height: 100%;
+    margin-right: 0rem;
+    margin-left: 0rem;
+    border-radius: 0rem;
 }
 
 .btn-primary.attach-card {
     background-color: #09424D;
     color: white;
     border-color: #09424D;
+    border-bottom-left-radius: 0.9rem;
 }
 
-.btn-primary:hover.attach-card {
-    background-color: #09424D;
-    border-color: #09424D;
+
+.btn-default.attach-card:hover{
+    background-color: #ff0000;
+    color: white;
+    border-color: #ff0000;
+    border-bottom-right-radius: 0.9rem;
 }
+

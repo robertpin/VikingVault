@@ -27,5 +27,6 @@ namespace VikingVault.DataAccess
                 .HasAlternateKey(card => card.CardNumber)
                 .HasName("AlternateKey_CardNumber");
         }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

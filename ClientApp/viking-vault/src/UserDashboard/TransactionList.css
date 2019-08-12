@@ -1,0 +1,19 @@
+.transactions {
+    width: 50%;
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+}
+
+.transactions table {
+    color: #58595B;
+}
+
+.transactions h5 {
+    color: #004450;
+}
+
+.transactions .other-party-image {
+    max-width: 30px;
+    max-height: 30px;
+}
