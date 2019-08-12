@@ -99,3 +99,36 @@ footer {
 .custom-button-size {
   width: 80px;
 }
+
+.btn.add-money {
+  width: 100%;
+  min-height: 100%;
+}
+
+.btn-primary.add-money {
+  background-color: #09424D;
+  color: white;
+  border-color: #09424D;
+}
+
+.btn-primary:hover.add-money {
+  background-color: green;
+  border-color: #09424D;
+}
+
+.btn.cancel-add-money {
+  width: 100%;
+  min-height: 100%;
+}
+
+.btn-primary.cancel-add-money {
+  background-color: white;
+  color: black;
+  border-color: #09424D;
+}
+
+.btn-primary:hover.cancel-add-money {
+  background-color: #09424D;
+  color: white;
+  border-color: #09424D;
+}

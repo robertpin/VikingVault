@@ -43,7 +43,7 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
     }
 
     private validateAmount(){
-        if(Number(this.state.amount) <= 0 || Number(this.state.amount) > 5000){
+        if(Number(this.state.amount) <= 0 || Number(this.state.amount) > 5000 || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
             return false;
         }
         return true;
@@ -67,8 +67,8 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
                         </div>
 
                         <div className="modal-footer">
-                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-success" : "btn btn-secondary"} onClick={this.handleAddMoney}>Confirm</button>
-                            <button type="button" className="btn btn-outline-dark custom-button-size" onClick={this.closeModal}>Cancel</button>
+                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-primary add-money" : "btn btn-secondary add-money"} onClick={this.handleAddMoney}>Confirm</button>
+                            <button type="button" className="btn btn-primary cancel-add-money" onClick={this.closeModal}>Cancel</button>
                         </div>
                     </div>
                 </div>
