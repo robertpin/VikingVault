@@ -10,9 +10,9 @@ using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-    
-    [ApiController]
-    public class UserController : ControllerBase
+	[Route("[controller]")]
+	[ApiController]
+	public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
