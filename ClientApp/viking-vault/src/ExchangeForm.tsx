@@ -2,11 +2,11 @@ import './ExchangeForm.css';
 import React from "react";
 import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
+import ExchangeResponseModal from './ExchangeResponseModal';
 
 interface IExchangeFormState {
     fromCurrency: string;
     toCurrency: string;
-    successfullyExchanged: string;
     currencyToRon: Number;
     currencyToEur: Number;
     currencyToUsd: Number;
@@ -16,6 +16,8 @@ interface IExchangeFormState {
     toExchangeAmount: Number;
     maximumValueToBeChanged: Number;
     fee: Number;
+    openModal: boolean;
+    modalMessage: string;
 }
 
 class ExchangeForm extends React.Component<any, IExchangeFormState> {
@@ -25,7 +27,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         this.state = {
             fromCurrency: "EUR",
             toCurrency: "EUR",
-            successfullyExchanged: "",
             currencyToRon: 0.00,
             currencyToEur: 0.00,
             currencyToUsd: 0.00,
@@ -34,7 +35,9 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             availableAmountToCurrency: 0.00,
             toExchangeAmount: 0.00,
             maximumValueToBeChanged: 0.00,
-            fee: 5
+            fee: 5,
+            openModal: false,
+            modalMessage: ""
         }
     }
 
@@ -197,14 +200,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         return +balance - ((+this.state.fee*+balance)/100);
     }
 
-    hideExchangeResult = () => {
-        setTimeout(() => {
-            this.setState({
-                successfullyExchanged: ""
-            });
-          }, 3000);
-    }
-
     exchange = () => {
         var exchangeRate = this.getCurrencyExchangeRate();
         var balance = this.calculateExchangedBalance(exchangeRate, this.state.toExchangeAmount);
@@ -212,15 +207,15 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
 
         if(this.state.fromCurrency === this.state.toCurrency){
             this.setState({
-                successfullyExchanged: "The sell and buy currency must be different!"
+                openModal: true,
+                modalMessage: "The sell and buy currency must be different!"
             })
-            this.hideExchangeResult();
         }
         else if(this.state.toExchangeAmount < 1) {
             this.setState({
-                successfullyExchanged: "The amount of money to exchange must be a positive number!"
+                openModal: true,
+                modalMessage:  "The amount of money to exchange must be a positive number!"
             })
-            this.hideExchangeResult();
         }
         else
         {
@@ -255,16 +250,17 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                 .then(result => {
                     if(result != null) {
                         this.setState({
-                            successfullyExchanged: "Successfully exchanged " +
-                            this.state.toExchangeAmount + " " + this.state.fromCurrency + " into " + balance.toFixed(3) + " " + this.state.toCurrency + "!"
+                            openModal: true,
+                            modalMessage: "Exchange successful! " +
+                            this.state.toExchangeAmount + " " + this.state.fromCurrency + " exchanged to " + balance.toFixed(3) + " " + this.state.toCurrency
                         })
-                        this.hideExchangeResult();
                         this.getMaximumValueToBeChanged();
                         this.getMaximumValueToChangeInto();
                     }
                     else {
                         this.setState({
-                            successfullyExchanged: "Couldn't exchange the money!"
+                            openModal: true,
+                            modalMessage: "Couldn't exchange the money!"
                         })
                     }
                 })
@@ -272,6 +268,13 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         }
     }
  
+    closeModal = () => {
+        this.setState({
+            openModal: false,
+            modalMessage: ""
+        });
+    }
+
     componentDidMount() {
         this.setFeeBasedOnDays();
         this.getCurrencyRates();
@@ -287,6 +290,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             <div className="background-div">
                 <SideBar/>
                 <TopBar/>
+                <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className="white-background-div">
                     <div className="container"> 
                         <div className="row"> 
@@ -335,35 +339,34 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                                     </div>
                                     <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
                                     <button id="exchange-button" className="btn btn-primary" onClick={this.exchange}>Exchange!</button>
-                                    <span className="badge badge-info exchange-result">{this.state.successfullyExchanged}</span>
                                 </div>
                             </div>
                             <div className="col-4 right-column">  {/* Right column */}
                                 <table id="exchange-table">
                                     <tbody>
-                                    <tr className="padding-design">
-                                        <th className="text-decoration">Exchange rates for {this.state.fromCurrency}</th>
-                                    </tr>
-                                    <tr className="padding-design">
-                                        <th className="table-text padding-design">Currency</th>
-                                        <th className="table-text padding-design">Exchange Rate</th>
-                                    </tr>
-                                    <tr className="padding-design">
-                                        <td className="currency-decoration padding-design">{this.state.fromCurrency === "RON"? null : `RON`}</td>
-                                        <td className="table-design padding-design">{this.state.fromCurrency === "RON"? null : `${this.state.currencyToRon}`}</td>
-                                    </tr>
-                                    <tr className="padding-design">
-                                        <td className="currency-decoration padding-design">{this.state.fromCurrency === "EUR"? null : `EUR`}</td>
-                                        <td className="table-design padding-design">{this.state.fromCurrency === "EUR"? null : `${this.state.currencyToEur}`}</td>
-                                    </tr>
-                                    <tr className="padding-design">
-                                        <td className="currency-decoration padding-design">{this.state.fromCurrency === "USD"? null : `USD`}</td>
-                                        <td className="table-design padding-design">{this.state.fromCurrency === "USD"? null : `${this.state.currencyToUsd}`}</td>
-                                    </tr>
-                                    <tr className="padding-design">
-                                        <td className="currency-decoration padding-design">{this.state.fromCurrency === "YEN"? null : `YEN`}</td>
-                                        <td className="table-design padding-design">{this.state.fromCurrency === "YEN"? null : `${this.state.currencyToYen}`}</td>
-                                    </tr>
+                                        <tr className="padding-design">
+                                            <th className="text-decoration">Exchange rates for {this.state.fromCurrency}</th>
+                                        </tr>
+                                        <tr className="padding-design">
+                                            <th className="table-text padding-design">Currency</th>
+                                            <th className="table-text padding-design">Exchange Rate</th>
+                                        </tr>   
+                                        <tr className="padding-design">
+                                            <td className="currency-decoration padding-design">{this.state.fromCurrency === "RON"? null : `RON`}</td>
+                                            <td className="table-design padding-design">{this.state.fromCurrency === "RON"? null : `${this.state.currencyToRon}`}</td>
+                                        </tr>
+                                        <tr className="padding-design">
+                                            <td className="currency-decoration padding-design">{this.state.fromCurrency === "EUR"? null : `EUR`}</td>
+                                            <td className="table-design padding-design">{this.state.fromCurrency === "EUR"? null : `${this.state.currencyToEur}`}</td>
+                                        </tr>
+                                        <tr className="padding-design">
+                                            <td className="currency-decoration padding-design">{this.state.fromCurrency === "USD"? null : `USD`}</td>
+                                            <td className="table-design padding-design">{this.state.fromCurrency === "USD"? null : `${this.state.currencyToUsd}`}</td>
+                                        </tr>
+                                        <tr className="padding-design">
+                                            <td className="currency-decoration padding-design">{this.state.fromCurrency === "YEN"? null : `YEN`}</td>
+                                            <td className="table-design padding-design">{this.state.fromCurrency === "YEN"? null : `${this.state.currencyToYen}`}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
