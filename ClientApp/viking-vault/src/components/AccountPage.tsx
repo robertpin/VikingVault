@@ -139,7 +139,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     }
 
     accountsInformation(){
-        return <div style={{width:'100%'}}>  
+        return <div>  
             <div className="balance-container">
                 <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>

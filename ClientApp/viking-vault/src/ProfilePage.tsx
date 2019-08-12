@@ -22,7 +22,7 @@ class ProfilePage extends React.Component<any, any>
         return ( 
             <div className = "ProfilePage">
                 <ProfilePicture />
-                <ProfileData firstName = "Radu" lastName = "Lambrino " address = "Brasov" id = "1" email = "r@yahoo.com" />
+                <ProfileData />
             </div>
         );
     }
