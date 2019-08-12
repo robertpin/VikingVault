@@ -153,6 +153,8 @@ class AccountPage extends React.Component<any, IAccountState>{
                     USD <span className="account-value">{this.state.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
                     YEN <span className="account-value">{this.state.accountsBalances.yenBalance}</span> </p> 
             </div>
+            <br/><br/>
+            <TransactionList />
         </div>
     }
 

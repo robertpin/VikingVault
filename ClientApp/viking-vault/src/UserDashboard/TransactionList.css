@@ -1,6 +1,5 @@
 .transactions {
-    width: 50%;
-    position: absolute;
+    width:80%;
     right: 5%;
     bottom: 5%;
 }
@@ -10,6 +9,7 @@
 }
 
 .transactions h5 {
+    font-size: 1.5vw;
     color: #004450;
 }
 
