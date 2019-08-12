@@ -28,7 +28,7 @@ class DeleteUserModal extends React.Component<IDeleteUserModalProps, any>{
                     <div className="modal-header">
                         <h4 className="modal-title">Are you sure you want to delete {this.props.deletedUserName}?</h4>
                     </div>
-                    <div className="modal-footer">
+                    <div className="modal-footer delete-user">
                         <button type="button" className="btn btn-primary delete-user" onClick={this.handleDeleteUser}>Yes</button>
                         <button type="button" className="btn btn-primary cancel-delete-user" onClick={this.closeModal}>No</button>
                     </div>
