@@ -13,7 +13,7 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
