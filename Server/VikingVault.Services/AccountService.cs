@@ -21,43 +21,49 @@ namespace VikingVault.Services
 
         public UserAccount GetUserAccount(StringValues token)
         {
+            try
+            {
+                int userId = FindUserIDByToken(token);
+                User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
+                Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == userId);
+                if (card == null)
+                {
+                    return null;
+                }
 
-            int userId = FindUserIDByToken(token);
-            User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
-            Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == userId);
-            if(card == null)
+                List<BankAccount> bankAccounts = _dbContext.BankAccount.Where(ba => ba.User == returnedUser).ToList();
+                UserAccount userAccount = new UserAccount
+                {
+                    FirstName = returnedUser.FirstName,
+                    LastName = returnedUser.LastName,
+                    CardNumber = card.CardNumber,
+                    ExpirationDate = GenerateExpirationDate(card.ExpirationDate)
+                };
+
+                foreach (BankAccount ba in bankAccounts)
+                {
+                    switch (ba.CurrencyType)
+                    {
+                        case "Ron":
+                            userAccount.RonBalance = ba.Balance;
+                            break;
+                        case "Eur":
+                            userAccount.EurBalance = ba.Balance;
+                            break;
+                        case "Usd":
+                            userAccount.UsdBalance = ba.Balance;
+                            break;
+                        case "Yen":
+                            userAccount.YenBalance = ba.Balance;
+                            break;
+                    }
+                }
+                return userAccount;
+            }
+            catch (Exception e)
             {
                 return null;
             }
-
-            List<BankAccount> bankAccounts = _dbContext.BankAccount.Where(ba => ba.User == returnedUser).ToList();
-            UserAccount userAccount = new UserAccount
-            {
-                FirstName = returnedUser.FirstName,
-                LastName = returnedUser.LastName,
-                CardNumber = card.CardNumber,
-                ExpirationDate = GenerateExpirationDate(card.ExpirationDate)
-            };
-
-            foreach (BankAccount ba in bankAccounts)
-            {
-                switch (ba.CurrencyType)
-                {
-                    case "Ron":
-                        userAccount.RonBalance = ba.Balance;
-                        break;
-                    case "Eur":
-                        userAccount.EurBalance = ba.Balance;
-                        break;
-                    case "Usd":
-                        userAccount.UsdBalance = ba.Balance;
-                        break;
-                    case "Yen":
-                        userAccount.YenBalance = ba.Balance;
-                        break;
-                }
-            }
-            return userAccount;
         }
 
         private int FindUserIDByToken(StringValues token)
