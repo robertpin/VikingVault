@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190806114745_AddedBankAccountToTransactionsTable")]
+    partial class AddedBankAccountToTransactionsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,9 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Amount");
+                    b.Property<int?>("AccountId");
 
-                    b.Property<string>("Currency");
+                    b.Property<float>("Amount");
 
                     b.Property<DateTime>("Date");
 
@@ -55,11 +57,9 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<int?>("userId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -110,9 +110,9 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                    b.HasOne("VikingVault.DataAccess.Models.BankAccount", "Account")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("AccountId");
                 });
 #pragma warning restore 612, 618
         }
