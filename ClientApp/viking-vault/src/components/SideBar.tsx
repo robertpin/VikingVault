@@ -43,7 +43,7 @@ class SideBar extends React.Component<any, ISideBarState> {
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
                         <span className = {dashboardVisibility}>Dashboard</span>
-                        <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
+                        
                 </div>
                 <div className = {sidemenuVisibility}>
                         <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Transfer</span>
@@ -63,6 +63,7 @@ class SideBar extends React.Component<any, ISideBarState> {
                 <div className = {sidemenuVisibility}>
                         <img className="menu-icon" src={card} /> <span className = {spanVisibility}>Contact</span>
                 </div>
+                <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
             </div>
         )
     }

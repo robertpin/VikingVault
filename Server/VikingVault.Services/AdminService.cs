@@ -23,23 +23,24 @@ namespace VikingVault.Services
             try
             {
                 var users = _dbContext.User.
-                    Join(
+                    GroupJoin(
                         _dbContext.Cards,
                         user => user.Id,
                         card => card.User.Id,
-                        (user, card) => new UserProfileDataWithCard()
+                        (user, card) =>
+                        new UserProfileDataWithCard()
                         {
-                            Id = user.id,
+                            Id = user.Id,
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Address = user.Address,
                             Email = user.Email,
-                            CardNumber = card.CardNumber,
-                            ExpirationDate = card.ExpirationDate.toString()
+                            PictureLink = user.PictureLink,
+                            CardNumber = card.Count() != 0 ? card.ToArray<Card>()[0].CardNumber : "",
+                            ExpirationDate = card.Count() != 0 ? GenerateExpirationDate(card.ToArray<Card>()[0].ExpirationDate) : ""
                         }).ToList();
 
-                return users;
-
+                 return users;
             }
             catch(Exception e)
             {
@@ -49,12 +50,20 @@ namespace VikingVault.Services
 
         public bool IsAdmin(string token)
         {
-            var tokenObject = new JwtSecurityToken(token);
-            string userId = tokenObject.Payload["Id"].ToString();
-            User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
-            return returnedUser.Email == "admin";
+            if (token != null)
+            {
+                var tokenObject = new JwtSecurityToken(token);
+                string userId = tokenObject.Payload["Id"].ToString();
+                User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
+                return returnedUser.Email == "admin";
+            }
+
+            return false; 
         }
 
-
+        private string GenerateExpirationDate(DateTime expirationDate)
+        {
+            return expirationDate.Month + "/" + expirationDate.Year.ToString().Substring(2, 2);
+        }
     }
 }

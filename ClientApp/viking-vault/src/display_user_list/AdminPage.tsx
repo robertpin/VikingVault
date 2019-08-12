@@ -6,6 +6,7 @@ import './DisplayUsers.css';
 import { constants } from "../ConstantVariables";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
+import UserIcon from "../components/UserIcon";
 
 
 const API_URL = constants.baseUrl+"admin/getAllUsers";
@@ -20,6 +21,7 @@ interface IProfileData{
     expirationDate: string;
     errorLabel: string;
     redirect: boolean;
+    users: IUserData[];
 }
 
 class AdminPage extends React.Component<any, IProfileData>{
@@ -36,28 +38,27 @@ class AdminPage extends React.Component<any, IProfileData>{
             cardNumber: "no-data",
             expirationDate: "no-data",
             errorLabel: "no-data",
-            redirect: true
+            redirect: false,
+            users: []
         }
     }
 
     getAllUsers ()
     {
-        /** 1) verify if we have admin token
-         *  2) if yes, go ahead and get the data, else redirect to login 
-         *  3) show the data 
-         */
+        var users;
+        var token = sessionStorage.getItem("Authentication-Token");
         
-        let token = sessionStorage.getItem("Authentication-Token");
-
         if(token === null)
         {
             this.setState({
                 errorLabel: "Access Token Unavailable",
                 redirect: true
             })
+
+            return [];
         }
+
         else{
-            //this is the fetch only for getting the data
             fetch(API_URL, {
                 method: "GET",
                 headers: {
@@ -66,6 +67,7 @@ class AdminPage extends React.Component<any, IProfileData>{
                 }})
             .then( response => 
                 {
+                    console.log(response);
                     if( response.status === 500)
                     {
                         this.setState({
@@ -78,27 +80,30 @@ class AdminPage extends React.Component<any, IProfileData>{
                     return response.json();
                 })
             .then( usersData => {
+                this.setState({
+                    users: usersData
+                })
+            })
+            .catch( error => this.setState({ errorLabel: "Something went wrong" }));
 
-                if(usersData != null)
-                {
-                   usersData.map( (user: IUserData) => <UserData {...user} /> );
-                }
-                
-                return null;
-
-            }).catch( error => this.setState({ errorLabel: "Something went wrong" }));
+            return users;
         }
     }
 
+    componentDidMount()
+    {
+        this.getAllUsers();
+    }
+
     render(){
-        var users = this.getAllUsers();
-        
+
         return(
             <div className = "admin-page">
+                <SideBar />
                 <TopBar/>
-                <SideBar/>  
+                <UserIcon></UserIcon>  
                 <div className = "display-users-container">
-                    {users !== null ? users : 'No Users'};
+                     { this.state.users.map( user => <UserData {...user} />) }
                 </div>
             </div>
          );   

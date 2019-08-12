@@ -1,51 +1,41 @@
-.sidebar-true{
-    position: relative;
-    float: left;
+.sidebar{
     background-color: white;
     color: #09424d;
     font-weight: bold;
     font-size: 13px;
     height: 100%;
     transition: 0.5s;
+    position: absolute;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 150px;
-    clear: left;
-    z-index: 10;
+    z-index: 2;
 }
 
-.sidebar-false{
-    position: relative;
-    float: left;
-    background-color: white;
-    color: #09424d;
-    font-weight: bold;
-    font-size: 13px;
-    height: 100vh;
-    transition: 0.5s;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 250px;
-    clear: left;
-    z-index: 10;
+.collapsed{
+    width: 60px;
+}
+
+.expanded{
+    width: 200px;
 }
 
 .top-bar{
-    position: absolute;
     background-color: #09424d;
     font-weight: bold;
     font-size: 13px;
     height: 60px;
-    min-width: 100%;
-    max-width: 1920px;
+    width: 100%; 
     align-items: center;
     vertical-align: middle;
 }
 
-.regular-div{
+.dashboard-title-container{
+    padding-top: 15px;
+    padding-left: 18px;
     border-bottom: 1px solid #09424d;
-    height:46px;
+    height:60px;
 }
 
-.img{
+.menu-icon{
     width:20px;
     height:20px;
 }
@@ -58,27 +48,12 @@
     margin-right: 50%;
 }
 
-.p{
-    margin-left: 5%;
-}
-
 .account-view{
     background-color: white;
-    margin-top: 10px;
-    margin-left: 20%;
-    width: 70%;
-    height: 600px;
-    border-radius : 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    display: none;
-}
-
-.account-hide{
-    background-color: white;
-    margin-top: 10px;
-    margin-left: 20%;
-    width: 70%;
-    height: 600px;
+    margin-top: 15px;
+    width: 75%;
+    margin-left:15%;
+    height: 550px;
     border-radius : 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: inline-flex;
@@ -86,14 +61,11 @@
 }
 
 .card-unavailable{
-    width: 600px;
-    height: 300px;
-    object-fit: cover;
-    margin-top: 3%;
-    margin-left: 5%;
+    min-width:400px;
+    width:400px;
+    height:250px;
     box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(7, 7, 7, 0.19);
-    border-radius: 25px;
-    transition: 0.5s;
+    border-radius: 15px;
 }
 
 .info{
@@ -107,6 +79,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
     width: 70%;
+    font-size:15px;
 }
 
 .user-icon {
@@ -114,7 +87,7 @@
     height: 40px;
     border-radius: 100%;
 }
-  
+
 .dropdown {
     float: right;
     margin-right: 5%;
@@ -135,27 +108,80 @@
     min-width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    border-radius: 3px;
 }
 
-.side-menu-true {
-    padding: 0% 40%;
+.side-menu-hide {
+    padding: 20% 30%;
+    align-items: center;
 }
 
-.side-menu-false{
-    padding: 2% 20%;
+.side-menu-hide:hover{
+    background-color: #d4e3e6;
+    transition: 0.4s;
 }
 
-.paragraph-true{
-    color: #fff;
+.side-menu-show{
+    padding: 7% 20%;
 }
 
-.paragraph-false{
+.side-menu-show:hover{
+    background-color: #d4e3e6;
+    transition: 0.4s;
+}
+
+.span-hide{
+    display:none;
+}
+
+.span-show{
     color: #09424d;
     font-weight: lighter;
 }
-hr{
-    width: 100%
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dashboard-hide{
+    display:none;
+}
+
+.dashboard-show{
+    color: #09424d;
+    font-weight: bold;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s;
+    -webkit-animation: fadein 2s; 
+    -o-animation: fadein 2s; 
 }
 
 .user-page{
@@ -165,10 +191,18 @@ hr{
 
 .transform-none{
     transform: none;
+    margin-left:30%;
+    position:absolute;
+    bottom:3%;
+    
 }
 
 .transform-reverse{
     transform: scaleX(-1);
+    align-self: center;
+    position:absolute; 
+    bottom:3%;
+    margin-left:80%;
 }
 
 .button-user-icon{
@@ -177,20 +211,105 @@ hr{
     border: none;
     color: #09424d;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     cursor: pointer;
+    font-size: 12px;
+    font-weight: 600
 }
 
 .button-user-icon:hover{
-    width:100%;
     background-color: #09424d;
-    border: none;
     color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
+    transition: 0.4s;
+}
+
+.accounts-header{
+    margin-top: 15px;
+    font-size: 1vw;
+    font-weight: bolder;
+}
+
+.accounts-title{
+    width:100%;
+}
+
+.balance-header{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#09424d;
+    font-size:2vw;
+    font-weight: 790;
+}
+
+.balance-value{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#505353;
+    font-size:2vw;
+    font-weight: 775;
+}
+
+.balance-information{
+    font-size: 10px;
+    margin-top: -20px;
+}
+
+.balance-container{
+    border-bottom: 1px solid #09424d;
+    width:80%;
+}
+
+.accounts-container{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#155764;
+    font-size:1.4vw;
+    font-weight: 775;
+}
+
+.account-value{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#7a8080;
+    font-size:1.4vw;
+    font-weight: 775;
+}
+
+.card-available{
+    min-width:400px;
+    width:400px;
+    height:250px;
+    box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(7, 7, 7, 0.19);
+    position: relative;
+    border-radius: 15px;
+}
+
+.card-picture-container{
+    margin-top: 3%;
+    margin-left: 5%;
+}
+
+.card-number{
+    position: absolute;
+    z-index: 1;
+    margin-top: 145px;
+    margin-left: 45px;
+    font-size: 23px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
+.card-expiration-date{
+    position: absolute;
+    z-index: 1;
+    margin-top: 181px;
+    margin-left: 165px;
+    user-select: none;
+}
+
+.card-owner-name{
+    position: absolute; 
+    z-index: 1;
+    margin-top: 210px;
+    margin-left:40px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    user-select: none;
 }

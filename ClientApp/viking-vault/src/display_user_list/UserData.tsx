@@ -1,24 +1,17 @@
 import React from "react";
-import SideBar from '../components/SideBar'
-import TopBar from '../components/TopBar'
 import '../components/styles.css';
 import './DisplayUsers.css';
-import SourceImg from '../UI/user2.png';
-import CardImg from '../UI/card-internship.png';
-import { string, number } from "prop-types";
-import { ninvoke } from "q";
+import DefaultProfilePicture from '../UI/user2.png';
+import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
-export * from "./UserData";
 
-const API_URL = constants.baseUrl+"admin/getAllUsers";
-const LOGIN_ROUTE ="/login";
-
-interface IUserData{
+export interface IUserData{
     id: number;
     firstName: string;
     lastName: string;
     address: string;
     email: string;
+    pictureLink: string;
     cardNumber: string;
     expirationDate: string;
 }
@@ -37,6 +30,7 @@ class UserData extends React.Component<IUserData, IUserData>{
                 lastName: props.lastName,
                 address: props.address,
                 email: props.email,
+                pictureLink: props.pictureLink,
                 cardNumber: props.cardNumber,
                 expirationDate: props.expirationDate
             };
@@ -49,21 +43,20 @@ class UserData extends React.Component<IUserData, IUserData>{
                 lastName: "no-data",
                 address: "no-data",
                 email: "no-data",
+                pictureLink: "",
                 cardNumber: "no-data",
                 expirationDate: "no-data"
             };
         }        
     }
 
-
     render(){
         return(
          
             <div className = "user-container"> 
                 <div className = "user-container-inside">
-                    
                     <div className = "img-container">
-                        <img src = {SourceImg} className = "profile-img"/>
+                         {this.state.pictureLink === "" ? <img src = {DefaultProfilePicture} className = "profile-img"/> : <img src = {this.state.pictureLink} className = {this.state.pictureLink}/> }                 
                     </div>
                     
                     <div className = "profile-data-container">
@@ -73,7 +66,15 @@ class UserData extends React.Component<IUserData, IUserData>{
                     </div>
 
                     <div className = "card-container">
-                        <img src = {CardImg} className = "card-img"></img>
+                        {this.state.cardNumber !== ""? 
+                                                        <div className = "card-data-style">
+                                                            <p className = "name-on-card">{this.state.firstName} {this.state.lastName}</p>
+                                                            <p className = "expiration-date-on-card">{this.state.expirationDate}</p>
+                                                            <p className = "card-number-on-card">{this.state.cardNumber}</p>
+                                                            <img src = {CardImg} className = "card-img"></img>
+                                                        </div>
+
+                                                       : null}
                     </div>
 
                     <div className = "button-container">
@@ -81,11 +82,10 @@ class UserData extends React.Component<IUserData, IUserData>{
                         <button className = "button-style">Delete</button>
                         <button className = "button-style">Add Money</button>
                     </div>
-
                 </div>
             </div>           
          );   
     }
 }
 
-
+export { UserData };
