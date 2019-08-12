@@ -26,11 +26,11 @@ class DeleteUserModal extends React.Component<IDeleteUserModalProps, any>{
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h4 className="modal-title">Are you sure you want to permanently delete {this.props.deletedUserName}?</h4>
+                        <h4 className="modal-title">Are you sure you want to delete {this.props.deletedUserName}?</h4>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-outline-danger custom-button-size" onClick={this.handleDeleteUser}>Yes</button>
-                        <button type="button" className="btn btn-outline-success custom-button-size" onClick={this.closeModal}>No</button>
+                        <button type="button" className="btn btn-primary delete-user" onClick={this.handleDeleteUser}>Yes</button>
+                        <button type="button" className="btn btn-primary cancel-delete-user" onClick={this.closeModal}>No</button>
                     </div>
                 </div>
             </div>

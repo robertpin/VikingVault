@@ -95,3 +95,38 @@ footer {
 .modal.close {
   display: none;
 }
+
+.btn.delete-user {
+  width: 100%;
+  min-height: 100%;
+}
+
+.btn-primary.delete-user {
+  background-color: white;
+  color: #990909;
+  border-color: #990909;
+}
+
+.btn-primary:hover.delete-user {
+  background-color: #990909;
+  color: white;
+  border-color: #09424D;
+}
+
+.btn.cancel-delete-user {
+  width: 100%;
+  min-height: 100%;
+}
+
+.btn-primary.cancel-delete-user {
+  background-color: white;
+  color: #09424D;
+  border-color: #09424D;
+}
+
+.btn-primary:hover.cancel-delete-user {
+  background-color: #09424D;
+  color: white;
+  border-color: #09424D;
+}
+
