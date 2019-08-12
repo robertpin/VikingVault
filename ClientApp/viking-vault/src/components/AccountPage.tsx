@@ -96,7 +96,6 @@ class AccountPage extends React.Component<any, IAccountState>{
                     }
                     return response.json();})
                 .then((userData:any)=>{
-                    console.log(userData)
                     if(userData != null){
                         this.setState(
                             {
@@ -140,7 +139,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     }
 
     accountsInformation(){
-        return <div>  
+        return <div style={{width:'100%'}}>  
             <div className="balance-container">
                 <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>

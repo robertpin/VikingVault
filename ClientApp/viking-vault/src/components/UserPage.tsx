@@ -30,7 +30,6 @@ class UserPage extends React.Component<any, IUserPageState>{
                 <SideBar/>
                 <TopBar/>
                 <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
-                
                 {this.state.viewProfile ?  <AccountPage /> : <ProfilePage/>}
             </div>
          )   

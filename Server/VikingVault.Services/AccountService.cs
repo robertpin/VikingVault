@@ -60,7 +60,6 @@ namespace VikingVault.Services
             return userAccount;
         }
 
-
         private int FindUserIDByToken(StringValues token)
         {
             var tokenObject = new JwtSecurityToken(token);
