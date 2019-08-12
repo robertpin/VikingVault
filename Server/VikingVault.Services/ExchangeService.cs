@@ -39,12 +39,11 @@ namespace VikingVault.Services
                 Type = "Exchange",
                 Currency = bankAccountSell.CurrencyType,
                 Date = DateTime.Now,
-                Amount = exchangeInfo.Balance,
+                Amount = exchangeInfo.Amount,
                 OtherParty = exchangeInfo.CurrencyType
             };
 
             _transactionService.AddTransaction(transaction);
-
             return bankAccounts;
         }
     }

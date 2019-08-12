@@ -6,6 +6,5 @@ namespace VikingVault.Services.Exceptions
 {
     class BankAccountServiceException:Exception
     {
-
     }
 }

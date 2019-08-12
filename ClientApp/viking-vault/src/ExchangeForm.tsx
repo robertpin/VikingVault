@@ -23,7 +23,6 @@ interface IExchangeFormState {
 class ExchangeForm extends React.Component<any, IExchangeFormState> {
     constructor(props: any) {
         super(props);
-
         this.state = {
             fromCurrency: "EUR",
             toCurrency: "EUR",
@@ -234,15 +233,15 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     body: JSON.stringify([  
                         {  
                             "CurrencyType": this.state.fromCurrency,
-                            "Balance": -this.state.toExchangeAmount
+                            "Amount": -this.state.toExchangeAmount
                         },
                         {  
                             "CurrencyType": this.state.toCurrency,
-                            "Balance": +balance
+                            "Amount": +balance
                         },
                         {
                             "CurrencyType": otherParty,
-                            "Balance": amount
+                            "Amount": amount
                         }
                     ])
                 })

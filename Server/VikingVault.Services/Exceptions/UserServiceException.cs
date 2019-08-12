@@ -6,6 +6,5 @@ namespace VikingVault.Services.Exceptions
 {
     public class UserServiceException:Exception 
     {
-
     }
 }

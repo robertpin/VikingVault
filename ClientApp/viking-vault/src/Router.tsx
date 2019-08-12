@@ -53,9 +53,9 @@ class Router extends React.Component<any, IState> {
         return <BRouter>
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
-            <Route path="/exchange" exact component={ExchangeForm}/>
+            <Route path="/user/exchange" exact component={ExchangeForm}/>
             <Route path="/" exact render={() => this.makeRedirect()}/>
-            <Route path="/user" component={UserPage} />
+            <Route path="/user" exact render = {() => <UserPage/>} />
         </BRouter>
     }
 }
