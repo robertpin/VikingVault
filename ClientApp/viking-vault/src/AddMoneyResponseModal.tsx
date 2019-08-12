@@ -23,8 +23,8 @@ class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps,
                     <div className="modal-header">
                         <h4 className="modal-title">{this.props.message}</h4>
                     </div>
-                    <div className="modal-footer">
-                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary cancel-add-money" : "btn btn-primary cancel-add-money"} onClick={this.closeModal}>Done</button>
+                    <div className="modal-footer response-add-money">
+                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary add-money-response" : "btn btn-primary add-money-response"} onClick={this.closeModal}>Done</button>
                     </div>
                 </div>
             </div>
