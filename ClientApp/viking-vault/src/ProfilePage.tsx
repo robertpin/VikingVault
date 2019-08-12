@@ -8,14 +8,11 @@ const style1 = { backgroundColor: 'red'};
 
 
 class ProfilePage extends React.Component<any, any>
-{
-    
-    
+{  
     constructor(props: any)
     {
         super(props);
     }
-
 
     render ()
     { 
