@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190806114557_AddedBankAccount")]
-    partial class AddedBankAccount
+    [Migration("20190808084250_updating_database_to_date")]
+    partial class updating_database_to_date
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,23 +41,27 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("BankAccount");
                 });
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Amount");
+                    b.Property<int>("CCV");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<string>("CardNumber")
+                        .IsRequired();
 
-                    b.Property<string>("OtherParty");
+                    b.Property<DateTime>("ExpirationDate");
 
-                    b.Property<string>("Type");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transactions");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
@@ -101,6 +105,14 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Card", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
+                        .WithOne("Card")
+                        .HasForeignKey("VikingVault.DataAccess.Models.Card", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

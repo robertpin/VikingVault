@@ -3,17 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class AddedBankAccount : Migration
+    public partial class updating_database_to_date : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "UsersProfilePages");
 
-            migrationBuilder.RenameColumn(
-                name: "Beneficiary",
-                table: "Transactions",
-                newName: "OtherParty");
+            migrationBuilder.DropUniqueConstraint(
+                name: "AlternateKey_CardNumber",
+                table: "Cards");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "CardNumber",
+                table: "Cards",
+                nullable: false,
+                oldClrType: typeof(string));
 
             migrationBuilder.CreateTable(
                 name: "BankAccount",
@@ -47,10 +52,16 @@ namespace VikingVault.DataAccess.Migrations
             migrationBuilder.DropTable(
                 name: "BankAccount");
 
-            migrationBuilder.RenameColumn(
-                name: "OtherParty",
-                table: "Transactions",
-                newName: "Beneficiary");
+            migrationBuilder.AlterColumn<string>(
+                name: "CardNumber",
+                table: "Cards",
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AddUniqueConstraint(
+                name: "AlternateKey_CardNumber",
+                table: "Cards",
+                column: "CardNumber");
 
             migrationBuilder.CreateTable(
                 name: "UsersProfilePages",

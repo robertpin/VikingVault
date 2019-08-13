@@ -2,9 +2,9 @@ import * as React from "react";
 import { render } from "react-dom";
 import './ProfileData.css';
 import { Redirect } from 'react-router-dom';
-import {constants} from "./ConstantVariables";
+import { constants } from "./ConstantVariables";
 
-const API_URL = constants.baseUrl+"userprofilepages";
+const API_URL = `${constants.baseUrl}userprofilepages`;
 const LOGIN_ROUTE ="/login";
 
 interface IProfileDataState {
@@ -70,7 +70,6 @@ class ProfileData extends React.Component<any, IProfileDataState>
             .then( userData => {
                 if(userData != null)
                 {
-                    
                     this.setState(
                         {
                             firstName: userData.firstName,
@@ -90,17 +89,12 @@ class ProfileData extends React.Component<any, IProfileDataState>
         return( 
             <div className = "ProfileDataContainer html" >
                 { this.state.redirect? <Redirect to = { LOGIN_ROUTE } /> : null} 
-                
                 <div className = "ProfileDataMainInfo">
-
                     <span className = "ProfileDataName"> 
                         {this.state.firstName} {this.state.lastName} <br /> 
-                    </span>
-                    
+                    </span>           
                     {this.state.address}
-
                     <hr />
-
                 </div>
                 
                 <div className = "ProfileDataSecondaryInfo" > 

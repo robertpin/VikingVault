@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190806114745_AddedBankAccountToTransactionsTable")]
-    partial class AddedBankAccountToTransactionsTable
+    [Migration("20190809095556_fullModelMigration")]
+    partial class fullModelMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,15 +41,38 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("BankAccount");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Card", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CCV");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired();
+
+                    b.Property<DateTime>("ExpirationDate");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Card");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccountId");
-
                     b.Property<float>("Amount");
+
+                    b.Property<string>("Currency");
 
                     b.Property<DateTime>("Date");
 
@@ -57,9 +80,11 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
+                    b.Property<int?>("userId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Transactions");
                 });
@@ -108,11 +133,19 @@ namespace VikingVault.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Card", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
+                        .WithOne("Card")
+                        .HasForeignKey("VikingVault.DataAccess.Models.Card", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.BankAccount", "Account")
+                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
                         .WithMany()
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }
