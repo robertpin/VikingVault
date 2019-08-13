@@ -8,6 +8,8 @@ var regex = /^([+-]?[1-9]\d*|0)$/;
 interface IModalProps {
     open: boolean;
     modalClose: any;
+    firstName: string;
+    lastName: string;
     userId: number;
 }
 
@@ -21,8 +23,6 @@ interface IFormState {
     [key: string]: string | number | boolean | ICardProperties  | null;
     card: ICardProperties;
     valid: boolean | null;
-    // status: number;
-    // response: string;
     errorLabel: string;
 }
 
@@ -36,8 +36,6 @@ class AttachCardForm extends React.Component<any, IFormState> {
                 ccv: 0,
             },
             valid: null,
-            // status: -1,
-            // response: "",
             errorLabel: "",
         }
     }
@@ -76,7 +74,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
     }
 
     private expirationDateIsAfter2019 = () => {
-        if(!(this.state.card.expirationDate === "2019" || this.state.card.expirationDate === ""))
+        if(!(this.state.card.expirationDate === ""))
             return  {
                 message: "Ok",
                 class: "alert alert-success"
@@ -128,6 +126,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
 
     private sendDataAndShowResponse = async () => {
         const card = this.getCard(this.props.userId);
+        console.log(card);
         fetch(baseUrl+"attach", {
             method: "POST",
             headers: {
@@ -177,7 +176,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
                         <div className="modal-dialog attach-card">
                             <div className="modal-content attach-card">
                                 <div className="modal-header attach-card">
-                                    <h5 className="heading-name attach-card">Vlad Dumitrescu</h5>
+                                    <h5 className="heading-name attach-card">{this.props.firstName} {this.props.lastName}</h5>
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Card number</label>
@@ -187,7 +186,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Expiration date</label>
                                     <select value={this.state.card.expirationDate} onChange={ (e) => this.handleChange(e.target.value, "expirationDate") } required className="form-control accent-color">
-                                        <option value="2019">2019</option>
+                                        <option value=" "></option>
                                         <option value="2020">2020</option>
                                         <option value="2021">2021</option>
                                         <option value="2022">2022</option>

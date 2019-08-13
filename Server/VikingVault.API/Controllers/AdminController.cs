@@ -29,5 +29,13 @@ namespace VikingVault.API.Controllers
             }
             return Ok(false);
         }
+
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            var users = _adminService.GetAllUsers();
+            return Ok(users);
+        }
     }
 }

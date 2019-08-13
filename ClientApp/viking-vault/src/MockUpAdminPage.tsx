@@ -5,7 +5,7 @@ interface IAdminPageState {
     openModal: boolean
 }
 
-class AdminPage extends React.Component<any, IAdminPageState> {
+class AdminPageMe extends React.Component<any, IAdminPageState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -36,4 +36,4 @@ class AdminPage extends React.Component<any, IAdminPageState> {
     }
 }
 
-export { AdminPage };
+export { AdminPageMe };

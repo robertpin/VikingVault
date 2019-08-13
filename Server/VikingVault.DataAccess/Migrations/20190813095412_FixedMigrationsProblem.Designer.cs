@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190809073239_completeModelMigration")]
-    partial class completeModelMigration
+    [Migration("20190813095412_FixedMigrationsProblem")]
+    partial class FixedMigrationsProblem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Card");
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>

@@ -5,17 +5,18 @@ import { LoginForm } from "./Login";
 import UserPage from './components/UserPage';
 import {constants} from "./ConstantVariables";
 import "./App.css"
-import { AdminPage } from "./MockUpAdminPage";
+import { AdminPage } from "./display_user_list/AdminPage";
+import { AdminPageMe } from "./MockUpAdminPage";
 
 const baseUrl = constants.baseUrl;
 
 interface IState {
-    isAdmin: boolean;
+    isAdmin: boolean | null;
 }
 
 class Router extends React.Component<any, IState> {
     state = {
-        isAdmin: false
+        isAdmin: null
     }
 
     private isUserAdmin() {
@@ -45,8 +46,31 @@ class Router extends React.Component<any, IState> {
     private makeRedirect() {
         if(sessionStorage.getItem("Authentication-Token") === null)
             return <Redirect to="/login" />;
-        else
-            return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+        else {
+            if(this.state.isAdmin === null) {
+                setTimeout(() =>{
+                    return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+                }, 500);
+            }
+            else return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+        }
+    }
+
+    private makeAdminRedirect()
+    {
+        if(this.state.isAdmin === null)
+        {
+            setTimeout(() => {
+                if(this.state.isAdmin)
+                    return <AdminPage/>;
+                else return <Redirect to = "/login" />
+            },500);
+        }
+
+        if(this.state.isAdmin)
+            return <AdminPage />
+        
+        return <Redirect to="/login" />
     }
 
     render() {
@@ -55,7 +79,8 @@ class Router extends React.Component<any, IState> {
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
             <Route path="/user" component={UserPage} />
-            <Route path="/aaa" component={AdminPage} />
+            <Route path="/admin" render = { () => this.makeAdminRedirect()} />
+            <Route path="/aaa" component={AdminPageMe} />
         </BRouter>
     }
 }

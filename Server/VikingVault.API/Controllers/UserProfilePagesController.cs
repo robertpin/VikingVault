@@ -21,7 +21,6 @@ namespace VikingVault.API.Controllers
             _userProfilePageService = userProfilePageService;
         }
         
-        // GET: api/UserProfilePages
         [HttpGet]
         public ActionResult<UserProfilePageViewModel> Get()
         {
