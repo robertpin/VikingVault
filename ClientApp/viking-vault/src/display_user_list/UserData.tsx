@@ -52,14 +52,22 @@ class UserData extends React.Component<IUserData, IUserData>{
         }        
     }
 
+    splitCardNumber(begin: number, end: number){
+        return this.state.cardNumber.substring(begin, end);
+    }
+
+    formatCardNumber(cardNumber: string)
+    {
+        return <span>{this.splitCardNumber(0,4)}   {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
+    }
+
     renderUserCard()
     {
         if(this.state.cardNumber !== "")
             return <div className = "card-data-style">
                         <p className = "name-on-card">{this.state.firstName} {this.state.lastName}</p>
                         <p className = "expiration-date-on-card">{this.state.expirationDate}</p>
-                        <p className = "card-number-on-card">{this.state.cardNumber}</p>
-                        <img src = {CardImg} className = "card-img"></img>
+                        <p className = "card-number-on-card">{this.formatCardNumber(this.state.cardNumber)}</p>
                    </div>        
 
         return null; 
@@ -80,7 +88,8 @@ class UserData extends React.Component<IUserData, IUserData>{
                     </div>
 
                     <div className = "card-container">
-                        {this.renderUserCard()}  
+                        <img src = {CardImg} className = "card-img"></img>
+                        {this.renderUserCard()}
                     </div>
 
                     <div className = "button-container">

@@ -7,7 +7,7 @@
 
 .display-users-container{
     position: relative;
-    margin-top: 1%; /* to be changed according to the top bat */
+    margin-top: 1%; 
     margin-bottom: 10%;
     margin-left: 13%;
     float: left;
@@ -41,6 +41,7 @@
 
 .img-container{
     float: left;
+    position: relative;
     width: 25%;
     height: 100%;
     text-align: center;
@@ -49,7 +50,10 @@
 .profile-img{
     width: 55%;
     height: auto;
-    margin-top: 7%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }
 
 .profile-data-container{
@@ -80,16 +84,18 @@
     float: left;
     position: relative;
     width: 25%;
-    height: 90%;
-    top:10%;
+    height: 100%;
     text-align: center;
 }
 
 .card-img{
-    width: 90%;
+    position: relative;
+    width: 100%;
     height: auto;
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.144);
     border-radius: 5%;
+    top:50%;
+    transform: translateY(-50%);
 }
 
 .button-container{
@@ -119,27 +125,27 @@
 
 .card-data-style{
     font-family: monospace;
-    width: 19em;
-    height: 10em;
+    width: 100%;
+    height: auto;
 }
 
 .card-number-on-card{
     position: absolute;
-    font-size: 1.3em;
-    top: 6.1rem;
-    left: 2.6rem;
+    font-size: 1.3rem;
+    top: 52%;
+    left: 10%;
 }
 
 .expiration-date-on-card{
     position: absolute;
-    top: 7.8rem;
-    left: 8.2rem;
+    top: 69%;
+    left: 42%;
     font-size: 0.85em;
 }
 
 .name-on-card{
     position: absolute;
     font-size: 0.85em;
-    top: 9rem;
-    left: 2.6rem;
+    top: 78%;
+    left: 10%;
 }

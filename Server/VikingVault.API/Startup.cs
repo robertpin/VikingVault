@@ -63,7 +63,6 @@ namespace VikingVault.API
 			if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            
             }
             else
             {
