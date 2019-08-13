@@ -59,7 +59,7 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Card");
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
@@ -93,14 +93,20 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccessFailedCount");
+
                     b.Property<string>("Address")
                         .IsRequired();
 
                     b.Property<string>("Cnp")
                         .IsRequired();
 
+                    b.Property<string>("ConcurrencyStamp");
+
                     b.Property<string>("Email")
                         .IsRequired();
+
+                    b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -108,12 +114,32 @@ namespace VikingVault.DataAccess.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
                     b.Property<string>("Password")
                         .IsRequired();
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("PictureLink");
 
                     b.Property<string>("Role");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

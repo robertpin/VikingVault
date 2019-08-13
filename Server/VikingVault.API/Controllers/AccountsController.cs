@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Net;
 using System.Net.Http;
 using VikingVault.DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VikingVault.API.Controllers
 {
@@ -25,6 +26,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<UserAccount> Get()
         {
             var token = Request.Headers["x-access-token"];

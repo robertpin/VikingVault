@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.DataAccess.Models;
@@ -11,7 +12,7 @@ namespace VikingVault.API.Controllers
 {
 	[Route("[controller]")]
 	[ApiController]
-	public class UserProfilePagesController : ControllerBase
+    public class UserProfilePagesController : ControllerBase
     {
         private readonly IUserProfilePageService _userProfilePageService;
 
@@ -20,9 +21,9 @@ namespace VikingVault.API.Controllers
         {
             _userProfilePageService = userProfilePageService;
         }
-        
-        // GET: api/UserProfilePages
+       
         [HttpGet]
+        [Authorize]
         public ActionResult<UserProfilePageViewModel> Get()
         {
             var token = Request.Headers["x-access-token"];

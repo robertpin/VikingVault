@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +37,10 @@ namespace VikingVault.API
 
 			services.AddDbContext<VikingVaultDbContext>
                 (options => options.UseSqlServer(connectionString));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<VikingVaultDbContext>()
+                .AddDefaultTokenProviders();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -74,6 +79,8 @@ namespace VikingVault.API
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
+
+            app.UseAuthentication();
                 
             app.UseHttpsRedirection();
             app.UseMvc();
