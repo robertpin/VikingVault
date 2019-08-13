@@ -16,9 +16,12 @@ namespace VikingVault.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+	    private readonly IHostingEnvironment _environment;
+
+	    public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+	        _environment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,8 +32,10 @@ namespace VikingVault.API
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<VikingVaultDbContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+	        var connectionString = _environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") : Configuration.GetConnectionString("LiveDbConnection");
+
+			services.AddDbContext<VikingVaultDbContext>
+                (options => options.UseSqlServer(connectionString));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -51,9 +56,11 @@ namespace VikingVault.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, VikingVaultDbContext context)
         {
-            if (env.IsDevelopment())
+	        context.Database.Migrate();
+
+			if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             
