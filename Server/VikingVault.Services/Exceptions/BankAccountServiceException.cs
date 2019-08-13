@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VikingVault.Services.Exceptions
 {
-    class BankAccountServiceException:Exception
+    public class BankAccountServiceException : Exception
     {
     }
 }

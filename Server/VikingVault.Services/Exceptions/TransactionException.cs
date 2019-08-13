@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VikingVault.Services.Exceptions
 {
-    public class TransactionException:Exception
+    public class TransactionException : Exception
     {
         public TransactionException()
         {

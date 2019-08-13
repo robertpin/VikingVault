@@ -19,11 +19,11 @@ namespace VikingVault.Services
             _dbContext = context;
         }
 
-        public Transaction AddTransaction(Transaction tran)
+        public Transaction AddTransaction(Transaction transaction)
         {
             try
             {
-                _dbContext.Add(tran);
+                _dbContext.Add(transaction);
                 _dbContext.SaveChanges();
             }
             catch(Exception e)
@@ -33,7 +33,7 @@ namespace VikingVault.Services
                     throw new TransactionException();
                 }
             }
-            return tran;
+            return transaction;
         }
 
         public List<Transaction> GetTransactions(string userId)
