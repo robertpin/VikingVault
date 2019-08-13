@@ -35,7 +35,6 @@ namespace VikingVault.API.Controllers
         public ActionResult GetAllUsers()
         {
             var users = _adminService.GetAllUsers();
-
             return Ok(users);
         }
     }
