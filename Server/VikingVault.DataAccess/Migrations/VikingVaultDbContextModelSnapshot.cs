@@ -59,7 +59,7 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Cards");
+                    b.ToTable("Card");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
