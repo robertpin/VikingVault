@@ -10,7 +10,7 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190813101416_SeedAdmin")]
+    [Migration("20190813112913_SeedAdmin")]
     partial class SeedAdmin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
