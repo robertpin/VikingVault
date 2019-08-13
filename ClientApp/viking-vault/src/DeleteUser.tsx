@@ -27,7 +27,7 @@ class DeleteUser extends React.Component<any,any>{
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email: "email3@gmail.com"
+              email: "blabla@gmail.com"
             })});
 
         this.setState({

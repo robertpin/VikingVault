@@ -1,4 +1,5 @@
 import React from 'react';
+import './DeleteUser.css';
 
 interface IDeleteUserModalProps{
     open: boolean;
@@ -29,8 +30,8 @@ class DeleteUserModal extends React.Component<IDeleteUserModalProps, any>{
                         <h4 className="modal-title">Are you sure you want to delete {this.props.deletedUserName}?</h4>
                     </div>
                     <div className="modal-footer delete-user">
-                        <button type="button" className="btn btn-primary delete-user" onClick={this.handleDeleteUser}>Yes</button>
-                        <button type="button" className="btn btn-primary cancel-delete-user" onClick={this.closeModal}>No</button>
+                        <button type="button" className="btn btn-primary delete-user-button" onClick={this.handleDeleteUser}>Yes</button>
+                        <button type="button" className="btn btn-primary cancel-delete-user-button" onClick={this.closeModal}>No</button>
                     </div>
                 </div>
             </div>
