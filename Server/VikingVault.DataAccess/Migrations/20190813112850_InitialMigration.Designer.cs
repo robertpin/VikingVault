@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190813095412_FixedMigrationsProblem")]
-    partial class FixedMigrationsProblem
+    [Migration("20190813112850_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,6 +123,20 @@ namespace VikingVault.DataAccess.Migrations
                         .HasName("Email");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Ioan Budai Deleanu Street 64",
+                            Cnp = "1700820642466",
+                            Email = "admin",
+                            FirstName = "Admin Firstname",
+                            LastName = "Admin Lastname",
+                            Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+                            PictureLink = "",
+                            Role = "admin"
+                        });
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
