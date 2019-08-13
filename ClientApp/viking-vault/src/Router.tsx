@@ -16,14 +16,9 @@ interface IState {
 
 class Router extends React.Component<any, IState> {
     
-    constructor(props: any)
-    {
-        super(props);
-
-        this.state = {
-            isAdmin: null
-        }
-    }
+    state = {
+        isAdmin: null
+    };
 
     private isUserAdmin() {
         let token = sessionStorage.getItem("Authentication-Token");
@@ -49,7 +44,6 @@ class Router extends React.Component<any, IState> {
         this.isUserAdmin();
     }
        
-
     private makeRedirect() {
         if(sessionStorage.getItem("Authentication-Token") === null)
             return <Redirect to="/login" />;
@@ -67,9 +61,8 @@ class Router extends React.Component<any, IState> {
     {
         if(this.state.isAdmin === null)
         {
-            console.log("REQUEST FOR IS ADMIN SENT" + this.state.isAdmin);
             setTimeout(() => {
-                if(this.state.isAdmin === true)
+                if(this.state.isAdmin)
                     return <AdminPage/>;
                 else 
                     return <Redirect to = "/login" />;
