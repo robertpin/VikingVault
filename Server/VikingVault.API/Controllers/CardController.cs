@@ -25,9 +25,9 @@ namespace VikingVault.API.Controllers
         }
 
         [AllowAnonymous]
-        [Route("api/attach")]
+        [Route("attach")]
         [HttpPost]
-        public IActionResult AttachCard([FromBody]Card card)
+        public ActionResult<Card> AttachCard([FromBody]Card card)
         {
             try
             {
