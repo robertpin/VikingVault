@@ -65,6 +65,7 @@ class UserData extends React.Component<IUserData, IUserData>{
     {
         if(this.state.cardNumber !== "")
             return <div className = "card-data-style">
+                        <img src = {CardImg} className = "card-img"></img>
                         <p className = "name-on-card">{this.state.firstName} {this.state.lastName}</p>
                         <p className = "expiration-date-on-card">{this.state.expirationDate}</p>
                         <p className = "card-number-on-card">{this.formatCardNumber(this.state.cardNumber)}</p>
@@ -88,7 +89,6 @@ class UserData extends React.Component<IUserData, IUserData>{
                     </div>
 
                     <div className = "card-container">
-                        <img src = {CardImg} className = "card-img"></img>
                         {this.renderUserCard()}
                     </div>
 
