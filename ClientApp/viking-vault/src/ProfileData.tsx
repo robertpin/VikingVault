@@ -70,7 +70,6 @@ class ProfileData extends React.Component<any, IProfileDataState>
             .then( userData => {
                 if(userData != null)
                 {
-                    
                     this.setState(
                         {
                             firstName: userData.firstName,
@@ -90,17 +89,12 @@ class ProfileData extends React.Component<any, IProfileDataState>
         return( 
             <div className = "ProfileDataContainer html" >
                 { this.state.redirect? <Redirect to = { LOGIN_ROUTE } /> : null} 
-                
                 <div className = "ProfileDataMainInfo">
-
                     <span className = "ProfileDataName"> 
                         {this.state.firstName} {this.state.lastName} <br /> 
-                    </span>
-                    
+                    </span>           
                     {this.state.address}
-
                     <hr />
-
                 </div>
                 
                 <div className = "ProfileDataSecondaryInfo" > 

@@ -9,9 +9,9 @@ using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserProfilePagesController : ControllerBase
+	[Route("[controller]")]
+	[ApiController]
+	public class UserProfilePagesController : ControllerBase
     {
         private readonly IUserProfilePageService _userProfilePageService;
 

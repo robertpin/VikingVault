@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+	[Route("[controller]")]
+	[ApiController]
+	public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]

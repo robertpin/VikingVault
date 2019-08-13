@@ -21,8 +21,6 @@ class UserIcon extends React.Component<any, IUserIconState> {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
-
-
   sendData = () =>{
     setTimeout(() => {
       this.props.parentCallBack(false);
