@@ -42,8 +42,7 @@ class SideBar extends React.Component<any, ISideBarState> {
                 <div className="dashboard-title-container">
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
-                        <span className = {dashboardVisibility}>Dashboard</span>
-                        
+                        <span className = {dashboardVisibility}>Dashboard</span>         
                 </div>
                 <div className = {sidemenuVisibility}>
                         <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Transfer</span>

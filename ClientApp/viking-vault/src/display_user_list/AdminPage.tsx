@@ -8,9 +8,7 @@ import { UserData }  from './UserData';
 import { IUserData } from './UserData';
 import UserIcon from "../components/UserIcon";
 
-
 const API_URL = constants.baseUrl+"admin/getAllUsers";
-const LOGIN_ROUTE ="/login";
 
 interface IProfileData{
     id: number;
@@ -20,7 +18,6 @@ interface IProfileData{
     cardNumber: string;
     expirationDate: string;
     errorLabel: string;
-    redirect: boolean;
     users: IUserData[];
 }
 
@@ -38,7 +35,6 @@ class AdminPage extends React.Component<any, IProfileData>{
             cardNumber: "no-data",
             expirationDate: "no-data",
             errorLabel: "no-data",
-            redirect: false,
             users: []
         }
     }
@@ -52,7 +48,6 @@ class AdminPage extends React.Component<any, IProfileData>{
         {
             this.setState({
                 errorLabel: "Access Token Unavailable",
-                redirect: true
             })
 
             return [];
@@ -67,7 +62,6 @@ class AdminPage extends React.Component<any, IProfileData>{
                 }})
             .then( response => 
                 {
-                    console.log(response);
                     if( response.status === 500)
                     {
                         this.setState({
@@ -96,7 +90,6 @@ class AdminPage extends React.Component<any, IProfileData>{
     }
 
     render(){
-
         return(
             <div className = "admin-page">
                 <SideBar />
@@ -108,7 +101,6 @@ class AdminPage extends React.Component<any, IProfileData>{
             </div>
          );   
     }
- 
 }
 
 export { AdminPage };

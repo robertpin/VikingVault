@@ -6,12 +6,6 @@ import { ProfileData } from './ProfileData';
 
 class ProfilePage extends React.Component<any, any>
 {
-      
-    constructor(props: any)
-    {
-        super(props);
-    }
-
     render ()
     {
         

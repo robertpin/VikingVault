@@ -16,13 +16,24 @@ export interface IUserData{
     expirationDate: string;
 }
 
+const defaultUser = {
+    id: 0,
+    firstName: "no-data",
+    lastName: "no-data",
+    address: "no-data",
+    email: "no-data",
+    pictureLink: "",
+    cardNumber: "no-data",
+    expirationDate: "no-data"
+};
+
 class UserData extends React.Component<IUserData, IUserData>{
     
     constructor(props: IUserData)
     {
         super(props);
 
-        if(props != null)
+        if(props !== null)
         {
             this.state = {
                 id: props.id,
@@ -37,44 +48,39 @@ class UserData extends React.Component<IUserData, IUserData>{
         }
         else
         {
-            this.state = {
-                id: 0,
-                firstName: "no-data",
-                lastName: "no-data",
-                address: "no-data",
-                email: "no-data",
-                pictureLink: "",
-                cardNumber: "no-data",
-                expirationDate: "no-data"
-            };
+            this.state = {...defaultUser};
         }        
     }
 
+    renderUserCard()
+    {
+        if(this.state.cardNumber !== "")
+            return <div className = "card-data-style">
+                        <p className = "name-on-card">{this.state.firstName} {this.state.lastName}</p>
+                        <p className = "expiration-date-on-card">{this.state.expirationDate}</p>
+                        <p className = "card-number-on-card">{this.state.cardNumber}</p>
+                        <img src = {CardImg} className = "card-img"></img>
+                   </div>        
+
+        return null; 
+    }
+
     render(){
-        return(
-         
+        return( 
             <div className = "user-container"> 
                 <div className = "user-container-inside">
                     <div className = "img-container">
-                         {this.state.pictureLink === "" ? <img src = {DefaultProfilePicture} className = "profile-img"/> : <img src = {this.state.pictureLink} className = {this.state.pictureLink}/> }                 
+                         {this.state.pictureLink === "" ? <img src = {DefaultProfilePicture} className = "profile-img"/> : <img src = {this.state.pictureLink} className = "profile-img"/> }                 
                     </div>
                     
                     <div className = "profile-data-container">
-                        <span className = "profile-data-text" id = "user_name"> {this.state.firstName} {this.state.lastName} </span>
+                        <span className = "profile-data-text" id = "user-name"> {this.state.firstName} {this.state.lastName} </span>
                         <span className = "profile-data-text"> {this.state.address} </span>
-                        <span className = "profile-data-text" id = "card_number"> {this.state.cardNumber} </span>
+                        <span className = "profile-data-text" id = "card-number"> {this.state.cardNumber} </span>
                     </div>
 
                     <div className = "card-container">
-                        {this.state.cardNumber !== ""? 
-                                                        <div className = "card-data-style">
-                                                            <p className = "name-on-card">{this.state.firstName} {this.state.lastName}</p>
-                                                            <p className = "expiration-date-on-card">{this.state.expirationDate}</p>
-                                                            <p className = "card-number-on-card">{this.state.cardNumber}</p>
-                                                            <img src = {CardImg} className = "card-img"></img>
-                                                        </div>
-
-                                                       : null}
+                        {this.renderUserCard()}  
                     </div>
 
                     <div className = "button-container">
