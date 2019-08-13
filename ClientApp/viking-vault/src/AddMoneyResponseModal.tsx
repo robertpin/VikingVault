@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddMoney.css';
 
 interface IAddMoneyResponseModalProps{
     open: boolean;
@@ -7,9 +8,6 @@ interface IAddMoneyResponseModalProps{
 }
 
 class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps, any>{ 
-    constructor(props : IAddMoneyResponseModalProps){
-        super(props);
-    }
 
     private closeModal = () =>{
         this.props.closeModal(false);
@@ -24,7 +22,7 @@ class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps,
                         <h4 className="modal-title">{this.props.message}</h4>
                     </div>
                     <div className="modal-footer response-add-money">
-                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary add-money-response" : "btn btn-primary add-money-response"} onClick={this.closeModal}>OK</button>
+                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary add-money-response-button" : "btn btn-primary add-money-response-button"} onClick={this.closeModal}>OK</button>
                     </div>
                 </div>
             </div>

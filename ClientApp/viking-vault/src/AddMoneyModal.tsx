@@ -1,6 +1,5 @@
 import React from 'react';
-import AddMoney from './AddMoney';
-import AddMoneyResponseModal from './AddMoneyResponseModal';
+import './AddMoney.css';
 
 interface IAddMoneyModalProps{
     open: boolean;
@@ -14,12 +13,9 @@ interface IAddMoneyModalState{
 }
 
 class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalState>{ 
-    constructor(props : IAddMoneyModalProps){
-        super(props);
-        this.state = {
+    state = {
             amount : ""
         };
-    }
 
     private resetAmountField(){
         this.setState({
@@ -67,8 +63,8 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
                         </div>
 
                         <div className="modal-footer add-money">
-                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-primary add-money" : "btn btn-secondary add-money"} onClick={this.handleAddMoney}>Confirm</button>
-                            <button type="button" className="btn btn-primary cancel-add-money" onClick={this.closeModal}>Cancel</button>
+                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-primary add-money-button" : "btn btn-secondary add-money-button"} onClick={this.handleAddMoney}>Confirm</button>
+                            <button type="button" className="btn btn-primary cancel-add-money-button" onClick={this.closeModal}>Cancel</button>
                         </div>
                     </div>
                 </div>

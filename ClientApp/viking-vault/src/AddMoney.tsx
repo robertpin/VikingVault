@@ -2,7 +2,6 @@ import React from 'react';
 import { variables } from './ConstantVariables';
 import AddMoneyModal from './AddMoneyModal';
 import AddMoneyResponseModal from './AddMoneyResponseModal';
-import { isFlowBaseAnnotation } from '@babel/types';
 
 class AddMoney extends React.Component<any,any>{
     state = {
@@ -55,7 +54,7 @@ class AddMoney extends React.Component<any,any>{
               Email: "email10@gmail.com"
             })}).then(response => {
                 if(response.status === 200) {
-                    this.openResponseModalWithMessage("Added RON "+amount+" to Vlad Buda account");
+                    this.openResponseModalWithMessage("Added RON "+amount+" to Vlad Buda account!");
                     this.setState({
                         amount : amount //+current balance
                     });
