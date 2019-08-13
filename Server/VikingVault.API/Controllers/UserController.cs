@@ -10,9 +10,9 @@ using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-
-    [ApiController]
-    public class UserController : ControllerBase
+	[Route("[controller]")]
+	[ApiController]
+	public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -21,7 +21,7 @@ namespace VikingVault.API.Controllers
             _userService = userService;
         }
 
-        [Route("api/register")]
+        [Route("register")]
         [HttpPost]
         public ActionResult Post([FromBody] User user)
         {
@@ -31,12 +31,12 @@ namespace VikingVault.API.Controllers
             }
             catch (UserServiceException e)
             {
-                return StatusCode(500, "Internal server error");
+               return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpDelete]
-        [Route("api/user")]
+        [Route("delete")]
         public ActionResult Delete([FromBody] UserEmail userEmail)
         {
             try

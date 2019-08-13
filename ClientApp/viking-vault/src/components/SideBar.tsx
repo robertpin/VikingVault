@@ -5,6 +5,7 @@ import arrow from './images/arrowGRIdeschis.png'
 import placeholder from './images/placeholder.png'
 import paymentMethod from './images/payment-method.png';
 import block from './images/password.png'
+import moneyExchange from './images/money-exchange.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
 
@@ -31,29 +32,36 @@ class SideBar extends React.Component<any, ISideBarState> {
     }
 
     render(){
+        const sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
+        const sidemenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
+        const spanVisibility: string = this.state.show ? "span-hide" : "span-show";
+        const dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
-            <div className={"sidebar-" + this.state.show} id="mySidebar">
-                <div className="regular-div">
-                    <p className="p"> <img className="img" src={dashboard} alt=""/> My Dashboard  <img src={arrow} className = {this.state.show ? "transform-none img" : "transform-reverse img"} alt="" onClick={this.clickHandler}/></p>
+            <div className={sidebarVisibility}>
+                <div className="dashboard-title-container">
+                        <img className="menu-icon" src={dashboard} /> 
+                        &nbsp;
+                        <span className = {dashboardVisibility}>Dashboard</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={transfer} alt=""/> &nbsp; Transfer </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Transfer</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={transfer} alt=""/> &nbsp; Exchange </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={moneyExchange} /> <span className = {spanVisibility}>Exchange</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={paymentMethod} alt=""/> &nbsp; Automatic debit </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={paymentMethod} /> <span className = {spanVisibility}>Automatic debit</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={block} alt=""/> &nbsp; Block card </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={block} /> <span className = {spanVisibility}>Block card</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={placeholder} alt=""/> &nbsp; Locations </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={placeholder} /> <span className = {spanVisibility}>Locations</span>
                 </div>
-                <div className = {"side-menu-" + this.state.show}>
-                <p className = {"paragraph-" + this.state.show + " p"}> <img className="img" src={card} alt=""/> &nbsp; Contact </p>
+                <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={card} /> <span className = {spanVisibility}>Contact</span>
                 </div>
+                <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
             </div>
         )
     }

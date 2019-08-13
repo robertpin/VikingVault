@@ -7,6 +7,7 @@ using VikingVault.Services.Exceptions;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
+using VikingVault.DataAccess.Enums;
 using System.Linq;
 
 namespace VikingVault.Services
@@ -14,28 +15,54 @@ namespace VikingVault.Services
     public class UserService : IUserService
     {
         private readonly VikingVaultDbContext _dbContext;
-        public UserService(VikingVaultDbContext dbContext)
+        private readonly IBankAccountService _bankAccountService;
+
+        public UserService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService)
         {
             _dbContext = dbContext;
+            _bankAccountService = bankAccountService;
         }
 
         public User CreateUser(User user)
         {
             user.Role = "user";
+            user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
+
             try
             {
-                user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
                 _dbContext.Add(user);
+
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Ron.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Eur.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Usd.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Yen.ToString()));
+
                 _dbContext.SaveChanges();
             }
+
             catch(Exception e)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException)
+                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
                 {
                     throw new UserServiceException();
                 }
             }
             return user;
+        }
+
+        public User GetById(int userId)
+        {
+            return _dbContext.User.Find(userId);
+        }
+
+        private BankAccount CreateBankAccount(User user, String currencyType)
+        {
+            return new BankAccount
+            {
+                User = user,
+                CurrencyType = currencyType,
+                Balance = 0.0f
+            };
         }
 
         public void DeleteUser(UserEmail userEmail)
@@ -46,7 +73,7 @@ namespace VikingVault.Services
                 _dbContext.Remove(user);
                 _dbContext.SaveChanges();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new UserServiceException();
             }
@@ -55,11 +82,6 @@ namespace VikingVault.Services
         public User GetByEmail(string email)
         {
             return _dbContext.User.SingleOrDefault(user => user.Email == email);
-        }
-
-        public User GetById(int userId)
-        {
-            return _dbContext.User.Find(userId);
         }
     }
 }
