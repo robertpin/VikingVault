@@ -61,7 +61,7 @@ class RegisterForm extends React.Component<any, IFormState> {
               'Content-Type': 'application/json',
             }
         }).then(response => response.json()).then(result => {
-            if(result === true) { // email is unique
+            if(result === true) {
                 this.setState({
                     valid: true
                 })
