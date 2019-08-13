@@ -8,5 +8,6 @@ namespace VikingVault.DataAccess.Models
     {
         public string CurrencyType { get; set; }
         public float Amount { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace VikingVault.Services.Abstractions
         BankAccount CreateBankAccount(BankAccount account);
         List<BankAccount> GetBankAccounts(string token);
         void UpdateBankAccount();
-        BankAccount ChangeBalance(string email, UpdateBankAccountModel updatedBankAccount);
+        BankAccount ChangeBalance(UpdateBankAccountModel updatedBankAccount);
     }
 }

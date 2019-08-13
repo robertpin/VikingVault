@@ -203,7 +203,6 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         var exchangeRate = this.getCurrencyExchangeRate();
         var balance = this.calculateExchangedBalance(exchangeRate, this.state.toExchangeAmount);
         balance = this.extractBanksFeeFromBalance(balance);
-
         if(this.state.fromCurrency === this.state.toCurrency){
             this.setState({
                 openModal: true,
@@ -216,7 +215,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                 modalMessage:  "The amount of money to exchange must be a positive number!"
             })
         }
-        else if(this.state.toExchangeAmount > this.state.maximumValueToBeChanged) {
+        else if(this.state.toExchangeAmount > this.state.availableAmountFromCurrency) {
             this.setState({
                 openModal: true,
                 modalMessage:  "Not enough funds to execute the exchange!"
@@ -239,15 +238,18 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     body: JSON.stringify([  
                         {  
                             "CurrencyType": this.state.fromCurrency,
-                            "Amount": -this.state.toExchangeAmount
+                            "Amount": -this.state.toExchangeAmount,
+                            "Email":""
                         },
                         {  
                             "CurrencyType": this.state.toCurrency,
-                            "Amount": +balance
+                            "Amount": +balance,
+                            "Email":""
                         },
                         {
                             "CurrencyType": otherParty,
-                            "Amount": amount
+                            "Amount": amount,
+                            "Email":""
                         }
                     ])
                 })
