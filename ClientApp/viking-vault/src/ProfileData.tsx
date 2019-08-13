@@ -2,9 +2,9 @@ import * as React from "react";
 import { render } from "react-dom";
 import './ProfileData.css';
 import { Redirect } from 'react-router-dom';
-import {constants} from "./ConstantVariables";
+import { constants } from "./ConstantVariables";
 
-const API_URL = constants.baseUrl+"userprofilepages";
+const API_URL = '${constants.baseUrl}userprofilepages';
 const LOGIN_ROUTE ="/login";
 
 interface IProfileDataState {

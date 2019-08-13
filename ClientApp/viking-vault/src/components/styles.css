@@ -23,7 +23,7 @@
     font-weight: bold;
     font-size: 13px;
     height: 60px;
-    width: 100%;
+    width: 100%; 
     align-items: center;
     vertical-align: middle;
 }
@@ -190,6 +190,39 @@
     }
 }
 
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .dashboard-hide{
     display:none;
 }
@@ -198,9 +231,6 @@
     color: #09424d;
     font-weight: bold;
     animation: fadein 2s;
-    -moz-animation: fadein 2s; /* Firefox */
-    -webkit-animation: fadein 2s; /* Safari and Chrome */
-    -o-animation: fadein 2s; /* Opera */
 }
 
 .user-page{
