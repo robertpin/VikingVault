@@ -50,7 +50,7 @@ class Router extends React.Component<any, IState> {
             if(this.state.isAdmin === null) {
                 setTimeout(() =>{
                     return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
-                }, 100);
+                }, 500);
             }
             else return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
         }
@@ -64,7 +64,7 @@ class Router extends React.Component<any, IState> {
                 if(this.state.isAdmin)
                     return <AdminPage/>;
                 else return <Redirect to = "/login" />
-            },200);
+            },500);
         }
 
         if(this.state.isAdmin)
