@@ -24,12 +24,13 @@
     border-radius: 0;
     border-bottom-left-radius: 0.9rem;
     margin-right: 0rem;
-    color: #990909;
+    color: white;
+    background-color: #990909;
     border-color: #990909;
   }
   
-  .btn-primary:hover.delete-user-button {
-    background-color: #990909;
+   .btn-primary:hover.delete-user-button {
+    background-color: #d90d0d;
     color: white;
     border-color: #09424D;
   }
@@ -41,12 +42,13 @@
     border-radius: 0;
     border-bottom-right-radius: 0.9rem;
     margin-left: 0rem;
-    color: #09424D;
+    color: white;
+    background-color:  #09424D;
     border-color: #09424D;
   }
   
-  .btn-primary:hover.cancel-delete-user-button {
-    background-color: #09424D;
+   .btn-primary:hover.cancel-delete-user-button {
+    background-color: #11768a;
     color: white;
     border-color: #09424D;
-  }
+  } 

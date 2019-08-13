@@ -1,6 +1,6 @@
 import React from 'react';
 import DeleteUserModal from './DeleteUserModal';
-import { variables } from './ConstantVariables';
+import { constants } from './ConstantVariables';
 
 class DeleteUser extends React.Component<any,any>{
     state = {
@@ -20,7 +20,7 @@ class DeleteUser extends React.Component<any,any>{
     }
 
     private deleteUser = () =>{
-        fetch(variables.baseUrl+"user", {
+        fetch(constants.baseUrl+"user/delete", {
             method: "DELETE",
             headers: {
               'Accept': 'application/json',
