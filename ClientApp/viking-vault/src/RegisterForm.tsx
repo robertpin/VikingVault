@@ -54,15 +54,12 @@ class RegisterForm extends React.Component<any, IFormState> {
     }
 
     private validateEmail = () => {
-        fetch(baseUrl+"UniqueEmail", {
-            method: "POST",
+        fetch(baseUrl+"UniqueEmail/"+this.state.user.email, {
+            method: "GET",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.state.user.email,
-            })
+            }
         }).then(response => response.json()).then(result => {
             if(result === true) { // email is unique
                 this.setState({
