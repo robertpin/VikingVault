@@ -13,21 +13,24 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        IAccountService _accService;
+        IAccountService _accountService;
 
         public AccountsController(IAccountService accService)
         {
-            _accService = accService;
+            _accountService = accService;
         }
 
         [HttpGet]
         public ActionResult<UserAccount> Get()
         {
-            UserAccount userAccount = _accService.FindById();
+            var token = Request.Headers["x-access-token"];
+
+            UserAccount userAccount = _accountService.GetUserAccount(token);
+
             if (userAccount != null)
             {
                 return Ok(userAccount);

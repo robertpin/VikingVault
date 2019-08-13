@@ -8,25 +8,19 @@ const style1 = { backgroundColor: 'red'};
 
 
 class ProfilePage extends React.Component<any, any>
-{
-    
-    
+{  
     constructor(props: any)
     {
         super(props);
     }
 
-
     render ()
-    {
-        
-        return (
-            
+    { 
+        return ( 
             <div className = "ProfilePage">
                 <ProfilePicture />
-                <ProfileData firstName = "Radu" lastName = "Lambrino " address = "Brasov" id = "1" email = "r@yahoo.com" />
+                <ProfileData />
             </div>
-             
         );
     }
 }
