@@ -8,7 +8,7 @@ import { UserData }  from './UserData';
 import { IUserData } from './UserData';
 import UserIcon from "../components/UserIcon";
 
-const API_URL = constants.baseUrl+"admin/getAllUsers";
+const API_URL = `${constants.baseUrl}admin/getAllUsers`;
 
 interface IProfileData{
     id: number;
