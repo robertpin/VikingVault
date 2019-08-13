@@ -3,9 +3,9 @@ import {ResponseModal} from "./ReponseModal";
 import {Redirect} from "react-router-dom";
 import { HeaderForm } from './HeaderForm';
 import { FooterForm } from './FooterForm';
-import {variables} from "./ConstantVariables";
+import {constants} from "./ConstantVariables";
 
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 interface IUserProperties {
@@ -54,17 +54,14 @@ class RegisterForm extends React.Component<any, IFormState> {
     }
 
     private validateEmail = () => {
-        fetch(baseUrl+"UniqueEmail", {
-            method: "POST",
+        fetch(baseUrl+"UniqueEmail/"+this.state.user.email, {
+            method: "GET",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.state.user.email,
-            })
+            }
         }).then(response => response.json()).then(result => {
-            if(result === true) { // email is unique
+            if(result === true) {
                 this.setState({
                     valid: true
                 })
@@ -189,7 +186,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     private sendDataAndShowResponse = async () => {
         this.setLoadingState();
         const user = this.getUser();
-        fetch(baseUrl+"register", {
+        fetch(baseUrl+"user/register", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -256,7 +253,7 @@ class RegisterForm extends React.Component<any, IFormState> {
                 <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
             </div>
             <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
-            {this.state.redirect? <Redirect to="/login" /> : null}
+            {this.state.redirect? <Redirect to="/" /> : null}
         </div>
         <FooterForm class="footer-register"/>
             </div>

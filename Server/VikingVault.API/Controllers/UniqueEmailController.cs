@@ -9,7 +9,7 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UniqueEmailController : ControllerBase
     {
@@ -19,10 +19,10 @@ namespace VikingVault.API.Controllers
         {
             _uniqueEmailService = uniqueEmailService;
         }
-        [HttpPost]
-        public ActionResult Post([FromBody] UserEmail userEmail)
+        [HttpGet("{userEmail}")]
+        public ActionResult Get(string userEmail)
         {
-            bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail.Email);
+            bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail);
             if (isUnique == null)
                 return StatusCode(500, "Internal Server Error");
             if (isUnique == true)

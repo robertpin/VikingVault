@@ -21,8 +21,6 @@ class UserIcon extends React.Component<any, IUserIconState> {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
-
-
   sendData = () =>{
     setTimeout(() => {
       this.props.parentCallBack(false);
@@ -42,6 +40,8 @@ class UserIcon extends React.Component<any, IUserIconState> {
   }
 
   handleOutsideClick = (event: Event) => {
+    if(this.megaMenu == null || this.megaMenu.current == null)
+      return;
     if (!this.megaMenu.current.contains(event.target)) {
       this.setState({
         clicked: false
@@ -51,11 +51,9 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   handleSignOut = () => {
       sessionStorage.removeItem("Authentication-Token");
-      setTimeout(() => {
-        this.setState({
-          redirect : true
-        });
-      }, 100);
+      this.setState({
+        redirect : true
+      });
       
   }
 
