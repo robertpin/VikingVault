@@ -36,7 +36,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpDelete]
-        [Route("api/user")]
+        [Route("delete")]
         public ActionResult Delete([FromBody] UserEmail userEmail)
         {
             try
