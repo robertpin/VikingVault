@@ -189,7 +189,7 @@ class RegisterForm extends React.Component<any, IFormState> {
     private sendDataAndShowResponse = async () => {
         this.setLoadingState();
         const user = this.getUser();
-        fetch(baseUrl+"register", {
+        fetch(baseUrl+"user/register", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -198,6 +198,7 @@ class RegisterForm extends React.Component<any, IFormState> {
             body: JSON.stringify(user)
         },).then(response => {
             if(response.status !== 200) {
+                console.log(response);
                 this.openModalWithMessage("Error. Please Try again");
             }
             return response.json();
