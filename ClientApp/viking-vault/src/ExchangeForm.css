@@ -1,4 +1,4 @@
-.background-div {
+.exchange-page-background {
     position: absolute;
     background-color: #B0B2B6;
     height: 100%;
@@ -39,7 +39,7 @@
     color: gray;
 }
 
-#amount-div { 
+#amount-container { 
     position: relative;
     top: 40px;
 }
@@ -91,7 +91,7 @@
     font-weight: 750;
 }
 
-.white-background-div {
+.white-box-background {
     background-color: white;
     margin-top: 2%;
     margin-left: 13%;

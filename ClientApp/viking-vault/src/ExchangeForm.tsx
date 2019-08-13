@@ -286,11 +286,11 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
 
     render() {
         return (
-            <div className="background-div">
+            <div className="exchange-page-background">
                 <SideBar/>
                 <TopBar/>
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
-                <div className="white-background-div">
+                <div className="white-box-background">
                     <div className="container"> 
                         <div className="row"> 
                             <div className="col-4 left-column"> {/* Left column */}
@@ -323,7 +323,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                                             </div>
                                         </div> 
                                     </div> 
-                                    <div id="amount-div">
+                                    <div id="amount-container">
                                         <p className="text-decoration">Amount</p>
                                         <input
                                                 className="form-control form-control-currency input-shadow"

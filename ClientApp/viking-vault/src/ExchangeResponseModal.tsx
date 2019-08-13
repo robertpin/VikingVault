@@ -7,15 +7,10 @@ interface IExchangeResponseModalProps{
     message : string;
 }
 
-class ExchangeResponseModal extends React.Component<IExchangeResponseModalProps, any>{ 
-    constructor(props : IExchangeResponseModalProps){
-        super(props);
-    }
-
+class ExchangeResponseModal extends React.Component<IExchangeResponseModalProps, any> { 
     private closeModal = () =>{
         this.props.closeModal();
     }
-    
     render(){
         return (
         <div className={this.props.open? "modal open" : "modal close"}>
@@ -30,7 +25,7 @@ class ExchangeResponseModal extends React.Component<IExchangeResponseModalProps,
                 </div>
             </div>
         </div>
-    )
+        )
     }
 }
 
