@@ -22,11 +22,10 @@ namespace VikingVault.DataAccess
         public void SeedAdmin(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().
-                HasData(new User
-                {
+                HasData(new {
                     Id = 1,
                     Email = "admin",
-                    Password = "admin",
+                    Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                     FirstName = "Admin Firstname",
                     LastName = "Admin Lastname",
                     PictureLink = "",
