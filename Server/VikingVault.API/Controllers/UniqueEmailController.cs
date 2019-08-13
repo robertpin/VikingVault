@@ -20,7 +20,7 @@ namespace VikingVault.API.Controllers
             _uniqueEmailService = uniqueEmailService;
         }
         [HttpPost]
-        public ActionResult Post([FromBody] UserEmail userEmail)
+        public ActionResult<Boolean> Post([FromBody] UserEmail userEmail)
         {
             bool? isUnique = _uniqueEmailService.IsUniqueEmail(userEmail.email);
             if (isUnique == null)

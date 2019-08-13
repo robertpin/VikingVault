@@ -20,7 +20,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult IsAdmin()
+        public ActionResult<Boolean> IsAdmin()
         {
             var token = Request.Headers["x-access-token"];
             if (_adminService.IsAdmin(token))
