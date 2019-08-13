@@ -6,16 +6,17 @@ import { ExchangeForm } from './ExchangeForm'
 import UserPage from './components/UserPage';
 import {constants} from "./ConstantVariables";
 import "./App.css"
+import { AdminPage } from "./display_user_list/AdminPage";
 
 const baseUrl = constants.baseUrl;
 
 interface IState {
-    isAdmin: boolean;
+    isAdmin: boolean | null;
 }
 
 class Router extends React.Component<any, IState> {
     state = {
-        isAdmin: false
+        isAdmin: null
     }
 
     private isUserAdmin() {
@@ -45,18 +46,42 @@ class Router extends React.Component<any, IState> {
     private makeRedirect() {
         if(sessionStorage.getItem("Authentication-Token") === null)
             return <Redirect to="/login" />;
-        else
-            return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+        else {
+            if(this.state.isAdmin === null) {
+                setTimeout(() =>{
+                    return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+                }, 100);
+            }
+            else return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
+        }
+    }
+
+    private makeAdminRedirect()
+    {
+        if(this.state.isAdmin === null)
+        {
+            setTimeout(() => {
+                if(this.state.isAdmin)
+                    return <AdminPage/>;
+                else return <Redirect to = "/login" />
+            },200);
+        }
+
+        if(this.state.isAdmin)
+            return <AdminPage />
+        
+        return <Redirect to="/login" />
     }
 
     render() {
         return <BRouter>
-                    <Route path="/register/" exact component={RegisterForm} />
-                    <Route path="/login" exact component={LoginForm} />
-                    <Route path="/user/exchange" exact component={ExchangeForm}/>
-                    <Route path="/" exact render={() => this.makeRedirect()}/>
-                    <Route path="/user" exact render = {() => <UserPage/>} />
-               </BRouter>
+            <Route path="/register/" exact component={RegisterForm} />
+            <Route path="/login" exact component={LoginForm} />
+            <Route path="/" exact render={() => this.makeRedirect()}/>
+            <Route path="/user" component={UserPage} />
+            <Route path="/user/exchange" exact component={ExchangeForm}/>
+            <Route path="/admin" render = { () => this.makeAdminRedirect()} />
+        </BRouter>
     }
 }
 

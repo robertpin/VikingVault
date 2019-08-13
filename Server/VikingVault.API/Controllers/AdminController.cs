@@ -8,7 +8,7 @@ using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -28,6 +28,14 @@ namespace VikingVault.API.Controllers
                 return Ok(true);
             }
             return Ok(false);
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            var users = _adminService.GetAllUsers();
+            return Ok(users);
         }
     }
 }

@@ -7,9 +7,9 @@ using VikingVault.DataAccess.Models.Exceptions;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+	[Route("[controller]")]
+	[Authorize]
     [ApiController]
-    [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
         private ILoginService _loginService;

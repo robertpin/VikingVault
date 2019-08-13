@@ -11,7 +11,7 @@ using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
     {
