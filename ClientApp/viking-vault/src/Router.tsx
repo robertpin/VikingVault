@@ -2,11 +2,11 @@ import React from "react";
 import { Route, Redirect, BrowserRouter as BRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
+import { ExchangeForm } from './ExchangeForm'
 import UserPage from './components/UserPage';
 import {constants} from "./ConstantVariables";
 import "./App.css"
 import { AdminPage } from "./display_user_list/AdminPage";
-import { AdminPageMe } from "./MockUpAdminPage";
 
 const baseUrl = constants.baseUrl;
 
@@ -78,9 +78,9 @@ class Router extends React.Component<any, IState> {
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
-            <Route path="/user" component={UserPage} />
-            <Route path="/admin" render = { () => this.makeAdminRedirect()} />
-            <Route path="/aaa" component={AdminPageMe} />
+            <Route path="/user" exact component={UserPage} />
+            <Route path="/user/exchange" exact component={ExchangeForm}/>
+            <Route path="/admin" exact render = { () => this.makeAdminRedirect()} />
         </BRouter>
     }
 }

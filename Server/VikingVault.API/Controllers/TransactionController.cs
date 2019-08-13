@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
@@ -28,6 +29,19 @@ namespace VikingVault.API.Controllers
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
             return _transactionService.GetTransactions(userId);
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody] Transaction transaction)
+        {
+            try
+            {
+                return Ok(_transactionService.AddTransaction(transaction));
+            }
+            catch (TransactionException e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
