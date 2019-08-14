@@ -1,0 +1,143 @@
+.exchange-page-background {
+    position: absolute;
+    background-color: #B0B2B6;
+    height: 100%;
+    width: 100%;
+}
+
+.input-field {
+    width: 50%;
+    padding: 0;
+    right: 1%;
+    position: relative;
+}
+
+.total-balance {
+    font-size: 150%;
+    font-family: Helvetica;
+    font-weight: 750;
+    color:gray;
+}
+
+.left-column {
+    position: absolute;
+    top: 11%;
+    left: 14%;
+}
+
+.right-column {
+    position: absolute;
+    left: 55%;
+    top: 16%;
+}
+
+.total-balance-text {
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    top: 66%;
+    color: gray;
+}
+
+#amount-container { 
+    position: relative;
+    top: 40px;
+}
+
+#exchange-button {
+    position: absolute;
+    top: 140%;
+    width: 80%;
+    height: 15%;
+    left: 5%;
+    text-align: center;
+    background-color: rgb(8, 73, 85);
+    border-color: gray;
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+    border-radius : 10px;
+    padding: 0px;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.text-decoration {
+    color: gray;
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+}
+
+.fee-text {
+    position: absolute;
+    top: 120%;
+    padding: 3px;
+    box-shadow: 3px 3px 3px rgb(206, 206, 206);
+}
+
+.input-shadow {
+    box-shadow: 0px 1px gray;
+    width: 25%;
+    background-clip: border-box;
+    border-radius: 0px;
+    text-align: left;
+}
+
+.form-control-currency {
+    border: none;
+    color: rgb(29, 84, 95);
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+}
+
+.white-box-background {
+    background-color: white;
+    margin-top: 2%;
+    margin-left: 13%;
+    width: 75%;
+    height: 500px;
+    border-radius : 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: inline-flex;
+}
+
+.currency-decoration {
+    font-size: 120%;
+    font-family: Helvetica;
+    font-weight: 750;
+    color:#09424D;
+}
+
+.table-design {
+    color: gray;
+    font-weight: 500;
+    font-family: Helvetica;
+    font-size: 120%;
+}
+
+.table-text {
+    color: gray;
+    font-weight: 400;
+}
+
+.padding-design {
+    padding: 6px;
+}
+
+#exchange-table {
+    box-shadow: 0px 1px grey;
+    width: 90%;
+}
+
+.exchange-result {
+    position: absolute;
+    top: 170%;
+    background-color: #F4C300;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+    border-radius : 10px;
+    padding: 7px;
+    box-shadow: 5px 5px 5px rgb(162, 162, 162);
+}

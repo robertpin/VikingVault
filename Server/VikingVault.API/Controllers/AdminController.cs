@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
@@ -28,6 +29,14 @@ namespace VikingVault.API.Controllers
                 return Ok(true);
             }
             return Ok(false);
+        }
+
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult<IEnumerable<UserProfileDataWithCard>> GetAllUsers()
+        {
+            var users = _adminService.GetAllUsers();
+            return Ok(users);
         }
     }
 }
