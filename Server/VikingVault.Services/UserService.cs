@@ -78,10 +78,5 @@ namespace VikingVault.Services
                 throw new UserServiceException();
             }
         }
-
-        //public User GetByEmail(string email)
-        //{
-        //    return _dbContext.User.SingleOrDefault(user => user.Email == email);
-        //}
     }
 }
