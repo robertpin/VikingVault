@@ -25,7 +25,7 @@ namespace VikingVault.Services
             {
                 int userId = FindUserIDByToken(token);
                 User returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == userId);
-                Card card = _dbContext.Card.SingleOrDefault(u => u.UserId == userId);
+                Card card = _dbContext.Cards.SingleOrDefault(u => u.UserId == userId);
                 if (card == null)
                 {
                     return null;

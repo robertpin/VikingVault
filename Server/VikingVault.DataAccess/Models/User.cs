@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace VikingVault.DataAccess.Models
 {
-    public class User:IdentityUser<string>
+    public class User
     {
         public int Id { get; set; }
         [Required]
