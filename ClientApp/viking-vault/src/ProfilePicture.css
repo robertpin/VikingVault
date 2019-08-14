@@ -1,18 +1,17 @@
-.ProfilePictureContainer
+.profile-picture-container
 {
+    
     position: relative;
-    float: left;
-    margin: 3%;
-    width: 20%;
-    height: 100%;
-}
-#ProfilePicture
-{
-    width: 80%;
-    height: auto;
-    margin: 0 auto;
-    margin-top: 50%;
-    transform: translate(0, -40%);
-    box-shadow: 0rem 0.1rem 0.5rem 0.5rem rgba(51, 204, 204, 0.20);
+    margin: 5%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
     border-radius: 50%;
+}
+
+#profile-picture
+{
+    height: 100%;
+    width: auto;
+    margin-left: -20%;
 }

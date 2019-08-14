@@ -22,7 +22,7 @@ namespace VikingVault.Services
         {
             try
             {
-                var users = _dbContext.User.
+                var users = _dbContext.User.Where(user => user.Role != "admin").
                     GroupJoin(
                         _dbContext.Cards,
                         user => user.Id,

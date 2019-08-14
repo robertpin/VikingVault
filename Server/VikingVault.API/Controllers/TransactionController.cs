@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.DataAccess.Models;
@@ -23,6 +24,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
+        [AuthorizeUser]
         public IEnumerable<Transaction> Get()
         {
             var token = Request.Headers["x-access-token"];

@@ -2,10 +2,14 @@ import React from "react";
 import icon from "./images/user2.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
+import { constants } from "../ConstantVariables";
+
+const API_URL = `${constants.baseUrl}userprofilepages`;
 
 interface IUserIconState {
   clicked: boolean;
   redirect: boolean;
+  userImage: string;
 }
 
 class UserIcon extends React.Component<any, IUserIconState> {
@@ -15,7 +19,8 @@ class UserIcon extends React.Component<any, IUserIconState> {
     super(props);
     this.state = {
       clicked: false,
-      redirect: false
+      redirect: false,
+      userImage: icon
     };
     this.megaMenu = React.createRef();
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
@@ -29,6 +34,43 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   componentDidMount() {
     document.addEventListener("click", this.handleOutsideClick, false);
+
+    let token = sessionStorage.getItem("Authentication-Token");
+
+        if(token === null)
+        {
+            this.setState({
+                redirect: true
+            })
+        }
+        else{         
+            fetch(API_URL, {
+                method: "GET",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token':  token.toString()
+                }})
+            .then( response => 
+                {
+                    if( response.status === 500)
+                    {
+                        return null;
+                    }
+                    
+                    return response.json();
+                })
+            .then( userData => {
+                if(userData != null)
+                {
+                    this.setState(
+                        {
+                           userImage: userData.pictureLink
+                        }
+                    )
+                }
+            });
+        }
   }
 
   componentWillUnmount() {
@@ -54,7 +96,6 @@ class UserIcon extends React.Component<any, IUserIconState> {
       this.setState({
         redirect : true
       });
-      
   }
 
   render() {
@@ -62,11 +103,11 @@ class UserIcon extends React.Component<any, IUserIconState> {
       <div className="dropdown" ref={this.megaMenu}>
         <img
           className="user-icon img"
-          src={icon}
+          src={this.state.userImage}
           alt=""
           onClick={this.handleClick}
         />
-        <div className={ `mega-menu ${this.state.clicked}`}>
+        <div className={`mega-menu ${this.state.clicked}`}>
           <div className="mega-menu-content">
             <button className="button-user-icon" onClick = {this.sendData}>View profile</button>
             <button className="button-user-icon" onClick = {this.handleSignOut}>Sign out</button>

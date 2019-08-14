@@ -16,6 +16,7 @@ namespace VikingVault.Services.Exceptions
 
         public BankAccountServiceException(string message, Exception inner) : base(message, inner)
         {
+
         }
     }   
 }

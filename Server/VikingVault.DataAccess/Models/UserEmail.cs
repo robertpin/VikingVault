@@ -4,10 +4,8 @@ using System.Text;
 
 namespace VikingVault.DataAccess.Models
 {
-    public class UpdateBankAccountModel
+    public class UserEmail
     {
-        public string CurrencyType { get; set; }
-        public float Amount { get; set; }
         public string Email { get; set; }
     }
 }

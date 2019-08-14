@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, BrowserRouter as BRouter } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
 import { ExchangeForm } from './ExchangeForm'
@@ -15,9 +15,10 @@ interface IState {
 }
 
 class Router extends React.Component<any, IState> {
+    
     state = {
         isAdmin: null
-    }
+    };
 
     private isUserAdmin() {
         let token = sessionStorage.getItem("Authentication-Token");
@@ -42,7 +43,7 @@ class Router extends React.Component<any, IState> {
     componentDidMount() {
         this.isUserAdmin();
     }
-
+       
     private makeRedirect() {
         if(sessionStorage.getItem("Authentication-Token") === null)
             return <Redirect to="/login" />;
@@ -58,30 +59,33 @@ class Router extends React.Component<any, IState> {
 
     private makeAdminRedirect()
     {
-        if(this.state.isAdmin === null)
-        {
+        if(this.state.isAdmin === null) {
             setTimeout(() => {
                 if(this.state.isAdmin)
                     return <AdminPage/>;
-                else return <Redirect to = "/login" />
+                else 
+                    return <Redirect to = "/login" />;
             },500);
         }
-
-        if(this.state.isAdmin)
-            return <AdminPage />
-        
-        return <Redirect to="/login" />
+        else {
+            if(this.state.isAdmin === true) {
+                return <AdminPage/>;
+            }   
+            else {
+                return <Redirect to = "/login"/>;
+            }
+        }
     }
 
     render() {
-        return <BRouter>
+        return <BrowserRouter>
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
             <Route path="/user" exact component={UserPage} />
             <Route path="/user/exchange" exact component={ExchangeForm}/>
-            <Route path="/admin" exact render = { () => this.makeAdminRedirect()} />
-        </BRouter>
+            <Route path="/admin" render = { () => this.makeAdminRedirect()} />
+        </BrowserRouter>
     }
 }
 
