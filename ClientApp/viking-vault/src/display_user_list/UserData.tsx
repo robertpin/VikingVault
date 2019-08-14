@@ -6,6 +6,7 @@ import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
+import DeleteUserModal from "./DeleteUserModal";
 
 export interface IUserData{
     id: number;
@@ -43,7 +44,8 @@ const defaultUser = {
     email: "no-data",
     pictureLink: "",
     cardNumber: "no-data",
-    expirationDate: "no-data"
+    expirationDate: "no-data",
+    openDeleteUserModal: false
 };
 
 class UserData extends React.Component<IUserDataProp, IPageState>{
@@ -54,7 +56,7 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         if(props !== null)
         {
             this.state = {
-                    user : {
+                user : {
                     id: props.user.id,
                     firstName: props.user.firstName,
                     lastName: props.user.lastName,
@@ -84,6 +86,15 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                         addMoneyResponseMessage: ""
                     };
         }        
+    }
+
+    splitCardNumber(begin: number, end: number){
+        return this.state.cardNumber.substring(begin, end);
+    }
+
+    formatCardNumber(cardNumber: string)
+    {
+        return <span>{this.splitCardNumber(0,4)}   {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
     }
 
     renderUserCard()
@@ -166,6 +177,28 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         }
 
 
+    private handleDeleteUser = () => this.setState({ openDeleteUserModal : true});
+
+    private closeDeleteUserModal = () => this.setState({ openDeleteUserModal : false });
+
+    private deleteUser = () =>{
+        fetch(constants.baseUrl+"user/delete", {
+            method: "DELETE",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: this.props.user.email
+            })});
+
+        this.setState({
+            openDeleteUserModal : false
+        });
+
+        this.props.deleteUserFromComponent(this.props.user.email);
+    }
+
     render(){
         return( 
             <div className = "user-container"> 
@@ -181,17 +214,18 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
 
                     <div className = "card-container">
-                        {this.renderUserCard()}  
+                        {this.renderUserCard()}
                     </div>
 
                     <div className = "button-container">
                         <button className = "button-style">Attach Card</button>
-                        <button className = "button-style">Delete</button>
+                        <button className = "button-style" onClick = {this.handleDeleteUser}>Delete</button>
                         <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>
                     </div>
                 </div>
                 <AddMoneyModal open = {this.state.modals.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
                 <ResponseModal open = {this.state.modals.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
+                <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
             </div>             
          );   
     }

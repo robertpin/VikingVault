@@ -19,7 +19,6 @@ namespace VikingVault.Services
 
         public bool? IsUniqueEmail(string email)
         {
-
             try
             {
                 var userEmailFromDB = _dbContext.User.SingleOrDefault(s => s.Email == email);
