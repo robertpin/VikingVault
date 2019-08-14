@@ -85,7 +85,7 @@ class UserData extends React.Component<IUserData, IUserData>{
                     <div className = "profile-data-container">
                         <span className = "profile-data-text" id = "user-name"> {this.state.firstName} {this.state.lastName} </span>
                         <span className = "profile-data-text"> {this.state.address} </span>
-                        <span className = "profile-data-text" id = "card-number"> {this.state.cardNumber} </span>
+                        <span className = "profile-data-text" id = "card-number"> {this.formatCardNumber(this.state.cardNumber)} </span>
                     </div>
 
                     <div className = "card-container">

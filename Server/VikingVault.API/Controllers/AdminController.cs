@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
@@ -20,7 +21,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult IsAdmin()
+        public ActionResult<bool> IsAdmin()
         {
             var token = Request.Headers["x-access-token"];
             if (_adminService.IsAdmin(token))
@@ -32,7 +33,7 @@ namespace VikingVault.API.Controllers
 
         [Route("[action]")]
         [HttpGet]
-        public ActionResult GetAllUsers()
+        public ActionResult<User> GetAllUsers()
         {
             var users = _adminService.GetAllUsers();
             return Ok(users);
