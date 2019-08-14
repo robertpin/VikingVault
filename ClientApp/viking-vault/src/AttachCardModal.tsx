@@ -4,6 +4,7 @@ import './AttachCardModal.css';
 
 const baseUrl = constants.baseUrl;
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
+let currentYearValue = new Date().getFullYear();
 
 interface IModalProps {
     open: boolean;
@@ -16,11 +17,11 @@ interface IModalProps {
 interface ICardProperties {
     cardNumber: string;
     expirationDate: string;
-    ccv: number;
+    ccv: string;
 }
 
 interface IFormState {
-    [key: string]: string | number | boolean | ICardProperties  | null;
+    [key: string]: string | boolean | ICardProperties  | null;
     card: ICardProperties;
     valid: boolean | null;
     errorLabel: string;
@@ -33,7 +34,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
             card: {
                 cardNumber: "",
                 expirationDate: "",
-                ccv: 0,
+                ccv: "",
             },
             valid: null,
             errorLabel: "",
@@ -62,7 +63,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
     }
 
     private ccvHasThreeDigits = () => {
-        if(this.state.card.ccv >=100 && this.state.card.ccv <= 999)
+        if(this.state.card.ccv.match(regexCheckIfOnlyDigits) && this.state.card.ccv.length === 3)
             return  {
                 message: "Ok",
                 class: "alert alert-success"
@@ -73,7 +74,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
         }
     }
 
-    private expirationDateIsAfter2019 = () => {
+    private expirationDateIsAfterCurrentYear = () => {
         if(!(this.state.card.expirationDate === ""))
             return  {
                 message: "Ok",
@@ -90,7 +91,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
         if(this.cardNumberHasSixteenDigits().message !== "Ok") {
             val = false;
         }
-        if(this.expirationDateIsAfter2019().message !== "Ok") {
+        if(this.expirationDateIsAfterCurrentYear().message !== "Ok") {
             val = false;
         }
         if(this.ccvHasThreeDigits().message !== "Ok") {
@@ -105,7 +106,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
                 ...this.state.card,
                 cardNumber: "",
                 expirationDate: "",
-                ccv: 0,
+                ccv: "",
             }
         });
     }
@@ -118,15 +119,14 @@ class AttachCardForm extends React.Component<any, IFormState> {
     private getCard = (userId : number) => {
         return {
             cardNumber: this.state.card.cardNumber,
-            expirationDate:  new Date(parseInt(this.state.card.expirationDate, 10), new Date().getMonth(), 1),
-            ccv: this.state.card.ccv,
+            expirationDate:  new Date(parseInt(this.state.card.expirationDate, 10), new Date().getMonth(), 2),
+            ccv: parseInt(this.state.card.ccv, 10),
             userId: userId,
         };
     }
 
     private sendDataAndShowResponse = async () => {
         const card = this.getCard(this.props.userId);
-        console.log(card);
         fetch(baseUrl+"attach", {
             method: "POST",
             headers: {
@@ -144,7 +144,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
                 this.setState({
                   errorLabel: ""
                 });
-              }, 5000);
+              }, 2500);
               return null;
             }
       
@@ -180,22 +180,22 @@ class AttachCardForm extends React.Component<any, IFormState> {
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Card number</label>
-                                    <input type="text" value={this.state.card.cardNumber} onChange={(e) => this.handleChange(e.target.value, "cardNumber")} required className="form-control accent-color"></input>
+                                    <input type="text" value={this.state.card.cardNumber} onChange={(e) => this.handleChange(e.target.value, "cardNumber")} required className="form-control attach-card"></input>
                                     {this.state.card.cardNumber !== "" && this.cardNumberHasSixteenDigits().message !== "Ok" ? <pre className={this.cardNumberHasSixteenDigits().class}>{this.cardNumberHasSixteenDigits().message}</pre> : null}
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Expiration date</label>
-                                    <select value={this.state.card.expirationDate} onChange={ (e) => this.handleChange(e.target.value, "expirationDate") } required className="form-control accent-color">
-                                        <option value=" "></option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
+                                    <select value={this.state.card.expirationDate} onChange={ (e) => this.handleChange(e.target.value, "expirationDate") } required className="form-control attach-card">
+                                        <option value=""></option>
+                                        <option selected={true} value={currentYearValue + 1}>{currentYearValue + 1}</option>
+                                        <option value={currentYearValue + 2}>{currentYearValue + 2}</option>
+                                        <option value={currentYearValue + 3}>{currentYearValue + 3}</option>
                                     </select>
-                                    { this.expirationDateIsAfter2019().message !== "Ok" ? <pre className={this.expirationDateIsAfter2019().class}>{this.expirationDateIsAfter2019().message}</pre> : null }
+                                    { this.expirationDateIsAfterCurrentYear().message !== "Ok" ? <pre className={this.expirationDateIsAfterCurrentYear().class}>{this.expirationDateIsAfterCurrentYear().message}</pre> : null }
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">CCV</label>
-                                    <input type="number" value={this.state.card.ccv} onChange={(e) => this.handleChange(e.target.value, "ccv")} required className="form-control accent-color"></input>
+                                    <input type="text" value={this.state.card.ccv} onChange={(e) => this.handleChange(e.target.value, "ccv")} required className="form-control attach-card"></input>
                                     { this.ccvHasThreeDigits().message !== "Ok" ? <pre className={this.ccvHasThreeDigits().class}>{this.ccvHasThreeDigits().message}</pre> : null }
                                 </div>
                                 {this.state.errorLabel !== "" ? <div className="alert alert-danger"> {this.state.errorLabel} </div> : null }

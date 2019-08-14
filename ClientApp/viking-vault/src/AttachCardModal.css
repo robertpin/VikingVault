@@ -11,6 +11,7 @@
 
 .form-control.attach-card {
     border: 1.5px solid #09424D;
+    margin-bottom: 10px;
 }
 
 .modal-dialog.attach-card {
