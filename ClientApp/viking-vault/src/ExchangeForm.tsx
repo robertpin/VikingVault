@@ -208,17 +208,22 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         var exchangeRate = this.getCurrencyExchangeRate();
         var balance = this.calculateExchangedBalance(exchangeRate, this.state.toExchangeAmount);
         balance = this.extractBanksFeeFromBalance(balance);
-
         if(this.state.fromCurrency === this.state.toCurrency){
             this.setState({
                 openModal: true,
                 modalMessage: "The sell and buy currency must be different!"
             })
         }
-        else if(this.state.toExchangeAmount < 1) {
+        else if(this.state.toExchangeAmount <= 0) {
             this.setState({
                 openModal: true,
                 modalMessage:  "The amount of money to exchange must be a positive number!"
+            })
+        }
+        else if(this.state.toExchangeAmount > this.state.availableAmountFromCurrency) {
+            this.setState({
+                openModal: true,
+                modalMessage:  "Not enough funds to perform the exchange!"
             })
         }
         else
@@ -237,16 +242,19 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     },
                     body: JSON.stringify([  
                         {  
-                            "CurrencyType": this.state.fromCurrency,
-                            "Amount": -this.state.toExchangeAmount
+                            "currencyType": this.state.fromCurrency,
+                            "amount": -this.state.toExchangeAmount,
+                            "email":""
                         },
                         {  
-                            "CurrencyType": this.state.toCurrency,
-                            "Amount": +balance
+                            "currencyType": this.state.toCurrency,
+                            "amount": +balance,
+                            "email":""
                         },
                         {
-                            "CurrencyType": otherParty,
-                            "Amount": amount
+                            "currencyType": otherParty,
+                            "amount": amount,
+                            "email":""
                         }
                     ])
                 })
