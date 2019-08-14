@@ -9,7 +9,6 @@ namespace VikingVault.Services.Abstractions
     {
         User CreateUser(User user);
         User GetById(int userId);
-        User GetByEmail(String email);
         void DeleteUser(UserEmail userEmail);
     }
 }

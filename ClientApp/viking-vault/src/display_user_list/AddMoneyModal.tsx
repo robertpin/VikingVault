@@ -4,8 +4,8 @@ import './AddMoney.css';
 interface IAddMoneyModalProps{
     open: boolean;
     userName: string;
-    closeModal: any;
-    addMoney: any;
+    closeModal: () => void;
+    addMoney: (amount: number) => void;
 }
 
 interface IAddMoneyModalState{
@@ -13,18 +13,15 @@ interface IAddMoneyModalState{
 }
 
 class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalState>{ 
-    state = {
-            amount : ""
-        };
+    state = { amount : "" };
 
     private resetAmountField(){
-        this.setState({
-            amount : ""
-        });
+        this.setState({ amount : "" });
     }
+
     private closeModal = () =>{
         this.resetAmountField();
-        this.props.closeModal(false);
+        this.props.closeModal();
     }
 
     private handleAddMoney = () =>{
@@ -32,14 +29,10 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
         this.props.addMoney(Number(this.state.amount));
     }
 
-    private handleAmountChange = (e:any) =>{
-        this.setState({
-            amount: e.target.value
-        });
-    }
+    private handleAmountChange = (e:any) => this.setState({ amount: e.target.value });
 
     private validateAmount(){
-        if(Number(this.state.amount) <= 0 || Number(this.state.amount) > 5000 || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
+        if(Number(this.state.amount) < 0.1 || Number(this.state.amount) > 5000 || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
             return false;
         }
         return true;

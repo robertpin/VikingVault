@@ -7,7 +7,6 @@ import { constants } from "../ConstantVariables";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 
-
 export interface IUserData{
     id: number;
     firstName: string;
@@ -21,15 +20,19 @@ export interface IUserData{
 
 interface IUserDataProp{
     user: IUserData;
-    deleteUserFromComponent: any;
+    deleteUserFromComponent: (email: string) => void;
 }
 
 interface IPageState{
     user: IUserData;
+    modals: IModals;
+    addMoneyResponseMessage: string
+}
+
+interface IModals {
     openDeleteUserModal: boolean;
     openAddMoneyFormModal : boolean;
     openAddMoneyResponseModal: boolean;
-    addMoneyResponseMessage: string
 }
 
 const defaultUser = {
@@ -40,8 +43,7 @@ const defaultUser = {
     email: "no-data",
     pictureLink: "",
     cardNumber: "no-data",
-    expirationDate: "no-data",
-    openDeleteUserModal: false
+    expirationDate: "no-data"
 };
 
 class UserData extends React.Component<IUserDataProp, IPageState>{
@@ -49,7 +51,6 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
     constructor(props: IUserDataProp)
     {
         super(props);
-
         if(props !== null)
         {
             this.state = {
@@ -63,9 +64,11 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     cardNumber: props.user.cardNumber,
                     expirationDate: props.user.expirationDate
                 },
-                openDeleteUserModal: false,
-                openAddMoneyFormModal : false,
-                openAddMoneyResponseModal: false,
+                modals : {
+                    openDeleteUserModal: false,
+                    openAddMoneyFormModal : false,
+                    openAddMoneyResponseModal: false
+                },
                 addMoneyResponseMessage: ""
             };
         }
@@ -73,9 +76,11 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         {
             this.state = {
                         user : {...defaultUser},
-                        openDeleteUserModal : false,
-                        openAddMoneyFormModal : false,
-                        openAddMoneyResponseModal: false,
+                        modals : {
+                            openDeleteUserModal: false,
+                            openAddMoneyFormModal : false,
+                            openAddMoneyResponseModal: false
+                        },
                         addMoneyResponseMessage: ""
                     };
         }        
@@ -89,39 +94,53 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                         <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
                         <p className = "card-number-on-card">{this.state.user.cardNumber}</p>
                         <img src = {CardImg} className = "card-img"></img>
-                   </div>        
-
+                   </div>;
         return null; 
     }
     
     private handleAddMoney = () =>{
-        this.setState((oldstate : any)=>({
-            openAddMoneyFormModal : !oldstate.openAddMoneyFormModal
+        this.setState((oldstate : IPageState)=>({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : !oldstate.modals.openAddMoneyFormModal
+            }
         }));
     }
 
     private closeAddMoneyFormModal = () =>{
         this.setState({
-            openAddMoneyFormModal : false
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : false
+            }
         });
     }
 
     private closeAddMoneyResponseModal = () =>{
         this.setState({
-            openAddMoneyResponseModal : false,
+            modals: {
+                ...this.state.modals,
+                openAddMoneyResponseModal : false
+            }
         });
     }
 
     private openResponseModalWithMessage = (message : string) =>{
         this.setState({
-            openAddMoneyResponseModal : true,
+            modals: {
+                ...this.state.modals,
+                openAddMoneyResponseModal : true
+            },
             addMoneyResponseMessage : message
         });
     }
 
     private addMoney = (amount : Number) =>{
         this.setState({
-            openAddMoneyFormModal : false
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : false
+            }
         });
         fetch(constants.baseUrl+"bankAccount", {
             method: "PUT",
@@ -141,6 +160,8 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                 if(response.status !== 200) {
                     this.openResponseModalWithMessage("Something wrong happened. Try again later!");
                 }
+            }).catch(err => {
+                this.openResponseModalWithMessage(err.toString());
             });
         }
 
@@ -169,8 +190,8 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                         <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>
                     </div>
                 </div>
-                <AddMoneyModal open = {this.state.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
-                <ResponseModal open = {this.state.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
+                <AddMoneyModal open = {this.state.modals.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
+                <ResponseModal open = {this.state.modals.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
             </div>             
          );   
     }
