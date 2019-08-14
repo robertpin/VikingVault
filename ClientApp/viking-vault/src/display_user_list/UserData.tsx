@@ -69,6 +69,15 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         }        
     }
 
+    splitCardNumber(begin: number, end: number){
+        return this.state.cardNumber.substring(begin, end);
+    }
+
+    formatCardNumber(cardNumber: string)
+    {
+        return <span>{this.splitCardNumber(0,4)}   {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
+    }
+
     renderUserCard()
     {
         if(this.state.user.cardNumber !== "")
@@ -119,7 +128,7 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
 
                     <div className = "card-container">
-                        {this.renderUserCard()}  
+                        {this.renderUserCard()}
                     </div>
 
                     <div className = "button-container">

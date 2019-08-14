@@ -15,9 +15,10 @@ interface IState {
 }
 
 class Router extends React.Component<any, IState> {
+    
     state = {
         isAdmin: null
-    }
+    };
 
     private isUserAdmin() {
         let token = sessionStorage.getItem("Authentication-Token");
@@ -42,7 +43,7 @@ class Router extends React.Component<any, IState> {
     componentDidMount() {
         this.isUserAdmin();
     }
-
+       
     private makeRedirect() {
         if(sessionStorage.getItem("Authentication-Token") === null)
             return <Redirect to="/login" />;
@@ -58,19 +59,22 @@ class Router extends React.Component<any, IState> {
 
     private makeAdminRedirect()
     {
-        if(this.state.isAdmin === null)
-        {
+        if(this.state.isAdmin === null) {
             setTimeout(() => {
                 if(this.state.isAdmin)
                     return <AdminPage/>;
-                else return <Redirect to = "/login" />
+                else 
+                    return <Redirect to = "/login" />;
             },500);
         }
-
-        if(this.state.isAdmin)
-            return <AdminPage />
-        
-        return <Redirect to="/login" />
+        else {
+            if(this.state.isAdmin === true) {
+                return <AdminPage/>;
+            }   
+            else {
+                return <Redirect to = "/login"/>;
+            }
+        }
     }
 
     render() {
