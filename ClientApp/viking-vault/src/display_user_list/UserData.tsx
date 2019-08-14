@@ -83,9 +83,10 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
     }
 
     private handleDeleteUser = () =>{
-        this.setState((oldstate : any)=>({
-            openDeleteUserModal : !oldstate.openDeleteUserModal
-        }));
+        this.setState({
+            openDeleteUserModal : true
+        }
+        );
     }
 
     private closeDeleteUserModal = () =>{
