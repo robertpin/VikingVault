@@ -1,5 +1,5 @@
 import React from 'react';
-import { variables } from './ConstantVariables';
+import { constants } from './ConstantVariables';
 import AddMoneyModal from './AddMoneyModal';
 import AddMoneyResponseModal from './AddMoneyResponseModal';
 
@@ -42,7 +42,7 @@ class AddMoney extends React.Component<any,any>{
             openAddMoneyFormModal : false
         });
 
-        fetch(variables.baseUrl+"bankAccount", {
+        fetch(constants.baseUrl+"bankAccount", {
             method: "PUT",
             headers: {
               'Accept': 'application/json',
@@ -50,7 +50,7 @@ class AddMoney extends React.Component<any,any>{
             },
             body: JSON.stringify({
               CurrencyType: "Ron",
-              Balance : amount, //add new amount to the total here
+              Balance : ""+amount, //add new amount to the total here
               Email: "email10@gmail.com"
             })}).then(response => {
                 if(response.status === 200) {

@@ -5,6 +5,9 @@ import DefaultProfilePicture from '../UI/user2.png';
 import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
 import DeleteUserModal from "../DeleteUserModal";
+import AddMoneyModal from "../AddMoneyModal";
+import AddMoneyResponseModal from "../AddMoneyResponseModal";
+
 
 export interface IUserData{
     id: number;
@@ -20,11 +23,16 @@ export interface IUserData{
 interface IUserDataProp{
     user: IUserData;
     deleteUserFromComponent: any;
+    
 }
 
 interface IPageState{
     user: IUserData;
-    openDeleteUserModal: boolean}
+    openDeleteUserModal: boolean;
+    openAddMoneyFormModal : boolean;
+    openAddMoneyResponseModal: boolean;
+    addMoneyResponseMessage: string
+}
 
 const defaultUser = {
     id: 0,
@@ -56,12 +64,18 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                 pictureLink: props.user.pictureLink,
                 cardNumber: props.user.cardNumber,
                 expirationDate: props.user.expirationDate},
-                openDeleteUserModal: false};
+                openDeleteUserModal: false,
+                openAddMoneyFormModal : false,
+                openAddMoneyResponseModal: false,
+                addMoneyResponseMessage: ""};
         }
         else
         {
             this.state = {user : {...defaultUser},
-                        openDeleteUserModal : false};
+                        openDeleteUserModal : false,
+                        openAddMoneyFormModal : false,
+                        openAddMoneyResponseModal: false,
+                        addMoneyResponseMessage: ""};
         }        
     }
 
@@ -108,6 +122,57 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         this.props.deleteUserFromComponent(this.props.user.email);
     }
 
+    private handleAddMoney = () =>{
+        this.setState((oldstate : any)=>({
+            openAddMoneyFormModal : !oldstate.openAddMoneyFormModal
+        }));
+    }
+
+    private closeAddMoneyFormModal = () =>{
+        this.setState({
+            openAddMoneyFormModal : false
+        });
+    }
+
+    private closeAddMoneyResponseModal = () =>{
+        this.setState({
+            openAddMoneyResponseModal : false,
+        });
+    }
+
+    private openResponseModalWithMessage = (message : string) =>{
+        this.setState({
+            openAddMoneyResponseModal : true,
+            addMoneyResponseMessage : message
+        });
+    }
+
+    private addMoney = (amount : Number) =>{
+        this.setState({
+            openAddMoneyFormModal : false
+        });
+        fetch(constants.baseUrl+"bankAccount", {
+            method: "PUT",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              CurrencyType: "Ron",
+              Amount: amount, //add new amount to the total here
+              Email: this.state.user.email
+            })}).then(response => {
+                if(response.status === 200) {
+                    this.openResponseModalWithMessage("Added RON "+amount+" to "+this.state.user.firstName + " "+this.state.user.lastName+" account!");
+                }
+                
+                if(response.status !== 200) {
+                    this.openResponseModalWithMessage("Something wrong happened. Try again later!");
+                }
+            });
+        }
+
+
     render(){
         return( 
             <div className = "user-container"> 
@@ -129,9 +194,11 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     <div className = "button-container">
                         <button className = "button-style">Attach Card</button>
                         <button className = "button-style" onClick = {this.handleDeleteUser}>Delete</button>
-                        <button className = "button-style">Add Money</button>
+                        <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>
                     </div>
                 </div>
+                <AddMoneyModal open = {this.state.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
+                <AddMoneyResponseModal open = {this.state.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
                 <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
             </div>             
          );   

@@ -10,7 +10,7 @@ using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class BankAccountController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace VikingVault.API.Controllers
         {
             try
             {
-                return Ok(_bankAccountService.UpdateBankAccount(updatedBankAccount));
+                return Ok(_bankAccountService.ChangeBalance(updatedBankAccount));
             }
             catch (BankAccountServiceException e)
             {

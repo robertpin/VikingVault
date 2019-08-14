@@ -28,8 +28,11 @@ namespace VikingVault.Services
             var returnedUser = _dbContext.User.SingleOrDefault(u => u.Id == Int32.Parse(userId));
 
             List<BankAccount> bankAccounts = new List<BankAccount>();
-            BankAccount bankAccountSell = _bankAccountService.ChangeBalance(returnedUser.Email, bankAccountModelSell);
-            BankAccount bankAccountBuy = _bankAccountService.ChangeBalance(returnedUser.Email, bankAccountModelBuy);
+            bankAccountModelSell.Email = returnedUser.Email;
+            bankAccountModelBuy.Email = returnedUser.Email;
+
+            BankAccount bankAccountSell = _bankAccountService.ChangeBalance(bankAccountModelSell);
+            BankAccount bankAccountBuy = _bankAccountService.ChangeBalance(bankAccountModelBuy);
             bankAccounts.Add(bankAccountSell);
             bankAccounts.Add(bankAccountBuy);       
 

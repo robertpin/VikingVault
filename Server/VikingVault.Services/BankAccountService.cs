@@ -46,9 +46,9 @@ namespace VikingVault.Services
             return bankAccounts;
         }
 
-        public BankAccount ChangeBalance(string email, UpdateBankAccountModel updatedBankAccount)
+        public BankAccount ChangeBalance(UpdateBankAccountModel updatedBankAccount)
         {
-            var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == email);
+            var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == updatedBankAccount.Email);
             var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
             oldBankAccount.Balance += updatedBankAccount.Amount;
             UpdateBankAccount();
