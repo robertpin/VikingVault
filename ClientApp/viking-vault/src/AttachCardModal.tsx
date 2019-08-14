@@ -87,16 +87,9 @@ class AttachCardForm extends React.Component<any, IFormState> {
     }
 
     private mandatoryFieldsCompletedCorrectly = () => {
-        let val = true;
-        if(this.cardNumberHasSixteenDigits().message !== "Ok") {
-            val = false;
-        }
-        if(this.expirationDateIsAfterCurrentYear().message !== "Ok") {
-            val = false;
-        }
-        if(this.ccvHasThreeDigits().message !== "Ok") {
-            val = false;
-        }
+        let val = false;
+        const validationFunctions = [this.cardNumberHasSixteenDigits, this.expirationDateIsAfterCurrentYear, this.ccvHasThreeDigits];
+        val = validationFunctions.every(functionItem => functionItem().message === "Ok");
         return val;
     }
 
