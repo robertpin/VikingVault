@@ -34,5 +34,21 @@ namespace VikingVault.API.Controllers
                return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public ActionResult Delete([FromBody] UserEmail userEmail)
+        {
+            try
+            {
+                _userService.DeleteUser(userEmail);
+                return Ok(true);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
