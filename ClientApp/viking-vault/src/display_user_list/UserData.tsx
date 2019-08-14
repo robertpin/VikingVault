@@ -4,7 +4,7 @@ import './DisplayUsers.css';
 import DefaultProfilePicture from '../UI/user2.png';
 import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
-import DeleteUserModal from "../DeleteUserModal";
+import DeleteUserModal from "./DeleteUserModal";
 
 export interface IUserData{
     id: number;
