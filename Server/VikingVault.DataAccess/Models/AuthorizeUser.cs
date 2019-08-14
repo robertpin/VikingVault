@@ -5,7 +5,6 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace VikingVault.DataAccess.Models
 {
-
     public class AuthorizeUser : Attribute, IAuthorizationFilter
     {
         void IAuthorizationFilter.OnAuthorization(AuthorizationFilterContext context)
@@ -22,7 +21,7 @@ namespace VikingVault.DataAccess.Models
             }
             catch (Exception ex)
             {
-                context.Result = new ForbidResult();
+                context.Result = new StatusCodeResult(500);
             }
         }
     }

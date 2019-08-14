@@ -16,8 +16,7 @@ namespace VikingVault.API.Controllers
     {
         private readonly IUserProfilePageService _userProfilePageService;
 
-
-        public UserProfilePagesController(IUserProfilePageService userProfilePageService)
+         public UserProfilePagesController(IUserProfilePageService userProfilePageService)
         {
             _userProfilePageService = userProfilePageService;
         }
