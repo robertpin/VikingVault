@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +45,7 @@ namespace VikingVault.API
             services.AddCors();
 
             ConfigureJWTAuthentication(appSettingsSection, services);
-
+            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserProfilePageService, UserProfilePageService>();
@@ -74,8 +76,8 @@ namespace VikingVault.API
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
-                
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
 
