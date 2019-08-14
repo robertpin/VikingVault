@@ -2,6 +2,9 @@ import React from "react";
 import icon from "./images/user2.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
+import { constants } from "../ConstantVariables";
+
+const API_URL = `${constants.baseUrl}userprofilepages`;
 
 interface IUserIconState {
   clicked: boolean;
@@ -40,8 +43,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
                 redirect: true
             })
         }
-        else{
-            
+        else{         
             fetch(API_URL, {
                 method: "GET",
                 headers: {
@@ -53,10 +55,6 @@ class UserIcon extends React.Component<any, IUserIconState> {
                 {
                     if( response.status === 500)
                     {
-                        this.setState({
-                            errorLabel: "Internal Server Error"
-                        })
-
                         return null;
                     }
                     
@@ -67,15 +65,11 @@ class UserIcon extends React.Component<any, IUserIconState> {
                 {
                     this.setState(
                         {
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            address: userData.address,
-                            id: userData.cnp, 
-                            email: userData.email
+                           userImage: userData.pictureLink
                         }
                     )
                 }
-            }).catch( error => this.setState({ errorLabel: "Something went wrong" }));
+            });
         }
   }
 
@@ -102,7 +96,6 @@ class UserIcon extends React.Component<any, IUserIconState> {
       this.setState({
         redirect : true
       });
-      
   }
 
   render() {
