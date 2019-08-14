@@ -218,7 +218,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         else if(this.state.toExchangeAmount > this.state.availableAmountFromCurrency) {
             this.setState({
                 openModal: true,
-                modalMessage:  "Not enough funds to execute the exchange!"
+                modalMessage:  "Not enough funds to perform the exchange!"
             })
         }
         else
