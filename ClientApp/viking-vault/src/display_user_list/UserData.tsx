@@ -48,20 +48,24 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         {
             this.state = {
                 user : {
-                id: props.user.id,
-                firstName: props.user.firstName,
-                lastName: props.user.lastName,
-                address: props.user.address,
-                email: props.user.email,
-                pictureLink: props.user.pictureLink,
-                cardNumber: props.user.cardNumber,
-                expirationDate: props.user.expirationDate},
-                openDeleteUserModal: false};
+                    id: props.user.id,
+                    firstName: props.user.firstName,
+                    lastName: props.user.lastName,
+                    address: props.user.address,
+                    email: props.user.email,
+                    pictureLink: props.user.pictureLink,
+                    cardNumber: props.user.cardNumber,
+                    expirationDate: props.user.expirationDate
+                },
+                openDeleteUserModal: false
+            };
         }
         else
         {
-            this.state = {user : {...defaultUser},
-                        openDeleteUserModal : false};
+            this.state = {
+                user : {...defaultUser},
+                openDeleteUserModal : false
+            };
         }        
     }
 
