@@ -1,0 +1,64 @@
+.modal-content.attach-card {
+    border-radius: 0.95rem;
+}
+
+.form-group.attach-card {
+    
+    width: 86%;
+    margin: auto;
+    text-align: left;
+}
+
+.form-control.attach-card {
+    border: 1.5px solid #09424D;
+    margin-bottom: 10px;
+}
+
+.modal-dialog.attach-card {
+    max-width: 600px;
+}
+
+.form-label.attach-card {
+    color : grey;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+}
+
+.modal-header.attach-card {
+    border: hidden;
+}
+
+.heading-name.attach-card {
+    color: grey;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-left: 5%;
+}
+
+.modal-footer.attach-card {
+    padding: 0;
+    height: 53px;
+}
+
+.btn.attach-card {
+    width: 100%;
+    min-height: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 0;
+}
+
+.btn-primary.attach-card {
+    background-color: #09424D;
+    color: white;
+    border-color: #09424D;
+    border-bottom-left-radius: 0.9rem;
+}
+
+
+.btn-default.attach-card:hover{
+    background-color: #ff0000;
+    color: white;
+    border-color: #ff0000;
+    border-bottom-right-radius: 0.9rem;
+}
+

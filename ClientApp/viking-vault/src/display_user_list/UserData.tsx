@@ -7,6 +7,7 @@ import { constants } from "../ConstantVariables";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
+import { AttachCardForm } from "../AttachCardModal";
 
 export interface IUserData{
     id: number;
@@ -34,6 +35,7 @@ interface IModals {
     openDeleteUserModal: boolean;
     openAddMoneyFormModal : boolean;
     openAddMoneyResponseModal: boolean;
+    openAttachCardModal: boolean
 }
 
 const defaultUser = {
@@ -45,7 +47,8 @@ const defaultUser = {
     pictureLink: "",
     cardNumber: "no-data",
     expirationDate: "no-data",
-    openDeleteUserModal: false
+    openDeleteUserModal: false,
+    openAttachCardModal: false, 
 };
 
 class UserData extends React.Component<IUserDataProp, IPageState>{
@@ -69,9 +72,10 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                 modals : {
                     openDeleteUserModal: false,
                     openAddMoneyFormModal : false,
-                    openAddMoneyResponseModal: false
+                    openAddMoneyResponseModal: false,
+                    openAttachCardModal: false,
                 },
-                addMoneyResponseMessage: ""
+                addMoneyResponseMessage: "",
             };
         }
         else
@@ -81,15 +85,16 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                         modals : {
                             openDeleteUserModal: false,
                             openAddMoneyFormModal : false,
-                            openAddMoneyResponseModal: false
+                            openAddMoneyResponseModal: false,
+                            openAttachCardModal: false,
                         },
-                        addMoneyResponseMessage: ""
+                        addMoneyResponseMessage: "",
                     };
         }        
     }
 
     splitCardNumber(begin: number, end: number){
-        return this.state.cardNumber.substring(begin, end);
+        return this.state.user.cardNumber.substring(begin, end);
     }
 
     formatCardNumber(cardNumber: string)
@@ -177,9 +182,19 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         }
 
 
-    private handleDeleteUser = () => this.setState({ openDeleteUserModal : true});
+    private handleDeleteUser = () => this.setState({
+         modals: {
+            ...this.state.modals,
+            openDeleteUserModal : true,
+            }
+        });
 
-    private closeDeleteUserModal = () => this.setState({ openDeleteUserModal : false });
+    private closeDeleteUserModal = () => this.setState({
+        modals: {
+            ...this.state.modals,
+             openDeleteUserModal : false, 
+            }
+        });
 
     private deleteUser = () =>{
         fetch(constants.baseUrl+"user/delete", {
@@ -193,10 +208,31 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
             })});
 
         this.setState({
-            openDeleteUserModal : false
+            modals: {
+                ...this.state.modals,
+                openDeleteUserModal : false,
+            }
         });
 
         this.props.deleteUserFromComponent(this.props.user.email);
+    }
+
+    handleAttachCard = () => {
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAttachCardModal: true,
+            }
+        });
+    }
+
+    closeAttachCardModal = () => {
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAttachCardModal: false,
+            }
+        });
     }
 
     render(){
@@ -218,14 +254,15 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
 
                     <div className = "button-container">
-                        <button className = "button-style">Attach Card</button>
+                        <AttachCardForm open={this.state.modals.openAttachCardModal} onModalClose={this.closeAttachCardModal} firstName={this.state.user.firstName} lastName={this.state.user.lastName} userId={this.state.user.id} />
+                        <button className = "button-style" onClick={ this.handleAttachCard}>Attach Card</button>
                         <button className = "button-style" onClick = {this.handleDeleteUser}>Delete</button>
                         <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>
                     </div>
                 </div>
                 <AddMoneyModal open = {this.state.modals.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
                 <ResponseModal open = {this.state.modals.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
-                <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
+                <DeleteUserModal open = {this.state.modals.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
             </div>             
          );   
     }

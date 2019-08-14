@@ -193,7 +193,7 @@ class RegisterForm extends React.Component<any, IFormState> {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
-        },).then(response => {
+        }).then(response => {
             if(response.status !== 200) {
                 this.openModalWithMessage("Error. Please Try again");
             }

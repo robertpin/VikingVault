@@ -15,8 +15,8 @@ namespace VikingVault.DataAccess
         }
         
         public DbSet<User> User { get; set; }
-        public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Transaction> Transactions { get; set; }  
         
         public void SeedAdmin(ModelBuilder modelBuilder)
@@ -44,6 +44,10 @@ namespace VikingVault.DataAccess
                 .HasName("Email");
 
             SeedAdmin(modelBuilder);
+
+            modelBuilder.Entity<Card>()
+                .HasAlternateKey(card => card.CardNumber)
+                .HasName("AlternateKey_CardNumber");
         }
     }
 }
