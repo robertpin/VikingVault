@@ -27,7 +27,7 @@
     margin: 2% auto;
     background-color: rgba(0, 0, 0, 0.137);
     border-radius: 2em;
-    box-shadow: 0px 0px 5px 3px rgba(9, 66, 77, 0.226);
+    
     overflow: hidden;
 }
 
@@ -51,6 +51,7 @@
     width: 55%;
     height: auto;
     position: absolute;
+    border-radius: 100%;
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
