@@ -4,6 +4,10 @@ import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
 import UserIcon from './components/UserIcon';
+import {constants} from './ConstantVariables';
+
+const EXCHANGE_URL = `${constants.baseUrl}exchange`;
+const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;
 
 interface IExchangeFormState {
     fromCurrency: string;
@@ -104,7 +108,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     getMaximumValueToBeChanged() {
         let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch("https://localhost:44323/api/bankAccount", {
+            fetch(BANK_ACCOUNT_URL, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -141,7 +145,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     getMaximumValueToChangeInto() {
         let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch("https://localhost:44323/api/bankAccount", {
+            fetch(BANK_ACCOUNT_URL, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -224,7 +228,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
 
             let token = sessionStorage.getItem('Authentication-Token');
             if(token != null) {
-                fetch("https://localhost:44323/api/exchange", {
+                fetch(EXCHANGE_URL, {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',
