@@ -108,7 +108,6 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         }, 1500);
         return null;
       }
-
       if(response.status === 500) {
         this.setState({
           errorLabel: "Error. Please try again later!"
@@ -120,16 +119,15 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         }, 2500);
         return null;
       }
-
-      return response.json();
-
+      if(response !== null) {
+        return response.json();
+      }
     })
     .then(result => {
       if(result !== null)
       {
         // correct email + password => redirect to user/admin page 
         sessionStorage.setItem('Authentication-Token', result.token);
-
         if(result.email === "admin"){
           this.setState({
             redirect: true,

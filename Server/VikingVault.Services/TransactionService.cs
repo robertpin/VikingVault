@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.Services
 {
@@ -17,9 +19,21 @@ namespace VikingVault.Services
             _dbContext = context;
         }
 
-        public Transaction AddTransaction(Transaction tran)
+        public Transaction AddTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Add(transaction);
+                _dbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                if (e is DbUpdateException || e is DbUpdateConcurrencyException)
+                {
+                    throw new TransactionException();
+                }
+            }
+            return transaction;
         }
 
         public List<Transaction> GetTransactions(string userId)
