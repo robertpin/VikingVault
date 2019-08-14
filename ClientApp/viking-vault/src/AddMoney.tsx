@@ -1,7 +1,7 @@
 import React from 'react';
 import { constants } from './ConstantVariables';
-import AddMoneyModal from './AddMoneyModal';
-import AddMoneyResponseModal from './AddMoneyResponseModal';
+import AddMoneyModal from './display_user_list/AddMoneyModal';
+import AddMoneyResponseModal from './display_user_list/ResponseModal';
 
 class AddMoney extends React.Component<any,any>{
     state = {

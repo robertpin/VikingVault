@@ -5,8 +5,8 @@ import DefaultProfilePicture from '../UI/user2.png';
 import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
 import DeleteUserModal from "../DeleteUserModal";
-import AddMoneyModal from "../AddMoneyModal";
-import AddMoneyResponseModal from "../AddMoneyResponseModal";
+import AddMoneyModal from "./AddMoneyModal";
+import ResponseModal from "./ResponseModal";
 
 
 export interface IUserData{
@@ -198,7 +198,7 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
                 </div>
                 <AddMoneyModal open = {this.state.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
-                <AddMoneyResponseModal open = {this.state.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
+                <ResponseModal open = {this.state.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
                 <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
             </div>             
          );   

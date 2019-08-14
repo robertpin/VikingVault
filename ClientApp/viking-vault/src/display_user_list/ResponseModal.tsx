@@ -1,13 +1,13 @@
 import React from 'react';
-import './AddMoney.css';
+import './ResponseModal.css';
 
-interface IAddMoneyResponseModalProps{
+interface IResponseModalProps{
     open: boolean;
     closeModal: any;
     message : string;
 }
 
-class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps, any>{ 
+class ResponseModal extends React.Component<IResponseModalProps, any>{ 
 
     private closeModal = () =>{
         this.props.closeModal(false);
@@ -21,8 +21,8 @@ class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps,
                     <div className="modal-header">
                         <h4 className="modal-title">{this.props.message}</h4>
                     </div>
-                    <div className="modal-footer response-add-money">
-                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary add-money-response-button" : "btn btn-primary add-money-response-button"} onClick={this.closeModal}>OK</button>
+                    <div className="modal-footer response-modal">
+                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary response-button" : "btn btn-primary response-button"} onClick={this.closeModal}>OK</button>
                     </div>
                 </div>
             </div>
@@ -31,4 +31,4 @@ class AddMoneyResponseModal extends React.Component<IAddMoneyResponseModalProps,
     }
 }
 
-export default AddMoneyResponseModal;
+export default ResponseModal;

@@ -17,11 +17,6 @@
     height: 50px;
   }
   
-  .modal-footer.response-add-money {
-    padding: 0;
-    height: 50px;
-  }
-  
   .btn-secondary.add-money-button {
     width: 100%;
     border-radius: 0;
@@ -40,6 +35,12 @@
     color: white;
     border-color: #09424D;
   }
+
+  .btn-primary:hover.add-money-button {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+  } 
   
   .btn-primary.cancel-add-money-button {
     width: 100%;
@@ -58,16 +59,5 @@
     color: black;
     border-color: grey;
   }
+
   
-  .btn-primary.add-money-response-button {
-    width: 100%;
-    margin-left: 0;
-    border-radius: 0;
-    border-bottom-right-radius: 0.9rem;
-    min-height: 100%;
-    background-color: #09424D;
-    color: white;
-    border-bottom-right-radius: 0.9rem;
-    border-bottom-left-radius: 0.9rem;
-    border-color: #09424D;
-  }
