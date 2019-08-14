@@ -3,11 +3,11 @@ import { constants } from "./ConstantVariables";
 import './AttachCardModal.css';
 
 const baseUrl = constants.baseUrl;
-var regex = /^([+-]?[1-9]\d*|0)$/;
+let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 
 interface IModalProps {
     open: boolean;
-    modalClose: any;
+    onModalClose: any;
     firstName: string;
     lastName: string;
     userId: number;
@@ -50,7 +50,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
     }
 
     private cardNumberHasSixteenDigits = () => {
-        if(this.state.card.cardNumber.length === 16 && this.state.card.cardNumber.match(regex))
+        if(this.state.card.cardNumber.length === 16 && this.state.card.cardNumber.match(regexCheckIfOnlyDigits))
             return  {
                 message: "Ok",
                 class: "alert alert-success"
@@ -112,7 +112,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
 
     private closeModal = () => {
         this.resetInputValues();
-        this.props.modalClose(false);
+        this.props.onModalClose(false);
     }
 
     private getCard = (userId : number) => {

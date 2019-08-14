@@ -100,7 +100,7 @@ class UserData extends React.Component<IUserData, IUserData>{
                     </div>
 
                     <div className = "button-container">
-                        <AttachCardForm open={this.state.openAttachCardModal} modalClose={this.closeModal} firstName={this.state.firstName} lastName={this.state.lastName} userId={this.state.id} />
+                        <AttachCardForm open={this.state.openAttachCardModal} onModalClose={this.closeModal} firstName={this.state.firstName} lastName={this.state.lastName} userId={this.state.id} />
                         <button className = "button-style" onClick={ this.openModal}>Attach Card</button>
                         <button className = "button-style">Delete</button>
                         <button className = "button-style">Add Money</button>

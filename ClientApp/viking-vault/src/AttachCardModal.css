@@ -3,8 +3,10 @@
 }
 
 .form-group.attach-card {
+    
     width: 86%;
-    margin-left: 7%;
+    margin: auto;
+    text-align: left;
 }
 
 .form-control.attach-card {
@@ -32,16 +34,16 @@
 }
 
 .modal-footer.attach-card {
-    padding: 0rem;
+    padding: 0;
     height: 53px;
 }
 
 .btn.attach-card {
     width: 100%;
     min-height: 100%;
-    margin-right: 0rem;
-    margin-left: 0rem;
-    border-radius: 0rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: 0;
 }
 
 .btn-primary.attach-card {
