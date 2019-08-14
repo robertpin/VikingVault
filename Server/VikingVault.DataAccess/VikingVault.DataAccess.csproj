@@ -27,6 +27,7 @@
     <Compile Remove="Migrations\20190809073239_completeModelMigration.cs" />
     <Compile Remove="Migrations\20190809095556_fullModelMigration.cs" />
     <Compile Remove="Migrations\20190813074007_DroppedProfilePages.cs" />
+    <Compile Remove="Migrations\20190813101416_SeedAdmin.cs" />
   </ItemGroup>
 
   <ItemGroup>

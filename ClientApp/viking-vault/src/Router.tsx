@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, BrowserRouter as BRouter } from 'react-router-dom';
+import { Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
 import { ExchangeForm } from './ExchangeForm'
@@ -78,14 +78,14 @@ class Router extends React.Component<any, IState> {
     }
 
     render() {
-        return <BRouter>
+        return <BrowserRouter>
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
-            <Route path="/user" component={UserPage} />
+            <Route path="/user" exact component={UserPage} />
             <Route path="/user/exchange" exact component={ExchangeForm}/>
             <Route path="/admin" render = { () => this.makeAdminRedirect()} />
-        </BRouter>
+        </BrowserRouter>
     }
 }
 
