@@ -11,13 +11,7 @@ interface IProfilePicture{
 
 class ProfilePicture extends React.Component<any, IProfilePicture> 
 {
-    constructor(props: any){
-        super(props)
-        this.state = {
-            userProfilePicture: profilePicture
-        }
-    }
-
+    state = { userProfilePicture: profilePicture}
     componentDidMount(){
         let token = sessionStorage.getItem("Authentication-Token");
         if(token!==null){
@@ -50,8 +44,8 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
     render()
     {
         return (
-            <div className = "ProfilePictureContainer">
-                <img src = {this.state.userProfilePicture} alt = "Profile Picture To Be Loaded" id = "ProfilePicture" />
+            <div className = "profile-picture-container">
+                <img src = {this.state.userProfilePicture} alt = "Profile Picture To Be Loaded" id = "profile-picture" />
             </div>
         );
     }
