@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
 using VikingVault.DataAccess.Enums;
+using System.Linq;
 
 namespace VikingVault.Services
 {
@@ -62,6 +63,20 @@ namespace VikingVault.Services
                 CurrencyType = currencyType,
                 Balance = 0.0f
             };
+        }
+
+        public void DeleteUser(UserEmail userEmail)
+        {
+            try
+            {
+                User userToDelete = _dbContext.User.SingleOrDefault(user => user.Email == userEmail.Email);
+                _dbContext.Remove(userToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new UserServiceException();
+            }
         }
     }
 }
