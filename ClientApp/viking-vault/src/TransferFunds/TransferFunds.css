@@ -21,3 +21,9 @@
     height: 100%;
     padding: 1em;
 }
+
+.transfer-details-container{
+    position: absolute;
+    top: 10%;
+    left: 150%;
+}
