@@ -69,19 +69,14 @@ namespace VikingVault.Services
         {
             try
             {
-                User user = this.GetByEmail(userEmail.Email);
-                _dbContext.Remove(user);
+                User userToDelete = _dbContext.User.SingleOrDefault(user => user.Email == userEmail.Email);
+                _dbContext.Remove(userToDelete);
                 _dbContext.SaveChanges();
             }
             catch (Exception e)
             {
                 throw new UserServiceException();
             }
-        }
-
-        public User GetByEmail(string email)
-        {
-            return _dbContext.User.SingleOrDefault(user => user.Email == email);
         }
     }
 }
