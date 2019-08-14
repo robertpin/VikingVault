@@ -10,10 +10,16 @@ interface IAddMoneyModalProps{
 
 interface IAddMoneyModalState{
     amount: string;
+    minAmount: number;
+    maxAmount: number;
 }
 
 class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalState>{ 
-    state = { amount : "" };
+    state = { 
+        amount : "",
+        minAmount: 0.1,
+        maxAmount: 5000 
+    };
 
     private resetAmountField(){
         this.setState({ amount : "" });
@@ -32,7 +38,7 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
     private handleAmountChange = (e:any) => this.setState({ amount: e.target.value });
 
     private validateAmount(){
-        if(Number(this.state.amount) < 0.1 || Number(this.state.amount) > 5000 || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
+        if(Number(this.state.amount) < this.state.minAmount || Number(this.state.amount) > this.state.maxAmount || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
             return false;
         }
         return true;
@@ -50,7 +56,11 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
                         <div className = "modal-body">
                             <div className="form-group">
                                 <label>Amount (RON)</label>
-                                <input type="text" className="form-control accent-color" value = {this.state.amount} onChange = {this.handleAmountChange}></input>
+                                <input type="text" className="form-control accent-color"
+                                min = {this.state.minAmount}
+                                max = {this.state.maxAmount}
+                                value = {this.state.amount} 
+                                onChange = {this.handleAmountChange}></input>
                                 {!this.validateAmount() ? <p className="alert alert-danger">Amount should be between 0.1-5000 RON</p> : null}
                             </div>
                         </div>
