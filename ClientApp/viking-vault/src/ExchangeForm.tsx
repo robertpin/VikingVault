@@ -3,6 +3,7 @@ import React from "react";
 import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
+import UserIcon from './components/UserIcon';
 
 interface IExchangeFormState {
     fromCurrency: string;
@@ -287,8 +288,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     render() {
         return (
             <div className="exchange-page-background">
-                <SideBar/>
-                <TopBar/>
+                <SideBar />
+                <TopBar />
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className="white-box-background">
                     <div className="container"> 

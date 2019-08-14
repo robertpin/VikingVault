@@ -361,3 +361,7 @@
     font-weight: bold;
     user-select: none;
 }
+
+.redirect-symbols:hover {
+    text-decoration: none;
+}
