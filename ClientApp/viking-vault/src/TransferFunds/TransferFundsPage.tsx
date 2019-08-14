@@ -8,8 +8,7 @@ import UserIcon from '../components/UserIcon';
 import './TransferFunds.css';
 import '../ExchangeForm.css';
 
-
-const url = constants.baseUrl+"TransferFunds";
+const url = `${constants.baseUrl}TransferFunds`;
 
 interface ITransferFundsState{
     transferedAmount: number;
@@ -43,21 +42,68 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         })
     }
 
-    transferMoney(){
-
-        let token = sessionStorage.getItem('Authentication-Token');
-        if(token != null) {
-            fetch("https://localhost:44323/api/bankAccount", {
-                method: "GET",
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'x-access-token': token.toString()
-                }
-            })
-            .then(response => response.json());
+    handleTransferMoney = () => {
+        var data = {
+          transferedAmount: this.state.transferedAmount,
+          cardNumber: this.state.cardNumber,
+          transferDetails: this.state.transferDetails
         }
-    }
+    
+        fetch(baseUrl+"login", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+          if(response.status === 404) {
+            this.setState({
+              errorLabel: "Incorrect email or password!"
+            });
+            setTimeout(() => {
+              this.setState({
+                errorLabel: ""
+              });
+            }, 1500);
+            return null;
+          }
+          if(response.status === 500) {
+            this.setState({
+              errorLabel: "Error. Please try again later!"
+            });
+            setTimeout(() => {
+              this.setState({
+                errorLabel: ""
+              });
+            }, 2500);
+            return null;
+          }
+          if(response !== null) {
+            return response.json();
+          }
+        })
+        .then(result => {
+          if(result !== null)
+          {
+            // correct email + password => redirect to user/admin page 
+            sessionStorage.setItem('Authentication-Token', result.token);
+            if(result.email === "admin"){
+              this.setState({
+                redirect: true,
+                userType: "admin"
+              })
+            }
+            else{
+              this.setState({
+                redirect: true,
+                userType: "user"
+              })
+            }
+          }
+      });
+      }
 
     render(){
         return(
@@ -107,7 +153,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     Transfer Now
                                 </button>   
                             </div>
-                            
+
                         </div>
                     </div> 
                 </div>

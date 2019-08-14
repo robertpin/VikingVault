@@ -51,7 +51,7 @@ class Router extends React.Component<any, IState> {
             if(this.state.isAdmin === null) {
                 setTimeout(() =>{
                     return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
-                }, 100);
+                }, 500);
             }
             else return <Redirect to={this.state.isAdmin? "/admin" : "/user"} />;
         }
@@ -65,7 +65,7 @@ class Router extends React.Component<any, IState> {
                 if(this.state.isAdmin)
                     return <AdminPage/>;
                 else return <Redirect to = "/login" />
-            },200);
+            },500);
         }
 
         if(this.state.isAdmin)
@@ -79,9 +79,9 @@ class Router extends React.Component<any, IState> {
             <Route path="/register/" exact component={RegisterForm} />
             <Route path="/login" exact component={LoginForm} />
             <Route path="/" exact render={() => this.makeRedirect()}/>
-            <Route path="/user" component={UserPage} />
+            <Route path="/user" exact component={UserPage} />
             <Route path="/user/exchange" exact component={ExchangeForm}/>
-            <Route path="/admin" render = { () => this.makeAdminRedirect()} />
+            <Route path="/admin" exact render = { () => this.makeAdminRedirect()} />
             <Route path="/transferfunds" component = {TransferFundsPage} />
         </BRouter>
     }

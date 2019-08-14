@@ -4,12 +4,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class completeModelMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "UsersProfilePages");
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    PictureLink = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: false),
+                    Cnp = table.Column<string>(nullable: false),
+                    Role = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.UniqueConstraint("Email", x => x.Email);
+                });
 
             migrationBuilder.CreateTable(
                 name: "BankAccount",
@@ -33,7 +51,7 @@ namespace VikingVault.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Card",
+                name: "Cards",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -45,9 +63,9 @@ namespace VikingVault.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Card", x => x.Id);
+                    table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Card_User_UserId",
+                        name: "FK_Cards_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -78,14 +96,19 @@ namespace VikingVault.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "Address", "Cnp", "Email", "FirstName", "LastName", "Password", "PictureLink", "Role" },
+                values: new object[] { 1, "Ioan Budai Deleanu Street 64", "1700820642466", "admin", "Admin Firstname", "Admin Lastname", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", "", "admin" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BankAccount_UserId",
                 table: "BankAccount",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Card_UserId",
-                table: "Card",
+                name: "IX_Cards_UserId",
+                table: "Cards",
                 column: "UserId",
                 unique: true);
 
@@ -101,28 +124,13 @@ namespace VikingVault.DataAccess.Migrations
                 name: "BankAccount");
 
             migrationBuilder.DropTable(
-                name: "Card");
+                name: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
 
-            migrationBuilder.CreateTable(
-                name: "UsersProfilePages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(nullable: true),
-                    Cnp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Firstname = table.Column<string>(nullable: true),
-                    Lastname = table.Column<string>(nullable: true),
-                    PictureLink = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersProfilePages", x => x.Id);
-                });
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }
