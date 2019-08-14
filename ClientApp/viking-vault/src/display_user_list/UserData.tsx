@@ -4,6 +4,8 @@ import './DisplayUsers.css';
 import DefaultProfilePicture from '../UI/user2.png';
 import CardImg from '../UI/GENERICcard-01.png';
 import { constants } from "../ConstantVariables";
+import AddMoneyModal from "./AddMoneyModal";
+import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
 
 export interface IUserData{
@@ -19,12 +21,20 @@ export interface IUserData{
 
 interface IUserDataProp{
     user: IUserData;
-    deleteUserFromComponent: any;
+    deleteUserFromComponent: (email: string) => void;
 }
 
 interface IPageState{
     user: IUserData;
-    openDeleteUserModal: boolean}
+    modals: IModals;
+    addMoneyResponseMessage: string
+}
+
+interface IModals {
+    openDeleteUserModal: boolean;
+    openAddMoneyFormModal : boolean;
+    openAddMoneyResponseModal: boolean;
+}
 
 const defaultUser = {
     id: 0,
@@ -43,7 +53,6 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
     constructor(props: IUserDataProp)
     {
         super(props);
-
         if(props !== null)
         {
             this.state = {
@@ -57,15 +66,25 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     cardNumber: props.user.cardNumber,
                     expirationDate: props.user.expirationDate
                 },
-                openDeleteUserModal: false
+                modals : {
+                    openDeleteUserModal: false,
+                    openAddMoneyFormModal : false,
+                    openAddMoneyResponseModal: false
+                },
+                addMoneyResponseMessage: ""
             };
         }
         else
         {
             this.state = {
-                user : {...defaultUser},
-                openDeleteUserModal : false
-            };
+                        user : {...defaultUser},
+                        modals : {
+                            openDeleteUserModal: false,
+                            openAddMoneyFormModal : false,
+                            openAddMoneyResponseModal: false
+                        },
+                        addMoneyResponseMessage: ""
+                    };
         }        
     }
 
@@ -86,10 +105,77 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                         <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
                         <p className = "card-number-on-card">{this.state.user.cardNumber}</p>
                         <img src = {CardImg} className = "card-img"></img>
-                   </div>        
-
+                   </div>;
         return null; 
     }
+    
+    private handleAddMoney = () =>{
+        this.setState((oldstate : IPageState)=>({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : !oldstate.modals.openAddMoneyFormModal
+            }
+        }));
+    }
+
+    private closeAddMoneyFormModal = () =>{
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : false
+            }
+        });
+    }
+
+    private closeAddMoneyResponseModal = () =>{
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyResponseModal : false
+            }
+        });
+    }
+
+    private openResponseModalWithMessage = (message : string) =>{
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyResponseModal : true
+            },
+            addMoneyResponseMessage : message
+        });
+    }
+
+    private addMoney = (amount : Number) =>{
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openAddMoneyFormModal : false
+            }
+        });
+        fetch(constants.baseUrl+"bankAccount", {
+            method: "PUT",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              CurrencyType: "Ron",
+              Amount: amount,
+              Email: this.state.user.email
+            })}).then(response => {
+                if(response.status === 200) {
+                    this.openResponseModalWithMessage("Added RON "+amount+" to "+this.state.user.firstName + " "+this.state.user.lastName+" account!");
+                }
+                
+                if(response.status !== 200) {
+                    this.openResponseModalWithMessage("Something wrong happened. Try again later!");
+                }
+            }).catch(err => {
+                this.openResponseModalWithMessage(err.toString());
+            });
+        }
+
 
     private handleDeleteUser = () => this.setState({ openDeleteUserModal : true});
 
@@ -134,9 +220,11 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     <div className = "button-container">
                         <button className = "button-style">Attach Card</button>
                         <button className = "button-style" onClick = {this.handleDeleteUser}>Delete</button>
-                        <button className = "button-style">Add Money</button>
+                        <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>
                     </div>
                 </div>
+                <AddMoneyModal open = {this.state.modals.openAddMoneyFormModal} userName = {this.state.user.firstName + " " + this.state.user.lastName} closeModal = {this.closeAddMoneyFormModal} addMoney = {this.addMoney}/>
+                <ResponseModal open = {this.state.modals.openAddMoneyResponseModal}  closeModal = {this.closeAddMoneyResponseModal} message = {this.state.addMoneyResponseMessage}/>
                 <DeleteUserModal open = {this.state.openDeleteUserModal} deletedUserName = {this.state.user.firstName +" "+ this.state.user.lastName} closeModal = {this.closeDeleteUserModal} deleteUser = {this.deleteUser}/>
             </div>             
          );   

@@ -86,3 +86,12 @@ footer {
   font-size: 65%;
 }
 
+.modal.open {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal.close {
+  display: none;
+}

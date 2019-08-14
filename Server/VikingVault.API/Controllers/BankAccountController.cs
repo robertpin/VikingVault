@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
@@ -26,5 +27,19 @@ namespace VikingVault.API.Controllers
             var token = Request.Headers["x-access-token"];
             return _bankAccountService.GetBankAccounts(token);
         }
+
+        [HttpPut]
+        public ActionResult Put([FromBody]UpdateBankAccountModel updatedBankAccount)
+        {
+            try
+            {
+                return Ok(_bankAccountService.ChangeBalance(updatedBankAccount));
+            }
+            catch (BankAccountServiceException e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        
     }
 }
