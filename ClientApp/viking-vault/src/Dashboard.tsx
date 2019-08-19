@@ -1,0 +1,52 @@
+import React from "react";
+import {constants} from "./ConstantVariables";
+import { Redirect } from "react-router-dom";
+import UserPage from "./components/UserPage";
+import { AdminPage } from "./display_user_list/AdminPage";
+
+const baseUrl = constants.baseUrl;
+
+interface IState {
+    isAdmin: boolean | null;
+}
+
+class Dashboard extends React.Component<any, IState> {
+    state = {
+        isAdmin: null
+    };
+
+    private isUserAdmin() {
+        let token = sessionStorage.getItem("Authentication-Token");
+        if(token === null) {
+            return;
+        }
+        return fetch(baseUrl+"admin", {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token' : token.toString()
+            }
+        }).then(response => response.json())
+        .then(result => {
+            this.setState({
+                isAdmin: result
+            })
+        });
+    }
+
+    componentDidMount() {
+        this.isUserAdmin();
+    }
+
+    render() {
+        return <div>
+            {sessionStorage.getItem("Authentication-Token") === null? <Redirect to="/login"/> : null}
+            {this.state.isAdmin? <AdminPage/> : null}
+            {this.state.isAdmin === false? <UserPage/> : null}
+        </div>
+        
+    }
+}
+
+export {Dashboard}
