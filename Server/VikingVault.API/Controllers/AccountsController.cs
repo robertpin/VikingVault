@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using VikingVault.Services.Abstractions;
+﻿using VikingVault.Services.Abstractions;
 using VikingVault.DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Web.Http;
 
 namespace VikingVault.API.Controllers
 {

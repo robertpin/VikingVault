@@ -1,31 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 
 namespace VikingVault.DataAccess.Models
 {
-    public class AuthorizeUser : Attribute, IAuthorizationFilter
+    public class AuthorizeUser : ActionFilterAttribute
     {
-        void IAuthorizationFilter.OnAuthorization(AuthorizationFilterContext context)
+        public override void OnActionExecuting(HttpActionContext context)
         {
             try
             {
-                string token = context.HttpContext.Request.Headers["x-access-token"].ToString();
+                string token = context.Request.Headers.GetValues("x-access-token").ToString();
                 var tokenObject = new JwtSecurityToken(token);
                 string userId = tokenObject.Payload["Id"].ToString();
                 if (userId == null)
                 {
-                    context.Result = new ForbidResult();
+                    context.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
                 }
             }
             catch (Exception ex)
             {
-                context.Result = new StatusCodeResult(500);
+                context.Response = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }
