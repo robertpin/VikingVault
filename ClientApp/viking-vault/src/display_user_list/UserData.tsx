@@ -8,6 +8,7 @@ import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
 import { AttachCardForm } from "../AttachCardModal";
+import { emptyStatement } from "@babel/types";
 
 export interface IUserData{
     id: number;
@@ -99,17 +100,17 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
 
     formatCardNumber(cardNumber: string)
     {
-        return <span>{this.splitCardNumber(0,4)}   {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
+        return <span>{this.splitCardNumber(0,4)}  {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
     }
 
     renderUserCard()
     {
         if(this.state.user.cardNumber !== "")
             return <div className = "card-data-style">
+                        <img src = {CardImg} className = "card-img"></img>
                         <p className = "name-on-card">{this.state.user.firstName} {this.state.user.lastName}</p>
                         <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
-                        <p className = "card-number-on-card">{this.state.user.cardNumber}</p>
-                        <img src = {CardImg} className = "card-img"></img>
+                        <p className = "card-number-on-card">{this.formatCardNumber(this.state.user.cardNumber)}</p>
                    </div>;
         return null; 
     }
@@ -244,12 +245,12 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
                     
                     <div className = "profile-data-container">
-                        <span className = "profile-data-text" id = "user-name"> {this.state.user.firstName} {this.state.user.lastName} </span>
+                        <span className = "profile-data-text user-name"> {this.state.user.firstName} {this.state.user.lastName} </span>
                         <span className = "profile-data-text"> {this.state.user.address} </span>
-                        <span className = "profile-data-text" id = "card-number"> {this.state.user.cardNumber} </span>
+                        <span className = "profile-data-text card-number"> {this.formatCardNumber(this.state.user.cardNumber)} </span>
                     </div>
 
-                    <div className = "card-container">
+                    <div className = "card-container-admin-display">
                         {this.renderUserCard()}
                     </div>
 
