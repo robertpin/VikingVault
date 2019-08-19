@@ -73,10 +73,10 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getImageForTransactionType(transactionType: string) {
-        if(transactionType === "transfer") {
+        if(transactionType.toLowerCase() === "transfer") {
             return userIcon;
         }
-        if(transactionType === "exchange") {
+        if(transactionType.toLowerCase() === "exchange") {
             return exchange;
         }
         return shoppingCart;
