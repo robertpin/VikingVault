@@ -6,16 +6,13 @@ import { ExchangeForm } from './ExchangeForm'
 import "./App.css"
 import { Dashboard } from "./Dashboard";
 
-class Router extends React.Component<any, any> {
-
-    render() {
-        return <BrowserRouter>
-            <Route path="/register/" exact component={RegisterForm} />
-            <Route path="/login" exact component={LoginForm} />
-            <Route path="/" exact component={Dashboard}/>
-            <Route path="/exchange" exact component={ExchangeForm}/>
-        </BrowserRouter>
-    }
+function Router(props: any) {
+    return <BrowserRouter>
+        <Route path="/register/" exact component={RegisterForm} />
+        <Route path="/login" exact component={LoginForm} />
+        <Route path="/" exact component={Dashboard}/>
+        <Route path="/exchange" exact component={ExchangeForm}/>
+    </BrowserRouter>;
 }
 
 export {Router}
