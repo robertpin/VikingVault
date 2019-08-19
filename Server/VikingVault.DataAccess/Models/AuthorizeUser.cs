@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Web.Http.Filters;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http.Controllers;
 
 namespace VikingVault.DataAccess.Models
 {

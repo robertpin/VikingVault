@@ -124,7 +124,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     showCardInformations(){
         return (
         <div className="card-picture-container">
-            <p className="card-number">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
+            <p className="card-number-large">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
             <p className="card-expiration-date">{this.state.expirationDate}</p>
             <p className="card-owner-name">{this.state.firstName} {this.state.lastName}</p>
             <img className="card-available" src={genericCard} alt=""></img>
