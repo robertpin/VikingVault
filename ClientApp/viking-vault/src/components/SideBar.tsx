@@ -35,7 +35,7 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         const sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
-        const sidemenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
+        const sideMenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
         const spanVisibility: string = this.state.show ? "span-hide" : "span-show";
         const dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
@@ -46,37 +46,37 @@ class SideBar extends React.Component<any, ISideBarState> {
                         <span className = {dashboardVisibility}> Dashboard </span>
                 </div>
                 <Link className="redirect-symbols" to="/transfer"> 
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={transfer}></img>
                         <span className = {spanVisibility}> Transfer </span>
                     </div>
                 </Link>
                 <Link className="redirect-symbols" to="/exchange">
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={moneyExchange}></img>
                         <span className = {spanVisibility}> Exchange </span>
                     </div>
                 </Link>
                 <Link className="redirect-symbols" to="/automatic-debit">
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={paymentMethod}></img>
                         <span className = {spanVisibility}> Automatic debit </span>
                     </div>
                 </Link>
                 <Link className="redirect-symbols" to="/block-card">
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={block}></img>
                         <span className = {spanVisibility}> Block card </span>
                     </div>
                 </Link>
                 <Link className="redirect-symbols" to="/locations">
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={placeholder}></img>
                         <span className = {spanVisibility}> Locations </span>
                     </div>
                 </Link>
                 <Link className="redirect-symbols" to="/contact">
-                    <div className = {sidemenuVisibility}>
+                    <div className = {sideMenuVisibility}>
                         <img className="menu-icon" src={card}></img>
                         <span className = {spanVisibility}> Contact </span>
                     </div>
