@@ -3,6 +3,11 @@ import React from "react";
 import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
+import UserIcon from './components/UserIcon';
+import {constants} from './ConstantVariables';
+
+const EXCHANGE_URL = `${constants.baseUrl}exchange`;
+const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;
 
 interface IExchangeFormState {
     fromCurrency: string;
@@ -103,7 +108,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     getMaximumValueToBeChanged() {
         let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch("https://localhost:44323/api/bankAccount", {
+            fetch(BANK_ACCOUNT_URL, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -140,7 +145,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     getMaximumValueToChangeInto() {
         let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch("https://localhost:44323/api/bankAccount", {
+            fetch(BANK_ACCOUNT_URL, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -203,17 +208,22 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         var exchangeRate = this.getCurrencyExchangeRate();
         var balance = this.calculateExchangedBalance(exchangeRate, this.state.toExchangeAmount);
         balance = this.extractBanksFeeFromBalance(balance);
-
         if(this.state.fromCurrency === this.state.toCurrency){
             this.setState({
                 openModal: true,
                 modalMessage: "The sell and buy currency must be different!"
             })
         }
-        else if(this.state.toExchangeAmount < 1) {
+        else if(this.state.toExchangeAmount <= 0) {
             this.setState({
                 openModal: true,
                 modalMessage:  "The amount of money to exchange must be a positive number!"
+            })
+        }
+        else if(this.state.toExchangeAmount > this.state.availableAmountFromCurrency) {
+            this.setState({
+                openModal: true,
+                modalMessage:  "Not enough funds to perform the exchange!"
             })
         }
         else
@@ -223,7 +233,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
 
             let token = sessionStorage.getItem('Authentication-Token');
             if(token != null) {
-                fetch("https://localhost:44323/api/exchange", {
+                fetch(EXCHANGE_URL, {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',
@@ -232,16 +242,19 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                     },
                     body: JSON.stringify([  
                         {  
-                            "CurrencyType": this.state.fromCurrency,
-                            "Amount": -this.state.toExchangeAmount
+                            "currencyType": this.state.fromCurrency,
+                            "amount": -this.state.toExchangeAmount,
+                            "email":""
                         },
                         {  
-                            "CurrencyType": this.state.toCurrency,
-                            "Amount": +balance
+                            "currencyType": this.state.toCurrency,
+                            "amount": +balance,
+                            "email":""
                         },
                         {
-                            "CurrencyType": otherParty,
-                            "Amount": amount
+                            "currencyType": otherParty,
+                            "amount": amount,
+                            "email":""
                         }
                     ])
                 })
@@ -287,8 +300,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     render() {
         return (
             <div className="exchange-page-background">
-                <SideBar/>
-                <TopBar/>
+                <SideBar />
+                <TopBar />
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className="white-box-background">
                     <div className="container"> 

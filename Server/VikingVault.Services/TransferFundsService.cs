@@ -32,32 +32,25 @@ namespace VikingVault.Services
         {
             int idSender = transferData.IdSender;
 
-            try
+            if (_userCardService.HasCardAttached(idSender)) //if user has a card attached
             {
-                if (_userCardService.HasCardAttached(idSender)) //if user has a card attached
+                int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+
+                if ( idReciever != null && _userCardService.HasCardAttached((int)idReciever))
                 {
-                    int idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+                    _bankAccountService.RetractMoneyFromAccount(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                    _bankAccountService.AddMoneyToAccount(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
 
-                    if (_userCardService.HasCardAttached(idReciever))
-                    {
-                        _bankAccountService.RetractMoneyFromAccount(idSender, transferData.Currency, transferData.AmountSent);
-                        _bankAccountService.AddMoneyToAccount(idReciever, transferData.Currency, transferData.AmountSent);
-
-                        return true;
-                    }
-                    else
-                    {
-                        throw new NoCardAttachedToUserException("No card attached to the reciever!");
-                    }
+                    return true;
                 }
                 else
                 {
-                    throw new NoCardAttachedToUserException("No card attached to the sender!");
+                    throw new NoCardAttachedToUserException("No card attached to the reciever!");
                 }
             }
-            catch
+            else
             {
-                throw new DatabaseException();
+                throw new NoCardAttachedToUserException("No card attached to the sender!");
             }
         }
     }

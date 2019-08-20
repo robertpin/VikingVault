@@ -14,12 +14,10 @@ namespace VikingVault.Services
     public class BankAccountService : IBankAccountService
     {
         private readonly VikingVaultDbContext _dbContext;
-        private readonly IUserService _userService;
 
-        public BankAccountService(VikingVaultDbContext dbContext, IUserService userService)
+        public BankAccountService(VikingVaultDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userService = userService;
         }
 
         public BankAccount CreateBankAccount(BankAccount account)
@@ -48,37 +46,42 @@ namespace VikingVault.Services
             return bankAccounts;
         }
 
-        public BankAccount ChangeBalance(string email, UpdateBankAccountModel updatedBankAccount)
+        public BankAccount ChangeBalance(UpdateBankAccountModel updatedBankAccount)
         {
-            var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == email);
+            var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == updatedBankAccount.Email);
             var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
             oldBankAccount.Balance += updatedBankAccount.Amount;
             UpdateBankAccount();
             return oldBankAccount;
         }
 
-        public BankAccount AddMoneyToAccount(int userId, string currency, float amountAdded)
+        public BankAccount AddMoneyToAccount(User user, string currency, float amountAdded)
         {
-            var user = _userService.GetById(userId);
-
             var updatedAccount = new UpdateBankAccountModel
             {
                 CurrencyType = currency,
-                Amount = amountAdded
+                Amount = amountAdded,
+                Email = user.Email
             };
 
-            return ChangeBalance(user.Email, updatedAccount);
+            return ChangeBalance(updatedAccount);
         }
 
-        public BankAccount RetractMoneyFromAccount(string accountEmail, string currency, float amountSubstracted)
+        public BankAccount RetractMoneyFromAccount(User user, string currency, float amountSubstracted)
         {
             var updatedAccount = new UpdateBankAccountModel
             {
                 CurrencyType = currency,
-                Amount = -amountSubstracted
+                Amount = -amountSubstracted,
+                Email = user.Email
             };
 
-            return ChangeBalance(accountEmail, updatedAccount);
+            BankAccount currentAccount = _dbContext.BankAccount.SingleOrDefault(account => account.CurrencyType == updatedAccount.CurrencyType && account.User == user);
+
+            if ( (currentAccount.Balance + updatedAccount.Amount) < 0 )
+                throw new TransactionException("Not enough funds to complete the transaction!");
+
+            return ChangeBalance(updatedAccount);
         }
 
         public void UpdateBankAccount()

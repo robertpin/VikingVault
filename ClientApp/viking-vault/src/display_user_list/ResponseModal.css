@@ -1,0 +1,38 @@
+.modal.open {
+    display: block;
+    opacity: 1;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal-content{
+    border-radius: 0.95rem;
+  }
+  
+  .modal.close {
+    display: none;
+  }
+
+  .modal-footer.response-modal {
+    padding: 0;
+    height: 50px;
+  }
+
+  .btn-primary.response-button {
+    width: 100%;
+    margin-left: 0;
+    border-radius: 0;
+    border-bottom-right-radius: 0.9rem;
+    min-height: 100%;
+    background-color: #09424D;
+    color: white;
+    border-bottom-right-radius: 0.9rem;
+    border-bottom-left-radius: 0.9rem;
+    border-color: #09424D;
+  }
+
+  .btn-primary:hover.response-button {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+  } 
+

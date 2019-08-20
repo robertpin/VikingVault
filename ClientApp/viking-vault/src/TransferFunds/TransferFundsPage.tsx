@@ -15,8 +15,9 @@ interface ITransferFundsState{
     currency: string;
     cardNumber: string;
     transferDetails: string;
-    errorLabel: string;
+    modalMessage: string;
     totalBalance: number;
+    openModal: boolean;
 }
 
 class TransferFundsPage extends React.Component<any, ITransferFundsState>{
@@ -27,8 +28,9 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           currency: "EUR",
           cardNumber: "",
           transferDetails: "",
-          errorLabel: "",
-          totalBalance: 0
+          modalMessage: "",
+          totalBalance: 0,
+          openModal: false
         }
     }
 
@@ -105,9 +107,11 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
     transferMoney = () => {
         var data = {
-          transferedAmount: this.state.transferedAmount,
-          cardNumber: this.state.cardNumber,
-          transferDetails: this.state.transferDetails
+          idSender: 0,
+          amountSent: this.state.transferedAmount,
+          cardNumberReciever: this.state.cardNumber,
+          transferDetails: this.state.transferDetails,
+          currency: this.state.currency
         }
     
         fetch(url, {
@@ -119,32 +123,25 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             body: JSON.stringify(data)
         })
         .then(response => {
-          if(response.status === 404) {
+          
+          if(response.status === 200) {
             this.setState({
-              errorLabel: "Incorrect email or password!"
+              modalMessage: "All good!"
             });
-            setTimeout(() => {
-              this.setState({
-                errorLabel: ""
-              });
-            }, 1500);
-            return null;
-          }
-          if(response.status === 500) {
-            this.setState({
-              errorLabel: "Error. Please try again later!"
-            });
-            setTimeout(() => {
-              this.setState({
-                errorLabel: ""
-              });
-            }, 2500);
-            return null;
-          }
-          if(response !== null) {
+
             return response.json();
           }
-        });
+          else{
+
+            if(response.status === 404) {
+              this.setState({
+                modalMessage: response.statusText
+              });
+            }
+            
+            return null;
+          }
+        });   
       }
 
     render(){

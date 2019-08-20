@@ -37,24 +37,24 @@ namespace VikingVault.API.Controllers
 
                 if (transferFundsData != null)
                 {
-                    _transferFundsService.TransferFunds();
+                    _transferFundsService.TransferFunds(transferFundsData);
 
-                    return Ok();
+                    return Ok("Succesfully transfered " + transferFundsData.AmountSent + "!");
                 }
                 else
                 {
-                    return NotFound("Request to server unsuccesful!");
+                    return NotFound("Request to server unsuccesful.");
                 }
             }
-            catch(NoCardAttachedToUserException e)
+            catch (Exception e)
             {
-                return NotFound();
+                if (e is NoCardAttachedToUserException || e is TransactionException || e is DatabaseException)
+                {
+                    return NotFound(e.Message);
+                }
+
+                return NotFound("Unknown error.");
             }
-            catch(DatabaseException e)
-            {
-                return NotFound();
-            }
-            
         }
     }
 }

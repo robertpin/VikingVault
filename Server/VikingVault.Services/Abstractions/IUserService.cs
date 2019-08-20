@@ -9,7 +9,7 @@ namespace VikingVault.Services.Abstractions
     {
         User CreateUser(User user);
         User GetById(int userId);
-        User GetUserByCardNumber(int cardNumber);
+        void DeleteUser(UserEmail userEmail);
         int GetIdFromToken(string token);
     }
 }

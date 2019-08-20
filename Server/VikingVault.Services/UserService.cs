@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
 using VikingVault.DataAccess.Enums;
+using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace VikingVault.Services
@@ -21,8 +22,9 @@ namespace VikingVault.Services
         public UserService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService, IUserCardService userCardService)
         {
             _dbContext = dbContext;
-            _bankAccountService = bankAccountService;
             _userCardService = userCardService;
+            _bankAccountService = bankAccountService;
+
         }
 
         public User CreateUser(User user)
@@ -62,14 +64,7 @@ namespace VikingVault.Services
             var tokenObject = new JwtSecurityToken(token);
             return Int32.Parse(tokenObject.Payload["Id"].ToString());
         }
-
-        public User GetUserByCardNumber(int cardNumber)
-        {
-            idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
-            reciever = _userService.GetById(idReciever);
-            cardNumberReciever = _userCardService.FindCardByUserId(idReciever);
-        }
-
+        
         private BankAccount CreateBankAccount(User user, String currencyType)
         {
             return new BankAccount
@@ -78,6 +73,20 @@ namespace VikingVault.Services
                 CurrencyType = currencyType,
                 Balance = 0.0f
             };
+        }
+
+        public void DeleteUser(UserEmail userEmail)
+        {
+            try
+            {
+                User userToDelete = _dbContext.User.SingleOrDefault(user => user.Email == userEmail.Email);
+                _dbContext.Remove(userToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new UserServiceException();
+            }
         }
     }
 }

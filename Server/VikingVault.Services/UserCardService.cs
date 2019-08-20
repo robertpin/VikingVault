@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
+using VikingVault.DataAccess.Models;
+using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
@@ -15,20 +18,41 @@ namespace VikingVault.Services
             _dbContext = dbContext;
         }
 
-        public string FindCardByUserId(int id)
+        public Card FindCardByUserId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _dbContext.Cards.SingleOrDefault(c => c.UserId == id);
+            }
+            catch
+            {
+                throw new DatabaseException("Server error.");
+            }
         }
 
-        public int FindUserIdByCardNumber(string cardNumber)
+        public int? FindUserIdByCardNumber(string cardNumber)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Card card = _dbContext.Cards.SingleOrDefault(c => c.CardNumber == cardNumber);
+                if (card == null)
+                    return null;
+
+                return card.UserId;
+            }
+            catch
+            {
+                throw new DatabaseException("Server error.");
+            }
         }
 
         public bool HasCardAttached(int userId)
         {
-            if (FindCardByUserId(userId) == "no-card")
+            if (FindCardByUserId(userId) == null)
+            {
                 return false;
+            }
+
             return true;
         }
     }

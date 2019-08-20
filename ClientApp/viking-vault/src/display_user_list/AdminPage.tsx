@@ -84,6 +84,16 @@ class AdminPage extends React.Component<any, IProfileData>{
         }
     }
 
+    private deleteUserFromComponent = (email : string) =>{
+        let userList = this.state.users.filter(user => {
+            return user.email !== email
+          });
+
+        this.setState({
+            users : userList
+        });
+    }
+
     componentDidMount()
     {
         this.getAllUsers();
@@ -96,7 +106,7 @@ class AdminPage extends React.Component<any, IProfileData>{
                 <TopBar/>
                 <UserIcon></UserIcon>  
                 <div className = "display-users-container">
-                     { this.state.users.map( user => <UserData {...user} />) }
+                     { this.state.users.map( user => <UserData user = {user} deleteUserFromComponent = {this.deleteUserFromComponent}/>) }
                 </div>
             </div>
          );   

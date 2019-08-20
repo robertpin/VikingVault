@@ -9,7 +9,7 @@ using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ExchangeController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpPost]
-        public List<BankAccount> Post([FromBody] List<UpdateBankAccountModel> bankAccountModels)
+        public ActionResult<List<BankAccount>> Post([FromBody] List<UpdateBankAccountModel> bankAccountModels)
         {
             string token = Request.Headers["x-access-token"];
             

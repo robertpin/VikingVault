@@ -5,8 +5,8 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface ITransferFundsService
+    public interface IAttachCardService
     {
-        bool? TransferFunds(TransferFundsModel transferData);
+        Card AttachCard(Card card);
     }
 }
