@@ -14,10 +14,12 @@ namespace VikingVault.Services
     public class BankAccountService : IBankAccountService
     {
         private readonly VikingVaultDbContext _dbContext;
+        private readonly IUserService _userService;
 
-        public BankAccountService(VikingVaultDbContext dbContext)
+        public BankAccountService(VikingVaultDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
+            _userService = userService;
         }
 
         public BankAccount CreateBankAccount(BankAccount account)
@@ -53,6 +55,30 @@ namespace VikingVault.Services
             oldBankAccount.Balance += updatedBankAccount.Amount;
             UpdateBankAccount();
             return oldBankAccount;
+        }
+
+        public BankAccount AddMoneyToAccount(int userId, string currency, float amountAdded)
+        {
+            var user = _userService.GetById(userId);
+
+            var updatedAccount = new UpdateBankAccountModel
+            {
+                CurrencyType = currency,
+                Amount = amountAdded
+            };
+
+            return ChangeBalance(user.Email, updatedAccount);
+        }
+
+        public BankAccount RetractMoneyFromAccount(string accountEmail, string currency, float amountSubstracted)
+        {
+            var updatedAccount = new UpdateBankAccountModel
+            {
+                CurrencyType = currency,
+                Amount = -amountSubstracted
+            };
+
+            return ChangeBalance(accountEmail, updatedAccount);
         }
 
         public void UpdateBankAccount()
