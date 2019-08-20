@@ -4,8 +4,8 @@ import './DeleteUser.css';
 interface IDeleteUserModalProps{
     open: boolean;
     deletedUserName: string;
-    closeModal: any;
-    deleteUser: any;
+    closeModal: () => void;
+    deleteUser: () => void;
 }
 
 class DeleteUserModal extends React.Component<IDeleteUserModalProps, any>{ 
@@ -14,7 +14,7 @@ class DeleteUserModal extends React.Component<IDeleteUserModalProps, any>{
     }
 
     private closeModal = () =>{
-        this.props.closeModal(false);
+        this.props.closeModal();
     }
 
     private handleDeleteUser = () =>{
