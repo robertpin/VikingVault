@@ -186,8 +186,8 @@ class LoginForm extends React.Component<any, ILoginFormState> {
           <br/>
           {this.state.errorLabel !== "" ? <div className="alert alert-danger"> {this.state.errorLabel} </div> : null }
         </div>
-        <FooterForm class="footer-login"></FooterForm>
-        {this.state.redirect? <Redirect to={this.state.userType}/> : null}
+        <FooterForm class="footer-login"/>
+        {this.state.redirect? <Redirect to="/"/> : null}
       </div>
     );
   }
