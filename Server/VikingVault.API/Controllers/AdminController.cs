@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
@@ -34,6 +35,7 @@ namespace VikingVault.API.Controllers
 
         [Route("[action]")]
         [HttpGet]
+        [AuthorizeAdmin]
         public ActionResult<User> GetAllUsers()
         {
             var users = _adminService.GetAllUsers();
