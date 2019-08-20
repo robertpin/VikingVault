@@ -4,8 +4,6 @@ import { Redirect } from "react-router-dom";
 import UserPage from "./components/UserPage";
 import { AdminPage } from "./display_user_list/AdminPage";
 
-const baseUrl = constants.baseUrl;
-
 interface IState {
     isAdmin: boolean | null;
 }
@@ -20,7 +18,7 @@ class Dashboard extends React.Component<any, IState> {
         if(token === null) {
             return;
         }
-        return fetch(baseUrl+"admin", {
+        return fetch(constants.baseUrl+"admin", {
             method: "GET",
             headers: {
               'Accept': 'application/json',
@@ -40,11 +38,11 @@ class Dashboard extends React.Component<any, IState> {
     }
 
     render() {
-        return <div>
+        return <React.Fragment>
             {sessionStorage.getItem("Authentication-Token") === null? <Redirect to="/login"/> : null}
             {this.state.isAdmin? <AdminPage/> : null}
             {this.state.isAdmin === false? <UserPage/> : null}
-        </div>
+        </React.Fragment>
         
     }
 }
