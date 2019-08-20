@@ -5,19 +5,35 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace VikingVault.API.SecurityFilters
 {
-    public class AuthorizeUser : Attribute, IAuthorizationFilter
+    public class Authorization : Attribute, IAuthorizationFilter
     {
+
+        public string Role { get; set; }
+
         void IAuthorizationFilter.OnAuthorization(AuthorizationFilterContext context)
         {
             try
             {
                 string token = context.HttpContext.Request.Headers["x-access-token"].ToString();
                 var tokenObject = new JwtSecurityToken(token);
-                string userId = tokenObject.Payload["Id"].ToString();
-                if (userId == null)
+                switch (Role)
                 {
-                    context.Result = new ForbidResult();
+                    case "user":
+                        string userId = tokenObject.Payload["Id"].ToString();
+                        if (userId == null)
+                        {
+                            context.Result = new ForbidResult();
+                        }
+                        break;
+                    case "admin":
+                        string userRole = tokenObject.Payload["Role"].ToString();
+                        if (userRole != "admin")
+                        {
+                            context.Result = new ForbidResult();
+                        }
+                        break;
                 }
+                
             }
             catch (Exception ex)
             {

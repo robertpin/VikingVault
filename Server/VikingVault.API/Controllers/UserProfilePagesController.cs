@@ -21,7 +21,7 @@ namespace VikingVault.API.Controllers
          }
        
         [HttpGet]
-        [AuthorizeUser]
+        [Authorization(Role ="user")]
         public ActionResult<UserProfilePageViewModel> Get()
         {
             var token = Request.Headers["x-access-token"];

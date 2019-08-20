@@ -35,7 +35,7 @@ namespace VikingVault.API.Controllers
 
         [Route("[action]")]
         [HttpGet]
-        [AuthorizeAdmin]
+        [Authorization(Role = "admin")]
         public ActionResult<User> GetAllUsers()
         {
             var users = _adminService.GetAllUsers();
