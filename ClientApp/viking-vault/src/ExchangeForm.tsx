@@ -300,7 +300,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     render() {
         return (
             <div className="exchange-page-background">
-                <SideBar />
+                <SideBar userType="user"/>
                 <TopBar />
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className="white-box-background">

@@ -2,21 +2,21 @@ import React from 'react'
 import './styles.css'
 import dashboard from './images/dashboard.png'
 import arrow from './images/arrowGRIdeschis.png'
-import placeholder from './images/placeholder.png'
-import paymentMethod from './images/payment-method.png'
-import block from './images/password.png'
-import moneyExchange from './images/money-exchange.png'
-import transfer from './images/transfer.png'
-import card from './images/business-card-of-a-man-with-contact-info.png'
 import { constants } from "../ConstantVariables";
 import { Link } from 'react-router-dom';
+import { UserSideBar } from './UserSideBar';
+import { AdminSideBar } from './AdminSideBar';
 
 interface ISideBarState{
     show: boolean;
 }
 
-class SideBar extends React.Component<any, ISideBarState> {
-    constructor(props:any){
+interface ISideBarProps {
+    userType: string;
+}
+
+class SideBar extends React.Component<ISideBarProps, ISideBarState> {
+    constructor(props:ISideBarProps){
         super(props)
         
         this.state = {
@@ -35,8 +35,6 @@ class SideBar extends React.Component<any, ISideBarState> {
 
     render(){
         const sidebarVisibility:string = this.state.show ? "sidebar collapsed" : "sidebar expanded";
-        const sideMenuVisibility:string = this.state.show ? "side-menu-hide" : "side-menu-show";
-        const spanVisibility: string = this.state.show ? "span-hide" : "span-show";
         const dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
             <div className={sidebarVisibility}>
@@ -45,42 +43,7 @@ class SideBar extends React.Component<any, ISideBarState> {
                         &nbsp;
                         <span className = {dashboardVisibility}> Dashboard </span>
                 </div>
-                <Link className="redirect-symbols" to="/transfer"> 
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={transfer}></img>
-                        <span className = {spanVisibility}> Transfer </span>
-                    </div>
-                </Link>
-                <Link className="redirect-symbols" to="/exchange">
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={moneyExchange}></img>
-                        <span className = {spanVisibility}> Exchange </span>
-                    </div>
-                </Link>
-                <Link className="redirect-symbols" to="/automatic-debit">
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={paymentMethod}></img>
-                        <span className = {spanVisibility}> Automatic debit </span>
-                    </div>
-                </Link>
-                <Link className="redirect-symbols" to="/block-card">
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={block}></img>
-                        <span className = {spanVisibility}> Block card </span>
-                    </div>
-                </Link>
-                <Link className="redirect-symbols" to="/locations">
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={placeholder}></img>
-                        <span className = {spanVisibility}> Locations </span>
-                    </div>
-                </Link>
-                <Link className="redirect-symbols" to="/contact">
-                    <div className = {sideMenuVisibility}>
-                        <img className="menu-icon" src={card}></img>
-                        <span className = {spanVisibility}> Contact </span>
-                    </div>
-                </Link>
+                {this.props.userType === "user"? <UserSideBar show = {this.state.show}/> : <AdminSideBar show={this.state.show}/>}
                 <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
             </div>
         )
