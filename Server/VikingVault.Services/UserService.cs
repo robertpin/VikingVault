@@ -25,7 +25,8 @@ namespace VikingVault.Services
 
         public User CreateUser(User user)
         {
-            user.Role = "user";
+            Role userRole = _dbContext.Roles.Find(2);
+            user.Role = userRole;
             user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
 
             try

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
@@ -22,7 +23,7 @@ namespace VikingVault.Services
         {
             try
             {
-                var users = _dbContext.User.Where(user => user.Role != "admin").
+                var users = _dbContext.User.Where(user => user.Role.Type != RoleEnum.Admin.ToString()).
                     GroupJoin(
                         _dbContext.Cards,
                         user => user.Id,

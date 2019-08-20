@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190820113259_addedRoleTableAndRefactoredUserTable")]
+    partial class addedRoleTableAndRefactoredUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,28 +73,27 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Type")
-                        .IsRequired();
+                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Type = "Admin"
+                            Type = 0
                         },
                         new
                         {
                             Id = 2,
-                            Type = "User"
+                            Type = 1
                         },
                         new
                         {
                             Id = 3,
-                            Type = "Company"
+                            Type = 2
                         });
                 });
 
@@ -147,7 +148,7 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("PictureLink");
 
-                    b.Property<int?>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
@@ -201,7 +202,8 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     b.HasOne("VikingVault.DataAccess.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
