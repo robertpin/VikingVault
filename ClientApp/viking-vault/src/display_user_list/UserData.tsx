@@ -7,7 +7,7 @@ import { constants } from "../ConstantVariables";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
-import { AttachCardForm } from "../AttachCardModal";
+import { AttachCardForm } from "./AttachCardModal";
 import { emptyStatement } from "@babel/types";
 
 export interface IUserData{
