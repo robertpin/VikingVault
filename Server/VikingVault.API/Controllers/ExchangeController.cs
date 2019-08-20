@@ -9,7 +9,7 @@ using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ExchangeController : ControllerBase
     {

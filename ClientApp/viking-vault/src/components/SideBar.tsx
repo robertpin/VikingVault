@@ -3,11 +3,13 @@ import './styles.css'
 import dashboard from './images/dashboard.png'
 import arrow from './images/arrowGRIdeschis.png'
 import placeholder from './images/placeholder.png'
-import paymentMethod from './images/payment-method.png';
+import paymentMethod from './images/payment-method.png'
 import block from './images/password.png'
 import moneyExchange from './images/money-exchange.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
+import { constants } from "../ConstantVariables";
+import { Link } from 'react-router-dom';
 
 interface ISideBarState{
     show: boolean;
@@ -41,26 +43,44 @@ class SideBar extends React.Component<any, ISideBarState> {
                 <div className="dashboard-title-container">
                         <img className="menu-icon" src={dashboard} /> 
                         &nbsp;
-                        <span className = {dashboardVisibility}>Dashboard</span>
+                        <span className = {dashboardVisibility}> Dashboard </span>
                 </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={transfer} /> <span className = {spanVisibility}>Transfer</span>
-                </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={moneyExchange} /> <span className = {spanVisibility}>Exchange</span>
-                </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={paymentMethod} /> <span className = {spanVisibility}>Automatic debit</span>
-                </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={block} /> <span className = {spanVisibility}>Block card</span>
-                </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={placeholder} /> <span className = {spanVisibility}>Locations</span>
-                </div>
-                <div className = {sidemenuVisibility}>
-                        <img className="menu-icon" src={card} /> <span className = {spanVisibility}>Contact</span>
-                </div>
+                <Link className="redirect-symbols" to="/user/transfer"> 
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={transfer}></img>
+                        <span className = {spanVisibility}> Transfer </span>
+                    </div>
+                </Link>
+                <Link className="redirect-symbols" to="/user/exchange">
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={moneyExchange}></img>
+                        <span className = {spanVisibility}> Exchange </span>
+                    </div>
+                </Link>
+                <Link className="redirect-symbols" to="/user/automatic-debit">
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={paymentMethod}></img>
+                        <span className = {spanVisibility}> Automatic debit </span>
+                    </div>
+                </Link>
+                <Link className="redirect-symbols" to="/user/block-card">
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={block}></img>
+                        <span className = {spanVisibility}> Block card </span>
+                    </div>
+                </Link>
+                <Link className="redirect-symbols" to="/user/locations">
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={placeholder}></img>
+                        <span className = {spanVisibility}> Locations </span>
+                    </div>
+                </Link>
+                <Link className="redirect-symbols" to="/user/contact">
+                    <div className = {sidemenuVisibility}>
+                        <img className="menu-icon" src={card}></img>
+                        <span className = {spanVisibility}> Contact </span>
+                    </div>
+                </Link>
                 <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
             </div>
         )

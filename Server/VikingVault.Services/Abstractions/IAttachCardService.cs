@@ -5,10 +5,8 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IUserService
+    public interface IAttachCardService
     {
-        User CreateUser(User user);
-        User GetById(int userId);
-        void DeleteUser(UserEmail userEmail);
+        Card AttachCard(Card card);
     }
 }
