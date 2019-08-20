@@ -1,5 +1,5 @@
 import React from "react";
-import icon from "./images/user2.png";
+import icon from "../images/user2.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
 import { constants } from "../ConstantVariables";

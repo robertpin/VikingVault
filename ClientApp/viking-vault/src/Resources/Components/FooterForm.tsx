@@ -1,6 +1,6 @@
 import React from 'react';
-import white_logo from './login_resources/logo_wirtek_white.png'
-import footer from "./login_resources/footer_login_page.png"
+import white_logo from '../images/logo_wirtek_white.png'
+import footer from "../images/footer_login_page.png"
 
 function FooterForm(props: any){
     return <footer className={props.class}>

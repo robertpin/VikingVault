@@ -1,8 +1,8 @@
 import React from "react";
-import {constants} from "./ConstantVariables";
+import {constants} from "../ConstantVariables";
 import { Redirect } from "react-router-dom";
-import UserPage from "./components/UserPage";
-import { AdminPage } from "./display_user_list/AdminPage";
+import UserPage from "../../UserDashboard/UserPage";
+import { AdminPage } from "../../AdminDashboard/AdminPage";
 
 interface IState {
     isAdmin: boolean | null;

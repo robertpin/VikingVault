@@ -1,10 +1,10 @@
 import React from 'react'
-import './styles.css'
-import inexistentCard from './images/card.png'
-import genericCard from './images/GENERICcard-01.png'
-import {constants} from "../ConstantVariables";
+import '../Resources/Components/styles.css'
+import inexistentCard from '../Resources/images/card.png'
+import genericCard from '../Resources/images/GENERICcard-01.png'
+import {constants} from "../Resources/ConstantVariables";
 import { Redirect } from 'react-router-dom';
-import { TransactionList } from '../UserDashboard/TransactionList';
+import { TransactionList } from './TransactionList';
 
 const url = constants.baseUrl+"Accounts/";
 

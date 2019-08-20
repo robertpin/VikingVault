@@ -2,9 +2,9 @@ import React from "react";
 import { Route, BrowserRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
-import { ExchangeForm } from './ExchangeForm'
+import { ExchangeForm } from './UserDashboard/ExchangeForm'
 import "./App.css"
-import { Dashboard } from "./Dashboard";
+import { Dashboard } from "./Resources/Components/Dashboard";
 
 function Router(props: any) {
     return <BrowserRouter>

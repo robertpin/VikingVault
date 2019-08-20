@@ -1,10 +1,10 @@
 import React from "react";
-import SideBar from './SideBar'
-import TopBar from './TopBar'
+import SideBar from '../Resources/Components/SideBar'
+import TopBar from '../Resources/Components/TopBar'
 import AccountPage from './AccountPage'
-import UserIcon from './UserIcon';
-import { ProfilePage } from "../ProfilePage";
-import { TransactionList } from "../UserDashboard/TransactionList";
+import UserIcon from '../Resources/Components/UserIcon';
+import { ProfilePage } from "./ProfilePage";
+import { TransactionList } from "./TransactionList";
 
 interface IUserPageState {
     viewProfile:boolean;

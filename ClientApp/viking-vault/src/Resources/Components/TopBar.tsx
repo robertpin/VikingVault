@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import './styles.css'
-import logo from './images/logo.png'
+import logo from '../images/logo.png'
 import {constants} from "../ConstantVariables";
 
 const baseUrl = constants.baseUrl;
