@@ -1,14 +1,13 @@
 import React from 'react'
 import './styles.css'
-import dashboard from './images/dashboard.png'
-import arrow from './images/arrowGRIdeschis.png'
-import placeholder from './images/placeholder.png'
-import paymentMethod from './images/payment-method.png'
-import block from './images/password.png'
-import moneyExchange from './images/money-exchange.png'
-import transfer from './images/transfer.png'
-import card from './images/business-card-of-a-man-with-contact-info.png'
-import { constants } from "../ConstantVariables";
+import dashboard from '../Resources/images/dashboard.png'
+import arrow from '../Resources/images/arrowGRIdeschis.png'
+import placeholder from '../Resources/images/placeholder.png'
+import paymentMethod from '../Resources/images/payment-method.png'
+import block from '../Resources/images/password.png'
+import moneyExchange from '../Resources/images/money-exchange.png'
+import transfer from '../Resources/images/transfer.png'
+import card from '../Resources/images/business-card-of-a-man-with-contact-info.png'
 import { Link } from 'react-router-dom';
 
 interface ISideBarState{

@@ -26,7 +26,7 @@ namespace VikingVault.API.Controllers
 
         [HttpGet]
         [Authorization(Role ="user")]
-        public IEnumerable<Transaction> Get()
+        public ActionResult<IEnumerable<Transaction>> Get()
         {
             var token = Request.Headers["x-access-token"];
             var tokenObject = new JwtSecurityToken(token);
@@ -35,7 +35,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Transaction transaction)
+        public ActionResult<Transaction> Post([FromBody] Transaction transaction)
         {
             try
             {
