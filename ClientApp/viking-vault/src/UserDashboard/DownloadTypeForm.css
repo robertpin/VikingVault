@@ -1,0 +1,40 @@
+.download-icon {
+    height: 7%;
+    width: 7%;
+    position: relative;
+    border: none;
+}
+
+.download-button:focus,.download-button:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ .download-dropdown {
+    position: relative;
+    left: 50%;
+    bottom: 65% !important;
+ }
+
+ .show-items {
+    position: absolute;
+    left: 50%;
+ }
+
+.download-option {
+    max-width: 100px;
+    position: relative;
+    padding: 5px;
+}
+
+.download-button {
+    bottom: 70%;
+}
+
+.dropdown-menu {
+    min-width: 40px;
+    padding: 0px;
+    text-align: left;
+    left: 57%;
+    top: 80%;
+}

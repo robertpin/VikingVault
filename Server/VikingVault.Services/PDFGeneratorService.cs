@@ -27,10 +27,10 @@ namespace VikingVault.Services
         {
             if (timeFilter == "day")
                 return "Transactions per last day";
+            else if (timeFilter == "week")
+                return "Transactions per last week";
             else if (timeFilter == "month")
-                return "Transactions per last day";
-            else if (timeFilter == "year")
-                return "Transactions per last year";
+                return "Transactions per last month";
             else
                 return "All transactions";
         }
@@ -56,11 +56,11 @@ namespace VikingVault.Services
             if (timeFilter == "day") {
                 transactionList = transactionList.FindAll(transaction => transaction.Date.Day == DateTime.Today.Day);
             }
+            else if (timeFilter == "week") {
+                transactionList = transactionList.FindAll(transaction => transaction.Date > DateTime.Today.Date.AddDays(-7));
+            }
             else if (timeFilter == "month") {
                 transactionList = transactionList.FindAll(transaction => transaction.Date.Month == DateTime.Today.Month);
-            }
-            else if (timeFilter == "year") {
-                transactionList = transactionList.FindAll(transaction => transaction.Date.Year == DateTime.Today.Year);
             }
             return transactionList;
         }

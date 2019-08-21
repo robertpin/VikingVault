@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,13 +23,14 @@ namespace VikingVault.API.Controllers
             _pdfGeneratorService = pdfGeneratorService;
         }
 
-        [HttpGet]
-        public FileStreamResult CreatePDF()
+        [HttpPost]
+        public FileStreamResult CreatePDF([FromBody]string timeFilter)
         {
             try
             {
-                string timeFilter = "day";
-                string userId = "2";
+                var token = Request.Headers["x-access-token"];
+                var tokenObject = new JwtSecurityToken(token);
+                string userId = tokenObject.Payload["Id"].ToString();
                 var pdf = _pdfGeneratorService.GetTransactionListAsPDF(userId, timeFilter);
                 return pdf;
             }
