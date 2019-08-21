@@ -1,6 +1,6 @@
 import  React  from 'react';
 import { Link } from 'react-router-dom';
-import card from './images/business-card-of-a-man-with-contact-info.png'
+import card from '../Resources/images/addbusiness.png';
 
 function AdminSideBar(props: any) {
     const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";

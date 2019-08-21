@@ -2,15 +2,9 @@ import React from 'react'
 import './styles.css'
 import dashboard from '../Resources/images/dashboard.png'
 import arrow from '../Resources/images/arrowGRIdeschis.png'
-import placeholder from '../Resources/images/placeholder.png'
-import paymentMethod from '../Resources/images/payment-method.png'
-import block from '../Resources/images/password.png'
-import moneyExchange from '../Resources/images/money-exchange.png'
-import transfer from '../Resources/images/transfer.png'
-import card from '../Resources/images/business-card-of-a-man-with-contact-info.png'
 import { Link } from 'react-router-dom';
-import { UserSideBar } from './UserSideBar';
-import { AdminSideBar } from './AdminSideBar';
+import { UserSideBar } from '../UserDashboard/UserSideBar';
+import { AdminSideBar } from '../AdminDashboard/AdminSideBar';
 
 interface ISideBarState{
     show: boolean;

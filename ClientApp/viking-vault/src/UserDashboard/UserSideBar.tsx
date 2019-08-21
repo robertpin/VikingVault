@@ -1,9 +1,9 @@
 import  React  from 'react';
 import { Link } from 'react-router-dom';
-import paymentMethod from './images/payment-method.png'
-import block from './images/password.png'
-import moneyExchange from './images/money-exchange.png'
-import transfer from './images/transfer.png'
+import paymentMethod from '../Resources/images/payment-method.png'
+import block from '../Resources/images/password.png'
+import moneyExchange from '../Resources/images/money-exchange.png'
+import transfer from '../Resources/images/transfer.png'
 
 function UserSideBar(props: any) {
     const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";
