@@ -1,5 +1,5 @@
 import React from "react";
-import {constants} from "../Resources/ConstantVariables";
+import {constants} from "../Resources/Constants";
 import { Redirect } from "react-router-dom";
 import UserPage from "../UserDashboard/UserPage";
 import { AdminPage } from "../AdminDashboard/AdminPage";

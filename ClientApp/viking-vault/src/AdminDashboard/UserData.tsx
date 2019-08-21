@@ -3,7 +3,7 @@ import '../Common/styles.css';
 import './DisplayUsers.css';
 import DefaultProfilePicture from '../Resources/images/user2.png';
 import CardImg from '../Resources/images/GENERICcard-01.png';
-import { constants } from "../Resources/ConstantVariables";
+import { constants } from "../Resources/Constants";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";

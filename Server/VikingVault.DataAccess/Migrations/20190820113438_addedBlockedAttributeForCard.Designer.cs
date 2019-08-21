@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190820113438_addedBlockedAttributeForCard")]
+    partial class addedBlockedAttributeForCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<int>("userId");
+                    b.Property<int?>("userId");
 
                     b.HasKey("Id");
 
@@ -162,8 +164,7 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     b.HasOne("VikingVault.DataAccess.Models.User", "user")
                         .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ import SideBar from '../Common/SideBar'
 import TopBar from '../Common/TopBar'
 import '../Common/styles.css';
 import './DisplayUsers.css';
-import { constants } from "../Resources/ConstantVariables";
+import { constants } from "../Resources/Constants";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
 import UserIcon from "../Common/UserIcon";

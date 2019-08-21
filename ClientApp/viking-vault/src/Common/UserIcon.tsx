@@ -2,7 +2,7 @@ import React from "react";
 import icon from "../Resources/images/user.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
-import { constants } from "../Resources/ConstantVariables";
+import { constants } from "../Resources/Constants";
 
 const API_URL = `${constants.baseUrl}userprofilepages`;
 
