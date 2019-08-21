@@ -1,5 +1,5 @@
 import React from "react";
-import {constants} from "../Resources/Constants";
+import {constants} from "../../Resources/Constants";
 
 interface ICompanyState {
     name: string;

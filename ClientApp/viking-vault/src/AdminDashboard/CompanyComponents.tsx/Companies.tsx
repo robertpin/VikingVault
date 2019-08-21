@@ -1,8 +1,8 @@
 import React from  "react";
-import TopBar from "../Common/TopBar";
-import SideBar from "../Common/SideBar";
-import UserIcon from "../Common/UserIcon";
-import "./DisplayUsers.css";
+import TopBar from "../../Common/TopBar";
+import SideBar from "../../Common/SideBar";
+import UserIcon from "../../Common/UserIcon";
+import "../DisplayUsers.css";
 import { AddCompany } from "./AddCompany";
 
 class Companies extends React.Component<any, any> {
