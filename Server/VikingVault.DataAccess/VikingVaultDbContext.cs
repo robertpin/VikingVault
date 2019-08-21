@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 
 namespace VikingVault.DataAccess
@@ -19,6 +20,7 @@ namespace VikingVault.DataAccess
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<AutomaticPayment> AutomaticPayments { get; set; }
+        public DbSet<Role> Roles { get; set; }
         
         public void SeedAdmin(ModelBuilder modelBuilder)
         {
@@ -32,8 +34,29 @@ namespace VikingVault.DataAccess
                     PictureLink = "",
                     Address = "Ioan Budai Deleanu Street 64",
                     Cnp = "1700820642466",
-                    Role = "admin"
+                    RoleId = 1
                 });
+        }
+
+        public void SeedRoles(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().
+                HasData(new
+                {
+                    Id = (int)RoleEnum.Admin,
+                    Type = RoleEnum.Admin.ToString()
+                },
+                new
+                {
+                    Id = (int)RoleEnum.User,
+                    Type = RoleEnum.User.ToString()
+                },
+                new
+                {
+                    Id = (int)RoleEnum.Company,
+                    Type = RoleEnum.Company.ToString()
+                }
+         );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +68,7 @@ namespace VikingVault.DataAccess
                 .HasName("Email");
 
             SeedAdmin(modelBuilder);
+            SeedRoles(modelBuilder);
 
             modelBuilder.Entity<Card>()
                 .HasAlternateKey(card => card.CardNumber)

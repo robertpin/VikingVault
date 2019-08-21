@@ -3,46 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190820113259_addedRoleTableAndRefactoredUserTable")]
+    partial class addedRoleTableAndRefactoredUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Amount");
-
-                    b.Property<int>("CompanyId");
-
-                    b.Property<DateTime>("InitialPaymentDate");
-
-                    b.Property<DateTime>("LastPaymentDate");
-
-                    b.Property<int?>("PayingUserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("PayingUserId");
-
-                    b.ToTable("AutomaticPayments");
-                });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
                 {
@@ -70,8 +47,6 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Blocked");
-
                     b.Property<int>("CCV");
 
                     b.Property<string>("CardNumber")
@@ -98,28 +73,27 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Type")
-                        .IsRequired();
+                    b.Property<int>("Type");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Type = "Admin"
+                            Type = 0
                         },
                         new
                         {
                             Id = 2,
-                            Type = "User"
+                            Type = 1
                         },
                         new
                         {
                             Id = 3,
-                            Type = "Company"
+                            Type = 2
                         });
                 });
 
@@ -198,18 +172,6 @@ namespace VikingVault.DataAccess.Migrations
                             PictureLink = "",
                             RoleId = 1
                         });
-                });
-
-            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
-                {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
-                        .WithMany()
-                        .HasForeignKey("PayingUserId");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
