@@ -31,6 +31,11 @@
     <Compile Remove="Migrations\20190813112913_SeedAdmin.cs" />
     <Compile Remove="Migrations\20190819105929_fixedTransactionTable.cs" />
     <Compile Remove="Migrations\20190820113438_addedBlockedAttributeForCard.cs" />
+    <Compile Remove="Migrations\20190821090534_addedAutomaticPaymentModel.cs" />
+    <Compile Remove="Migrations\20190821091307_removedRequiredAnnotationForFKsOfAutomaticPayment.cs" />
+    <Compile Remove="Migrations\20190821100912_AutomaticPayment.cs" />
+    <Compile Remove="Migrations\20190821101307_AutomaticPayments.cs" />
+    <Compile Remove="Migrations\20190821103648_AutomaticPaymentsV2.cs" />
   </ItemGroup>
 
   <ItemGroup>
