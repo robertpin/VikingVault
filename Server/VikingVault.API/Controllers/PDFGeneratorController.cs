@@ -27,7 +27,9 @@ namespace VikingVault.API.Controllers
         {
             try
             {
-                var pdf = _pdfGeneratorService.GetTransactionListAsPDF();
+                string timeFilter = "day";
+                string userId = "2";
+                var pdf = _pdfGeneratorService.GetTransactionListAsPDF(userId, timeFilter);
                 return pdf;
             }
             catch
