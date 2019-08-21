@@ -45,12 +45,12 @@ namespace VikingVault.Services
                 }
                 else
                 {
-                    throw new NoCardAttachedToUserException("No card attached to the reciever!");
+                    throw new NoCardAttachedToUserException("No user found with the specified card number!");
                 }
             }
             else
             {
-                throw new NoCardAttachedToUserException("No card attached to the sender!");
+                throw new NoCardAttachedToUserException("You can't complete the transfer without having a card.");
             }
         }
     }

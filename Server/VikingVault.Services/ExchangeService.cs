@@ -38,7 +38,7 @@ namespace VikingVault.Services
 
             Transaction transaction = new Transaction
             {
-                user = returnedUser,
+                User = returnedUser,
                 Type = "Exchange",
                 Currency = bankAccountSell.CurrencyType,
                 Date = DateTime.Now,

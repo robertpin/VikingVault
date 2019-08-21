@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './login_resources/logo_wirtek.png'
+import logo from '../Resources/images/logo_wirtek.png'
 import { Link } from 'react-router-dom';
 
 function HeaderForm(){

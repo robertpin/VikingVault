@@ -1,8 +1,8 @@
 import React from "react";
-import { constants } from "./ConstantVariables";
+import { constants } from "../Resources/Constants.js";
 import './AttachCardModal.css';
 
-const baseUrl = constants.baseUrl;
+//const baseUrl = constants.baseUrl;
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 let currentYearValue = new Date().getFullYear();
 
@@ -58,7 +58,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
             }
         return  {
             message: "Card Number must have 16 digits",
-            class: "alert alert-danger"
+            class: "alert alert-info"
         }
     }
 
@@ -70,7 +70,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
             }
         return  {
             message: "CCV must have 3 digits",
-            class: "alert alert-danger"
+            class: "alert alert-info"
         }
     }
 
@@ -82,7 +82,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
             }
         return  {
             message: "Expiration Date must be after at least one year from the current date!",
-            class: "alert alert-danger"
+            class: "alert alert-info"
         }
     }
 
@@ -115,12 +115,13 @@ class AttachCardForm extends React.Component<any, IFormState> {
             expirationDate:  new Date(parseInt(this.state.card.expirationDate, 10), new Date().getMonth(), 2),
             ccv: parseInt(this.state.card.ccv, 10),
             userId: userId,
+            blocked: false,
         };
     }
 
     private sendDataAndShowResponse = async () => {
         const card = this.getCard(this.props.userId);
-        fetch(baseUrl+"attach", {
+        fetch(constants.baseUrl+"attach", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -191,7 +192,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
                                     <input type="text" value={this.state.card.ccv} onChange={(e) => this.handleChange(e.target.value, "ccv")} required className="form-control attach-card"></input>
                                     { this.ccvHasThreeDigits().message !== "Ok" ? <pre className={this.ccvHasThreeDigits().class}>{this.ccvHasThreeDigits().message}</pre> : null }
                                 </div>
-                                {this.state.errorLabel !== "" ? <div className="alert alert-danger"> {this.state.errorLabel} </div> : null }
+                                {this.state.errorLabel !== "" ? <div className="alert alert-warning"> {this.state.errorLabel} </div> : null }
                                 <div className="modal-footer attach-card">
                                     <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary attach-card" : "btn btn-secondary attach-card"} onClick={() => this.sendDataAndShowResponse()}>Attach Card</button>
                                     <button type="button" className="btn btn-default attach-card" onClick={this.closeModal}>Cancel</button>

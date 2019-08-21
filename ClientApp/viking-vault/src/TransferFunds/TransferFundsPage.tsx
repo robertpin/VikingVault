@@ -1,12 +1,13 @@
 import React from 'react'
-import {constants} from "../ConstantVariables";
+import {constants} from "../Resources/Constants";
 import { Redirect } from 'react-router-dom';
-import { TransactionList } from '../UserDashboard/TransactionList';
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
-import UserIcon from '../components/UserIcon';
+import SideBar from '../Common/SideBar';
+import TopBar from '../Common/TopBar';
+import UserIcon from '../Common/UserIcon';
 import './TransferFunds.css';
-import '../ExchangeForm.css';
+import TransferFundsModal from './TransferFundsModal';
+import Toggle from '../Common/Toggle';
+
 
 const url = `${constants.baseUrl}transferFunds`;
 
@@ -18,6 +19,7 @@ interface ITransferFundsState{
     modalMessage: string;
     totalBalance: number;
     openModal: boolean;
+    requestMoney: boolean;
 }
 
 class TransferFundsPage extends React.Component<any, ITransferFundsState>{
@@ -30,21 +32,26 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           transferDetails: "",
           modalMessage: "",
           totalBalance: 0,
-          openModal: false
+          openModal: false,
+          requestMoney: false
         }
     }
 
-    componentDidMount() {
+    componentDidMount(){
+      this.getTotalBalance();      
+    }
+
+    componentDidUpdate() {
       this.getTotalBalance();
     }
 
     setAmountToBeTransfered = (e : any) =>
     {
-      if(e.target.value <= this.state.totalBalance) {
-        this.setState({
-          transferedAmount: e.target.value
-        });
-      }
+        if(Number (e.target.value) <= this.state.totalBalance) {
+          this.setState({
+            transferedAmount: e.target.value
+          });
+        }
     }
 
     handleChangedCardNumber = (e : any) =>
@@ -68,6 +75,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       this.getTotalBalance();
     }
 
+    handleChangeRequestMoneyState = () =>
+    {
+      this.setState((oldState: ITransferFundsState) => {this.setState({
+        requestMoney: !oldState.requestMoney
+      })});
+        
+    }
+
     getTotalBalance = () => {
       let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
@@ -83,23 +98,24 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             .then(result => {
                 if(this.state.currency === "RON") {
                     this.setState({
-                        totalBalance: result[0].balance
+                        totalBalance: result[0].balance.toFixed(2)
                     });
                 }
                 if(this.state.currency === "EUR") {
                     this.setState({
-                        totalBalance: result[1].balance
+                        totalBalance: result[1].balance.toFixed(2)
                     });
                 }
                 if(this.state.currency === "USD") {
                     this.setState({
-                        totalBalance: result[2].balance
+                        totalBalance: result[2].balance.toFixed(2)
                     });
                 }
                 if(this.state.currency === "YEN") {
                     this.setState({
-                        totalBalance: result[3].balance
+                        totalBalance: result[3].balance.toFixed(2)
                     });
+
                 }
             });
         }
@@ -113,48 +129,60 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           transferDetails: this.state.transferDetails,
           currency: this.state.currency
         }
-        
-        console.log(data);
 
-        let token = sessionStorage.getItem('Authentication-Token');
-
-        if(token !== null)
+        if(data.amountSent == 0)
         {
-            fetch(url, {
-              method: "POST",
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': token.toString()
-              },
-              body: JSON.stringify(data)
-          })
-          .then(response => {
-            
-            if(response.status === 200) {
-              this.setState({
-                modalMessage: "All good!"
-              });
-              
-            
-              return response.json();
-            }
-            else{
-              
-              console.log(response.statusText);
-              if(response.status === 404) {
-                this.setState({
-                  modalMessage: response.statusText
-                });
-              }
-              console.log(this.state.modalMessage);
-              return null;
-            }
-          });   
+            this.setState({
+              openModal: true,
+              modalMessage: "Insert a proper amount to be sent!"
+            })
         }
+        else
+        {
+          let token = sessionStorage.getItem('Authentication-Token');
 
-        
-      }
+          if(token !== null)
+          {
+              fetch(url, {
+                method: "POST",
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'x-access-token': token.toString()
+                },
+                body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then( response => {
+                  
+                    if(response != null)
+                    {
+                        this.setState({
+                          openModal: true,
+                          modalMessage: response
+                        });  
+                    }
+                    else
+                    {
+                      this.setState({
+                        openModal: true,
+                        modalMessage: response
+                      });  
+                    } 
+                });
+          }
+        }
+    };
+  
+
+    closeModal = () =>
+    {
+        this.setState({
+          openModal: false,
+          modalMessage: "",
+          transferedAmount: 0
+        }); 
+    }
 
     render(){
         return(
@@ -162,10 +190,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                 <SideBar/>
                 <TopBar/>
                 <UserIcon/>
+                <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className = "transfer-funds-container">
                     <div className = "details-inside-container"> 
                         <div className="col"> 
-                            <p className="text-decoration">Sell</p>
+                            <p className= {this.state.requestMoney == true ? "text-decoration toggle-deactivated-text-decoration" : "text-decoration toggle-activated-text-decoration" }>Transfer</p>
+                            <p className= {this.state.requestMoney == true ? "text-decoration toggle-activated-text-decoration" : "text-decoration toggle-deactivated-text-decoration" }>Request</p>
+                        
+                            <Toggle toggleSwitch = {this.handleChangeRequestMoneyState}/>
                             <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
                                 <option value="EUR">EUR</option>
                                 <option value="RON">RON</option>
@@ -186,7 +218,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                         min="1"
                                         pattern="^[0-9]"
                                         max= {this.state.totalBalance}
-                                        step="0.01"
+                                        step="0.001"
                                         onChange={this.setAmountToBeTransfered}
                                         value={this.state.transferedAmount}
                                 />
@@ -209,8 +241,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                         </div>
                     </div> 
                 </div>
-            </div>          
-    
+            </div>         
         )
     }
 }

@@ -2,9 +2,9 @@ import React from "react";
 import { Route, BrowserRouter } from 'react-router-dom';
 import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
-import { ExchangeForm } from './ExchangeForm'
+import { ExchangeForm } from './UserDashboard/ExchangeForm'
 import "./App.css"
-import { Dashboard } from "./Dashboard";
+import { Dashboard } from "./Common/Dashboard";
 import { TransferFundsPage } from "./TransferFunds/TransferFundsPage";
 
 function Router(props: any) {
@@ -16,4 +16,5 @@ function Router(props: any) {
         <Route path="/transfer" exact component={TransferFundsPage}/>
     </BrowserRouter>;
 }
+
 export {Router}

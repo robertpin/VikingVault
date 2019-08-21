@@ -1,9 +1,9 @@
 import  React  from 'react';
-import {constants} from "../ConstantVariables";
+import {constants} from "../Resources/Constants";
 import "./TransactionList.css";
-import shoppingCart from './shoppingcart.png';
-import userIcon from './profileWhite.png';
-import exchange from "./moneyExchange.png";
+import shoppingCart from '../Resources/images/shoppingcart.png';
+import userIcon from '../Resources/images/profileWhite.png';
+import exchange from "../Resources/images/money-exchange.png";
 
 const baseUrl = constants.baseUrl;
 
