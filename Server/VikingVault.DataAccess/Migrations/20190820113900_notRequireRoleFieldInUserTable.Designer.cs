@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190820113900_notRequireRoleFieldInUserTable")]
+    partial class notRequireRoleFieldInUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +47,6 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Blocked");
-
                     b.Property<int>("CCV");
 
                     b.Property<string>("CardNumber")
@@ -78,7 +78,7 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
@@ -149,7 +149,7 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("PictureLink");
 
-                    b.Property<int>("RoleId");
+                    b.Property<int?>("RoleId");
 
                     b.HasKey("Id");
 
@@ -203,8 +203,7 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     b.HasOne("VikingVault.DataAccess.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }
