@@ -23,20 +23,29 @@ namespace VikingVault.Services
             _bankAccountService = bankAccountService;
         }
 
-        public User CreateUser(User user)
+        public User CreateUser(UserDTO user)
         {
             Role userRole = _dbContext.Roles.Find(2);
-            user.Role = userRole;
-            user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
+            User userToBeInserted = new User
+            {
+                Email = user.Email,
+                Password = PasswordEncryption.ComputeSha256Hash(user.Password),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PictureLink = user.PictureLink,
+                Address = user.Address,
+                Cnp = user.Cnp,
+                Role = userRole
+            };
 
             try
             {
-                _dbContext.Add(user);
+                _dbContext.Add(userToBeInserted);
 
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Ron.ToString()));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Eur.ToString()));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Usd.ToString()));
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(user, CurrencyEnum.Yen.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(userToBeInserted, CurrencyEnum.Ron.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(userToBeInserted, CurrencyEnum.Eur.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(userToBeInserted, CurrencyEnum.Usd.ToString()));
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(userToBeInserted, CurrencyEnum.Yen.ToString()));
 
                 _dbContext.SaveChanges();
             }
@@ -48,7 +57,7 @@ namespace VikingVault.Services
                     throw new UserServiceException();
                 }
             }
-            return user;
+            return userToBeInserted;
         }
 
         public User GetById(int userId)

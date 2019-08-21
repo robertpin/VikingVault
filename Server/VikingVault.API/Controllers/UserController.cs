@@ -23,7 +23,7 @@ namespace VikingVault.API.Controllers
 
         [Route("register")]
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public ActionResult<User> Post([FromBody] UserDTO user)
         {
             try
             {
