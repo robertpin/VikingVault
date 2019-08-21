@@ -8,7 +8,7 @@ import UserIcon from '../components/UserIcon';
 import './TransferFunds.css';
 import '../ExchangeForm.css';
 
-const url = `${constants.baseUrl}TransferFunds`;
+const url = `${constants.baseUrl}transferFunds`;
 
 interface ITransferFundsState{
     transferedAmount: number;
@@ -113,35 +113,47 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           transferDetails: this.state.transferDetails,
           currency: this.state.currency
         }
-    
-        fetch(url, {
-            method: "POST",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-          
-          if(response.status === 200) {
-            this.setState({
-              modalMessage: "All good!"
-            });
+        
+        console.log(data);
 
-            return response.json();
-          }
-          else{
+        let token = sessionStorage.getItem('Authentication-Token');
 
-            if(response.status === 404) {
-              this.setState({
-                modalMessage: response.statusText
-              });
-            }
+        if(token !== null)
+        {
+            fetch(url, {
+              method: "POST",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token.toString()
+              },
+              body: JSON.stringify(data)
+          })
+          .then(response => {
             
-            return null;
-          }
-        });   
+            if(response.status === 200) {
+              this.setState({
+                modalMessage: "All good!"
+              });
+              
+            
+              return response.json();
+            }
+            else{
+              
+              console.log(response.statusText);
+              if(response.status === 404) {
+                this.setState({
+                  modalMessage: response.statusText
+                });
+              }
+              console.log(this.state.modalMessage);
+              return null;
+            }
+          });   
+        }
+
+        
       }
 
     render(){

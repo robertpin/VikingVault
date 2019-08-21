@@ -12,7 +12,7 @@ using VikingVault.Services.Exceptions.CardException;
 
 namespace VikingVault.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TransferFundsController : ControllerBase
     {
