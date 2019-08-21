@@ -1,14 +1,13 @@
 import React from "react";
-import '../components/styles.css';
+import '../Common/styles.css';
 import './DisplayUsers.css';
-import DefaultProfilePicture from '../UI/user2.png';
-import CardImg from '../UI/GENERICcard-01.png';
-import { constants } from "../Constants";
+import DefaultProfilePicture from '../Resources/images/user2.png';
+import CardImg from '../Resources/images/GENERICcard-01.png';
+import { constants } from "../Resources/Constants";
 import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
 import { AttachCardForm } from "./AttachCardModal";
-import { emptyStatement } from "@babel/types";
 
 export interface IUserData{
     id: number;

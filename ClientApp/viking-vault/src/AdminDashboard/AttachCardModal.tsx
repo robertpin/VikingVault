@@ -1,5 +1,5 @@
 import React from "react";
-import { constants } from "../Constants";
+import { constants } from "../Resources/Constants.js";
 import './AttachCardModal.css';
 
 //const baseUrl = constants.baseUrl;

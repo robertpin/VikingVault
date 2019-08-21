@@ -2,7 +2,7 @@
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class fixedTransactionTable : Migration
+    public partial class ChangedTransactionsAndCardsTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,8 +10,18 @@ namespace VikingVault.DataAccess.Migrations
                 name: "FK_Transactions_User_userId",
                 table: "Transactions");
 
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.RenameColumn(
                 name: "userId",
+                table: "Transactions",
+                newName: "UserId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Transactions_userId",
+                table: "Transactions",
+                newName: "IX_Transactions_UserId");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "UserId",
                 table: "Transactions",
                 nullable: false,
                 oldClrType: typeof(int),
@@ -23,15 +33,21 @@ namespace VikingVault.DataAccess.Migrations
                 nullable: false,
                 oldClrType: typeof(string));
 
+            migrationBuilder.AddColumn<bool>(
+                name: "Blocked",
+                table: "Cards",
+                nullable: false,
+                defaultValue: false);
+
             migrationBuilder.AddUniqueConstraint(
                 name: "AlternateKey_CardNumber",
                 table: "Cards",
                 column: "CardNumber");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Transactions_User_userId",
+                name: "FK_Transactions_User_UserId",
                 table: "Transactions",
-                column: "userId",
+                column: "UserId",
                 principalTable: "User",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -40,12 +56,26 @@ namespace VikingVault.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Transactions_User_userId",
+                name: "FK_Transactions_User_UserId",
                 table: "Transactions");
 
             migrationBuilder.DropUniqueConstraint(
                 name: "AlternateKey_CardNumber",
                 table: "Cards");
+
+            migrationBuilder.DropColumn(
+                name: "Blocked",
+                table: "Cards");
+
+            migrationBuilder.RenameColumn(
+                name: "UserId",
+                table: "Transactions",
+                newName: "userId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Transactions_UserId",
+                table: "Transactions",
+                newName: "IX_Transactions_userId");
 
             migrationBuilder.AlterColumn<int>(
                 name: "userId",

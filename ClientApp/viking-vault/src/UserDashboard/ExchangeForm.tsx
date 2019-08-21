@@ -1,10 +1,10 @@
 import './ExchangeForm.css';
 import React from "react";
-import SideBar from './components/SideBar';
-import TopBar from './components/TopBar';
+import SideBar from '../Common/SideBar';
+import TopBar from '../Common/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
-import UserIcon from './components/UserIcon';
-import {constants} from './Constants';
+import UserIcon from '../Common/UserIcon';
+import {constants} from '../Resources/Constants';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
 const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;

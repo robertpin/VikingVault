@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190820113438_addedBlockedAttributeForCard")]
-    partial class addedBlockedAttributeForCard
+    [Migration("20190821083601_ChangedTransactionsAndCardsTables")]
+    partial class ChangedTransactionsAndCardsTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,11 +85,11 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<int?>("userId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -162,9 +162,10 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
