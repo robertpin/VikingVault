@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190821082859_setRoleToRequired")]
-    partial class setRoleToRequired
+    [Migration("20190821125849_modifiedCardsAndTransactionsMigration")]
+    partial class modifiedCardsAndTransactionsMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,8 @@ namespace VikingVault.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Blocked");
 
                     b.Property<int>("CCV");
 
@@ -114,11 +116,11 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<int?>("userId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -193,9 +195,10 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
