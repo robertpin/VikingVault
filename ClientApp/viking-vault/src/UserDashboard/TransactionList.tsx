@@ -3,7 +3,7 @@ import {constants} from "../Resources/ConstantVariables";
 import "./TransactionList.css";
 import shoppingCart from '../Resources/images/shoppingcart.png';
 import userIcon from '../Resources/images/profileWhite.png';
-import exchange from "../Resources/images/moneyExchange.png";
+import exchange from "../Resources/images/money-exchange.png";
 
 const baseUrl = constants.baseUrl;
 

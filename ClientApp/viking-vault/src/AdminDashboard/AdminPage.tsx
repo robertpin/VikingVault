@@ -1,12 +1,12 @@
 import React from "react";
-import SideBar from '../Resources/Components/SideBar'
-import TopBar from '../Resources/Components/TopBar'
-import '../Resources/Components/styles.css';
+import SideBar from '../Common/SideBar'
+import TopBar from '../Common/TopBar'
+import '../Common/styles.css';
 import './DisplayUsers.css';
 import { constants } from "../Resources/ConstantVariables";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
-import UserIcon from "../Resources/Components/UserIcon";
+import UserIcon from "../Common/UserIcon";
 
 const API_URL = `${constants.baseUrl}admin/getAllUsers`;
 

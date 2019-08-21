@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Resources/Components/styles.css'
+import '../Common/styles.css'
 import inexistentCard from '../Resources/images/card.png'
 import genericCard from '../Resources/images/GENERICcard-01.png'
 import {constants} from "../Resources/ConstantVariables";

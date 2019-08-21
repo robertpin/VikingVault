@@ -1,8 +1,8 @@
 import React from "react";
 import {ResponseModal} from "./ReponseModal";
 import {Redirect} from "react-router-dom";
-import { HeaderForm } from './Resources/Components/HeaderForm';
-import { FooterForm } from './Resources/Components/FooterForm';
+import { HeaderForm } from './Common/HeaderForm';
+import { FooterForm } from './Common/FooterForm';
 import {constants} from "./Resources/ConstantVariables";
 
 const baseUrl = constants.baseUrl;

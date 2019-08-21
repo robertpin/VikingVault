@@ -1,8 +1,8 @@
 import React from "react";
-import SideBar from '../Resources/Components/SideBar'
-import TopBar from '../Resources/Components/TopBar'
+import SideBar from '../Common/SideBar'
+import TopBar from '../Common/TopBar'
 import AccountPage from './AccountPage'
-import UserIcon from '../Resources/Components/UserIcon';
+import UserIcon from '../Common/UserIcon';
 import { ProfilePage } from "./ProfilePage";
 import { TransactionList } from "./TransactionList";
 

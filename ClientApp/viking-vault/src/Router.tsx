@@ -4,7 +4,7 @@ import { RegisterForm } from "./RegisterForm";
 import { LoginForm } from "./Login";
 import { ExchangeForm } from './UserDashboard/ExchangeForm'
 import "./App.css"
-import { Dashboard } from "./Resources/Components/Dashboard";
+import { Dashboard } from "./Common/Dashboard";
 
 function Router(props: any) {
     return <BrowserRouter>

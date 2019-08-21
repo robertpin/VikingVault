@@ -1,9 +1,9 @@
 import './ExchangeForm.css';
 import React from "react";
-import SideBar from '../Resources/Components/SideBar';
-import TopBar from '../Resources/Components/TopBar';
+import SideBar from '../Common/SideBar';
+import TopBar from '../Common/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
-import UserIcon from '../Resources/Components/UserIcon';
+import UserIcon from '../Common/UserIcon';
 import {constants} from '../Resources/ConstantVariables';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
