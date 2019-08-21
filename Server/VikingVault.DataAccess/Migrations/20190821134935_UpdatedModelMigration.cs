@@ -4,10 +4,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class AutomaticPayment : Migration
+    public partial class UpdatedModelMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_Roles_RoleId",
+                table: "User");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "RoleId",
+                table: "User",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<bool>(
+                name: "Blocked",
+                table: "Cards",
+                nullable: false,
+                defaultValue: false);
+
             migrationBuilder.CreateTable(
                 name: "AutomaticPayments",
                 columns: table => new
@@ -46,12 +63,42 @@ namespace VikingVault.DataAccess.Migrations
                 name: "IX_AutomaticPayments_PayingUserId",
                 table: "AutomaticPayments",
                 column: "PayingUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_User_Roles_RoleId",
+                table: "User",
+                column: "RoleId",
+                principalTable: "Roles",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_Roles_RoleId",
+                table: "User");
+
             migrationBuilder.DropTable(
                 name: "AutomaticPayments");
+
+            migrationBuilder.DropColumn(
+                name: "Blocked",
+                table: "Cards");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "RoleId",
+                table: "User",
+                nullable: true,
+                oldClrType: typeof(int));
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_User_Roles_RoleId",
+                table: "User",
+                column: "RoleId",
+                principalTable: "Roles",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
