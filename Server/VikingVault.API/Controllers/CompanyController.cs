@@ -20,22 +20,7 @@ namespace VikingVault.API.Controllers
         {
             _companyService = companyService;
         }
-
-        // GET: api/Company
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET: api/Company/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST: api/Company
+        
         [HttpPost]
         public ActionResult<User> Post([FromBody] CompanyDTO company)
         {
@@ -47,18 +32,6 @@ namespace VikingVault.API.Controllers
             {
                 return StatusCode(500, "Internal Server Error");
             }
-        }
-
-        // PUT: api/Company/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

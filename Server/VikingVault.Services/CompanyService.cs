@@ -60,10 +60,5 @@ namespace VikingVault.Services
                 Balance = 0.0f
             };
         }
-
-        public List<User> GetAllCompanies()
-        {
-            return _dbContext.User.Where(user => user.Role == "company").ToList();
-        }
     }
 }
