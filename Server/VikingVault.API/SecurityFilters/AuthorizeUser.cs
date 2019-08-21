@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using VikingVault.DataAccess.Enums;
 
 namespace VikingVault.API.SecurityFilters
 {
     public class Authorization : Attribute, IAuthorizationFilter
     {
 
-        public string Role { get; set; }
+        public RoleEnum Role { get; set; }
 
         void IAuthorizationFilter.OnAuthorization(AuthorizationFilterContext context)
         {
@@ -16,18 +17,18 @@ namespace VikingVault.API.SecurityFilters
             {
                 string token = context.HttpContext.Request.Headers["x-access-token"].ToString();
                 var tokenObject = new JwtSecurityToken(token);
+                string userId = tokenObject.Payload["Id"].ToString();
+
                 switch (Role)
                 {
-                    case "user":
-                        string userId = tokenObject.Payload["Id"].ToString();
+                    case RoleEnum.User:
                         if (userId == null)
                         {
                             context.Result = new ForbidResult();
                         }
                         break;
-                    case "admin":
-                        string userRole = tokenObject.Payload["Role"].ToString();
-                        if (userRole != "admin")
+                    case RoleEnum.Admin:
+                        if (userId != "1")
                         {
                             context.Result = new ForbidResult();
                         }

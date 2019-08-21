@@ -3,6 +3,7 @@ using VikingVault.DataAccess.Models;
 using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
 
 namespace VikingVault.API.Controllers
 {
@@ -18,7 +19,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
-        [Authorization(Role = "user")]
+        [Authorization(Role = RoleEnum.User)]
         public ActionResult<UserAccount> Get()
         {
             var token = Request.Headers["x-access-token"];
