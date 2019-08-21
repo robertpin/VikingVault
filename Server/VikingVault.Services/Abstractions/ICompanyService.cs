@@ -7,6 +7,7 @@ namespace VikingVault.Services.Abstractions
 {
     public interface ICompanyService
     {
-        User CreateCompany(User company);
+        User CreateCompany(CompanyDTO company);
+        List<User> GetAllCompanies();
     }
 }

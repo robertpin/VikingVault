@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace VikingVault.Services
 {
     [Serializable]
-    internal class CompanyServiceException : Exception
+    public class CompanyServiceException : Exception
     {
         public CompanyServiceException()
         {

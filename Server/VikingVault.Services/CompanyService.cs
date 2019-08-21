@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
@@ -20,14 +21,23 @@ namespace VikingVault.Services
             _bankAccountService = bankAccountService;
         }
 
-        public User CreateCompany(User company)
+        public User CreateCompany(CompanyDTO company)
         {
-            company.Role = "company";
+            User companyUser = new User
+            {
+                FirstName = company.Name,
+                LastName = company.Name,
+                Email = company.Email,
+                Password = company.Name,
+                Address = company.Address,
+                Cnp = "1234567891234",
+                Role = "company" // refactor for Role table
+            };
 
             try
             {
-                _dbContext.Add(company);
-                _bankAccountService.CreateBankAccount(this.CreateBankAccount(company, "Ron"));
+                _dbContext.Add(companyUser);
+                _bankAccountService.CreateBankAccount(this.CreateBankAccount(companyUser, "Ron"));
 
                 _dbContext.SaveChanges();
             } catch (Exception e)
@@ -38,7 +48,7 @@ namespace VikingVault.Services
                 }
             }
 
-            return company;
+            return companyUser;
         }
 
         private BankAccount CreateBankAccount(User user, String currencyType)
@@ -49,6 +59,11 @@ namespace VikingVault.Services
                 CurrencyType = currencyType,
                 Balance = 0.0f
             };
+        }
+
+        public List<User> GetAllCompanies()
+        {
+            return _dbContext.User.Where(user => user.Role == "company").ToList();
         }
     }
 }
