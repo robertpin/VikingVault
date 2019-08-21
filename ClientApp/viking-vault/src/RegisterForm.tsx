@@ -3,7 +3,7 @@ import {ResponseModal} from "./ReponseModal";
 import {Redirect} from "react-router-dom";
 import { HeaderForm } from './HeaderForm';
 import { FooterForm } from './FooterForm';
-import {constants} from "./ConstantVariables";
+import {constants} from "./Constants";
 
 const baseUrl = constants.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

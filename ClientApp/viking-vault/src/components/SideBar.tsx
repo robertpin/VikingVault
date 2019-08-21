@@ -8,7 +8,7 @@ import block from './images/password.png'
 import moneyExchange from './images/money-exchange.png'
 import transfer from './images/transfer.png'
 import card from './images/business-card-of-a-man-with-contact-info.png'
-import { constants } from "../ConstantVariables";
+import { constants } from "../Constants";
 import { Link } from 'react-router-dom';
 
 interface ISideBarState{

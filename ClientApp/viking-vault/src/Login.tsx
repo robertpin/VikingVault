@@ -2,7 +2,7 @@ import * as React from "react";
 import {Redirect, Link} from 'react-router-dom';
 import { FooterForm } from "./FooterForm";
 import { HeaderForm } from "./HeaderForm";
-import { constants } from "./ConstantVariables";
+import { constants } from "./Constants";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const baseUrl = constants.baseUrl;
