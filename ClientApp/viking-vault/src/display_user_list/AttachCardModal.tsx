@@ -1,8 +1,8 @@
 import React from "react";
-import { constants } from "../ConstantVariables";
+import { constants } from "../Constants";
 import './AttachCardModal.css';
 
-const baseUrl = constants.baseUrl;
+//const baseUrl = constants.baseUrl;
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 let currentYearValue = new Date().getFullYear();
 
@@ -121,7 +121,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
 
     private sendDataAndShowResponse = async () => {
         const card = this.getCard(this.props.userId);
-        fetch(baseUrl+"attach", {
+        fetch(constants.baseUrl+"attach", {
             method: "POST",
             headers: {
               'Accept': 'application/json',

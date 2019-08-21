@@ -4,7 +4,7 @@ import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
 import UserIcon from './components/UserIcon';
-import {constants} from './ConstantVariables';
+import {constants} from './Constants';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
 const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;

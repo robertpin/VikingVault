@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import inexistentCard from './images/card.png'
 import genericCard from './images/GENERICcard-01.png'
-import {constants} from "../ConstantVariables";
+import {constants} from "../Constants";
 import { Redirect } from 'react-router-dom';
 import { TransactionList } from '../UserDashboard/TransactionList';
 

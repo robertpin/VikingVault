@@ -1,7 +1,7 @@
 import * as React from "react";
 import profilePicture from "./UI/user2.png";
 import './ProfilePicture.css';
-import { constants } from "./ConstantVariables";
+import { constants } from "./Constants";
 
 const API_URL = `${constants.baseUrl}userprofilepages`;
 

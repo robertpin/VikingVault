@@ -1,5 +1,5 @@
 import  React  from 'react';
-import {constants} from "../ConstantVariables";
+import {constants} from "../Constants";
 import "./TransactionList.css";
 import shoppingCart from './shoppingcart.png';
 import userIcon from './profileWhite.png';
