@@ -42,17 +42,17 @@ namespace VikingVault.DataAccess
             modelBuilder.Entity<Role>().
                 HasData(new
                 {
-                    Id = 1,
+                    Id = (int)RoleEnum.Admin,
                     Type = RoleEnum.Admin.ToString()
                 },
                 new
                 {
-                    Id = 2,
+                    Id = (int)RoleEnum.User,
                     Type = RoleEnum.User.ToString()
                 },
                 new
                 {
-                    Id = 3,
+                    Id = (int)RoleEnum.Company,
                     Type = RoleEnum.Company.ToString()
                 }
          );

@@ -6,8 +6,8 @@ namespace VikingVault.DataAccess.Enums
 {
     public enum RoleEnum
     {
-        Admin,
-        User,
-        Company
+        Admin = 1,
+        User = 2,
+        Company = 3
     }
 }
