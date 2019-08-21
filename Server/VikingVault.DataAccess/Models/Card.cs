@@ -16,5 +16,7 @@ namespace VikingVault.DataAccess.Models
         public int CCV { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        [Required]
+        public bool Blocked { get; set; }
     }
 }

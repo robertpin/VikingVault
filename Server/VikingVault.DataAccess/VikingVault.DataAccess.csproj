@@ -29,6 +29,8 @@
     <Compile Remove="Migrations\20190813074007_DroppedProfilePages.cs" />
     <Compile Remove="Migrations\20190813101416_SeedAdmin.cs" />
     <Compile Remove="Migrations\20190813112913_SeedAdmin.cs" />
+    <Compile Remove="Migrations\20190819105929_fixedTransactionTable.cs" />
+    <Compile Remove="Migrations\20190820113438_addedBlockedAttributeForCard.cs" />
   </ItemGroup>
 
   <ItemGroup>

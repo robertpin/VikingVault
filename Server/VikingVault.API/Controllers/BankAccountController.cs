@@ -22,7 +22,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<BankAccount> Get()
+        public ActionResult<IEnumerable<BankAccount>> Get()
         {
             var token = Request.Headers["x-access-token"];
             return _bankAccountService.GetBankAccounts(token);
