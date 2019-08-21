@@ -83,11 +83,11 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<int>("userId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -160,9 +160,9 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
