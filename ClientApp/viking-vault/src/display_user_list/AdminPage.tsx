@@ -58,7 +58,8 @@ class AdminPage extends React.Component<any, IProfileData>{
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-access-token' : token.toString()
                 }})
             .then( response => 
                 {

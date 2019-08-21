@@ -11,7 +11,7 @@ interface IProfilePicture{
 
 class ProfilePicture extends React.Component<any, IProfilePicture> 
 {
-    state = { userProfilePicture: profilePicture}
+    state = { userProfilePicture: profilePicture }
     componentDidMount(){
         let token = sessionStorage.getItem("Authentication-Token");
         if(token!==null){
@@ -31,7 +31,7 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
                     return response.json();
                 })
             .then( userData => {
-                if(userData != null)
+                if(userData.pictureLink != "")
                 {
                     this.setState(
                     {

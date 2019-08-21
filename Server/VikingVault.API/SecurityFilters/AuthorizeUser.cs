@@ -32,8 +32,7 @@ namespace VikingVault.API.SecurityFilters
                             context.Result = new ForbidResult();
                         }
                         break;
-                }
-                
+                }        
             }
             catch (Exception ex)
             {
