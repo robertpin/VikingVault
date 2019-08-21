@@ -19,8 +19,8 @@ namespace VikingVault.DataAccess
         public DbSet<Card> Cards { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<AutomaticPayment> AutomaticPayments { get; set; }
+        public DbSet<Role> Roles { get; set; }
         
         public void SeedAdmin(ModelBuilder modelBuilder)
         {
