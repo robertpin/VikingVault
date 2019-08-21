@@ -23,7 +23,7 @@ namespace VikingVault.Services
         {
             try
             {
-                var users = _dbContext.User.Where(user => user.Role.Type != RoleEnum.Admin.ToString()).
+                var users = _dbContext.User.Where(user => user.Role.Type == RoleEnum.User.ToString()).
                     GroupJoin(
                         _dbContext.Cards,
                         user => user.Id,
