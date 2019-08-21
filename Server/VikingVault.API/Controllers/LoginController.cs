@@ -21,7 +21,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Authenticate([FromBody]UserLogin user)
+        public ActionResult<User> Authenticate([FromBody]UserLogin user)
         {
             try
             {
