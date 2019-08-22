@@ -22,7 +22,7 @@ namespace VikingVault.API.Controllers
         {
             _companyService = companyService;
         }
-        
+
         [Authorization(Role=RoleEnum.Admin)]
         [HttpPost]
         public ActionResult<User> Post([FromBody] CompanyDTO company)
@@ -34,6 +34,19 @@ namespace VikingVault.API.Controllers
             catch(CompanyServiceAlreadyExistsException e)
             {
                 return Conflict();
+            }
+            catch(CompanyServiceException e)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult<List<CompanyDataDTO>> Get()
+        {
+            try
+            {
+                return Ok(_companyService.GetAllCompanies());
             }
             catch(CompanyServiceException e)
             {

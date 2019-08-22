@@ -9,12 +9,19 @@ interface ICompanyState {
     [key: string]: string;
 }
 
-class AddCompany extends React.Component<any, ICompanyState> {
-    state = {
-        name: "",
-        address: "",
-        message: "",
-        messageClass: ""
+interface IAddCompanyProps {
+    changeReloading: (reloading: boolean) => void;
+}
+
+class AddCompany extends React.Component<IAddCompanyProps, ICompanyState> {
+    constructor(props: IAddCompanyProps){
+        super(props);
+        this.state = {
+            name: "",
+            address: "",
+            message: "",
+            messageClass: ""
+        }
     }
 
     private handleChange = (inputValue: string, inputName: string) => {
@@ -80,7 +87,8 @@ class AddCompany extends React.Component<any, ICompanyState> {
             this.setState({
                 name: "",
                 address: ""
-            })
+            });
+            this.props.changeReloading(true);
         });
     }
 
