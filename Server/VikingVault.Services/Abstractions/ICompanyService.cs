@@ -9,5 +9,6 @@ namespace VikingVault.Services.Abstractions
     {
         User CreateCompany(CompanyDTO company);
         List<CompanyDataDTO> GetAllCompanies();
+        void DeleteCompany(int companyId);
     }
 }
