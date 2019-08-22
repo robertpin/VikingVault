@@ -16,7 +16,7 @@ namespace VikingVault.Services
     {
         private Timer _timer;
         public IServiceProvider Services { get; }
-        public int PaymentCheckInterval = 5 * 60;
+        public int PaymentCheckIntervalInSeconds = 5 * 60;
 
         public TimedPaymentService(IServiceProvider services)
         {
@@ -25,7 +25,7 @@ namespace VikingVault.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-             _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(PaymentCheckInterval));
+             _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(PaymentCheckIntervalInSeconds));
              return Task.CompletedTask;         
         }
 
