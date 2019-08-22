@@ -31,7 +31,7 @@ namespace VikingVault.Services
             {
                 if (e is DbUpdateException || e is DbUpdateConcurrencyException)
                 {
-                    throw new BankAccountServiceException();
+                    throw new BankAccountServiceException(e.Message);
                 }
             }
             return account;
@@ -65,7 +65,7 @@ namespace VikingVault.Services
             {
                 if (e is DbUpdateException || e is DbUpdateConcurrencyException)
                 {
-                    throw new BankAccountServiceException();
+                    throw new BankAccountServiceException(e.Message);
                 }
             }
         }

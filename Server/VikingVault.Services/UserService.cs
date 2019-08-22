@@ -54,7 +54,7 @@ namespace VikingVault.Services
             {
                 if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
                 {
-                    throw new UserServiceException();
+                    throw new UserServiceException(e.Message);
                 }
             }
             return userToBeInserted;
@@ -85,7 +85,7 @@ namespace VikingVault.Services
             }
             catch (Exception e)
             {
-                throw new UserServiceException();
+                throw new UserServiceException(e.Message);
             }
         }
     }
