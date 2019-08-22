@@ -21,7 +21,7 @@ namespace VikingVault.API.Controllers
         }
         
         [HttpGet]
-        public ActionResult<IEnumerable<AutomaticPaymentDTO>> GetAllAutomaticPayments()
+        public List<AutomaticPaymentDTO> GetAllAutomaticPayments()
         {
             return _automaticPaymentService.GetAllAutomaticPayments();
         }
