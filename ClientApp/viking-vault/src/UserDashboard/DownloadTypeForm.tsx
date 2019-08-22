@@ -37,42 +37,18 @@ class DownloadDropdown extends React.Component {
                     const link = document.createElement('a');
                     link.href = url;
                     link.setAttribute('download', `Viking Vault Report.pdf`);
-                    document.body.appendChild(link);
                     link.click(); }
                 })
             }
         }
-       
 
-
-    handlePDFRequestPerDay = () => {
+    handlePDFRequestPer = (timeFilter: string) => {
         this.setState({
-            timeFilter: "day",
+            timeFilter: timeFilter,
             isOpen: !this.state.isOpen
         }, this.generatePDF);
+        return null;
     }
-
-    handlePDFRequestPerWeek = () => {
-        this.setState({
-            timeFilter: "week",
-            isOpen: !this.state.isOpen
-        }, this.generatePDF);
-    }
-
-    handlePDFRequestPerMonth = () => {
-        this.setState({
-            timeFilter: "month",
-            isOpen: !this.state.isOpen
-        }, this.generatePDF);
-    }
-
-    handlePDFRequestAll = () => {
-        this.setState({
-            timeFilter: "all",
-            isOpen: !this.state.isOpen
-        }, this.generatePDF);
-    }
-
 
     render() {
       const menuClass = `dropdown-menu${this.state.isOpen ? " show show-items" : ""}`;
@@ -89,10 +65,10 @@ class DownloadDropdown extends React.Component {
                 <img title="Download transactions as PDF" className="download-icon" src={downloadIcon} alt="Download Icon"></img>
             </button>
             <div className={menuClass} aria-labelledby="dropdownMenuButton">
-                <div id="1" className="dropdown-item download-option" onClick={this.handlePDFRequestPerDay.bind(this)}>Per day</div>
-                <div id="2" className="dropdown-item download-option" onClick={this.handlePDFRequestPerWeek.bind(this)}>Per week</div>
-                <div id="3" className="dropdown-item download-option" onClick={this.handlePDFRequestPerMonth.bind(this)}>Per month</div>
-                <div id="4" className="dropdown-item download-option" onClick={this.handlePDFRequestAll.bind(this)}>All</div>
+                <div id="1" className="dropdown-item download-option" onClick={() => this.handlePDFRequestPer("day")}>Per day</div>
+                <div id="2" className="dropdown-item download-option" onClick={() => this.handlePDFRequestPer("week")}>Per week</div>
+                <div id="3" className="dropdown-item download-option" onClick={() => this.handlePDFRequestPer("month")}>Per month</div>
+                <div id="4" className="dropdown-item download-option" onClick={() => this.handlePDFRequestPer("all")}>All</div>
             </div>
         </div>
       );

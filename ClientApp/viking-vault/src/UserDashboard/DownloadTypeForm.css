@@ -6,14 +6,14 @@
 }
 
 .download-button:focus,.download-button:active {
-    outline: none !important;
+    outline: none;
     box-shadow: none;
  }
 
  .download-dropdown {
     position: relative;
     left: 50%;
-    bottom: 65% !important;
+    bottom: 65%;
  }
 
  .show-items {
