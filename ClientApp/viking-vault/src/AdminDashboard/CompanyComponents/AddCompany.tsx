@@ -44,7 +44,8 @@ class AddCompany extends React.Component<any, ICompanyState> {
     }
 
     private sendCompanyToBackend = () => {
-        if(!this.checkFieldsNotEmpty()) {
+        const token = sessionStorage.getItem("Authentication-Token");
+        if(!this.checkFieldsNotEmpty() || token === null) {
             return;
         }
         const company = {
@@ -57,6 +58,7 @@ class AddCompany extends React.Component<any, ICompanyState> {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'x-access-token': token.toString()
             },
             body: JSON.stringify(company)
         }).then(response => {
