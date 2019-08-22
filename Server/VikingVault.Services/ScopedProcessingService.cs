@@ -6,13 +6,10 @@ using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
+using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
 {
-    public interface IScopedProcessingService
-    {
-        void PayCompanies();
-    }
     public class ScopedProcessingService : IScopedProcessingService
     {
         private readonly VikingVaultDbContext _dbContext;
