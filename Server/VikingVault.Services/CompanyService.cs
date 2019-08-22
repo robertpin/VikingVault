@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
@@ -23,6 +24,12 @@ namespace VikingVault.Services
 
         public User CreateCompany(CompanyDTO company)
         {
+            Role companyRole = _dbContext.Roles.SingleOrDefault(role => role.Type == RoleEnum.Company.ToString());
+            var presentUser = _dbContext.User.SingleOrDefault(user => user.FirstName.ToLower() == company.Name.ToLower());
+            if (presentUser != null)
+            {
+                throw new CompanyServiceException("Company already exists");
+            }
             User companyUser = new User
             {
                 FirstName = company.Name,
@@ -31,7 +38,7 @@ namespace VikingVault.Services
                 Password = company.Name,
                 Address = company.Address,
                 Cnp = "1234567891234",
-                Role = "company" // refactor for Role table
+                Role = companyRole
             };
 
             try
@@ -44,7 +51,7 @@ namespace VikingVault.Services
             {
                 if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
                 {
-                    throw new CompanyServiceException();
+                    throw new CompanyServiceException("Internal server error");
                 }
             }
 

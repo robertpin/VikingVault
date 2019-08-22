@@ -30,7 +30,11 @@ namespace VikingVault.API.Controllers
             }
             catch(CompanyServiceException e)
             {
-                return StatusCode(500, "Internal Server Error");
+                if(e.Message == "Company already exists")
+                {
+                    return Conflict();
+                }
+                return StatusCode(500);
             }
         }
     }

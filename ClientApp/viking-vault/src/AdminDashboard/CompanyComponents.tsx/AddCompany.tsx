@@ -61,11 +61,24 @@ class AddCompany extends React.Component<any, ICompanyState> {
             body: JSON.stringify(company)
         }).then(response => {
             if(response.status !== 200) {
-                this.showMessage("Internal server error!", "alert alert-danger");
+                if(response.status === 409) {
+                    this.showMessage("Company already exists!", "alert alert-danger");
+                }
+                else {
+                    this.showMessage("Internal server error!", "alert alert-danger");
+                }
+                return null;
             }
             return response.json();
         }).then(result => {
+            if(result === null) {
+                return;
+            }
             this.showMessage("Company added!", "alert alert-success");
+            this.setState({
+                name: "",
+                address: ""
+            })
         });
     }
 
