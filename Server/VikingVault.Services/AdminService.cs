@@ -12,6 +12,7 @@ namespace VikingVault.Services
 {
     public class AdminService : IAdminService
     {
+
         private readonly VikingVaultDbContext _dbContext;
 
         public AdminService(VikingVaultDbContext dbContext)

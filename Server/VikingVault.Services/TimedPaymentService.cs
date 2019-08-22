@@ -1,30 +1,44 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VikingVault.DataAccess;
+using VikingVault.DataAccess.Models;
+using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
 {
-    class TimedPaymentService : IHostedService, IDisposable
+    public class TimedPaymentService : IHostedService
     {
         private Timer _timer;
+        public IServiceProvider Services { get; }
+        public int PaymentCheckInterval = 5 * 60;
 
-        public void Dispose()
+        public TimedPaymentService(IServiceProvider services)
         {
-            _timer?.Dispose();
+            Services = services;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(PayCompanies, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
-            return Task.CompletedTask;
+             _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(PaymentCheckInterval));
+             return Task.CompletedTask;         
         }
 
-        private void PayCompanies(object state)
+        private void DoWork(object state)
         {
-            
+            using (var scope = Services.CreateScope())
+            {
+                var scopedProcessingService =
+                    scope.ServiceProvider
+                        .GetRequiredService<IScopedProcessingService>();
+
+                scopedProcessingService.PayCompanies();
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
