@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VikingVault.DataAccess.Migrations
 {
-    public partial class UpdatedModelMigration : Migration
+    public partial class FixedAutomaticPaymentTableIssue : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

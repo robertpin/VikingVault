@@ -5,6 +5,7 @@ import { LoginForm } from "./Login";
 import { ExchangeForm } from './UserDashboard/ExchangeForm'
 import "./App.css"
 import { Dashboard } from "./Common/Dashboard";
+import { WillOpenModal } from "./WillOpenModal";
 
 function Router(props: any) {
     return <BrowserRouter>
@@ -12,6 +13,8 @@ function Router(props: any) {
         <Route path="/login" exact component={LoginForm} />
         <Route path="/" exact component={Dashboard}/>
         <Route path="/exchange" exact component={ExchangeForm}/>
+        <Route path="/aaa" exact component={WillOpenModal}/>
+
     </BrowserRouter>;
 }
 
