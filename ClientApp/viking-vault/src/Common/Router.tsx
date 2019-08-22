@@ -5,7 +5,7 @@ import { LoginForm } from "../Login";
 import { ExchangeForm } from '../UserDashboard/ExchangeForm'
 import "../App.css"
 import { Dashboard } from "../Common/Dashboard";
-import { Companies } from "../AdminDashboard/CompanyComponents.tsx/Companies";
+import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
 
 function Router(props: any) {
     return <BrowserRouter>
