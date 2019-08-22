@@ -1,5 +1,5 @@
 import React from "react";
-import trash from "../../Resources/images/delete.png";
+import deleteIcon from "../../Resources/images/delete.png";
 import { constants } from "../../Resources/Constants";
 
 interface IDeleteCompanyProps {
@@ -28,7 +28,7 @@ function deleteCompanyFromDB(companyId: number, props: IDeleteCompanyProps) {
 }
 
 function DeleteCompany (props: IDeleteCompanyProps) {
-    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteCompanyFromDB(props.companyId, props)}}><img className="w-50" src={trash} /></button>
+    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteCompanyFromDB(props.companyId, props)}}><img className="w-50" src={deleteIcon} /></button>
 }
 
 export {DeleteCompany};
