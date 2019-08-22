@@ -4,8 +4,9 @@ import paymentMethod from '../Resources/images/payment-method.png'
 import block from '../Resources/images/password.png'
 import moneyExchange from '../Resources/images/money-exchange.png'
 import transfer from '../Resources/images/transfer.png'
+import { ISideBarProps } from '../AdminDashboard/AdminSideBar';
 
-function UserSideBar(props: any) {
+function UserSideBar(props: ISideBarProps) {
     const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";
     const spanVisibility: string = props.show ? "span-hide" : "span-show";
 

@@ -16,7 +16,7 @@ interface ISideBarProps {
 
 class SideBar extends React.Component<ISideBarProps, ISideBarState> {
     constructor(props:ISideBarProps){
-        super(props)
+        super(props);
         
         this.state = {
             show: true

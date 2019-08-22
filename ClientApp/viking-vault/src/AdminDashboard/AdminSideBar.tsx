@@ -2,7 +2,11 @@ import  React  from 'react';
 import { Link } from 'react-router-dom';
 import card from '../Resources/images/addbusiness.png';
 
-function AdminSideBar(props: any) {
+export interface ISideBarProps {
+    show: boolean;
+}
+
+function AdminSideBar(props: ISideBarProps) {
     const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";
     const spanVisibility: string = props.show ? "span-hide" : "span-show";
 
