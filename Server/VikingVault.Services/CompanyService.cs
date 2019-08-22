@@ -67,13 +67,13 @@ namespace VikingVault.Services
 
         public List<CompanyDataDTO> GetAllCompanies()
         {
-            List<CompanyDataDTO> companiesData = new List<CompanyDataDTO>();
+            var companiesData = new List<CompanyDataDTO>();
             try
             {
-                List<User> companies = _dbContext.User.Where(user => user.Role.Type == RoleEnum.Company.ToString()).ToList();
+                var companies = _dbContext.User.Where(user => user.Role.Type == RoleEnum.Company.ToString()).ToList();
                 foreach (User company in companies)
                 {
-                    BankAccount account = _dbContext.BankAccount
+                    var account = _dbContext.BankAccount
                         .SingleOrDefault(bankAccount => bankAccount.User.Id == company.Id &&
                                                         bankAccount.CurrencyType == CurrencyEnum.Ron.ToString());
                     companiesData.Add(new CompanyDataDTO
@@ -87,7 +87,7 @@ namespace VikingVault.Services
             }
             catch (Exception e)
             {
-                throw new CompanyServiceException();
+                throw new CompanyServiceException(e.Message);
             }
 
             return companiesData;
