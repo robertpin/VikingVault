@@ -71,7 +71,7 @@ namespace VikingVault.Services
             try
             {
                 var companies = _dbContext.User.Where(user => user.Role.Type == RoleEnum.Company.ToString()).ToList();
-                foreach (User company in companies)
+                foreach (var company in companies)
                 {
                     var account = _dbContext.BankAccount
                         .SingleOrDefault(bankAccount => bankAccount.User.Id == company.Id &&
