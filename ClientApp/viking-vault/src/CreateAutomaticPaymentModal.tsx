@@ -1,6 +1,7 @@
 import React from "react";
 import { constants } from "./Resources/Constants.js";
 import './AdminDashboard/AttachCardModal.css';
+import { IUserData } from "./AdminDashboard/UserData.jsx";
 
 let regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
 let currentDate = new Date();
@@ -18,11 +19,19 @@ interface IAutomaticPaymentProperties {
     lastPaymentDate: string;
 }
 
+interface ICompanyData {
+    id: number;
+    name: string;
+    address: string;
+    balance: number;
+}
+
 interface IFormState {
-    [key: string]: string | boolean | IAutomaticPaymentProperties  | null;
+    [key: string]: string | boolean | IAutomaticPaymentProperties  | ICompanyData[] | null;
     automaticPayment: IAutomaticPaymentProperties;
     valid: boolean | null;
     errorLabel: string;
+    companies: ICompanyData[];
 }
 
 class AutomaticPaymentForm extends React.Component<any, IFormState> {
@@ -37,6 +46,7 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
             },
             valid: null,
             errorLabel: "",
+            companies: [],
         }
     }
 
@@ -107,6 +117,54 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         };
     }
 
+    getAllCompanies ()
+    {
+        var companies;
+        var token = sessionStorage.getItem("Authentication-Token");
+        if(token === null)
+        {
+            this.setState({
+                errorLabel: "Access Token Unavailable",
+            })
+            return [];
+        }
+        else{
+            fetch(constants.baseUrl+"company", {
+                method: "GET",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token' : token.toString()
+                }})
+            .then( response => 
+                {
+                    if( response.status === 500)
+                    {
+                        this.setState({
+                            errorLabel: "Internal Server Error"
+                        })
+                        return null;
+                    }
+                    
+                    return response.json();
+                })
+            .then( companiesData => {
+                console.log(companiesData);
+                this.setState({
+                    companies: companiesData
+                })
+            })
+            .catch( error => this.setState({ errorLabel: "Something went wrong" }));
+
+            return companies;
+        }
+    }
+
+    componentDidMount()
+    {
+        this.getAllCompanies();
+    }
+
     private sendDataAndShowResponse = async () => {
         const automaticPayment = this.getAutomaticPayment(this.props.userId);
         console.log(automaticPayment);
@@ -150,9 +208,17 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                                     <h5 className="heading-name attach-card">xd</h5>
                                 </div>
 
-                                <div className="form-group attach-card">
+                                {/* <div className="form-group attach-card">
                                     <label className="form-label attach-card">Company</label>
                                     <input type="text" value={this.state.automaticPayment.companyId} onChange={(e) => this.handleChange(e.target.value, "companyId")} required className="form-control attach-card"></input>
+                                </div> */}
+
+                                <div className="form-group attach-card">
+                                    <label className="form-label attach-card">Company</label>
+                                    {/* <input type="text" value={this.state.automaticPayment.companyId} onChange={(e) => this.handleChange(e.target.value, "companyId")} required className="form-control attach-card"></input> */}
+                                    <select value={this.state.automaticPayment.companyId} onChange={ (e) => this.handleChange(e.target.value, "companyId") } required className="form-control attach-card">
+                                        {this.state.companies.map((x) => <option key={x.id}>{x.name}</option>)}
+                                    </select>
                                 </div>
 
                                 <div className="form-group attach-card">
