@@ -28,7 +28,7 @@ namespace VikingVault.Services
             var presentUser = _dbContext.User.SingleOrDefault(user => user.FirstName.ToLower() == company.Name.ToLower());
             if (presentUser != null)
             {
-                throw new CompanyServiceException("Company already exists");
+                throw new CompanyServiceAlreadyExistsException("Company already exists");
             }
             var companyUser = new User
             {

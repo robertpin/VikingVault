@@ -31,12 +31,12 @@ namespace VikingVault.API.Controllers
             {
                 return Ok(_companyService.CreateCompany(company));
             }
+            catch(CompanyServiceAlreadyExistsException e)
+            {
+                return Conflict();
+            }
             catch(CompanyServiceException e)
             {
-                if(e.Message == "Company already exists")
-                {
-                    return Conflict();
-                }
                 return StatusCode(500);
             }
         }
