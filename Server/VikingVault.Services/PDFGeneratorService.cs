@@ -105,6 +105,7 @@ namespace VikingVault.Services
             stream.Position = 0;
             FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
             fileStreamResult.FileDownloadName = "Viking Vault Report.pdf";
+
             return fileStreamResult;
         }
     }

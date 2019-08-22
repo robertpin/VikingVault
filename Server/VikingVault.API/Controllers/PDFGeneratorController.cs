@@ -8,6 +8,9 @@ using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
+using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 
 namespace VikingVault.API.Controllers
@@ -23,14 +26,16 @@ namespace VikingVault.API.Controllers
             _pdfGeneratorService = pdfGeneratorService;
         }
 
-        [HttpPost]
-        public FileStreamResult CreatePDF([FromBody]string timeFilter)
+        [HttpGet("{timeFilter}")]
+        [Authorization(Role = RoleEnum.User)]
+        public FileStreamResult CreatePDF(string timeFilter)
         {
             try
             {
                 var token = Request.Headers["x-access-token"];
                 var tokenObject = new JwtSecurityToken(token);
                 string userId = tokenObject.Payload["Id"].ToString();
+
                 var pdf = _pdfGeneratorService.GetTransactionListAsPDF(userId, timeFilter);
                 return pdf;
             }

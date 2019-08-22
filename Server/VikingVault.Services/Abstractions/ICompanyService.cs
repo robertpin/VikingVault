@@ -5,10 +5,8 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IUserService
+    public interface ICompanyService
     {
-        User CreateUser(UserDTO user);
-        User GetById(int userId);
-        void DeleteUser(UserEmail userEmail);
+        User CreateCompany(CompanyDTO company);
     }
 }

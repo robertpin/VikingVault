@@ -23,18 +23,23 @@ class DownloadDropdown extends React.Component {
             })
         }
         else {
-            fetch(API_URL, {
-                method: "POST",
-                headers: {
-                    'x-access-token':  token.toString()
-                },
-                body: JSON.stringify({
-                    'timeFilter': this.state.timeFilter
+            var pdfURL = API_URL + "/"+ this.state.timeFilter;
+            fetch(pdfURL, {
+                    method: "GET",
+                    headers: {
+                        "x-access-token":  token.toString()
+                    }
                 })
-            }).then(result => {
-                if(result !== null){
-                    window.open(API_URL);
-                }})
+                .then((response) => response.blob())
+                .then((blob) => {
+                    if(blob != null) {
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `Viking Vault Report.pdf`);
+                    document.body.appendChild(link);
+                    link.click(); }
+                })
             }
         }
        

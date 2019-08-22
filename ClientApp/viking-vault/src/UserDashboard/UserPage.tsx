@@ -27,7 +27,7 @@ class UserPage extends React.Component<any, IUserPageState>{
     render(){
         return(
             <div className="user-page">
-                <SideBar/>
+                <SideBar userType="user"/>
                 <TopBar/>
                 <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
                 {this.state.viewProfile ?  <AccountPage /> : <ProfilePage/>}
