@@ -18,7 +18,7 @@ namespace VikingVault.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(PayCompanies, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            _timer = new Timer(PayCompanies, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
             return Task.CompletedTask;
         }
 
