@@ -5,6 +5,7 @@ import SideBar from '../Common/SideBar';
 import TopBar from '../Common/TopBar';
 import UserIcon from '../Common/UserIcon';
 import './TransferFunds.css';
+import '../UserDashboard/ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../Common/Toggle';
 
@@ -192,53 +193,65 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className = "transfer-funds-container">
-                    <div className = "details-inside-container"> 
-                        <div className="col"> 
-                            <p className= {this.state.requestMoney == true ? "text-decoration toggle-deactivated-text-decoration" : "text-decoration toggle-activated-text-decoration" }>Transfer</p>
-                            <p className= {this.state.requestMoney == true ? "text-decoration toggle-activated-text-decoration" : "text-decoration toggle-deactivated-text-decoration" }>Request</p>
-                        
-                            <Toggle toggleSwitch = {this.handleChangeRequestMoneyState}/>
-                            <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
-                                <option value="EUR">EUR</option>
-                                <option value="RON">RON</option>
-                                <option value="YEN">YEN</option>
-                                <option value="USD">USD</option>
-                            </select>
-                            <div>
-                                <p className="total-balance">{this.state.totalBalance}</p>
-                                {/* <span className="total-balance-text">Total balance</span> */}
-                            </div>
-                            
-                            <div id="amount-container">
-                                <p className="text-decoration">Amount</p>
-                                <input
-                                        className="form-control form-control-currency input-shadow underlineIt"
-                                        placeholder=""
-                                        type="number"
-                                        min="1"
-                                        pattern="^[0-9]"
-                                        max= {this.state.totalBalance}
-                                        step="0.001"
-                                        onChange={this.setAmountToBeTransfered}
-                                        value={this.state.transferedAmount}
-                                />
+                    <div className = "transfer-funds-left-container"> 
+
+                            <div className = "transfer-request-toggle-container">
+                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangeRequestMoneyState}/></span> 
+                                <p className= {"toggle-text-container text-decoration " + (this.state.requestMoney == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
+                                <p className= {"toggle-text-container text-decoration " + (this.state.requestMoney == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>
 
+                            <div className="transfer-data-left-container">
+                               <div className = "transfer-amount-text-container">
+                                  <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
+                                        <option value="EUR">EUR</option>
+                                        <option value="RON">RON</option>
+                                        <option value="YEN">YEN</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                    <div>
+                                        <p className="total-balance">{this.state.totalBalance}</p>
+                                        {/* <span className="total-balance-text">Total balance</span> */}
+                                    </div>
+                               
+                                    <div className = "amount-container-position">
+                                        <p className="text-decoration">Amount</p>
+                                        <input
+                                                className="form-control form-control-currency input-shadow underlineIt amount-input-field"
+                                                placeholder=""
+                                                type="number"
+                                                min="1"
+                                                pattern="^[0-9]"
+                                                max= {this.state.totalBalance}
+                                                step="0.001"
+                                                onChange={this.setAmountToBeTransfered}
+                                                value={this.state.transferedAmount}
+                                        />
+                                   </div>
+                               </div>
+                            </div>
+                      
                             <div className="transfer-details-container">
-                                Details
                                 <form>
-                                    Card Number:<br/>
-                                    <input type="text" name="cardnumber" onChange = {this.handleChangedCardNumber} /><br/>
-                                    Transfer Details:<br/>
-                                    <input type="text" name="transferdetails" onChange = {this.handleChangedTransferDetails} /><br/>
+                                    <br/>
+                                    <input 
+                                    className="form-control form-group text-center"
+                                    type="text"
+                                    placeholder="Card Number"
+                                    onChange={this.handleChangedCardNumber}/> 
+                                    <input 
+                                     className="form-control form-group text-center"
+                                     type="cardnumber"
+                                     placeholder="Transfer Details"
+                                     onChange={this.handleChangedTransferDetails}/>
                                 </form>
 
-                                <button onClick = {this.transferMoney}>
-                                    Transfer Now
+                                <button className="btn button-login transfer-request-button" onClick = {this.transferMoney}>
+                                    {this.state.requestMoney == true ? "Request Now" : "Transfer Now"}
                                 </button>   
                             </div>
 
-                        </div>
+
                     </div> 
                 </div>
             </div>         
