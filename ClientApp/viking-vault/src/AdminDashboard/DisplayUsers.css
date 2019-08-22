@@ -5,17 +5,14 @@
     background-color:#B0B2B6;
 }
 
-.display-users-container{
+.display-entities-container{
     position: relative;
     margin-top: 1%; 
     margin-bottom: 10%;
-    margin-left: 13%;
-    float: left;
-    width: 80%;
-    height: 90%;
-    overflow-y: scroll;
-    background-color: rgb(255, 255, 255);
+    height: 85%;
+    overflow-y: auto;
     border-radius: 2em;
+    padding: 1%;
 }
 
 .user-container{
