@@ -40,7 +40,7 @@ namespace VikingVault.Services
             {
                 User = returnedUser,
                 Type = "Exchange",
-                Currency = bankAccountSell.CurrencyType,
+                Currency = bankAccountBuy.CurrencyType,
                 Date = DateTime.Now,
                 Amount = exchangeInfo.Amount,
                 OtherParty = exchangeInfo.CurrencyType

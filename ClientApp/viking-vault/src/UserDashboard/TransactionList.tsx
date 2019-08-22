@@ -87,8 +87,8 @@ class TransactionList extends React.Component<any, IState> {
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"} /></td>
             <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
             <td>{this.formatDate(tran.date)}</td>
-            <td className="font-weight-bold">{tran.amount>0? `+${tran.currency.toUpperCase()}` : `-${tran.currency.toUpperCase()}`}</td>
-            <td className="font-weight-bold text-right">{tran.amount>0? tran.amount : -tran.amount}</td>
+            <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
+            <td className="font-weight-bold text-right">{tran.amount>0? `+${tran.amount}` : tran.amount}</td>
         </tr>
     }
 
