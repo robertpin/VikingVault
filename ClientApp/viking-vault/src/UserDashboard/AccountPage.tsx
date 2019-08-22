@@ -147,10 +147,10 @@ class AccountPage extends React.Component<any, IAccountState>{
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountsBalances.ronBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountsBalances.usdBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance.toFixed(2)}</span> </p> 
             </div>
             <br/><br/>
             <TransactionList />
