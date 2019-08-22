@@ -87,10 +87,7 @@ namespace VikingVault.Services
             }
             catch (Exception e)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
-                {
-                    throw new CompanyServiceException();
-                }
+                throw new CompanyServiceException();
             }
 
             return companiesData;
