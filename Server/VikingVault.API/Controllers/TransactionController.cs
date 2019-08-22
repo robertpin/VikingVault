@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-	[Route("[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TransactionController : ControllerBase
     {
@@ -24,6 +21,7 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpGet]
+        [Authorization(Role = RoleEnum.User)]
         public ActionResult<IEnumerable<Transaction>> Get()
         {
             var token = Request.Headers["x-access-token"];

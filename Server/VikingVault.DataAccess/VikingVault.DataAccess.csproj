@@ -31,17 +31,14 @@
     <Compile Remove="Migrations\20190813112913_SeedAdmin.cs" />
     <Compile Remove="Migrations\20190819105929_fixedTransactionTable.cs" />
     <Compile Remove="Migrations\20190820113438_addedBlockedAttributeForCard.cs" />
+    <Compile Remove="Migrations\20190821082859_setRoleToRequired.cs" />
+    <Compile Remove="Migrations\20190821083601_ChangedTransactionsAndCardsTables.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 
   <ItemGroup>
