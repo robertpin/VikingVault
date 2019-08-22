@@ -24,13 +24,13 @@ namespace VikingVault.Services
 
         public User CreateCompany(CompanyDTO company)
         {
-            Role companyRole = _dbContext.Roles.SingleOrDefault(role => role.Type == RoleEnum.Company.ToString());
+            var companyRole = _dbContext.Roles.SingleOrDefault(role => role.Type == RoleEnum.Company.ToString());
             var presentUser = _dbContext.User.SingleOrDefault(user => user.FirstName.ToLower() == company.Name.ToLower());
             if (presentUser != null)
             {
                 throw new CompanyServiceException("Company already exists");
             }
-            User companyUser = new User
+            var companyUser = new User
             {
                 FirstName = company.Name,
                 LastName = company.Name,
@@ -49,16 +49,13 @@ namespace VikingVault.Services
                 _dbContext.SaveChanges();
             } catch (Exception e)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
-                {
-                    throw new CompanyServiceException("Internal server error");
-                }
+                throw new CompanyServiceException("Internal server error");
             }
 
             return companyUser;
         }
 
-        private BankAccount CreateBankAccount(User user, String currencyType)
+        private BankAccount CreateBankAccount(User user, string currencyType)
         {
             return new BankAccount
             {
