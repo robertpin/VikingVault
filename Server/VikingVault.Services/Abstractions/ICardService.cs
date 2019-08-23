@@ -5,8 +5,9 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IAttachCardService
+    public interface ICardService
     {
         Card AttachCard(Card card);
+        Card UpdateCard(Card card);
     }
 }

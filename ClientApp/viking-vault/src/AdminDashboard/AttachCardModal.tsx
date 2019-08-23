@@ -121,11 +121,14 @@ class AttachCardForm extends React.Component<any, IFormState> {
 
     private sendDataAndShowResponse = async () => {
         const card = this.getCard(this.props.userId);
-        fetch(constants.baseUrl+"attach", {
+        const token = sessionStorage.getItem('Authentication-Token');
+        if(token === null) return;
+        fetch(constants.baseUrl+"card", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'x-access-token': token
             },
             body: JSON.stringify(card)
         })

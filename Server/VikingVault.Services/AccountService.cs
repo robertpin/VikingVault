@@ -37,6 +37,9 @@ namespace VikingVault.Services
                     FirstName = returnedUser.FirstName,
                     LastName = returnedUser.LastName,
                     CardNumber = card.CardNumber,
+                    CCV = card.CCV,
+                    CardId = card.Id,
+                    BlockedCard = card.Blocked,
                     ExpirationDate = GenerateExpirationDate(card.ExpirationDate)
                 };
 

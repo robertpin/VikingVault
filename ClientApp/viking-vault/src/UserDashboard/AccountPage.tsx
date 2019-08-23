@@ -2,9 +2,12 @@ import React from 'react'
 import '../Common/styles.css'
 import inexistentCard from '../Resources/images/card.png'
 import genericCard from '../Resources/images/GENERICcard-01.png'
+import genericCardGrayscale from '../Resources/images/GENERICcard-01-grayscale.jpg'
 import {constants} from "../Resources/Constants";
 import { Redirect } from 'react-router-dom';
 import { TransactionList } from './TransactionList';
+import ToggleBlockCard from './ToggleBlockCard';
+import ResponseModal from '../AdminDashboard/ResponseModal';
 
 const url = constants.baseUrl+"Accounts/";
 
@@ -18,12 +21,17 @@ interface IAccountBalance{
 interface IAccountState{
     firstName: string
     lastName: string
+    cardId: number
     cardNumber: string
+    CCV: number
     expirationDate: string
     accountsBalances: IAccountBalance
     totalBalance: number
     isPresent: boolean
+    isCardBlocked: boolean
     redirect: boolean
+    openBlockCardResponseModal: boolean
+    blockCardResponseMessage: string
 } 
 
 class AccountPage extends React.Component<any, IAccountState>{
@@ -33,7 +41,9 @@ class AccountPage extends React.Component<any, IAccountState>{
         this.state={
             firstName: "",
             lastName: "",
+            cardId: 0,
             cardNumber: "",
+            CCV: 0,
             expirationDate: "",
             accountsBalances: { 
                 ronBalance: 0,
@@ -43,7 +53,10 @@ class AccountPage extends React.Component<any, IAccountState>{
         },
             totalBalance: 0,
             isPresent: true,
-            redirect:false
+            isCardBlocked : false,
+            redirect:false,
+            openBlockCardResponseModal: false,
+            blockCardResponseMessage: ""
         }
     }
     
@@ -101,8 +114,11 @@ class AccountPage extends React.Component<any, IAccountState>{
                             {
                                 firstName: userData.firstName,
                                 lastName: userData.lastName,
+                                cardId : userData.cardId,
                                 cardNumber: userData.cardNumber,
+                                CCV: userData.ccv,
                                 expirationDate: userData.expirationDate,
+                                isCardBlocked: userData.blockedCard,
                                 accountsBalances: {
                                     ronBalance: userData.ronBalance,
                                     eurBalance: userData.eurBalance,
@@ -127,7 +143,7 @@ class AccountPage extends React.Component<any, IAccountState>{
             <p className="card-number-large">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
             <p className="card-expiration-date">{this.state.expirationDate}</p>
             <p className="card-owner-name">{this.state.firstName} {this.state.lastName}</p>
-            <img className="card-available" src={genericCard} alt=""></img>
+            <img className="card-available" src = {!this.state.isCardBlocked ? genericCard : genericCardGrayscale} alt=""></img>
         </div>)
     }
 
@@ -170,6 +186,50 @@ class AccountPage extends React.Component<any, IAccountState>{
         return this.state.cardNumber.substring(begin, end);
     }
 
+    blockCard = () =>{
+        const token = sessionStorage.getItem('Authentication-Token');
+        if(token === null) return;
+        fetch(constants.baseUrl+"card", {
+            method: "PUT",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            },
+            body: JSON.stringify({
+              Id: this.state.cardId,
+              CardNumber: this.state.cardNumber,
+              ExpirationDate: this.state.expirationDate,
+              CCV: this.state.CCV,
+              Blocked: !this.state.isCardBlocked
+            })}).then(response => {   
+                if(response.status === 200){
+                    let oldState = this.state.isCardBlocked;
+                    this.setState({
+                        isCardBlocked : !oldState
+                    });
+                }
+                if(response.status !== 200) {
+                   this.openResponseModalWithMessage("Something wrong happened. Try again later!")
+                }
+            }).catch(err => {
+                this.openResponseModalWithMessage("Something wrong happened. Try again later!")
+            });
+    }
+
+    private openResponseModalWithMessage = (message : string) =>{
+        this.setState({
+            openBlockCardResponseModal : true,
+            blockCardResponseMessage : message
+        });
+    }
+
+    closeBlockCardModal = () =>{
+        this.setState({
+            openBlockCardResponseModal : false
+        });
+    }
+
     render(){
         return(            
             <div className="account-view"> 
@@ -182,6 +242,9 @@ class AccountPage extends React.Component<any, IAccountState>{
                     {this.state.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                 </div>
                 {this.state.redirect? <Redirect to="/login"/> : null}
+                <div className = "block-card-toggle-position"> {!this.state.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.isCardBlocked}/> : null} </div>
+                <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
+
             </div>
         )
     }

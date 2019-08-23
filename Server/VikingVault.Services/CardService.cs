@@ -12,11 +12,11 @@ using VikingVault.Services.Exceptions.CardExceptions;
 
 namespace VikingVault.Services
 {
-    public class AttachCardService : IAttachCardService
+    public class CardService : ICardService
     {
         private readonly VikingVaultDbContext _dbContext;
 
-        public AttachCardService(VikingVaultDbContext dbContext)
+        public CardService(VikingVaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -46,5 +46,26 @@ namespace VikingVault.Services
                 throw new DatabaseException("Database Error!");
             }
         }
+
+        public Card UpdateCard(Card cardToUpdate)
+        {
+            try
+            {
+                var oldCard = _dbContext.Cards.Find(cardToUpdate.Id);
+                if(oldCard == null)
+                {
+                    throw new DatabaseException("Card to be updated doesn't exist in the database!");
+                }
+                oldCard.Blocked = cardToUpdate.Blocked;
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new DatabaseException(e.Message);
+            }
+            return cardToUpdate;
+        }
     }
+
+    
 }
