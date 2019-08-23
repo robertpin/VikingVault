@@ -26,13 +26,21 @@ namespace VikingVault.Services
         public string GetTimeFilterHeaderText(string timeFilter)
         {
             if (timeFilter == "day")
+            {
                 return "Transactions per last day";
+            }
             else if (timeFilter == "week")
+            {
                 return "Transactions per last week";
+            }
             else if (timeFilter == "month")
+            {
                 return "Transactions per last month";
+            }
             else
+            {
                 return "All transactions";
+            }
         }
 
         public void CreatePDFHeader(PdfPage page, string timeFilter)
@@ -53,13 +61,16 @@ namespace VikingVault.Services
 
         public List<Transaction> FilterTransactionsByTime(List<Transaction> transactionList, string timeFilter)
         {
-            if (timeFilter == "day") {
+            if (timeFilter == "day")
+            {
                 transactionList = transactionList.FindAll(transaction => transaction.Date.Day == DateTime.Today.Day);
             }
-            else if (timeFilter == "week") {
+            else if (timeFilter == "week")
+            {
                 transactionList = transactionList.FindAll(transaction => transaction.Date > DateTime.Today.Date.AddDays(-7));
             }
-            else if (timeFilter == "month") {
+            else if (timeFilter == "month")
+            {
                 transactionList = transactionList.FindAll(transaction => transaction.Date.Month == DateTime.Today.Month);
             }
             return transactionList;
@@ -105,7 +116,6 @@ namespace VikingVault.Services
             stream.Position = 0;
             FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
             fileStreamResult.FileDownloadName = "Viking Vault Report.pdf";
-
             return fileStreamResult;
         }
     }

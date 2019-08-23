@@ -47,7 +47,6 @@ class DownloadDropdown extends React.Component {
             timeFilter: timeFilter,
             isOpen: !this.state.isOpen
         }, this.generatePDF);
-        return null;
     }
 
     render() {
