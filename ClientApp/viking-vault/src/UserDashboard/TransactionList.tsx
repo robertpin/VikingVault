@@ -1,5 +1,5 @@
 import  React  from 'react';
-import {constants} from "../Resources/Constants";
+import {constants, transactionTypeEnum} from "../Resources/Constants";
 import "./TransactionList.css";
 import '../UserDashboard/DownloadTypeForm.css'
 import shoppingCart from '../Resources/images/shoppingcart.png';
@@ -8,7 +8,7 @@ import exchange from "../Resources/images/money-exchange.png";
 import { IUserData } from './../AdminDashboard/UserData';
 import DownloadDropdown from './DownloadTypeForm';
 
-const baseUrl = constants.baseUrl;
+const url = constants.baseUrl+"transaction";
 
 interface ITransaction {
     user: IUserData;
@@ -34,7 +34,7 @@ class TransactionList extends React.Component<any, IState> {
         if(token === null)  {
             return;
         }
-        fetch(baseUrl+"transaction",{
+        fetch(url,{
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -52,13 +52,13 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
-        if(transaction.type.toLowerCase() === "transfer") {
+        if(transaction.type.toLowerCase() === transactionTypeEnum.transfer) {
             if(transaction.amount >= 0) {
                 return `From ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
             }
             return `To ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
         }
-        if(transaction.type.toLowerCase() === "exchange") {
+        if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
             return `Exchanged ${transaction.details.toUpperCase()}`;
         }
         return transaction.senderOrReceiver.firstName;
@@ -78,17 +78,17 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getImageForTransactionType(transactionType: string) {
-        if(transactionType.toLowerCase() === "transfer") {
+        if(transactionType.toLowerCase() === transactionTypeEnum.transfer) {
             return userIcon;
         }
-        if(transactionType.toLowerCase() === "exchange") {
+        if(transactionType.toLowerCase() === transactionTypeEnum.exchange) {
             return exchange;
         }
         return shoppingCart;
     }
 
     private formatDetails(tranasction: ITransaction) {
-        if(tranasction.type.toLowerCase() === "exchange") {
+        if(tranasction.type.toLowerCase() === transactionTypeEnum.exchange) {
             return "Exchange";
         }
         return tranasction.details;

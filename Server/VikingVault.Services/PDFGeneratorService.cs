@@ -100,7 +100,7 @@ namespace VikingVault.Services
                 graphics.DrawString(transaction.Date.ToShortDateString().ToString(), columnDataFont, columnDataBrush, new PointF(x, y));
                 graphics.DrawString(transaction.Currency.ToString(), columnDataFont, columnDataBrush, new PointF(x + 120, y));
                 graphics.DrawString(transaction.Amount.ToString(), columnDataFont, columnDataBrush, new PointF(x + 230, y));
-                graphics.DrawString(transaction.OtherParty.ToString(), columnDataFont, columnDataBrush, new PointF(x + 360, y));
+                graphics.DrawString(transaction.Details.ToString(), columnDataFont, columnDataBrush, new PointF(x + 360, y));
                 y = y + 25;
             }
         }
