@@ -2,7 +2,7 @@ import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 
-const baseUrl = constants.baseUrl + "automaticpayment";
+const baseUrl = constants.baseUrl + "AutomaticPayment";
 
 interface IAutomaticPayment {
     companyName: string,
@@ -78,6 +78,20 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.getAutomaticPayments();
     }
 
+    getPaymentsTableBody() {
+        return this.state.payments.map( (payment) => {
+            return <tr>
+                <td className="payments-text centered-text">{payment.companyName}</td>
+                <td className="payments-text centered-text">{payment.amount}</td>
+                <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
+                <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
+                <td className="payments-text centered-text">Cancel element here</td>
+                <td className="payments-text centered-text">Edit element here</td>
+                <td className="payments-text centered-text">Delete element here</td>
+            </tr>;
+        })
+    }
+
     render() {
         return <div className="m-4 w-auto">
             {this.state.isThePaymentListEmpty?
@@ -93,17 +107,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.payments.map( (payment) => {
-                            return <tr>
-                                <td className="payments-text centered-text">{payment.companyName}</td>
-                                <td className="payments-text centered-text">{payment.amount}</td>
-                                <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
-                                <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
-                                <td className="payments-text centered-text">Cancel element here</td>
-                                <td className="payments-text centered-text">Edit element here</td>
-                                <td className="payments-text centered-text">Delete element here</td>
-                            </tr>;
-                        })}
+                        {this.getPaymentsTableBody()}
                     </tbody>
                 </table>
             }
