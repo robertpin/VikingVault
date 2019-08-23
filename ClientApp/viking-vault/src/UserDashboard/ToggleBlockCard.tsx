@@ -6,8 +6,7 @@ interface IToggleBlockCardState{
     isCardBlocked: boolean
 }
 
-function ToggleBlockCard (props: IToggleBlockCardState) 
-{
+function ToggleBlockCard (props: IToggleBlockCardState) {
     return (
         <label className="switch-block-card">
             <input type="checkbox" onClick = {props.toggleSwitch} checked = {!props.isCardBlocked}/>

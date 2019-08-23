@@ -10,6 +10,7 @@ import ToggleBlockCard from './ToggleBlockCard';
 import ResponseModal from '../AdminDashboard/ResponseModal';
 
 const url = constants.baseUrl+"Accounts/";
+const updateCardUrl = constants.baseUrl+"updateCard/";
 
 interface IAccountBalance{
     ronBalance: number;
@@ -189,7 +190,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     blockCard = () =>{
         const token = sessionStorage.getItem('Authentication-Token');
         if(token === null) return;
-        fetch(constants.baseUrl+"updateCard", {
+        fetch(updateCardUrl, {
             method: "PUT",
             headers: {
               'Accept': 'application/json',
@@ -209,7 +210,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                         isCardBlocked : !oldState
                     });
                 }
-                if(response.status !== 200) {
+                else{
                    this.openResponseModalWithMessage("Something wrong happened. Try again later!")
                 }
             }).catch(err => {
