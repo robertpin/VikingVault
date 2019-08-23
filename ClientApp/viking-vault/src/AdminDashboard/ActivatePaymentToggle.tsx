@@ -22,17 +22,13 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
     this.setState({
       checked: e.target.checked
     })
-    fetch(API_URL+"PaymentToggling", {
+    fetch(API_URL+"PaymentToggling/"+this.props.paymentId, {
       method: "PUT",
       headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'    
       },
-      body: JSON.stringify(
-        {
-          id: this.props.paymentId,
-          isChecked: this.state.checked
-        })
+      body: this.state.checked
     })
   }
 

@@ -21,7 +21,6 @@ namespace VikingVault.API.Controllers
             _paymentTogglingService = paymentTogglingService;
         }
 
-        // GET: api/PaymentToggling/5
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Boolean> Get(int id)
         {
@@ -34,19 +33,11 @@ namespace VikingVault.API.Controllers
             else
                 return Ok(false);
         }
-
-        // PUT: api/PaymentToggling/5
-        [HttpPut]
-        public void Put([FromBody] string value)
+        
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
         {
-            try
-            {
-                _paymentTogglingService.ChangePaymentState(value);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("cevaaaaa");
-            }
+            _paymentTogglingService.ChangePaymentState(id, value);
         }
     }
 }
