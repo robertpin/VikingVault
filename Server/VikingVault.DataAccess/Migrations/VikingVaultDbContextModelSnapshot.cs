@@ -92,6 +92,28 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Read");
+
+                    b.Property<bool>("Seen");
+
+                    b.Property<string>("Text")
+                        .IsRequired();
+
+                    b.Property<int>("userId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -225,6 +247,14 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithOne("Card")
                         .HasForeignKey("VikingVault.DataAccess.Models.Card", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Notification", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
