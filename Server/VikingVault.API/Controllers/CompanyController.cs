@@ -53,5 +53,20 @@ namespace VikingVault.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [Authorization(Role=RoleEnum.Admin)]
+        [HttpDelete]
+        public ActionResult Delete([FromBody] int companyId)
+        {
+            try
+            {
+                _companyService.DeleteCompany(companyId);
+                return Ok();
+            }
+            catch(CompanyServiceException e)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }
