@@ -5,8 +5,10 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IAttachCardService
+    public interface ICardService
     {
         Card AttachCard(Card card);
+        Card CheckUserHasCard(string token);
+        bool CheckCardIsBlocked(string token);
     }
 }

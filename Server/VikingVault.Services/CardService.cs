@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
@@ -12,11 +13,11 @@ using VikingVault.Services.Exceptions.CardExceptions;
 
 namespace VikingVault.Services
 {
-    public class AttachCardService : IAttachCardService
+    public class CardService : ICardService
     {
         private readonly VikingVaultDbContext _dbContext;
 
-        public AttachCardService(VikingVaultDbContext dbContext)
+        public CardService(VikingVaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -45,6 +46,40 @@ namespace VikingVault.Services
             {
                 throw new DatabaseException("Database Error!");
             }
+        }
+
+        public Card CheckUserHasCard(string token)
+        {
+            try
+            {
+                var tokenObject = new JwtSecurityToken(token);
+                string userId = tokenObject.Payload["Id"].ToString();
+                var returnedUser = _dbContext.User.Include(user => user.Card).SingleOrDefault(u => u.Id == Int32.Parse(userId));
+                return returnedUser.Card;
+            }
+            catch(Exception e)
+            {
+                throw new CardServiceException(e.Message);
+            }
+            
+        }
+
+        public bool CheckCardIsBlocked(string token)
+        {
+            try
+            {
+                Card card = CheckUserHasCard(token);
+                if(card == null)
+                {
+                    return true;
+                }
+                return card.Blocked;
+            }
+            catch (Exception e)
+            {
+                throw new CardServiceException(e.Message);
+            }
+
         }
     }
 }
