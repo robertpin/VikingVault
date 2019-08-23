@@ -5,8 +5,8 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IAttachCardService
+    public interface IAutomaticPaymentService
     {
-        Card AttachCard(Card card);
+        List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token);
     }
 }
