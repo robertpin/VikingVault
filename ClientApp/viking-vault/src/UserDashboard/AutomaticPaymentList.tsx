@@ -74,7 +74,6 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         return new Intl.DateTimeFormat('en-GB', options).format(date).toString().toUpperCase();
     }
 
-
     componentDidMount() {
         this.getAutomaticPayments();
     }
