@@ -14,6 +14,7 @@ namespace VikingVault.DataAccess.Models
         public DateTime Date { get; set; }
         public string Currency { get; set; }
         public float Amount { get; set; }
-        public string OtherParty { get; set; }
+        public string SenderOrReceiver { get; set; }
+        public string Details { get; set; }
     }
 }
