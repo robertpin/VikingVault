@@ -69,7 +69,8 @@ namespace VikingVault.Services
                 Date = currentDateTime,
                 Currency = "Ron",
                 Amount = automaticPayment.Amount,
-                OtherParty = automaticPayment.ReceivingCompany.FirstName
+                SenderOrReceiver = automaticPayment.ReceivingCompany.FirstName,
+                Details = "Automatic Payment"
             };
 
             _dbContext.Transactions.Add(transaction);
