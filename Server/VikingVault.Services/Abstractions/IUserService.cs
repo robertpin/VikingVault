@@ -7,9 +7,11 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IUserService
     {
-        User CreateUser(User user);
+        User CreateUser(UserDTO user);
         User GetById(int userId);
         void DeleteUser(UserEmail userEmail);
         int GetIdFromToken(string token);
+        User GetUserFromToken(string token);
+        User GetUserFromCardNumber(string cardNumber);
     }
 }

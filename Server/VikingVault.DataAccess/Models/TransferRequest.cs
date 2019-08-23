@@ -5,13 +5,16 @@ using System.Text;
 
 namespace VikingVault.DataAccess.Models
 {
-    class TransferRequest
+    public class TransferRequest
     {
         public int Id { get; set; }
         [Required]
-        public User User { get; set; }
+        public User Requester { get; set; }
+        [Required]
         public string Amount { get; set; }
+        [Required]
         public string Currency { get; set; }
+        [Required]
         public string CardNumberReciever { get; set; }
         public string Details { get; set; }
     }

@@ -1,4 +1,3 @@
-/* The switch - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
@@ -11,7 +10,7 @@
     background-color: #09424d; 
     color: white;
     transition: .3s;
-    border-radius: 1em;
+    border-radius: 10px;
 }
 
 .toggle-deactivated-text-decoration{
@@ -19,17 +18,15 @@
     color:#09424d;
     text-align: center;
     transition: .3s;
-    border-radius: 1em;
+    border-radius: 10px;
 }
 
-  /* Hide default HTML checkbox */
   .switch input {
     opacity: 0;
     width: 0;
     height: 0;
   }
   
-  /* The slider */
   .slider {
     position: absolute;
     cursor: pointer;
@@ -60,7 +57,6 @@
     transform: translateX(26px);
   }
   
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
   }

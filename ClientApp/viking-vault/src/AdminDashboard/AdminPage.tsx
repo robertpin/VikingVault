@@ -58,7 +58,8 @@ class AdminPage extends React.Component<any, IProfileData>{
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-access-token' : token.toString()
                 }})
             .then( response => 
                 {
@@ -102,10 +103,10 @@ class AdminPage extends React.Component<any, IProfileData>{
     render(){
         return(
             <div className = "admin-page">
-                <SideBar />
+                <SideBar userType="admin"/>
                 <TopBar/>
                 <UserIcon/>
-                <div className = "display-users-container">
+                <div className = "display-entities-container w-75 mr-auto ml-auto bg-white">
                      { this.state.users.map( (user) => <UserData user = {user} key = {user.id} deleteUserFromComponent = {this.deleteUserFromComponent}/>) }
                 </div>
             </div>

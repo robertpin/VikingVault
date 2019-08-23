@@ -26,19 +26,18 @@ namespace VikingVault.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> Post([FromBody] TransferFundsModel transferFundsData)
+        public ActionResult<string> Post([FromBody] TrasnferFundsDTO transferFundsDTO)
         {
             try
             {
                 var token = Request.Headers["x-access-token"];
-                var idSender = _userService.GetIdFromToken(token);
 
-                transferFundsData.IdSender = idSender; //TO BE CHANGED
-
-                if (transferFundsData != null)
+                if (transferFundsDTO != null)
                 {
-                    _transferFundsService.TransferFunds(transferFundsData);
+                    User sender = _userService.GetUserFromToken(token);
+                    TransferFundsModel transferFundsData = transferFundsDTO.convertDTOtoTransferFundsModel(sender);
 
+                    _transferFundsService.TransferFunds(transferFundsData);
                     return Ok("Succesfully transfered " + transferFundsData.AmountSent + "!");
                 }
                 else

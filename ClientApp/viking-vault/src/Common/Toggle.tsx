@@ -6,7 +6,7 @@ interface IToggleState{
     toggleSwitch: any
 }
 
-const Toggle = (props: IToggleState) => 
+function Toggle (props: IToggleState)
 {
     return (
         <label className="switch">

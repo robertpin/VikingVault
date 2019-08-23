@@ -10,7 +10,8 @@ import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../Common/Toggle';
 
 
-const url = `${constants.baseUrl}transferFunds`;
+const transferUrl = `${constants.baseUrl}transferFunds`;
+const requestUrl = `${constants.baseUrl}transferRequests`;
 
 interface ITransferFundsState{
     transferedAmount: number;
@@ -20,7 +21,8 @@ interface ITransferFundsState{
     modalMessage: string;
     totalBalance: number;
     openModal: boolean;
-    requestMoney: boolean;
+    requestTransfer: boolean;
+    isButtonDisabled: boolean;
 }
 
 class TransferFundsPage extends React.Component<any, ITransferFundsState>{
@@ -34,7 +36,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           modalMessage: "",
           totalBalance: 0,
           openModal: false,
-          requestMoney: false
+          requestTransfer: false,
+          isButtonDisabled: false
         }
     }
 
@@ -76,12 +79,19 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       this.getTotalBalance();
     }
 
-    handleChangeRequestMoneyState = () =>
+    handleChangerequestTransferState = () =>
     {
-      this.setState((oldState: ITransferFundsState) => {this.setState({
-        requestMoney: !oldState.requestMoney
-      })});
+      this.setState((oldState: ITransferFundsState) => ({
+        requestTransfer: !oldState.requestTransfer
+      }));
         
+    }
+
+    handleIsButtonDisabled = () =>
+    {
+        this.setState((oldState: ITransferFundsState) => ({
+          isButtonDisabled: !oldState.isButtonDisabled
+        }));
     }
 
     getTotalBalance = () => {
@@ -144,37 +154,96 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
           if(token !== null)
           {
-              fetch(url, {
-                method: "POST",
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  'x-access-token': token.toString()
-                },
-                body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then( response => {
-                  
-                    if(response != null)
-                    {
-                        this.setState({
-                          openModal: true,
-                          modalMessage: response
-                        });  
-                    }
-                    else
-                    {
+            this.handleIsButtonDisabled();
+
+            fetch(transferUrl, {
+              method: "POST",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token.toString()
+              },
+              body: JSON.stringify(data)
+              })
+              .then(response => response.json())
+              .then( response => {
+                
+                  if(response != null)
+                  {
                       this.setState({
                         openModal: true,
                         modalMessage: response
                       });  
-                    } 
-                });
+                  }
+                  else
+                  {
+                    this.setState({
+                      openModal: true,
+                      modalMessage: response
+                    });   
+                  }
+                  this.handleIsButtonDisabled(); 
+              });
           }
         }
-    };
-  
+    }
+
+    requestTransfer = () =>
+    {
+      var data = {
+        amount: this.state.transferedAmount,
+        currency: this.state.currency,
+        cardNumberReciever: this.state.cardNumber,
+        details: this.state.transferDetails
+      }
+
+      if(data.amount == 0)
+      {
+          this.setState({
+            openModal: true,
+            modalMessage: "Insert a proper amount to be requested!"
+          })
+      }
+      else
+      {
+        let token = sessionStorage.getItem('Authentication-Token');
+
+         if(token !== null)
+        {
+          this.handleIsButtonDisabled();
+
+          fetch(requestUrl, {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token.toString()
+            },
+            body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then( response => {
+              
+                if(response != null)
+                {
+                    this.setState({
+                      openModal: true,
+                      modalMessage: response
+                    });  
+                }
+                else
+                {
+                  this.setState({
+                    openModal: true,
+                    modalMessage: response
+                  });  
+                } 
+
+                this.handleIsButtonDisabled();
+            });
+        } 
+      }
+    }
 
     closeModal = () =>
     {
@@ -188,7 +257,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     render(){
         return(
             <div className = "transfer-funds-page">  
-                <SideBar/>
+                <SideBar userType = "admin"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
@@ -196,13 +265,13 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                     <div className = "transfer-funds-left-container"> 
 
                             <div className = "transfer-request-toggle-container">
-                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangeRequestMoneyState}/></span> 
-                                <p className= {"toggle-text-container text-decoration " + (this.state.requestMoney == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
-                                <p className= {"toggle-text-container text-decoration " + (this.state.requestMoney == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
+                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangerequestTransferState}/></span> 
+                                <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
+                                <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>
 
                             <div className="transfer-data-left-container">
-                               <div className = "transfer-amount-text-container">
+                               <div>
                                   <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
                                         <option value="EUR">EUR</option>
                                         <option value="RON">RON</option>
@@ -211,7 +280,6 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     </select>
                                     <div>
                                         <p className="total-balance">{this.state.totalBalance}</p>
-                                        {/* <span className="total-balance-text">Total balance</span> */}
                                     </div>
                                
                                     <div className = "amount-container-position">
@@ -246,12 +314,10 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                      onChange={this.handleChangedTransferDetails}/>
                                 </form>
 
-                                <button className="btn button-login transfer-request-button" onClick = {this.transferMoney}>
-                                    {this.state.requestMoney == true ? "Request Now" : "Transfer Now"}
+                                <button className="btn button-login transfer-request-button" disabled = {this.state.isButtonDisabled} onClick = {this.state.requestTransfer === true? this.requestTransfer : this.transferMoney}>
+                                    {this.state.requestTransfer == true ? "Request Now" : "Transfer Now"}
                                 </button>   
                             </div>
-
-
                     </div> 
                 </div>
             </div>         

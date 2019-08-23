@@ -19,6 +19,31 @@ namespace VikingVault.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Amount");
+
+                    b.Property<int>("CompanyId");
+
+                    b.Property<DateTime>("InitialPaymentDate");
+
+                    b.Property<DateTime>("LastPaymentDate");
+
+                    b.Property<int?>("PayingUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("PayingUserId");
+
+                    b.ToTable("AutomaticPayments");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -67,6 +92,37 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Type = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Type = "User"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Type = "Company"
+                        });
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -90,6 +146,32 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Amount")
+                        .IsRequired();
+
+                    b.Property<string>("CardNumberReciever")
+                        .IsRequired();
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.Property<string>("Details");
+
+                    b.Property<int>("RequesterId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequesterId");
+
+                    b.ToTable("TransferRequests");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
@@ -118,12 +200,14 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("PictureLink");
 
-                    b.Property<string>("Role");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Email")
                         .HasName("Email");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
 
@@ -138,8 +222,20 @@ namespace VikingVault.DataAccess.Migrations
                             LastName = "Admin Lastname",
                             Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             PictureLink = "",
-                            Role = "admin"
+                            RoleId = 1
                         });
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
+                        .WithMany()
+                        .HasForeignKey("PayingUserId");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
@@ -163,6 +259,22 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Requester")
+                        .WithMany()
+                        .HasForeignKey("RequesterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

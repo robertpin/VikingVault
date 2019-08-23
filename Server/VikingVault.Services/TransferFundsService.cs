@@ -30,22 +30,30 @@ namespace VikingVault.Services
 
         public bool? TransferFunds(TransferFundsModel transferData)
         {
-            int idSender = transferData.IdSender;
-
-            if (_userCardService.HasCardAttached(idSender)) //if user has a card attached
+            int idSender = transferData.Sender.Id;
+            
+            if (_userCardService.HasCardAttached(idSender))
             {
                 int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
 
-                if ( idReciever != null && _userCardService.HasCardAttached((int)idReciever))
+                if (idSender != idReciever)
                 {
-                    _bankAccountService.RetractMoneyFromAccount(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                    _bankAccountService.AddMoneyToAccount(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                    if (idReciever != null && _userCardService.HasCardAttached((int)idReciever))
+                    {
+                        _bankAccountService.RetractMoneyFromAccount(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                        _bankAccountService.AddMoneyToAccount(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
 
-                    return true;
+                        _transactionService.AddTransactionsForTransferFunds(transferData);
+                        return true;
+                    }
+                    else
+                    {
+                        throw new NoCardAttachedToUserException("No user found with the specified card number!");
+                    }
                 }
                 else
                 {
-                    throw new NoCardAttachedToUserException("No user found with the specified card number!");
+                    throw new NoCardAttachedToUserException("You can't transfer money to yourself!");
                 }
             }
             else

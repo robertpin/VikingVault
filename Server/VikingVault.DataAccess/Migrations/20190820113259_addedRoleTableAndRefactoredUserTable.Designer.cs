@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190821083601_ChangedTransactionsAndCardsTables")]
-    partial class ChangedTransactionsAndCardsTables
+    [Migration("20190820113259_addedRoleTableAndRefactoredUserTable")]
+    partial class addedRoleTableAndRefactoredUserTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,8 +47,6 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Blocked");
-
                     b.Property<int>("CCV");
 
                     b.Property<string>("CardNumber")
@@ -67,6 +65,36 @@ namespace VikingVault.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Type = 2
+                        });
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
@@ -120,12 +148,14 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("PictureLink");
 
-                    b.Property<string>("Role");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Email")
                         .HasName("Email");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
 
@@ -140,7 +170,7 @@ namespace VikingVault.DataAccess.Migrations
                             LastName = "Admin Lastname",
                             Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             PictureLink = "",
-                            Role = "admin"
+                            RoleId = 1
                         });
                 });
 
@@ -165,6 +195,14 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
