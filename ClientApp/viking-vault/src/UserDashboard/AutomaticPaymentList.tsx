@@ -61,8 +61,6 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         });}
     }
 
-
-
     formatDate(transactionDate: Date) {
         let date = new Date(transactionDate);
         let options = {
@@ -110,12 +108,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                     </tbody>
                 </table>
             }
- 
-        
     </div> 
     }
 }
 
 export {AutomaticPaymentList}
-
-
