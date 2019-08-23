@@ -325,7 +325,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                 <TopBar />
                 <UserIcon />
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
-                <div className="white-box-background">
+                <div className="white-box">
                     <div className="container"> 
                         <div className="row"> 
                             <div className="col-4 left-column"> {/* Left column */}
