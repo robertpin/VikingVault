@@ -9,5 +9,7 @@ namespace VikingVault.Services.Abstractions
     {
         Card AttachCard(Card card);
         Card UpdateCard(Card card);
+        Card CheckUserHasCard(string token);
+        bool CheckCardIsBlocked(string token);
     }
 }
