@@ -8,5 +8,6 @@ namespace VikingVault.Services.Abstractions
     public interface IAutomaticPaymentService
     {
         AutomaticPayment CreateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO);
+        AutomaticPayment UpdateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO);
     }
 }

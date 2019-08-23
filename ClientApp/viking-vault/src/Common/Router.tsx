@@ -7,6 +7,7 @@ import "../App.css"
 import { Dashboard } from "../Common/Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
 import { WillOpenModal } from "../WillOpenModal";
+import { WillOpenEditModal } from "../WillOpenEditModal";
 
 function Router(props: any) {
     return <BrowserRouter>
@@ -16,6 +17,7 @@ function Router(props: any) {
         <Route path="/exchange" exact component={ExchangeForm}/>
         <Route path="/companies" exact component={Companies}/>
         <Route path="/aaa" exact component={WillOpenModal}/>
+        <Route path="/qqq" exact component={WillOpenEditModal}/>
 
     </BrowserRouter>;
 }
