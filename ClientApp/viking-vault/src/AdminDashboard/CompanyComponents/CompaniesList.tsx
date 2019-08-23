@@ -1,7 +1,9 @@
 import React from "react";
 import { constants } from "../../Resources/Constants";
+import { DeleteCompany } from "./DeleteCompany";
 
 interface ICompanyData {
+    id: number;
     name: string;
     address: string;
     balance: string;
@@ -65,22 +67,22 @@ class CompaniesList extends React.Component<ICompaniesListProps, ICompaniesListS
         return <div className="m-4 w-auto">
             {this.props.reload? this.reloadData() : null}
             {this.state.error !== ""? <p className="alert alert-danger">{this.state.error}</p> : null}
-            <table className="table table-striped w-75">
+            <table className="table table-hover w-100">
                 <thead>
                     <tr>
                         <th scope="col">Company name</th>
                         <th scope="col">Company address</th>
                         <th scope="col">Company balance</th>
-                        <th scope="col">Delete company</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.state.companies.map( (company) => {
-                        return <tr>
+                        return <tr key={company.id}>
                             <td>{company.name}</td>
                             <td>{company.address}</td>
                             <td>{`${company.balance} RON`}</td>
-                            <td></td>
+                            <td><DeleteCompany companyId = {company.id} changeReloading = {this.props.changeReloading}/></td>
                         </tr>;
                     })}
                 </tbody>
