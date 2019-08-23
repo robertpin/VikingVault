@@ -1,10 +1,12 @@
 import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import "./TransactionList.css";
+import '../UserDashboard/DownloadTypeForm.css'
 import shoppingCart from '../Resources/images/shoppingcart.png';
 import userIcon from '../Resources/images/profileWhite.png';
 import exchange from "../Resources/images/money-exchange.png";
 import { IUserData } from './../AdminDashboard/UserData';
+import DownloadDropdown from './DownloadTypeForm';
 
 const baseUrl = constants.baseUrl;
 
@@ -114,6 +116,7 @@ class TransactionList extends React.Component<any, IState> {
     render() {
         return <div className="transactions">
             <h5 className="font-weight-bold">Transactions</h5>
+            <DownloadDropdown/>
             <table className="table table-hover">
                 {this.getTableBodyFromTransactionList()}
             </table>
