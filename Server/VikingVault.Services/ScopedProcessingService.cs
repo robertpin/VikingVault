@@ -38,7 +38,8 @@ namespace VikingVault.Services
                 var payingUserCard = _dbContext.Cards.SingleOrDefault(card => card.UserId == automaticPayment.PayingUser.Id);
                 var payingUserAccount = _dbContext.BankAccount
                                         .Include(bankAccount => bankAccount.User)
-                                       .SingleOrDefault(bankAccount => bankAccount.User.Id == automaticPayment.PayingUser.Id && bankAccount.CurrencyType.Equals("Ron"));
+                                        .SingleOrDefault(bankAccount => bankAccount.User.Id == automaticPayment.PayingUser.Id 
+                                                                                           && bankAccount.CurrencyType.Equals("Ron"));
 
                 if (payingUserAccount.Balance < automaticPayment.Amount)
                 {
@@ -86,7 +87,7 @@ namespace VikingVault.Services
         {
             var payingUserAccount = _dbContext.BankAccount
                                         .Include(bankAccount => bankAccount.User)
-                                       .SingleOrDefault(bankAccount => bankAccount.User.Id == payingUser.Id 
+                                        .SingleOrDefault(bankAccount => bankAccount.User.Id == payingUser.Id 
                                                                                            && bankAccount.CurrencyType.Equals("Ron"));
 
             payingUserAccount.Balance -= amount;
