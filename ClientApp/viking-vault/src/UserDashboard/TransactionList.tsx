@@ -4,15 +4,18 @@ import "./TransactionList.css";
 import shoppingCart from '../Resources/images/shoppingcart.png';
 import userIcon from '../Resources/images/profileWhite.png';
 import exchange from "../Resources/images/money-exchange.png";
+import { IUserData } from './../AdminDashboard/UserData';
 
 const baseUrl = constants.baseUrl;
 
 interface ITransaction {
+    user: IUserData;
     type: string;
     date: Date;
     amount: number;
     currency: string;
-    otherParty: string;
+    senderOrReceiver: IUserData;
+    details: string
 }
 
 interface IState {
@@ -47,16 +50,16 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
-        if(transaction.type === "transfer") {
+        if(transaction.type.toLowerCase() === "transfer") {
             if(transaction.amount >= 0) {
-                return `From ${transaction.otherParty}`;
+                return `From ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
             }
-            return `To ${transaction.otherParty}`;
+            return `To ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
         }
-        if(transaction.type === "exchange") {
-            return `Exchanged ${transaction.otherParty.toUpperCase()}`;
+        if(transaction.type.toLowerCase() === "exchange") {
+            return `Exchanged ${transaction.details.toUpperCase()}`;
         }
-        return transaction.otherParty;
+        return transaction.senderOrReceiver.firstName;
     }
 
     private formatDate(transactionDate: Date) {

@@ -10,7 +10,7 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190823102752_ModifiedTransactionModel")]
+    [Migration("20190823110153_ModifiedTransactionModel")]
     partial class ModifiedTransactionModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,19 +29,21 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<float>("Amount");
 
-                    b.Property<int>("CompanyId");
-
                     b.Property<DateTime>("InitialPaymentDate");
+
+                    b.Property<bool>("IsEnabled");
 
                     b.Property<DateTime>("LastPaymentDate");
 
                     b.Property<int?>("PayingUserId");
 
+                    b.Property<int>("ReceivingCompanyId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("PayingUserId");
+
+                    b.HasIndex("ReceivingCompanyId");
 
                     b.ToTable("AutomaticPayments");
                 });
@@ -139,13 +141,15 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Details");
 
-                    b.Property<string>("SenderOrReceiver");
+                    b.Property<int?>("SenderOrReceiverId");
 
                     b.Property<string>("Type");
 
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SenderOrReceiverId");
 
                     b.HasIndex("UserId");
 
@@ -206,14 +210,14 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
                         .WithMany()
                         .HasForeignKey("PayingUserId");
+
+                    b.HasOne("VikingVault.DataAccess.Models.User", "ReceivingCompany")
+                        .WithMany()
+                        .HasForeignKey("ReceivingCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
@@ -234,6 +238,10 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
                 {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "SenderOrReceiver")
+                        .WithMany()
+                        .HasForeignKey("SenderOrReceiverId");
+
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

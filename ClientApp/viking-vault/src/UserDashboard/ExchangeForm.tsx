@@ -250,7 +250,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
         else
         {
             var amount = this.state.exchangedAmount.toFixed(2);
-            let otherParty = `Exchanged ${this.state.toExchangeAmount} ${this.state.fromCurrency}`;
+            let details = `${this.state.toExchangeAmount} ${this.state.fromCurrency}`;
 
             let token = sessionStorage.getItem('Authentication-Token');
             if(token != null) {
@@ -273,7 +273,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                             "email":""
                         },
                         {
-                            "currencyType": otherParty,
+                            "currencyType": details,
                             "amount": amount,
                             "email":""
                         }

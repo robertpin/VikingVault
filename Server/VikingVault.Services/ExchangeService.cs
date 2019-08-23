@@ -43,6 +43,7 @@ namespace VikingVault.Services
                 Currency = bankAccountBuy.CurrencyType,
                 Date = DateTime.Now,
                 Amount = exchangeInfo.Amount,
+                SenderOrReceiver = returnedUser,
                 Details = exchangeInfo.CurrencyType
             };
 

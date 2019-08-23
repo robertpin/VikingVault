@@ -40,6 +40,8 @@ namespace VikingVault.Services
         {
             int uid = int.Parse(userId);
             return _dbContext.Transactions
+                .Include(t => t.User)
+                .Include(t => t.SenderOrReceiver)
                 .Where(t => t.User.Id == uid)
                 .OrderByDescending(t => t.Date)
                 .Take(5)

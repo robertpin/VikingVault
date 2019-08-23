@@ -68,8 +68,8 @@ namespace VikingVault.Services
                 Type = "Payment",
                 Date = currentDateTime,
                 Currency = "Ron",
-                Amount = automaticPayment.Amount,
-                SenderOrReceiver = automaticPayment.ReceivingCompany.FirstName,
+                Amount = -automaticPayment.Amount,
+                SenderOrReceiver = automaticPayment.ReceivingCompany,
                 Details = "Automatic Payment"
             };
 
