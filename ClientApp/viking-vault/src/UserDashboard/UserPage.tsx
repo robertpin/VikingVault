@@ -32,7 +32,7 @@ class UserPage extends React.Component<any, IUserPageState>{
                 <TopBar/>
                 <UserIcon className="u-icon" parentCallBack = {this.callbackFunction} />
                 {this.state.viewProfile ?  <AccountPage /> : <ProfilePage/>}
-                <ActivatePaymentToggle />
+                <ActivatePaymentToggle paymentId={3} />
             </div>
          )   
     }
