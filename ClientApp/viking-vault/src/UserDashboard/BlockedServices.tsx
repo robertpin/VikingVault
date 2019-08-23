@@ -10,6 +10,9 @@ interface IBlockedServicesState {
     isCardBlocked: boolean | null;
 }
 
+const cardUrl = constants.baseUrl+"card";
+const blockUrl = constants.baseUrl+"blockedcard";
+
 class BlockedServices extends React.Component<any, IBlockedServicesState> {
     constructor(props: any) {
         super(props);
@@ -29,7 +32,7 @@ class BlockedServices extends React.Component<any, IBlockedServicesState> {
         if(token === null) {
             return;
         }
-        fetch(constants.baseUrl+"card", {
+        fetch(cardUrl, {
             method: "GET",
             headers: {
               'Accept': 'application/json',
@@ -56,7 +59,7 @@ class BlockedServices extends React.Component<any, IBlockedServicesState> {
         if(token === null) {
             return;
         }
-        fetch(constants.baseUrl+"blockedcard", {
+        fetch(blockUrl, {
             method: "GET",
             headers: {
               'Accept': 'application/json',
@@ -72,7 +75,6 @@ class BlockedServices extends React.Component<any, IBlockedServicesState> {
             if(result === null) {
                 return;
             }
-            console.log(result);
             this.setState({
                 isCardBlocked: result
             });
@@ -90,19 +92,17 @@ class BlockedServices extends React.Component<any, IBlockedServicesState> {
             <SideBar userType="user"/>
             <TopBar/>
             <UserIcon/>
-            <div className="white-container w-75 mr-auto ml-auto bg-white">
+            <div className="message-container w-75 mr-auto ml-auto bg-white">
                 <h3 className="text-center m-5">{message}</h3>
             </div>
         </React.Fragment>
     }
 
-    
     render() {
         return <div className="dark-background">
             {this.state.userHasCard && !this.state.isCardBlocked? this.props.children : this.returnBlockServiceView()}
         </div>;
     }
-    
 }
 
 export {BlockedServices};

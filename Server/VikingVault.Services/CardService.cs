@@ -53,7 +53,7 @@ namespace VikingVault.Services
             try
             {
                 var tokenObject = new JwtSecurityToken(token);
-                string userId = tokenObject.Payload["Id"].ToString();
+                var userId = tokenObject.Payload["Id"].ToString();
                 var returnedUser = _dbContext.User.Include(user => user.Card).SingleOrDefault(u => u.Id == Int32.Parse(userId));
                 return returnedUser.Card;
             }
@@ -68,7 +68,7 @@ namespace VikingVault.Services
         {
             try
             {
-                Card card = CheckUserHasCard(token);
+                var card = CheckUserHasCard(token);
                 if(card == null)
                 {
                     return true;
