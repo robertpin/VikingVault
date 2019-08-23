@@ -25,6 +25,13 @@ interface ITransferFundsState{
     isButtonDisabled: boolean;
 }
 
+interface ITransferDataDTO{
+    amount: number;
+    cardNumberReciever: string;
+    transferDetails: string;
+    currency: string;
+}
+
 class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     constructor(props:any){
         super(props);
@@ -79,7 +86,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       this.getTotalBalance();
     }
 
-    handleChangerequestTransferState = () =>
+    handleChangeRequestTransferState = () =>
     {
       this.setState((oldState: ITransferFundsState) => ({
         requestTransfer: !oldState.requestTransfer
@@ -132,23 +139,36 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         }
     }
 
-    transferMoney = () => {
-        var data = {
-          idSender: 0,
-          amountSent: this.state.transferedAmount,
+    private getTransferDataFromUI = ():ITransferDataDTO =>
+    {
+        return {
+          amount: this.state.transferedAmount,
           cardNumberReciever: this.state.cardNumber,
           transferDetails: this.state.transferDetails,
           currency: this.state.currency
-        }
+        };  
+    }
 
-        if(data.amountSent == 0)
-        {
-            this.setState({
-              openModal: true,
-              modalMessage: "Insert a proper amount to be sent!"
-            })
-        }
-        else
+    private isValidAmount = (data: ITransferDataDTO) =>
+    {
+      if(data.amount == 0)
+      {
+          this.setState({
+            openModal: true,
+            modalMessage: "Insert a proper amount to be sent!"
+          })
+
+          return false;
+      }
+
+      return true;
+    }
+
+    transferMoney = () => {
+        
+        let data = this.getTransferDataFromUI();
+
+        if(this.isValidAmount(data))
         {
           let token = sessionStorage.getItem('Authentication-Token');
 
@@ -168,20 +188,11 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
               .then(response => response.json())
               .then( response => {
                 
-                  if(response != null)
-                  {
-                      this.setState({
-                        openModal: true,
-                        modalMessage: response
-                      });  
-                  }
-                  else
-                  {
-                    this.setState({
-                      openModal: true,
-                      modalMessage: response
-                    });   
-                  }
+                  this.setState({
+                    openModal: true,
+                    modalMessage: response
+                  }); 
+                  
                   this.handleIsButtonDisabled(); 
               });
           }
@@ -190,21 +201,9 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
     requestTransfer = () =>
     {
-      var data = {
-        amount: this.state.transferedAmount,
-        currency: this.state.currency,
-        cardNumberReciever: this.state.cardNumber,
-        details: this.state.transferDetails
-      }
+      let data = this.getTransferDataFromUI();
 
-      if(data.amount == 0)
-      {
-          this.setState({
-            openModal: true,
-            modalMessage: "Insert a proper amount to be requested!"
-          })
-      }
-      else
+      if(this.isValidAmount(data))
       {
         let token = sessionStorage.getItem('Authentication-Token');
 
@@ -224,20 +223,10 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             .then(response => response.json())
             .then( response => {
               
-                if(response != null)
-                {
-                    this.setState({
-                      openModal: true,
-                      modalMessage: response
-                    });  
-                }
-                else
-                {
-                  this.setState({
-                    openModal: true,
-                    modalMessage: response
-                  });  
-                } 
+                this.setState({
+                  openModal: true,
+                  modalMessage: response
+                });
 
                 this.handleIsButtonDisabled();
             });
@@ -265,7 +254,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                     <div className = "transfer-funds-left-container"> 
 
                             <div className = "transfer-request-toggle-container">
-                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangerequestTransferState}/></span> 
+                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangeRequestTransferState}/></span> 
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>

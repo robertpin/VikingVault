@@ -51,7 +51,7 @@ namespace VikingVault.API.Controllers
                 }
                 else
                 {
-                    return NotFound("Request to server unsuccesful.");
+                    return Ok("Request to server unsuccesful.");
                 }
             }
             catch (Exception e)

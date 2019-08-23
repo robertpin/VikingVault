@@ -9,7 +9,7 @@ interface IToggleState{
 function Toggle (props: IToggleState)
 {
     return (
-        <label className="switch">
+        <label className="common-toggle">
             <input type="checkbox" onClick = {props.toggleSwitch}/>
             <span className="slider round"> </span>
         </label>
