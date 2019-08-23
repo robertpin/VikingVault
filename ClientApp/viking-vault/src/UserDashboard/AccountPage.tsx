@@ -6,6 +6,7 @@ import {constants} from "../Resources/Constants";
 import { Redirect } from 'react-router-dom';
 import { TransactionList } from './TransactionList';
 
+
 const url = constants.baseUrl+"Accounts/";
 
 interface IAccountBalance{
@@ -127,7 +128,7 @@ class AccountPage extends React.Component<any, IAccountState>{
             <p className="card-number-large">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
             <p className="card-expiration-date">{this.state.expirationDate}</p>
             <p className="card-owner-name">{this.state.firstName} {this.state.lastName}</p>
-            <img className="card-available" src={genericCard} alt=""></img>
+            <img className="card-available" src={genericCard} alt="Available card"/>
         </div>)
     }
 

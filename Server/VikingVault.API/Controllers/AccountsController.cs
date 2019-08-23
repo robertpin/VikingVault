@@ -1,6 +1,5 @@
 ﻿using VikingVault.Services.Abstractions;
 using VikingVault.DataAccess.Models;
-using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.API.SecurityFilters;
 using VikingVault.DataAccess.Enums;
