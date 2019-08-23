@@ -189,7 +189,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     blockCard = () =>{
         const token = sessionStorage.getItem('Authentication-Token');
         if(token === null) return;
-        fetch(constants.baseUrl+"card", {
+        fetch(constants.baseUrl+"updateCard", {
             method: "PUT",
             headers: {
               'Accept': 'application/json',
