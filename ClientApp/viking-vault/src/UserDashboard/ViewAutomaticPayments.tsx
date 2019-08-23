@@ -1,88 +1,36 @@
-import  React  from 'react';
-import {constants} from "../Resources/Constants";
-import SideBar from '../Common/SideBar';
-import TopBar from '../Common/TopBar';
-const baseUrl = constants.baseUrl;
+import React from  "react";
+import './ViewAutomaticPayments.css'
+import TopBar from "../Common/TopBar";
+import SideBar from "../Common/SideBar";
+import UserIcon from "../Common/UserIcon";
+import { AutomaticPaymentList } from "./AutomaticPaymentList";
 
-interface IAutomaticPayment {
-    CompanyName: string,
-    Amount: string,
-    InitialPaymentDate: Date,
-    LastPaymentDate: Date
-}
-
-interface IAutomaticPaymentsState {
-    payments: IAutomaticPayment[]
+export interface IAutomaticPaymentsState {
+    reload: boolean;
 }
 
 class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState> {
     state = {
-        payments: []
+        reload: false
     }
 
-    getAutomaticPayments = () => {
-        let token = sessionStorage.getItem("Authentication-Token");
-        if(token === null)  {
-            return;
-        }else{
-        fetch(baseUrl+"automaticpayment",{
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': token.toString()
-            }
-        }).then(response => response.json())
-        .then(result => {
-            this.setState({
-                payments: result
-            });
-            console.log(this.state.payments);
-        })}
-    }
-
-    formatDate = (paymentDate: Date) => {
-        let date = paymentDate.toString();
-        var dateArray = date.split("T");
-        date = dateArray[0];
-        return date;
-    }
-
-    getTableRowFromPayment = (payment: IAutomaticPayment) => {
-        return <tr>
-            <td>{payment.CompanyName}</td>
-            <td>{payment.Amount}</td>
-            <td>{payment.InitialPaymentDate}</td>
-            <td>{payment.LastPaymentDate}</td>
-        </tr>;
-    }
-
-    getTableBodyFromPaymentList = () => {
-        let rows = [];
-        for(let payment of this.state.payments) {
-            rows.push(this.getTableRowFromPayment(payment));
-        }
-        return <tbody>
-            {rows}
-        </tbody>;
-    }
-
-    componentDidMount() {
-        this.getAutomaticPayments();
+    changeReloadingAutomaticPaymentsList = (reloading: boolean) => {
+        this.setState({
+            reload: reloading
+        });
     }
 
     render() {
         return <div>
             <SideBar userType="user"/>
             <TopBar/>
-            <div>
-                <h3>Automatic Payments</h3>
-                <table className="table">
-                    {() => this.getTableBodyFromPaymentList()}
-                </table>
+            <UserIcon/>
+            <div className="display-entities-container w-75 mr-auto ml-auto bg-white automatic-payments-list">
+                <h4>Your payments:</h4>
+                <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/>
             </div>
         </div>
     }
 }
 
-export {ViewAutomaticPayments}
+export {ViewAutomaticPayments};

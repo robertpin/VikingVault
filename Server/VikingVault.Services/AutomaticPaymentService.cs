@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
@@ -19,12 +20,20 @@ namespace VikingVault.Services
             _dbContext = dbContext;
         }
 
-        public List<AutomaticPaymentDTO> GetAllAutomaticPayments()
+        public List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token)
         {
+            var tokenObject = new JwtSecurityToken(token);
+            int userId = Int32.Parse(tokenObject.Payload["Id"].ToString());
+
             var automaticPaymentData = new List<AutomaticPaymentDTO>();
             try
             {
-                var payments = _dbContext.AutomaticPayments.Include(payment => payment.Company).ToList();
+                var payments = _dbContext.AutomaticPayments
+                    .Include(payment => payment.Company)
+                    .Include(payment => payment.PayingUser)
+                    .Where(payment => payment.PayingUser.Id == userId)
+                    .ToList();
+
                 foreach (var payment in payments)
                 {
                     var company = _dbContext.User.SingleOrDefault(user => user.Id == payment.Company.Id);

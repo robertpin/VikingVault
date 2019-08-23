@@ -7,6 +7,6 @@ namespace VikingVault.Services.Abstractions
 {
     public interface IAutomaticPaymentService
     {
-        List<AutomaticPaymentDTO> GetAllAutomaticPayments();
+        List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token);
     }
 }
