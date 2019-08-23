@@ -53,7 +53,7 @@ namespace VikingVault.API.Controllers
         {
             try
             {
-                return Ok(_attachCardService.UpdateCard(cardToUpdate));
+                return Ok(_cardService.UpdateCard(cardToUpdate));
             }
             catch (DatabaseException de)
             {

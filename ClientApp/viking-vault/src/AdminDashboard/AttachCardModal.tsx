@@ -126,8 +126,6 @@ class AttachCardForm extends React.Component<any, IFormState> {
             return;
         }
         const card = this.getCard(this.props.userId);
-        const token = sessionStorage.getItem('Authentication-Token');
-        if(token === null) return;
         fetch(url, {
             method: "POST",
             headers: {

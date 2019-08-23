@@ -66,7 +66,6 @@ namespace VikingVault.Services
             }
             return cardToUpdate;
         }
-    }
     
         public Card CheckUserHasCard(string token)
         {
