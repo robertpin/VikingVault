@@ -1,7 +1,6 @@
 import React from "react";
 import { constants } from "./Resources/Constants.js";
 import './AdminDashboard/AttachCardModal.css';
-import { IUserData } from "./AdminDashboard/UserData.jsx";
 
 let regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
 let currentDate = new Date();
@@ -13,7 +12,7 @@ interface IModalProps {
 }
 
 interface IAutomaticPaymentProperties {
-    companyId: number;
+    companyName: string;
     amount: string;
     initialPaymentDate: string;
     lastPaymentDate: string;
@@ -39,7 +38,7 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         super(props);
         this.state = {
             automaticPayment: {
-                companyId: 0,
+                companyName: "",
                 amount: "",
                 initialPaymentDate: "",
                 lastPaymentDate: "",
@@ -56,7 +55,6 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                 ...this.state.automaticPayment,
                 [inputName]: inputValue
             }
-            
         });
     }
 
@@ -95,7 +93,7 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         this.setState({
             card: {
                 ...this.state.automaticPayment,
-                companyId: 0,
+                companyName: "",
                 amount: "",
                 initialPaymentDate: "",
             }
@@ -107,9 +105,13 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         this.props.onModalClose(false);
     }
 
+    private getIdOfCompanyByName = (name: string) => {
+        return this.state.companies.filter(company => company.name === name)[0].id;
+    }
+
     private getAutomaticPayment = (userId : number) => {
         return {
-            companyId: this.state.automaticPayment.companyId,
+            companyId: this.getIdOfCompanyByName(this.state.automaticPayment.companyName),
             amount: this.state.automaticPayment.amount,
             initialPaymentDate: new Date(this.state.automaticPayment.initialPaymentDate),
             lastPaymentDate: new Date(2000,0,2),
@@ -144,8 +146,7 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                             errorLabel: "Internal Server Error"
                         })
                         return null;
-                    }
-                    
+                    } 
                     return response.json();
                 })
             .then( companiesData => {
@@ -155,7 +156,6 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                 })
             })
             .catch( error => this.setState({ errorLabel: "Something went wrong" }));
-
             return companies;
         }
     }
@@ -205,36 +205,25 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                         <div className="modal-dialog attach-card">
                             <div className="modal-content attach-card">
                                 <div className="modal-header attach-card">
-                                    <h5 className="heading-name attach-card">xd</h5>
+                                    <h5 className="heading-name attach-card">Automatic Payment Form</h5>
                                 </div>
-
-                                {/* <div className="form-group attach-card">
-                                    <label className="form-label attach-card">Company</label>
-                                    <input type="text" value={this.state.automaticPayment.companyId} onChange={(e) => this.handleChange(e.target.value, "companyId")} required className="form-control attach-card"></input>
-                                </div> */}
-
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Company</label>
-                                    {/* <input type="text" value={this.state.automaticPayment.companyId} onChange={(e) => this.handleChange(e.target.value, "companyId")} required className="form-control attach-card"></input> */}
-                                    <select value={this.state.automaticPayment.companyId} onChange={ (e) => this.handleChange(e.target.value, "companyId") } required className="form-control attach-card">
+                                    <select value={this.state.automaticPayment.companyName} onChange={ (e) => this.handleChange(e.target.value, "companyName") } required className="form-control attach-card">
                                         {this.state.companies.map((x) => <option key={x.id}>{x.name}</option>)}
                                     </select>
                                 </div>
-
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Amount</label>
                                     <input type="text" value={this.state.automaticPayment.amount} onChange={(e) => this.handleChange(e.target.value, "amount")} required className="form-control attach-card"></input>
                                     {this.amountMustBePositive().message !== "Ok" ? <pre className={this.amountMustBePositive().class}>{this.amountMustBePositive().message}</pre> : null}
                                 </div>
-
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Initial Payment Date</label>
                                     <input type="date" name="initialPaymentDate" value={this.state.automaticPayment.initialPaymentDate} onChange={(e) => this.handleChange(e.target.value, "initialPaymentDate")} required className="form-control attach-card"></input>
                                     { this.initialPaymentDateIsAfterCurrentDate().message !== "Ok" ? <pre className={this.initialPaymentDateIsAfterCurrentDate().class}>{this.initialPaymentDateIsAfterCurrentDate().message}</pre> : null }
                                 </div>
-
                                 {this.state.errorLabel !== "" ? <div className="alert alert-warning"> {this.state.errorLabel} </div> : null }
-                                
                                 <div className="modal-footer attach-card">
                                     <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary attach-card" : "btn btn-secondary attach-card"} onClick={() => this.sendDataAndShowResponse()}>Create Automatic Payment</button>
                                     <button type="button" className="btn btn-default attach-card" onClick={this.closeModal}>Cancel</button>

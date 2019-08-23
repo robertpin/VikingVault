@@ -28,7 +28,6 @@ namespace VikingVault.Services
                 LastPaymentDate = automaticPaymentDTO.LastPaymentDate,
                 PayingUser = _dbContext.User.Find(automaticPaymentDTO.PayingUserId)
             };
-
             try
             {
                 _dbContext.Add(automaticPaymentToBeCreated);
