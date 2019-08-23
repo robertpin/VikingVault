@@ -53,9 +53,26 @@ namespace VikingVault.Services
                         UpdateCompanyBankAccount(automaticPayment.ReceivingCompany, automaticPayment.Amount);
                         UpdatePayingUserBankAccount(automaticPayment.PayingUser, automaticPayment.Amount);
                         UpdateAutomaticPayment(automaticPayment, currentDateTime);
+                        AddPayingUserAutomaticTransaction(automaticPayment, currentDateTime);
                     }
                 }
             }
+        }
+
+        private void AddPayingUserAutomaticTransaction(AutomaticPayment automaticPayment, DateTime currentDateTime)
+        {
+            Transaction transaction = new Transaction
+            {
+                User = automaticPayment.PayingUser,
+                Type = "Payment",
+                Date = currentDateTime,
+                Currency = "Ron",
+                Amount = automaticPayment.Amount,
+                OtherParty = automaticPayment.ReceivingCompany.FirstName
+            };
+
+            _dbContext.Transactions.Add(transaction);
+            _dbContext.SaveChanges();
         }
 
         private void UpdateAutomaticPayment(AutomaticPayment automaticPayment, DateTime date)
@@ -69,7 +86,8 @@ namespace VikingVault.Services
         {
             var payingUserAccount = _dbContext.BankAccount
                                         .Include(bankAccount => bankAccount.User)
-                                       .SingleOrDefault(bankAccount => bankAccount.User.Id == payingUser.Id && bankAccount.CurrencyType.Equals("Ron"));
+                                       .SingleOrDefault(bankAccount => bankAccount.User.Id == payingUser.Id 
+                                                                                           && bankAccount.CurrencyType.Equals("Ron"));
 
             payingUserAccount.Balance -= amount;
             _dbContext.BankAccount.Update(payingUserAccount);
@@ -79,7 +97,8 @@ namespace VikingVault.Services
         {
             var companyAccount = _dbContext.BankAccount
                                         .Include(bankAccount => bankAccount.User)
-                                        .SingleOrDefault(bankAccount => bankAccount.User.Id == company.Id && bankAccount.CurrencyType.Equals("Ron"));
+                                        .SingleOrDefault(bankAccount => bankAccount.User.Id == company.Id 
+                                                                                            && bankAccount.CurrencyType.Equals("Ron"));
                                         
             companyAccount.Balance += amount;
             _dbContext.BankAccount.Update(companyAccount);
