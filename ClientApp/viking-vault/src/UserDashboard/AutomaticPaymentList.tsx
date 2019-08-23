@@ -1,10 +1,13 @@
 import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
+import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
+
 
 const baseUrl = constants.baseUrl + "AutomaticPayment";
 
 interface IAutomaticPayment {
+    id: Number,
     companyName: string,
     amount: Number,
     initialPaymentDate: Date,
@@ -85,7 +88,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
-                <td className="payments-text centered-text">Cancel element here</td>
+                <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
                 <td className="payments-text centered-text">Edit element here</td>
                 <td className="payments-text centered-text">Delete element here</td>
             </tr>;

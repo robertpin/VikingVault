@@ -25,6 +25,7 @@ interface IAccountState{
     totalBalance: number
     isPresent: boolean
     redirect: boolean
+    loading: boolean
 } 
 
 class AccountPage extends React.Component<any, IAccountState>{
@@ -44,7 +45,8 @@ class AccountPage extends React.Component<any, IAccountState>{
         },
             totalBalance: 0,
             isPresent: true,
-            redirect:false
+            redirect:false,
+            loading:false
         }
     }
     
@@ -58,7 +60,8 @@ class AccountPage extends React.Component<any, IAccountState>{
                     totalBalance: this.state.accountsBalances.ronBalance + 
                     (this.state.accountsBalances.eurBalance/data.rates.EUR) + 
                     (this.state.accountsBalances.usdBalance/data.rates.USD) + 
-                    (this.state.accountsBalances.yenBalance/data.rates.JPY)
+                    (this.state.accountsBalances.yenBalance/data.rates.JPY),
+                    loading: false
                 })
             }
         })
@@ -74,6 +77,9 @@ class AccountPage extends React.Component<any, IAccountState>{
         }
         else
         {
+            this.setState({
+                loading:true
+            })
             setInterval(this.updateExchangingRates, constants.ratesRefreshInterval);
             fetch(url, {
                 method:"GET",
@@ -142,7 +148,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     accountsInformation(){
         return <div>  
             <div className="balance-container">
-                <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
+                <p className="balance-header">RON <span className="balance-value">{this.state.loading ? "Loading..." : this.state.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
             </div>
             <br/>
