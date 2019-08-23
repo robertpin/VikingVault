@@ -4,7 +4,7 @@ import SideBar from '../Common/SideBar';
 import TopBar from '../Common/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
 import UserIcon from '../Common/UserIcon';
-import {constants} from '../Resources/Constants';
+import {constants, currencyEnum} from '../Resources/Constants';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
 const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;
@@ -31,8 +31,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            fromCurrency: "EUR",
-            toCurrency: "EUR",
+            fromCurrency: currencyEnum.eur,
+            toCurrency: currencyEnum.eur,
             currencyToRon: 0.00,
             currencyToEur: 0.00,
             currencyToUsd: 0.00,
@@ -73,7 +73,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             loading: true
         });
         var base = this.state.fromCurrency;
-        if(base === "YEN") {
+        if(base === currencyEnum.yen) {
             base = "JPY"
         }
         fetch("https://api.exchangeratesapi.io/latest?base="+base)
@@ -133,22 +133,22 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             })
             .then(response => response.json())
             .then(result => {
-                if(this.state.fromCurrency === "RON") {
+                if(this.state.fromCurrency === currencyEnum.ron) {
                     this.setState({
                         availableAmountFromCurrency: result[0].balance
                     });
                 }
-                if(this.state.fromCurrency === "EUR") {
+                if(this.state.fromCurrency === currencyEnum.eur) {
                     this.setState({
                         availableAmountFromCurrency: result[1].balance
                     });
                 }
-                if(this.state.fromCurrency === "USD") {
+                if(this.state.fromCurrency === currencyEnum.usd) {
                     this.setState({
                         availableAmountFromCurrency: result[2].balance
                     });
                 }
-                if(this.state.fromCurrency === "YEN") {
+                if(this.state.fromCurrency === currencyEnum.yen) {
                     this.setState({
                         availableAmountFromCurrency: result[3].balance
                     });
@@ -170,22 +170,22 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             })
             .then(response => response.json())
             .then(result => {
-                if(this.state.toCurrency === "RON") {
+                if(this.state.toCurrency === currencyEnum.ron) {
                     this.setState({
                         availableAmountToCurrency: result[0].balance
                     });
                 }
-                if(this.state.toCurrency === "EUR") {
+                if(this.state.toCurrency === currencyEnum.eur) {
                     this.setState({
                         availableAmountToCurrency: result[1].balance
                     });
                 }
-                if(this.state.toCurrency === "USD") {
+                if(this.state.toCurrency === currencyEnum.usd) {
                     this.setState({
                         availableAmountToCurrency: result[2].balance
                     });
                 }
-                if(this.state.toCurrency === "YEN") {
+                if(this.state.toCurrency === currencyEnum.yen) {
                     this.setState({
                         availableAmountToCurrency: result[3].balance
                     });
@@ -196,16 +196,16 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
 
     getCurrencyExchangeRate = () => {
         var value = "0";
-        if(this.state.toCurrency === "RON") {
+        if(this.state.toCurrency === currencyEnum.ron) {
             value = this.state.currencyToRon.toString();
         }
-        if(this.state.toCurrency === "EUR") {
+        if(this.state.toCurrency === currencyEnum.eur) {
             value = this.state.currencyToEur.toString();
         }
-        if(this.state.toCurrency === "USD") {
+        if(this.state.toCurrency === currencyEnum.usd) {
             value = this.state.currencyToUsd.toString();
         }
-        if(this.state.toCurrency === "YEN") {
+        if(this.state.toCurrency === currencyEnum.yen) {
             value = this.state.currencyToYen.toString();
         }
         return Number(value);
@@ -386,25 +386,25 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                                             <th className="table-text padding-design">Currency</th>
                                             <th className="table-text padding-design">Exchange Rate</th>
                                         </tr>
-                                        {this.state.fromCurrency === "RON" ? null : 
+                                        {this.state.fromCurrency === currencyEnum.ron ? null : 
                                             <tr className="padding-design">
                                                 <td className="currency-decoration padding-design font-750">{`RON`}</td>
                                                 <td className="table-design padding-design font-750">{this.state.loading? "Loading.." : `${this.state.currencyToRon}`}</td>
                                             </tr>
                                         }
-                                        {this.state.fromCurrency === "EUR" ? null : 
+                                        {this.state.fromCurrency === currencyEnum.eur ? null : 
                                             <tr className="padding-design">
                                                 <td className="currency-decoration padding-design font-750">{`EUR`}</td>
                                                 <td className="table-design padding-design font-750">{this.state.loading? "Loading.." : `${this.state.currencyToEur}`}</td>
                                             </tr>
                                         }
-                                        {this.state.fromCurrency === "USD" ? null : 
+                                        {this.state.fromCurrency === currencyEnum.usd ? null : 
                                             <tr className="padding-design">
                                                 <td className="currency-decoration padding-design font-750">{`USD`}</td>
                                                 <td className="table-design padding-design font-750">{this.state.loading? "Loading.." : `${this.state.currencyToUsd}`}</td>
                                             </tr>
                                         }
-                                        {this.state.fromCurrency === "YEN" ? null : 
+                                        {this.state.fromCurrency === currencyEnum.yen ? null : 
                                             <tr className="padding-design">
                                                 <td className="currency-decoration padding-design font-750">{`YEN`}</td>
                                                 <td className="table-design padding-design font-750">{this.state.loading? "Loading.." : `${this.state.currencyToYen}`}</td>
