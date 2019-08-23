@@ -2,7 +2,7 @@ import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 
-const baseUrl = constants.baseUrl;
+const baseUrl = constants.baseUrl + "automaticpayment";
 
 interface IAutomaticPayment {
     companyName: string,
@@ -33,7 +33,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             return;
         }
         else {
-        fetch(baseUrl + "automaticpayment", {
+        fetch(baseUrl, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -80,16 +80,16 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
 
     render() {
         return <div className="m-4 w-auto">
-            {this.state.isThePaymentListEmpty === true?
+            {this.state.isThePaymentListEmpty?
                 <label className="payments-text centered-text">{this.state.emptyListMessage}</label> :
-                <table className="table table-striped">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col" className="centered-text">Company</th>
                             <th scope="col" className="centered-text">Amount</th>
                             <th scope="col" className="centered-text">Initial Payment Date</th>
                             <th scope="col" className="centered-text">Last Payment Date</th>
-                            <th></th><th scope="col" className="centered-text">Options</th><th></th>
+                            <th colSpan={3} scope="col" className="centered-text">Options</th>
                         </tr>
                     </thead>
                     <tbody>
