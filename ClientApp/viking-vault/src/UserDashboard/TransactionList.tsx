@@ -85,6 +85,13 @@ class TransactionList extends React.Component<any, IState> {
         return shoppingCart;
     }
 
+    private formatDetails(tranasction: ITransaction) {
+        if(tranasction.type.toLowerCase() === "exchange") {
+            return "Exchange";
+        }
+        return tranasction.details;
+    }
+
     private getTableRowFromTransaction(tran: ITransaction) {
         return <tr>
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"} /></td>
@@ -92,6 +99,7 @@ class TransactionList extends React.Component<any, IState> {
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
             <td className="font-weight-bold text-right">{tran.amount>0? `+${tran.amount}` : tran.amount}</td>
+            <td className="details">{this.formatDetails(tran)}</td>
         </tr>
     }
 
@@ -106,7 +114,7 @@ class TransactionList extends React.Component<any, IState> {
     render() {
         return <div className="transactions">
             <h5 className="font-weight-bold">Transactions</h5>
-            <table className="table">
+            <table className="table table-hover">
                 {this.getTableBodyFromTransactionList()}
             </table>
         </div>
