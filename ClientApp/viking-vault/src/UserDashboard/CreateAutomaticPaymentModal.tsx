@@ -1,6 +1,6 @@
 import React from "react";
-import { constants } from "./Resources/Constants.js";
-import './AdminDashboard/AttachCardModal.css';
+import { constants } from "../Resources/Constants.js";
+import '../AdminDashboard/AttachCardModal.css';
 
 let regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
 let currentDate = new Date();
@@ -8,7 +8,6 @@ let currentDate = new Date();
 interface IModalProps {
     open: boolean;
     onModalClose: any;
-    userId: number;
 }
 
 interface IAutomaticPaymentProperties {
@@ -33,7 +32,7 @@ interface IFormState {
     companies: ICompanyData[];
 }
 
-class AutomaticPaymentForm extends React.Component<any, IFormState> {
+class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     constructor(props: IModalProps) {
         super(props);
         this.state = {
@@ -56,6 +55,18 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                 [inputName]: inputValue
             }
         });
+    }
+
+    private isCompanySelected = () => {
+        if(this.state.automaticPayment.companyName !== "")
+            return  {
+                message: "Ok",
+                class: "alert alert-success"
+            }
+        return  {
+            message: "A company must be selected!",
+            class: "alert alert-info"
+        }
     }
 
     private amountMustBePositive = () => {
@@ -84,14 +95,14 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
 
     private mandatoryFieldsCompletedCorrectly = () => {
         let val = false;
-        const validationFunctions = [this.amountMustBePositive, this.initialPaymentDateIsAfterCurrentDate];
+        const validationFunctions = [this.isCompanySelected, this.amountMustBePositive, this.initialPaymentDateIsAfterCurrentDate];
         val = validationFunctions.every(functionItem => functionItem().message === "Ok");
         return val;
     }
 
     private resetInputValues = () => {
         this.setState({
-            card: {
+            automaticPayment: {
                 ...this.state.automaticPayment,
                 companyName: "",
                 amount: "",
@@ -109,18 +120,17 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         return this.state.companies.filter(company => company.name === name)[0].id;
     }
 
-    private getAutomaticPayment = (userId : number) => {
+    private getAutomaticPayment = () => {
         return {
             companyId: this.getIdOfCompanyByName(this.state.automaticPayment.companyName),
+            companyName: this.state.automaticPayment.companyName,
             amount: this.state.automaticPayment.amount,
             initialPaymentDate: new Date(this.state.automaticPayment.initialPaymentDate),
             lastPaymentDate: new Date(2000,0,2),
-            payingUserId: userId,
         };
     }
 
-    getAllCompanies ()
-    {
+    getAllCompanies = () => {
         var companies;
         var token = sessionStorage.getItem("Authentication-Token");
         if(token === null)
@@ -165,36 +175,42 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
         this.getAllCompanies();
     }
 
-    private sendDataAndShowResponse = async () => {
-        const automaticPayment = this.getAutomaticPayment(this.props.userId);
-        console.log(automaticPayment);
-        fetch(constants.baseUrl+"automaticPayment", {
-            method: "POST",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(automaticPayment)
-        })
-        .then(response => {
-            if(response.status === 500) {
-              this.setState({
-                errorLabel: "Error. Please try again later!"
-              });
-              setTimeout(() => {
+    private sendDataAndShowResponse = () => {
+        const token = sessionStorage.getItem("Authentication-Token");
+        if(token === null) {
+            return;
+        }
+        else {
+            const automaticPayment = this.getAutomaticPayment();
+            fetch(constants.baseUrl+"automaticPayment", {
+                method: "POST",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'x-access-token': token,
+                },
+                body: JSON.stringify(automaticPayment)
+            })
+            .then(response => {
+                if(response.status === 500) {
                 this.setState({
-                  errorLabel: ""
+                    errorLabel: "Error. Please try again later!"
                 });
-              }, 2500);
-              return null;
-            }
-            return response.json();
-          })
-          .then(result => {
-            if (this.state.errorLabel === "") {
-                this.closeModal()
-            }
-    });
+                setTimeout(() => {
+                    this.setState({
+                    errorLabel: ""
+                    });
+                }, 2500);
+                return null;
+                }
+                return response.json();
+            })
+            .then(result => {
+                if (this.state.errorLabel === "") {
+                    this.closeModal()
+                }
+        });
+    }
 }
 
     render() {
@@ -210,8 +226,10 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Company</label>
                                     <select value={this.state.automaticPayment.companyName} onChange={ (e) => this.handleChange(e.target.value, "companyName") } required className="form-control attach-card">
+                                        <option key="" disabled={true} hidden={true}> </option>
                                         {this.state.companies.map((x) => <option key={x.id}>{x.name}</option>)}
                                     </select>
+                                    {this.isCompanySelected().message !== "Ok" ? <pre className={this.isCompanySelected().class}>{this.isCompanySelected().message}</pre> : null}
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Amount</label>
@@ -228,7 +246,6 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
                                     <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary attach-card" : "btn btn-secondary attach-card"} onClick={() => this.sendDataAndShowResponse()}>Create Automatic Payment</button>
                                     <button type="button" className="btn btn-default attach-card" onClick={this.closeModal}>Cancel</button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -238,4 +255,4 @@ class AutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 }
 
-export {AutomaticPaymentForm}
+export {CreateAutomaticPaymentForm}

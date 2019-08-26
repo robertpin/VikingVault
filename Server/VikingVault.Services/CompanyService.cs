@@ -92,5 +92,19 @@ namespace VikingVault.Services
 
             return companiesData;
         }
+
+        public void DeleteCompany(int companyId)
+        {
+            try
+            {
+                var companyToDelete = _dbContext.User.SingleOrDefault(company => company.Id == companyId);
+                _dbContext.Remove(companyToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw new CompanyServiceException();
+            }
+        }
     }
 }

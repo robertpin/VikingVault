@@ -14,11 +14,18 @@ namespace VikingVault.API.Controllers
     [ApiController]
     public class AutomaticPaymentController : ControllerBase
     {
-        private IAutomaticPaymentService _automaticPaymentService;
+        private readonly IAutomaticPaymentService _automaticPaymentService;
 
         public AutomaticPaymentController(IAutomaticPaymentService automaticPaymentService)
         {
             _automaticPaymentService = automaticPaymentService;
+        }
+        
+        [HttpGet]
+        public List<AutomaticPaymentDTO> GetAllAutomaticPayments()
+        {
+            var token = Request.Headers["x-access-token"];
+            return _automaticPaymentService.GetAllAutomaticPayments(token);
         }
 
         [HttpPost]
@@ -26,7 +33,8 @@ namespace VikingVault.API.Controllers
         {
             try
             {
-                return Ok(_automaticPaymentService.CreateAutomaticPayment(automaticPayment));
+                var token = Request.Headers["x-access-token"];
+                return Ok(_automaticPaymentService.CreateAutomaticPayment(automaticPayment, token));
             }
             catch (AutomaticPaymentServiceException apse)
             {

@@ -11,10 +11,11 @@ namespace VikingVault.DataAccess.Models
         [Required]
         public int CompanyId { get; set; }
         [Required]
+        public string CompanyName { get; set; }
+        [Required]
         public float Amount { get; set; }
         [Required]
         public DateTime InitialPaymentDate { get; set; }
         public DateTime LastPaymentDate { get; set; }
-        public int PayingUserId { get; set; }
     }
 }
