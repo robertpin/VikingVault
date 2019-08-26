@@ -4,7 +4,7 @@ import './ViewAutomaticPayments.css'
 import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
 
 
-const baseUrl = constants.baseUrl + "AutomaticPayment";
+const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
 
 interface IAutomaticPayment {
     id: Number,
@@ -36,7 +36,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             return;
         }
         else {
-        fetch(baseUrl, {
+        fetch(automaticPaymentBaseUrl, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',

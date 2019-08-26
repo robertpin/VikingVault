@@ -3,7 +3,7 @@ import React from 'react';
 import {constants} from "../Resources/Constants";
 import './toggle.css';
 
-const API_URL = `${constants.baseUrl}`;
+const paymentTogglingURL = `${constants.baseUrl}PaymentToggling/`;
 
 interface IPaymentToggleProps{
   paymentId: Number
@@ -22,7 +22,7 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
     this.setState({
       checked: e.target.checked
     })
-    fetch(API_URL+"PaymentToggling/"+this.props.paymentId, {
+    fetch(paymentTogglingURL+this.props.paymentId, {
       method: "PUT",
       headers: {
       'Accept': 'application/json',
@@ -33,7 +33,7 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
   }
 
   componentDidMount(){
-    fetch(API_URL+"PaymentToggling/"+this.props.paymentId, {
+    fetch(paymentTogglingURL+this.props.paymentId, {
       method: "GET",
       headers: {
       'Accept': 'application/json',
@@ -46,7 +46,6 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
         }                    
         return response.json();
       }).then(responseData =>{
-        console.log(responseData)
             this.setState({
                   checked: responseData
             })

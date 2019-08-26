@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.Services
 {
@@ -31,7 +32,7 @@ namespace VikingVault.Services
             }
             catch (Exception e)
             {
-                return null;
+                throw new AutomaticPaymentException();
             }
         }
     }

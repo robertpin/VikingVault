@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.Services;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
@@ -24,10 +25,15 @@ namespace VikingVault.API.Controllers
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Boolean> Get(int id)
         {
-            bool? isPaymentEnabled = _paymentTogglingService.IsPaymentEnabled(id);
-            if (isPaymentEnabled == null)
+            try
+            {
+                bool? isPaymentEnabled = _paymentTogglingService.IsPaymentEnabled(id);
+                return Ok(isPaymentEnabled);
+            }
+            catch (AutomaticPaymentException e)
+            {
                 return StatusCode(500, "Internal Server Error");
-            return Ok(isPaymentEnabled);
+            }
         }
         
         [HttpPut("{id}")]
