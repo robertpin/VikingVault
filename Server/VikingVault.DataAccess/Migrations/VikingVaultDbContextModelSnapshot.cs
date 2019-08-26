@@ -297,12 +297,12 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("VikingVault.DataAccess.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()

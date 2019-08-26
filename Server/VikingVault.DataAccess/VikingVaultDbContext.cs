@@ -66,12 +66,12 @@ namespace VikingVault.DataAccess
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Sender)
                 .WithMany()
-                .Metadata.DeleteBehavior = DeleteBehavior.SetNull;
+                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Receiver)
                 .WithMany()
-                .Metadata.DeleteBehavior = DeleteBehavior.SetNull;
+                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
 
             modelBuilder.Entity<User>()
                 .HasAlternateKey(c => c.Email)

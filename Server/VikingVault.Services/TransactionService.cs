@@ -52,7 +52,8 @@ namespace VikingVault.Services
                     Currency = transferData.Currency,
                     Date = DateTime.Now,
                     Amount = -transferData.AmountSent,
-                    OtherParty = reciever.FirstName + reciever.LastName
+                    Sender = transferData.Sender,
+                    Receiver = reciever
                 };
 
                 Transaction recieverTransaction = new Transaction
@@ -62,7 +63,8 @@ namespace VikingVault.Services
                     Currency = transferData.Currency,
                     Date = DateTime.Now,
                     Amount = transferData.AmountSent,
-                    OtherParty = transferData.Sender.FirstName + transferData.Sender.LastName
+                    Sender = transferData.Sender,
+                    Receiver = reciever
                 };
 
                 AddTransaction(senderTransaction);
