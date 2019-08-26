@@ -99,7 +99,9 @@ class Notifications extends React.Component<any, INotificationState> {
     returnTableRows = () => {
         return this.state.notifications.map(notification => {
             return <tr key={notification.id}>
-                <td className="notification-text">{notification.text}</td>
+                <td className="notification-text">
+                    <span className={notification.read? "" : "font-weight-bold"}>{notification.text}</span>
+                </td>
                 <td>
                     <button className="btn btn-primary" onClick={() => {this.changeNotificationState(notification);}}>
                         Mark as {notification.read? "unread" : "read"}
