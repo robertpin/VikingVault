@@ -36,7 +36,9 @@ namespace VikingVault.Services
             {
                 Card card = _dbContext.Cards.SingleOrDefault(c => c.CardNumber == cardNumber);
                 if (card == null)
+                {
                     return null;
+                }
 
                 return card.UserId;
             }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {constants} from "../Resources/Constants";
+import {constants, currencyEnum} from "../Resources/Constants";
 import { Redirect } from 'react-router-dom';
 import SideBar from '../Common/SideBar';
 import TopBar from '../Common/TopBar';
@@ -12,6 +12,12 @@ import Toggle from '../Common/Toggle';
 
 const transferUrl = `${constants.baseUrl}transferFunds`;
 const requestUrl = `${constants.baseUrl}transferRequests`;
+const currencyMap = {
+  [currencyEnum.ron]: 0,
+  [currencyEnum.eur]: 1,
+  [currencyEnum.usd]: 2,
+  [currencyEnum.yen]: 3
+};
 
 interface ITransferFundsState{
     transferedAmount: number;
@@ -56,8 +62,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       this.getTotalBalance();
     }
 
-    setAmountToBeTransfered = (e : any) =>
-    {
+    setAmountToBeTransfered = (e : any) => {
         if(Number (e.target.value) <= this.state.totalBalance) {
           this.setState({
             transferedAmount: e.target.value
@@ -65,15 +70,13 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         }
     }
 
-    handleChangedCardNumber = (e : any) =>
-    {
+    handleChangedCardNumber = (e : any) => {
         this.setState({
             cardNumber: e.target.value
         })
     }
 
-    handleChangedTransferDetails = (e : any) =>
-    {
+    handleChangedTransferDetails = (e : any) => {
         this.setState({
             transferDetails: e.target.value
         })
@@ -86,16 +89,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       this.getTotalBalance();
     }
 
-    handleChangeRequestTransferState = () =>
-    {
+    handleChangeRequestTransferState = () => {
       this.setState((oldState: ITransferFundsState) => ({
         requestTransfer: !oldState.requestTransfer
       }));
         
     }
 
-    handleIsButtonDisabled = () =>
-    {
+    handleIsButtonDisabled = () => {
         this.setState((oldState: ITransferFundsState) => ({
           isButtonDisabled: !oldState.isButtonDisabled
         }));
@@ -114,33 +115,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             })
             .then(response => response.json())
             .then(result => {
-                if(this.state.currency === "RON") {
-                    this.setState({
-                        totalBalance: result[0].balance.toFixed(2)
-                    });
-                }
-                if(this.state.currency === "EUR") {
-                    this.setState({
-                        totalBalance: result[1].balance.toFixed(2)
-                    });
-                }
-                if(this.state.currency === "USD") {
-                    this.setState({
-                        totalBalance: result[2].balance.toFixed(2)
-                    });
-                }
-                if(this.state.currency === "YEN") {
-                    this.setState({
-                        totalBalance: result[3].balance.toFixed(2)
-                    });
-
-                }
+              this.setState({
+                totalBalance: result[currencyMap[this.state.currency]].balance
+              });
             });
         }
     }
 
-    private getTransferDataFromUI = ():ITransferDataDTO =>
-    {
+    private getTransferDataFromUI = ():ITransferDataDTO => {
         return {
           amount: this.state.transferedAmount,
           cardNumberReciever: this.state.cardNumber,
@@ -149,10 +131,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         };  
     }
 
-    private isValidAmount = (data: ITransferDataDTO) =>
-    {
-      if(data.amount == 0)
-      {
+    private isValidAmount = (data: ITransferDataDTO) => {
+      if(data.amount == 0){
           this.setState({
             openModal: true,
             modalMessage: "Insert a proper amount to be sent!"
@@ -168,12 +148,12 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         
         let data = this.getTransferDataFromUI();
 
-        if(this.isValidAmount(data))
-        {
+        if(this.isValidAmount(data)) {
+
           let token = sessionStorage.getItem('Authentication-Token');
 
-          if(token !== null)
-          {
+          if(token !== null) {
+
             this.handleIsButtonDisabled();
 
             fetch(transferUrl, {
@@ -203,8 +183,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     {
       let data = this.getTransferDataFromUI();
 
-      if(this.isValidAmount(data))
-      {
+      if(this.isValidAmount(data)) {
+
         let token = sessionStorage.getItem('Authentication-Token');
 
          if(token !== null)

@@ -6,8 +6,7 @@ interface IToggleState{
     toggleSwitch: any
 }
 
-function Toggle (props: IToggleState)
-{
+function Toggle (props: IToggleState){
     return (
         <label className="common-toggle">
             <input type="checkbox" onClick = {props.toggleSwitch}/>

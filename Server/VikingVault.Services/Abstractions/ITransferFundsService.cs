@@ -7,6 +7,6 @@ namespace VikingVault.Services.Abstractions
 {
     public interface ITransferFundsService
     {
-        bool? TransferFunds(TransferFundsModel transferData);
+        void TransferFunds(TransferFundsModel transferData);
     }
 }

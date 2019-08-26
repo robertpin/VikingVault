@@ -55,7 +55,7 @@ namespace VikingVault.Services
             return oldBankAccount;
         }
 
-        public BankAccount AddMoneyToAccount(User user, string currency, float amountAdded)
+        public BankAccount AddMoneyToUser(User user, string currency, float amountAdded)
         {
             var updatedAccount = new UpdateBankAccountModel
             {
@@ -67,7 +67,7 @@ namespace VikingVault.Services
             return ChangeBalance(updatedAccount);
         }
 
-        public BankAccount RetractMoneyFromAccount(User user, string currency, float amountSubstracted)
+        public BankAccount RetractMoneyFromUser(User user, string currency, float amountSubstracted)
         {
             var updatedAccount = new UpdateBankAccountModel
             {
@@ -78,8 +78,10 @@ namespace VikingVault.Services
 
             BankAccount currentAccount = _dbContext.BankAccount.SingleOrDefault(account => account.CurrencyType == updatedAccount.CurrencyType && account.User == user);
 
-            if ( (currentAccount.Balance + updatedAccount.Amount) < 0 )
+            if ((currentAccount.Balance + updatedAccount.Amount) < 0)
+            {
                 throw new TransactionException("Not enough funds to complete the transaction!");
+            }
 
             return ChangeBalance(updatedAccount);
         }

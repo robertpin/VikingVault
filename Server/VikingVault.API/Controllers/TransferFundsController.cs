@@ -42,17 +42,17 @@ namespace VikingVault.API.Controllers
                 }
                 else
                 {
-                    return NotFound("Request to server unsuccesful.");
+                    return Ok("Not able to send data to the server");
                 }
             }
             catch (Exception e)
             {
-                if (e is NoCardAttachedToUserException || e is TransactionException || e is DatabaseException)
+                if (e is NoCardAttachedToUserException || e is TransactionException || e is TransferFundsException || e is DatabaseException)
                 {
-                    return NotFound(e.Message);
+                    return Ok(e.Message);
                 }
 
-                return NotFound("Unknown error.");
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

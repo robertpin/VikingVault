@@ -7,6 +7,7 @@ using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 using VikingVault.Services.Exceptions.CardException;
 
 namespace VikingVault.Services
@@ -28,38 +29,43 @@ namespace VikingVault.Services
             _userService = userService;
         }
 
-        public bool? TransferFunds(TransferFundsModel transferData)
+        public void TransferFunds(TransferFundsModel transferData)
         {
             int idSender = transferData.Sender.Id;
-            
-            if (_userCardService.HasCardAttached(idSender))
+            int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+
+            if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
             {
-                int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+                _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
 
-                if (idSender != idReciever)
-                {
-                    if (idReciever != null && _userCardService.HasCardAttached((int)idReciever))
-                    {
-                        _bankAccountService.RetractMoneyFromAccount(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                        _bankAccountService.AddMoneyToAccount(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
-
-                        _transactionService.AddTransactionsForTransferFunds(transferData);
-                        return true;
-                    }
-                    else
-                    {
-                        throw new NoCardAttachedToUserException("No user found with the specified card number!");
-                    }
-                }
-                else
-                {
-                    throw new NoCardAttachedToUserException("You can't transfer money to yourself!");
-                }
+                _transactionService.AddTransactionsForTransferFunds(transferData);          
             }
-            else
+        }
+
+        private bool AreDifferentUsers(int idSender, int idReciever)
+        {
+             if (idSender == idReciever)
+             {
+                throw new TransferFundsException("You can't transfer money to yourself!");
+             }
+
+            return true;
+        }
+
+        private bool UsersHaveCardsAttached(int? idSender, int? idReciever)
+        {
+            if (idSender == null || _userCardService.HasCardAttached((int)idSender) == false)
             {
                 throw new NoCardAttachedToUserException("You can't complete the transfer without having a card.");
             }
+
+            if(idReciever == null || _userCardService.HasCardAttached((int)idReciever) == false)
+            {
+                throw new NoCardAttachedToUserException("No user found with the specified card number!");
+            }
+
+            return true;
         }
     }
 }

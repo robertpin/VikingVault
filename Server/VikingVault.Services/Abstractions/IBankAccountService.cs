@@ -11,7 +11,7 @@ namespace VikingVault.Services.Abstractions
         List<BankAccount> GetBankAccounts(string token);
         void UpdateBankAccount();
         BankAccount ChangeBalance(UpdateBankAccountModel updatedBankAccount);
-        BankAccount AddMoneyToAccount(User user, string currency, float amountToBeAdded);
-        BankAccount RetractMoneyFromAccount(User user, string currency, float amountToBeSubstracted);
+        BankAccount AddMoneyToUser(User user, string currency, float amountToBeAdded);
+        BankAccount RetractMoneyFromUser(User user, string currency, float amountToBeSubstracted);
     }
 }
