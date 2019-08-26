@@ -5,9 +5,10 @@ using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IAutomaticPaymentService
+    public interface ICardService
     {
-        List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token);
-		void DeleteAutomaticPayment(int id);
+        Card AttachCard(Card card);
+        Card CheckUserHasCard(string token);
+        bool CheckCardIsBlocked(string token);
     }
 }

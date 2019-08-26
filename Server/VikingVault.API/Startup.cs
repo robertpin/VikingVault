@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,7 +53,11 @@ namespace VikingVault.API
             services.AddScoped<IBankAccountService, BankAccountService>();
             services.AddScoped<IExchangeService, ExchangeService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IAttachCardService, AttachCardService>();
+            services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
+            services.AddScoped<ICardService, CardService>();
+            services.AddHostedService<TimedPaymentService>();
+            services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
         }
 

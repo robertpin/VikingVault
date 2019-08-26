@@ -5,17 +5,15 @@ using System.Text;
 
 namespace VikingVault.DataAccess.Models
 {
-    public class AutomaticPayment
+    public class AutomaticPaymentDTO
     {
-        public int Id { get; set; }
         [Required]
-        public User ReceivingCompany { get; set; }
+        public string CompanyName { get; set; }
         [Required]
         public float Amount { get; set; }
         [Required]
         public DateTime InitialPaymentDate { get; set; }
+        [Required]
         public DateTime LastPaymentDate { get; set; }
-        public User PayingUser { get; set; }
-        public bool IsEnabled { get; set; }
     }
 }

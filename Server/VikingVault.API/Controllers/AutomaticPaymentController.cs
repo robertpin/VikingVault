@@ -20,6 +20,13 @@ namespace VikingVault.API.Controllers
             _automaticPaymentService = automaticPaymentService;
         }
 
+        [HttpGet]
+        public List<AutomaticPaymentDTO> GetAllAutomaticPayments()
+        {
+            var token = Request.Headers["x-access-token"];
+            return _automaticPaymentService.GetAllAutomaticPayments(token);
+        }
+
         [HttpDelete]
         public ActionResult Delete(AutomaticPaymentId automaticPaymentToDelete)
         {
