@@ -21,6 +21,7 @@ namespace VikingVault.DataAccess
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<AutomaticPayment> AutomaticPayments { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<TransferRequest> TransferRequests { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         
         public void SeedAdmin(ModelBuilder modelBuilder)
