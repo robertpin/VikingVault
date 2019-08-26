@@ -159,9 +159,9 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Details");
 
-                    b.Property<int?>("ReceiverId");
+                    b.Property<int>("ReceiverId");
 
-                    b.Property<int?>("SenderId");
+                    b.Property<int>("SenderId");
 
                     b.Property<string>("Type");
 
@@ -270,11 +270,13 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     b.HasOne("VikingVault.DataAccess.Models.User", "Receiver")
                         .WithMany()
-                        .HasForeignKey("ReceiverId");
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("VikingVault.DataAccess.Models.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()

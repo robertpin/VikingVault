@@ -43,6 +43,8 @@
     <Compile Remove="Migrations\20190821134529_automaticPaymentsAddedToPreviousMigration.cs" />
     <Compile Remove="Migrations\20190823102752_ModifiedTransactionModel.cs" />
     <Compile Remove="Migrations\20190823121631_CreatedNotificationModel.cs" />
+    <Compile Remove="Migrations\20190826083956_ModifiedTransaction.cs" />
+    <Compile Remove="Migrations\20190826090009_ModifiedTransactionRequired.cs" />
   </ItemGroup>
 
   <ItemGroup>
