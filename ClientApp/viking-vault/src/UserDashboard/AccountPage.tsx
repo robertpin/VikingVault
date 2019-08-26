@@ -30,7 +30,6 @@ interface IAccountState{
     totalBalance: number
     isPresent: boolean
     isCardBlocked: boolean
-    redirect: boolean
 } 
 
 interface IAccountPageState{
@@ -64,7 +63,7 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                 isCardBlocked : false
         },
             openBlockCardResponseModal: false,
-            blockCardResponseMessage: ""
+            blockCardResponseMessage: "",
             redirect:false,
             loading:false
         }
