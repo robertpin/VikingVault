@@ -25,6 +25,7 @@ interface IAccountState{
     totalBalance: number
     isPresent: boolean
     redirect: boolean
+    loading: boolean
 } 
 
 class AccountPage extends React.Component<any, IAccountState>{
@@ -44,7 +45,8 @@ class AccountPage extends React.Component<any, IAccountState>{
         },
             totalBalance: 0,
             isPresent: true,
-            redirect:false
+            redirect:false,
+            loading:false
         }
     }
     
@@ -58,7 +60,8 @@ class AccountPage extends React.Component<any, IAccountState>{
                     totalBalance: this.state.accountsBalances.ronBalance + 
                     (this.state.accountsBalances.eurBalance/data.rates.EUR) + 
                     (this.state.accountsBalances.usdBalance/data.rates.USD) + 
-                    (this.state.accountsBalances.yenBalance/data.rates.JPY)
+                    (this.state.accountsBalances.yenBalance/data.rates.JPY),
+                    loading: false
                 })
             }
         })
@@ -72,8 +75,10 @@ class AccountPage extends React.Component<any, IAccountState>{
                 redirect:true
             })
         }
-        else
-        {
+        else{
+            this.setState({
+                loading:true
+            })
             setInterval(this.updateExchangingRates, constants.ratesRefreshInterval);
             fetch(url, {
                 method:"GET",
@@ -142,18 +147,18 @@ class AccountPage extends React.Component<any, IAccountState>{
     accountsInformation(){
         return <div>  
             <div className="balance-container">
-                <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
+                <p className="balance-header">RON <span className="balance-value">{this.state.loading ? "Loading..." : this.state.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
             </div>
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountsBalances.ronBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountsBalances.usdBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance.toFixed(2)}</span> </p> 
             </div>
-            <br/><br/>
+            <br/>
             <TransactionList />
         </div>
     }

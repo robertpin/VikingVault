@@ -86,7 +86,7 @@ class TransactionList extends React.Component<any, IState> {
 
     private getTableRowFromTransaction(tran: ITransaction) {
         return <tr>
-            <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"} /></td>
+            <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"}/></td>
             <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.amount>0? `+${tran.currency.toUpperCase()}` : `-${tran.currency.toUpperCase()}`}</td>
