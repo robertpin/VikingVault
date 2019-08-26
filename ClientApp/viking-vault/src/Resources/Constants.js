@@ -5,4 +5,11 @@ const constants = {
     ratesRefreshInterval: 2500
 }
 
-export {constants};
+const currencyEnum = {
+    ron: "RON",
+    eur: "EUR",
+    usd: "USD",
+    yen: "YEN"
+}
+
+export {constants, currencyEnum};
