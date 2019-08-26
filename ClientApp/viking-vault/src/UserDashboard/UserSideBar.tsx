@@ -13,25 +13,25 @@ function UserSideBar(props: ISideBarProps) {
     return <React.Fragment>
         <Link className="redirect-symbols" to="/transfer"> 
             <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={transfer}></img>
+                <img className="menu-icon" src={transfer} alt="Transfer" title="Transfer"></img>
                 <span className = {spanVisibility}> Transfer </span>
             </div>
         </Link>
         <Link className="redirect-symbols" to="/exchange">
             <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={moneyExchange}></img>
+                <img className="menu-icon" src={moneyExchange} alt="Exchange" title="Exchange"></img>
                 <span className = {spanVisibility}> Exchange </span>
             </div>
         </Link>
         <Link className="redirect-symbols" to="/automatic-debit">
             <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={paymentMethod}></img>
+                <img className="menu-icon" src={paymentMethod} alt="Automatic debit" title="Automatic debit"></img>
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>
         <Link className="redirect-symbols" to="/block-card">
             <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={block}></img>
+                <img className="menu-icon" src={block} alt="Block card" title="Block card"></img>
                 <span className = {spanVisibility}> Block card </span>
             </div>
         </Link>
