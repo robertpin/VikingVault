@@ -53,13 +53,13 @@ namespace VikingVault.API
             services.AddScoped<IBankAccountService, BankAccountService>();
             services.AddScoped<IExchangeService, ExchangeService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IAttachCardService, AttachCardService>();
             services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
             services.AddScoped<ICardService, CardService>();
             services.AddHostedService<TimedPaymentService>();
             services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

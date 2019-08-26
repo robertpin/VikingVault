@@ -29,14 +29,14 @@ namespace VikingVault.Services
             try
             {
                 var payments = _dbContext.AutomaticPayments
-                    .Include(payment => payment.Company)
+                    .Include(payment => payment.ReceivingCompany)
                     .Include(payment => payment.PayingUser)
                     .Where(payment => payment.PayingUser.Id == userId)
                     .ToList();
 
                 foreach (var payment in payments)
                 {
-                    var company = _dbContext.User.SingleOrDefault(user => user.Id == payment.Company.Id);
+                    var company = _dbContext.User.SingleOrDefault(user => user.Id == payment.ReceivingCompany.Id);
                     automaticPaymentData.Add(new AutomaticPaymentDTO
                     {
                         CompanyName = company.FirstName,
