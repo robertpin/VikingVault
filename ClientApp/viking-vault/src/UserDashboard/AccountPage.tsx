@@ -141,10 +141,8 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                                     eurBalance: userData.eurBalance,
                                     usdBalance: userData.usdBalance,
                                     yenBalance: userData.yenBalance,
+                                    }
                                 }
-
-                                }
-                                
                             }
                         )
                     }
