@@ -37,5 +37,20 @@ namespace VikingVault.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [Authorization(Role=RoleEnum.User)]
+        [HttpPut]
+        public ActionResult ChangeNotificationStatus([FromBody] NotificationDTO notification)
+        {
+            try
+            {
+                _notificationsService.UpdateNotificationStatus(notification);
+                return Ok();
+            }
+            catch(NotificationsServiceException e)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }

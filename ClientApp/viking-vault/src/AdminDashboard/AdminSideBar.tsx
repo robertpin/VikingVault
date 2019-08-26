@@ -2,7 +2,7 @@ import  React  from 'react';
 import { Link } from 'react-router-dom';
 import card from '../Resources/images/addbusiness.png';
 
-export interface ISideBarProps {
+interface ISideBarProps {
     show: boolean;
 }
 

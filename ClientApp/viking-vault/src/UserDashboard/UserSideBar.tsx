@@ -1,12 +1,17 @@
 import  React  from 'react';
 import { Link } from 'react-router-dom';
 import paymentMethod from '../Resources/images/payment-method.png'
-import block from '../Resources/images/password.png'
+import notification from '../Resources/images/notification.png'
 import moneyExchange from '../Resources/images/money-exchange.png'
 import transfer from '../Resources/images/transfer.png'
-import { ISideBarProps } from '../AdminDashboard/AdminSideBar';
+import unreadNotifications from "../Resources/images/unreadNotifiactions.png";
 
-function UserSideBar(props: ISideBarProps) {
+interface IUserSideBarProps {
+    show: boolean;
+    unreadNotification: boolean;
+}
+
+function UserSideBar(props: IUserSideBarProps) {
     const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";
     const spanVisibility: string = props.show ? "span-hide" : "span-show";
 
@@ -29,10 +34,10 @@ function UserSideBar(props: ISideBarProps) {
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/block-card">
+        <Link className="redirect-symbols" to="/notifications">
             <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={block}></img>
-                <span className = {spanVisibility}> Block card </span>
+                <img className="menu-icon" src={props.unreadNotification? unreadNotifications : notification}></img>
+                <span className = {spanVisibility}> Notifications </span>
             </div>
         </Link>
     </React.Fragment>

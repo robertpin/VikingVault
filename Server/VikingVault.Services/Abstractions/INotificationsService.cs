@@ -8,5 +8,6 @@ namespace VikingVault.Services.Abstractions
     public interface INotificationsService
     {
         List<Notification> GetAllNotifications(string token);
+        void UpdateNotificationStatus(NotificationDTO notification);
     }
 }
