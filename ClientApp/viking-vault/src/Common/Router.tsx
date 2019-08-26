@@ -8,7 +8,6 @@ import { Dashboard } from "../Common/Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
 import { ViewAutomaticPayments } from "../UserDashboard/ViewAutomaticPayments";
 import { BlockedServices } from "../UserDashboard/BlockedServices";
-import { WillOpenModal } from "../WillOpenModal";
 
 function Router(props: any) {
     return <BrowserRouter>

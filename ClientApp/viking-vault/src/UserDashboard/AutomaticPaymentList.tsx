@@ -2,6 +2,7 @@ import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 import {CreateAutomaticPaymentForm} from "./CreateAutomaticPaymentModal"
+import add_payment from "../Resources/images/add_payment.png"
 
 const baseUrl = constants.baseUrl + "AutomaticPayment";
 
@@ -123,7 +124,9 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
     render() {
         return <div className="m-4 w-auto">
                 <CreateAutomaticPaymentForm open={this.state.modals.openCreateAutomaticPaymentModal} onModalClose={this.closeCreateAutomaticPaymentModal}/>
-                <button className = "btn btn-primary" onClick={ this.handleCreateAutomaticPayment}>Create Automatic Payment</button>
+                <button className = "btn add_payment_button" onClick={ this.handleCreateAutomaticPayment}>
+                    <img title="Create Automatic Payment" className="add_payment_icon" src={add_payment} alt="Automatic Payment Button"></img>
+                </button>
             {this.state.isThePaymentListEmpty?
                 <label className="payments-text centered-text">{this.state.emptyListMessage}</label> :
                 <table className="table table-hover">

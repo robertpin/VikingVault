@@ -12,3 +12,23 @@
     position: relative;
     right: 4%;
 }
+
+.add_payment_icon {
+    position: relative;
+    border: none;
+    padding: 0;
+    width: 90%;
+}
+
+.add_payment_button {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: 91%;
+    bottom: 85%;
+}
+
+.add_payment_button:focus,.add_payment_button:active {
+    outline: none;
+    box-shadow: none;
+ }
