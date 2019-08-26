@@ -1,10 +1,13 @@
 import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
+import './DeleteAutomaticPayment';
+import { DeleteAutomaticPayment } from './DeleteAutomaticPayment';
 
 const baseUrl = constants.baseUrl + "AutomaticPayment";
 
 interface IAutomaticPayment {
+    paymentId: number,
     companyName: string,
     amount: Number,
     initialPaymentDate: Date,
@@ -78,6 +81,16 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.getAutomaticPayments();
     }
 
+    deletePaymentFromList = (id : Number) =>{
+        let paymentList = this.state.payments.filter(payment => {
+            return payment.paymentId !== id
+          });
+
+          this.setState({
+            payments : paymentList
+        });
+    }
+
     getPaymentsTableBody() {
         return this.state.payments.map( (payment) => {
             return <tr>
@@ -87,7 +100,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
                 <td className="payments-text centered-text">Cancel element here</td>
                 <td className="payments-text centered-text">Edit element here</td>
-                <td className="payments-text centered-text">Delete element here</td>
+                <td><DeleteAutomaticPayment automaticPaymentId = {payment.paymentId} deletePaymentFromList = {this.deletePaymentFromList}/></td>
             </tr>;
         })
     }

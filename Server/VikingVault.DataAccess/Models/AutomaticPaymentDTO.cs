@@ -8,6 +8,8 @@ namespace VikingVault.DataAccess.Models
     public class AutomaticPaymentDTO
     {
         [Required]
+        public int PaymentId { get; set; }
+        [Required]
         public string CompanyName { get; set; }
         [Required]
         public float Amount { get; set; }

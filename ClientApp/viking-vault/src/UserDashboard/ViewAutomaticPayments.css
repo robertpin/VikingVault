@@ -12,3 +12,8 @@
     position: relative;
     right: 4%;
 }
+
+.delete-automatic-payment-icon{
+    margin-bottom: 10px;
+    width: 40%;
+}

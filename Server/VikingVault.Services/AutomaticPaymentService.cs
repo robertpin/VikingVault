@@ -39,6 +39,7 @@ namespace VikingVault.Services
                     var company = _dbContext.User.SingleOrDefault(user => user.Id == payment.ReceivingCompany.Id);
                     automaticPaymentData.Add(new AutomaticPaymentDTO
                     {
+                        PaymentId = payment.Id,
                         CompanyName = company.FirstName,
                         Amount = payment.Amount,
                         InitialPaymentDate = payment.InitialPaymentDate,
@@ -59,10 +60,14 @@ namespace VikingVault.Services
             try
             {
                 AutomaticPayment automaticPaymentToDelete = _dbContext.AutomaticPayments.SingleOrDefault(automaticPayment => automaticPayment.Id == id);
+                if(automaticPaymentToDelete == null)
+                {
+                    throw new AutomaticPaymentException("The payment to be deleted doesn't exist in the database!");
+                }
                 _dbContext.Remove(automaticPaymentToDelete);
                 _dbContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
             {
                 throw new AutomaticPaymentException(e.Message);
             }
