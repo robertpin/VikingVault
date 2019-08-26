@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
 using VikingVault.DataAccess.Enums;
 using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace VikingVault.Services
 {
@@ -16,11 +17,14 @@ namespace VikingVault.Services
     {
         private readonly VikingVaultDbContext _dbContext;
         private readonly IBankAccountService _bankAccountService;
+        private readonly IUserCardService _userCardService;
 
-        public UserService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService)
+        public UserService(VikingVaultDbContext dbContext, IBankAccountService bankAccountService, IUserCardService userCardService)
         {
             _dbContext = dbContext;
+            _userCardService = userCardService;
             _bankAccountService = bankAccountService;
+
         }
 
         public User CreateUser(UserDTO user)
@@ -63,6 +67,29 @@ namespace VikingVault.Services
         public User GetById(int userId)
         {
             return _dbContext.User.Find(userId);
+        }
+
+        public int GetIdFromToken(string token)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            return Int32.Parse(tokenObject.Payload["Id"].ToString());
+        }
+
+        public User GetUserFromToken(string token)
+        {
+            return GetById(GetIdFromToken(token));
+        }
+
+        public User GetUserFromCardNumber(string cardNumber)
+        {
+            int? idUser = _userCardService.FindUserIdByCardNumber(cardNumber);
+            
+            if(idUser != null)
+            {
+                return GetById((int)idUser);
+            }
+                
+            return null;
         }
 
         private BankAccount CreateBankAccount(User user, String currencyType)

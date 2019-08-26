@@ -31,7 +31,7 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
                     return response.json();
                 })
             .then( userData => {
-                if(userData.pictureLink != "")
+                if(userData.pictureLink !== "")
                 {
                     this.setState(
                     {

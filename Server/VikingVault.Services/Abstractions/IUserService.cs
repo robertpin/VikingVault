@@ -10,5 +10,8 @@ namespace VikingVault.Services.Abstractions
         User CreateUser(UserDTO user);
         User GetById(int userId);
         void DeleteUser(UserEmail userEmail);
+        int GetIdFromToken(string token);
+        User GetUserFromToken(string token);
+        User GetUserFromCardNumber(string cardNumber);
     }
 }

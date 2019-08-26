@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
+using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
 
@@ -13,10 +14,12 @@ namespace VikingVault.Services
     public class TransactionService : ITransactionService
     {
         private readonly VikingVaultDbContext _dbContext;
+        private readonly IUserService _userService;
 
-        public TransactionService(VikingVaultDbContext context)
+        public TransactionService(VikingVaultDbContext context, IUserService userService)
         {
             _dbContext = context;
+            _userService = userService;
         }
 
         public Transaction AddTransaction(Transaction transaction)
@@ -34,6 +37,41 @@ namespace VikingVault.Services
                 }
             }
             return transaction;
+        }
+
+        public void AddTransactionsForTransferFunds(TransferFundsModel transferData)
+        {
+            try
+            {
+                User reciever = _userService.GetUserFromCardNumber(transferData.CardNumberReciever);
+
+                Transaction senderTransaction = new Transaction
+                {
+                    User = transferData.Sender,
+                    Type = "Transfer",
+                    Currency = transferData.Currency,
+                    Date = DateTime.Now,
+                    Amount = -transferData.AmountSent,
+                    OtherParty = reciever.FirstName + reciever.LastName
+                };
+
+                Transaction recieverTransaction = new Transaction
+                {
+                    User = reciever,
+                    Type = "Transfer",
+                    Currency = transferData.Currency,
+                    Date = DateTime.Now,
+                    Amount = transferData.AmountSent,
+                    OtherParty = transferData.Sender.FirstName + transferData.Sender.LastName
+                };
+
+                AddTransaction(senderTransaction);
+                AddTransaction(recieverTransaction);
+            }
+            catch
+            {
+                throw new DatabaseException();
+            }
         }
 
         public List<Transaction> GetTransactions(string userId)
