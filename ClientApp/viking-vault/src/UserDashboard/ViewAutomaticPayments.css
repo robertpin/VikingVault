@@ -29,3 +29,23 @@
     width: 100%;
     height: 92%;
 }
+
+.add-payment-icon {
+    position: relative;
+    border: none;
+    padding: 0;
+    width: 90%;
+}
+
+.add-payment-button {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: 91%;
+    bottom: 85%;
+}
+
+.add-payment-button:focus,.add-payment-button:active {
+    outline: none;
+    box-shadow: none;
+ }

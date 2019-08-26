@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190821134935_UpdatedModelMigration")]
-    partial class UpdatedModelMigration
+    [Migration("20190822074625_FixedAutomaticPaymentTableIssue")]
+    partial class FixedAutomaticPaymentTableIssue
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
