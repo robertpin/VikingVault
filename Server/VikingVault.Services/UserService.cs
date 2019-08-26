@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using VikingVault.Services.Utils;
 using VikingVault.DataAccess.Enums;
 using System.Linq;
+using VikingVault.DataAccess.Models.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace VikingVault.Services
@@ -54,12 +55,9 @@ namespace VikingVault.Services
                 _dbContext.SaveChanges();
             }
 
-            catch(Exception e)
-            {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
-                {
-                    throw new UserServiceException();
-                }
+            catch(Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException || e is BankAccountServiceException)
+            { 
+                throw new UserServiceException(e.Message);
             }
             return userToBeInserted;
         }
@@ -107,12 +105,16 @@ namespace VikingVault.Services
             try
             {
                 User userToDelete = _dbContext.User.SingleOrDefault(user => user.Email == userEmail.Email);
+                if(userToDelete == null)
+                {
+                    throw new UserServiceException("The user to be deleted doesn't exist in the database!");
+                }
                 _dbContext.Remove(userToDelete);
                 _dbContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
             {
-                throw new UserServiceException();
+                throw new DatabaseException(e.Message);
             }
         }
     }

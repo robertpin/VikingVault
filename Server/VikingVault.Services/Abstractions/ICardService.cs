@@ -8,6 +8,7 @@ namespace VikingVault.Services.Abstractions
     public interface ICardService
     {
         Card AttachCard(Card card);
+        Card UpdateCard(Card card);
         Card CheckUserHasCard(string token);
         bool CheckCardIsBlocked(string token);
     }

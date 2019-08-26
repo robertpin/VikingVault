@@ -366,6 +366,12 @@
     text-decoration: none;
 }
 
+.block-card-toggle-position{
+    position: absolute;
+    left: 225px;
+    top: 330px;
+}
+
 .message-container {
     position: relative;
     margin-top: 2%; 
@@ -381,4 +387,5 @@
     position: absolute;
     height: 100%;
     width: 100%;
+
 }

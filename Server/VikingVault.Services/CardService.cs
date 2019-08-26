@@ -48,6 +48,25 @@ namespace VikingVault.Services
             }
         }
 
+        public Card UpdateCard(Card cardToUpdate)
+        {
+            try
+            {
+                var oldCard = _dbContext.Cards.Find(cardToUpdate.Id);
+                if(oldCard == null)
+                {
+                    throw new DatabaseException("Card to be updated doesn't exist in the database!");
+                }
+                oldCard.Blocked = cardToUpdate.Blocked;
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new DatabaseException(e.Message);
+            }
+            return cardToUpdate;
+        }
+    
         public Card CheckUserHasCard(string token)
         {
             try

@@ -27,12 +27,9 @@ namespace VikingVault.Services
                 _dbContext.Add(account);
                 _dbContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException)
-                {
-                    throw new BankAccountServiceException();
-                }
+                throw new BankAccountServiceException(e.Message);
             }
             return account;
         }
@@ -42,6 +39,10 @@ namespace VikingVault.Services
             var tokenObject = new JwtSecurityToken(token);
             string userId = tokenObject.Payload["Id"].ToString();
             var returnedUser = _dbContext.User.Find(Int32.Parse(userId));
+            if(returnedUser == null)
+            {
+                throw new BankAccountServiceException("The user does not exist in the database!");
+            }
             var bankAccounts = _dbContext.BankAccount.Where(account => account.User == returnedUser).ToList();
             return bankAccounts;
         }
@@ -49,6 +50,10 @@ namespace VikingVault.Services
         public BankAccount ChangeBalance(UpdateBankAccountModel updatedBankAccount)
         {
             var bankAccountOwner = _dbContext.User.SingleOrDefault(user => user.Email == updatedBankAccount.Email);
+            if (bankAccountOwner == null)
+            {
+                throw new BankAccountServiceException("The user does not exist in the database!");
+            }
             var oldBankAccount = _dbContext.BankAccount.SingleOrDefault(bank => bank.User == bankAccountOwner && bank.CurrencyType == updatedBankAccount.CurrencyType);
             oldBankAccount.Balance += updatedBankAccount.Amount;
             UpdateBankAccount();
@@ -92,12 +97,9 @@ namespace VikingVault.Services
             {
                 _dbContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
             {
-                if (e is DbUpdateException || e is DbUpdateConcurrencyException)
-                {
-                    throw new BankAccountServiceException();
-                }
+                throw new BankAccountServiceException(e.Message);
             }
         }
     }
