@@ -22,7 +22,7 @@ namespace VikingVault.API.Controllers
             _paymentTogglingService = paymentTogglingService;
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public ActionResult<Boolean> Get(int id)
         {
             try
