@@ -16,7 +16,8 @@ interface ITransaction {
     date: Date;
     amount: number;
     currency: string;
-    senderOrReceiver: IUserData;
+    sender: IUserData;
+    receiver: IUserData;
     details: string
 }
 
@@ -52,16 +53,17 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
+        console.log(transaction);
         if(transaction.type.toLowerCase() === transactionTypeEnum.transfer) {
             if(transaction.amount >= 0) {
-                return `From ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
+                return `From ${transaction.sender.firstName} ${transaction.sender.lastName}`;
             }
-            return `To ${transaction.senderOrReceiver.firstName} ${transaction.senderOrReceiver.lastName}`;
+            return `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
         }
         if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
             return `Exchanged ${transaction.details.toUpperCase()}`;
         }
-        return transaction.senderOrReceiver.firstName;
+        return transaction.receiver.firstName;
     }
 
     private formatDate(transactionDate: Date) {
@@ -94,13 +96,23 @@ class TransactionList extends React.Component<any, IState> {
         return tranasction.details;
     }
 
+    private formatAmount = (transation: ITransaction) => {
+        if(transation.type === "payment") {
+            return -transation.amount;
+        }
+        if(transation.amount > 0) {
+            return `+${transation.amount}`;
+        }
+        return transation.amount;
+    }
+
     private getTableRowFromTransaction(tran: ITransaction) {
         return <tr>
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"} /></td>
             <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
-            <td className="font-weight-bold text-right">{tran.amount>0? `+${tran.amount}` : tran.amount}</td>
+            <td className="font-weight-bold text-right">{this.formatAmount(tran)}</td>
             <td className="details">{this.formatDetails(tran)}</td>
         </tr>
     }

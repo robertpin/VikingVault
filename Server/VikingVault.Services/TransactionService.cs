@@ -39,13 +39,15 @@ namespace VikingVault.Services
         public List<Transaction> GetTransactions(string userId)
         {
             int uid = int.Parse(userId);
-            return _dbContext.Transactions
+            var transactions =  _dbContext.Transactions
                 .Include(t => t.User)
-                .Include(t => t.SenderOrReceiver)
+                .Include(t => t.Sender)
+                .Include(t => t.Receiver)
                 .Where(t => t.User.Id == uid)
                 .OrderByDescending(t => t.Date)
                 .Take(5)
                 .ToList();
+            return transactions;
         }
     }
 }

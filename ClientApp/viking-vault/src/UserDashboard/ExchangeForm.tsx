@@ -8,6 +8,12 @@ import {constants, currencyEnum} from '../Resources/Constants';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
 const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;
+const currencyMap = {
+    [currencyEnum.ron]: 0,
+    [currencyEnum.eur]: 1,
+    [currencyEnum.usd]: 2,
+    [currencyEnum.yen]: 3
+};
 
 interface IExchangeFormState {
     fromCurrency: string;
@@ -133,26 +139,9 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             })
             .then(response => response.json())
             .then(result => {
-                if(this.state.fromCurrency === currencyEnum.ron) {
-                    this.setState({
-                        availableAmountFromCurrency: result[0].balance
-                    });
-                }
-                if(this.state.fromCurrency === currencyEnum.eur) {
-                    this.setState({
-                        availableAmountFromCurrency: result[1].balance
-                    });
-                }
-                if(this.state.fromCurrency === currencyEnum.usd) {
-                    this.setState({
-                        availableAmountFromCurrency: result[2].balance
-                    });
-                }
-                if(this.state.fromCurrency === currencyEnum.yen) {
-                    this.setState({
-                        availableAmountFromCurrency: result[3].balance
-                    });
-                }
+                this.setState({
+                    availableAmountFromCurrency: result[currencyMap[this.state.fromCurrency]].balance
+                });
             });
         }
     }
@@ -170,26 +159,9 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             })
             .then(response => response.json())
             .then(result => {
-                if(this.state.toCurrency === currencyEnum.ron) {
-                    this.setState({
-                        availableAmountToCurrency: result[0].balance
-                    });
-                }
-                if(this.state.toCurrency === currencyEnum.eur) {
-                    this.setState({
-                        availableAmountToCurrency: result[1].balance
-                    });
-                }
-                if(this.state.toCurrency === currencyEnum.usd) {
-                    this.setState({
-                        availableAmountToCurrency: result[2].balance
-                    });
-                }
-                if(this.state.toCurrency === currencyEnum.yen) {
-                    this.setState({
-                        availableAmountToCurrency: result[3].balance
-                    });
-                }
+                this.setState({
+                    availableAmountToCurrency: result[currencyMap[this.state.toCurrency]].balance
+                });
             });
         }
     }
