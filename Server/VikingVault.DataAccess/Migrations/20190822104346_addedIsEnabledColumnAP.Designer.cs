@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VikingVault.DataAccess;
 
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    partial class VikingVaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190822104346_addedIsEnabledColumnAP")]
+    partial class addedIsEnabledColumnAP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +29,8 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<float>("Amount");
 
+                    b.Property<int>("CompanyId");
+
                     b.Property<DateTime>("InitialPaymentDate");
 
                     b.Property<bool>("IsEnabled");
@@ -35,13 +39,11 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<int?>("PayingUserId");
 
-                    b.Property<int>("ReceivingCompanyId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PayingUserId");
+                    b.HasIndex("CompanyId");
 
-                    b.HasIndex("ReceivingCompanyId");
+                    b.HasIndex("PayingUserId");
 
                     b.ToTable("AutomaticPayments");
                 });
@@ -150,32 +152,6 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Amount")
-                        .IsRequired();
-
-                    b.Property<string>("CardNumberReciever")
-                        .IsRequired();
-
-                    b.Property<string>("Currency")
-                        .IsRequired();
-
-                    b.Property<string>("Details");
-
-                    b.Property<int>("RequesterId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequesterId");
-
-                    b.ToTable("TransferRequests");
-                });
-
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -230,14 +206,14 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
                 {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
                         .WithMany()
                         .HasForeignKey("PayingUserId");
-
-                    b.HasOne("VikingVault.DataAccess.Models.User", "ReceivingCompany")
-                        .WithMany()
-                        .HasForeignKey("ReceivingCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
@@ -261,14 +237,6 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
-                {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

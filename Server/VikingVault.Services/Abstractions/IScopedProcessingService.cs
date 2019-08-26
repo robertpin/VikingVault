@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VikingVault.DataAccess.Models;
 
 namespace VikingVault.Services.Abstractions
 {
-    public interface IAttachCardService
+    public interface IScopedProcessingService
     {
-        Card AttachCard(Card card);
+        void PayCompanies();
     }
 }

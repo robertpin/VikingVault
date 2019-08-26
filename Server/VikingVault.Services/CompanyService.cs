@@ -64,5 +64,47 @@ namespace VikingVault.Services
                 Balance = 0.0f
             };
         }
+
+        public List<CompanyDataDTO> GetAllCompanies()
+        {
+            var companiesData = new List<CompanyDataDTO>();
+            try
+            {
+                var companies = _dbContext.User.Where(user => user.Role.Type == RoleEnum.Company.ToString()).ToList();
+                foreach (var company in companies)
+                {
+                    var account = _dbContext.BankAccount
+                        .SingleOrDefault(bankAccount => bankAccount.User.Id == company.Id &&
+                                                        bankAccount.CurrencyType == CurrencyEnum.Ron.ToString());
+                    companiesData.Add(new CompanyDataDTO
+                    {
+                        Id = company.Id,
+                        Name = company.FirstName,
+                        Address = company.Address,
+                        Balance = account.Balance
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                throw new CompanyServiceException(e.Message);
+            }
+
+            return companiesData;
+        }
+
+        public void DeleteCompany(int companyId)
+        {
+            try
+            {
+                var companyToDelete = _dbContext.User.SingleOrDefault(company => company.Id == companyId);
+                _dbContext.Remove(companyToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw new CompanyServiceException();
+            }
+        }
     }
 }
