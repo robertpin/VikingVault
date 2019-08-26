@@ -30,10 +30,12 @@ interface IAccountState{
     totalBalance: number
     isPresent: boolean
     isCardBlocked: boolean
+    redirect: boolean
 } 
 
 interface IAccountPageState{
-    accountInfo: IAccountState,
+    accountInfo: IAccountState
+    loading: boolean
     redirect: boolean
     openBlockCardResponseModal: boolean
     blockCardResponseMessage: string
@@ -61,9 +63,10 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                 isPresent: true,
                 isCardBlocked : false
         },
-            redirect:false,
             openBlockCardResponseModal: false,
             blockCardResponseMessage: ""
+            redirect:false,
+            loading:false
         }
     }
     
@@ -80,7 +83,8 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                         (this.state.accountInfo.accountsBalances.eurBalance/data.rates.EUR) + 
                         (this.state.accountInfo.accountsBalances.usdBalance/data.rates.USD) + 
                         (this.state.accountInfo.accountsBalances.yenBalance/data.rates.JPY)
-                    }
+                    },
+                    loading: false
                 })
             }
         })
@@ -94,8 +98,10 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                 redirect:true
             })
         }
-        else
-        {
+        else{
+            this.setState({
+                loading:true
+            })
             setInterval(this.updateExchangingRates, constants.ratesRefreshInterval);
             fetch(url, {
                 method:"GET",
@@ -178,7 +184,7 @@ class AccountPage extends React.Component<any, IAccountPageState>{
     accountsInformation(){
         return <div>  
             <div className="balance-container">
-                <p className="balance-header">RON <span className="balance-value">{this.state.accountInfo.totalBalance.toFixed(2)}</span></p> 
+                <p className="balance-header">RON <span className="balance-value">{this.state.loading ? "Loading..." : this.state.accountInfo.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
             </div>
             <br/>
@@ -189,7 +195,7 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                     USD <span className="account-value">{this.state.accountInfo.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
                     YEN <span className="account-value">{this.state.accountInfo.accountsBalances.yenBalance}</span> </p> 
             </div>
-            <br/><br/>
+            <br/>
             <TransactionList />
         </div>
     }
