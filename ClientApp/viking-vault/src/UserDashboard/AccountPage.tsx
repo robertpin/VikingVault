@@ -30,31 +30,37 @@ interface IAccountState{
     totalBalance: number
     isPresent: boolean
     isCardBlocked: boolean
+} 
+
+interface IAccountPageState{
+    accountInfo: IAccountState,
     redirect: boolean
     openBlockCardResponseModal: boolean
     blockCardResponseMessage: string
-} 
+}
 
-class AccountPage extends React.Component<any, IAccountState>{
+class AccountPage extends React.Component<any, IAccountPageState>{
     
     constructor(props:any){
         super(props);
         this.state={
-            firstName: "",
-            lastName: "",
-            cardId: 0,
-            cardNumber: "",
-            CCV: 0,
-            expirationDate: "",
-            accountsBalances: { 
-                ronBalance: 0,
-                eurBalance: 0,
-                usdBalance: 0,
-                yenBalance: 0
+            accountInfo: {
+                firstName: "",
+                lastName: "",
+                cardId: 0,
+                cardNumber: "",
+                CCV: 0,
+                expirationDate: "",
+                accountsBalances: { 
+                    ronBalance: 0,
+                    eurBalance: 0,
+                    usdBalance: 0,
+                    yenBalance: 0
+            },
+                totalBalance: 0,
+                isPresent: true,
+                isCardBlocked : false
         },
-            totalBalance: 0,
-            isPresent: true,
-            isCardBlocked : false,
             redirect:false,
             openBlockCardResponseModal: false,
             blockCardResponseMessage: ""
@@ -68,10 +74,13 @@ class AccountPage extends React.Component<any, IAccountState>{
         }).then((data:any)=>{
             if(data!==null){
                 this.setState({
-                    totalBalance: this.state.accountsBalances.ronBalance + 
-                    (this.state.accountsBalances.eurBalance/data.rates.EUR) + 
-                    (this.state.accountsBalances.usdBalance/data.rates.USD) + 
-                    (this.state.accountsBalances.yenBalance/data.rates.JPY)
+                    accountInfo:{
+                        ...this.state.accountInfo,
+                        totalBalance: this.state.accountInfo.accountsBalances.ronBalance + 
+                        (this.state.accountInfo.accountsBalances.eurBalance/data.rates.EUR) + 
+                        (this.state.accountInfo.accountsBalances.usdBalance/data.rates.USD) + 
+                        (this.state.accountInfo.accountsBalances.yenBalance/data.rates.JPY)
+                    }
                 })
             }
         })
@@ -98,14 +107,19 @@ class AccountPage extends React.Component<any, IAccountState>{
                 .then((response)=> {
                     if(response.status === 404){
                         this.setState({
-                            isPresent: true
+                            accountInfo:{
+                                ...this.state.accountInfo,
+                                isPresent : true
+                            }
                         })
                     }
                     if(response.status === 200){
-                        this.setState(oldState => {
-                            return {
+                        this.setState({
+                            accountInfo:{
+                                ...this.state.accountInfo,
                                 isPresent: false
                             }
+
                         })
                     }
                     return response.json();})
@@ -113,26 +127,34 @@ class AccountPage extends React.Component<any, IAccountState>{
                     if(userData != null){
                         this.setState(
                             {
-                                firstName: userData.firstName,
-                                lastName: userData.lastName,
-                                cardId : userData.cardId,
-                                cardNumber: userData.cardNumber,
-                                CCV: userData.ccv,
-                                expirationDate: userData.expirationDate,
-                                isCardBlocked: userData.blockedCard,
-                                accountsBalances: {
+                                accountInfo:{
+                                    ...this.state.accountInfo,
+                                    firstName: userData.firstName,
+                                    lastName: userData.lastName,
+                                    cardId : userData.cardId,
+                                    cardNumber: userData.cardNumber,
+                                    CCV: userData.ccv,
+                                    expirationDate: userData.expirationDate,
+                                    isCardBlocked: userData.blockedCard,
+                                    accountsBalances: {
                                     ronBalance: userData.ronBalance,
                                     eurBalance: userData.eurBalance,
                                     usdBalance: userData.usdBalance,
                                     yenBalance: userData.yenBalance,
                                 }
+
+                                }
+                                
                             }
                         )
                     }
                 })
                 .catch(error => {
                     this.setState({
-                        isPresent: true
+                        accountInfo:{
+                            ...this.state.accountInfo,
+                            isPresent: true
+                        }
                     })
                 })
         }
@@ -142,9 +164,9 @@ class AccountPage extends React.Component<any, IAccountState>{
         return (
         <div className="card-picture-container">
             <p className="card-number-large">{this.splitCardNumber(0,4)} &nbsp; {this.splitCardNumber(4,8)} &nbsp; {this.splitCardNumber(8,12)} &nbsp; {this.splitCardNumber(12,16)}</p>
-            <p className="card-expiration-date">{this.state.expirationDate}</p>
-            <p className="card-owner-name">{this.state.firstName} {this.state.lastName}</p>
-            <img className="card-available" src = {!this.state.isCardBlocked ? genericCard : genericCardGrayscale} alt=""></img>
+            <p className="card-expiration-date">{this.state.accountInfo.expirationDate}</p>
+            <p className="card-owner-name">{this.state.accountInfo.firstName} {this.state.accountInfo.lastName}</p>
+            <img className="card-available" src = {!this.state.accountInfo.isCardBlocked ? genericCard : genericCardGrayscale} alt="Available card"></img>
         </div>)
     }
 
@@ -158,16 +180,16 @@ class AccountPage extends React.Component<any, IAccountState>{
     accountsInformation(){
         return <div>  
             <div className="balance-container">
-                <p className="balance-header">RON <span className="balance-value">{this.state.totalBalance.toFixed(2)}</span></p> 
+                <p className="balance-header">RON <span className="balance-value">{this.state.accountInfo.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
             </div>
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.accountsBalances.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountInfo.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountInfo.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountInfo.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountInfo.accountsBalances.yenBalance}</span> </p> 
             </div>
             <br/><br/>
             <TransactionList />
@@ -184,7 +206,7 @@ class AccountPage extends React.Component<any, IAccountState>{
     }
 
     splitCardNumber(begin: number, end: number){
-        return this.state.cardNumber.substring(begin, end);
+        return this.state.accountInfo.cardNumber.substring(begin, end);
     }
 
     blockCard = () =>{
@@ -198,16 +220,19 @@ class AccountPage extends React.Component<any, IAccountState>{
               'x-access-token': token
             },
             body: JSON.stringify({
-              Id: this.state.cardId,
-              CardNumber: this.state.cardNumber,
-              ExpirationDate: this.state.expirationDate,
-              CCV: this.state.CCV,
-              Blocked: !this.state.isCardBlocked
+              Id: this.state.accountInfo.cardId,
+              CardNumber: this.state.accountInfo.cardNumber,
+              ExpirationDate: this.state.accountInfo.expirationDate,
+              CCV: this.state.accountInfo.CCV,
+              Blocked: !this.state.accountInfo.isCardBlocked
             })}).then(response => {   
                 if(response.status === 200){
-                    let oldState = this.state.isCardBlocked;
+                    let oldState = this.state.accountInfo.isCardBlocked;
                     this.setState({
-                        isCardBlocked : !oldState
+                        accountInfo:{
+                            ...this.state.accountInfo,
+                            isCardBlocked : !oldState
+                        }
                     });
                 }
                 else{
@@ -235,15 +260,15 @@ class AccountPage extends React.Component<any, IAccountState>{
         return(            
             <div className="account-view"> 
                 { this.state.redirect? <Redirect to = "/login"  /> : null}       
-                {this.state.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
+                {this.state.accountInfo.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
                 <div className="accounts-information">
                     <div className="accounts-title">
                         <h2 className="accounts-header">Accounts</h2>
                     </div>
-                    {this.state.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
+                    {this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                 </div>
                 {this.state.redirect? <Redirect to="/login"/> : null}
-                <div className = "block-card-toggle-position"> {!this.state.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.isCardBlocked}/> : null} </div>
+                <div className = "block-card-toggle-position"> {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} </div>
                 <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
 
             </div>
