@@ -59,7 +59,7 @@ namespace VikingVault.Services
         public AutomaticPayment CreateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO, string token)
         {
             var tokenObject = new JwtSecurityToken(token);
-            int userId = Int32.Parse(tokenObject.Payload["Id"].ToString());
+            int userId = int.Parse(tokenObject.Payload["Id"].ToString());
             AutomaticPayment automaticPaymentToBeCreated = new AutomaticPayment
             {
                 ReceivingCompany = _dbContext.User.Find(automaticPaymentDTO.CompanyId),

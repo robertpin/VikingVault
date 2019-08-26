@@ -2,8 +2,8 @@ import React from "react";
 import { constants } from "../Resources/Constants.js";
 import '../AdminDashboard/AttachCardModal.css';
 
-let regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
-let currentDate = new Date();
+const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
+const currentDate = new Date();
 
 interface IModalProps {
     open: boolean;
@@ -133,25 +133,24 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     getAllCompanies = () => {
         var companies;
         var token = sessionStorage.getItem("Authentication-Token");
-        if(token === null)
-        {
+        if(token === null) {
             this.setState({
                 errorLabel: "Access Token Unavailable",
-            })
+            });
             return [];
         }
-        else{
+        else {
             fetch(constants.baseUrl+"company", {
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'x-access-token' : token.toString()
-                }})
+                }
+            })
             .then( response => 
                 {
-                    if( response.status === 500)
-                    {
+                    if( response.status === 500) {
                         this.setState({
                             errorLabel: "Internal Server Error"
                         })
@@ -160,7 +159,6 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
                     return response.json();
                 })
             .then( companiesData => {
-                console.log(companiesData);
                 this.setState({
                     companies: companiesData
                 })
@@ -170,8 +168,7 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
         }
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         this.getAllCompanies();
     }
 

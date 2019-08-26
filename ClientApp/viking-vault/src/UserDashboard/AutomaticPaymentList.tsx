@@ -3,7 +3,7 @@ import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
 import {CreateAutomaticPaymentForm} from "./CreateAutomaticPaymentModal"
-import add_payment from "../Resources/images/add_payment.png"
+import addPaymentImg from "../Resources/images/add_payment.png"
 
 
 const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
@@ -13,10 +13,10 @@ interface IModals {
 }
 
 interface IAutomaticPayment {
-    id: Number,
+    id: number,
     companyId: number,
     companyName: string,
-    amount: Number,
+    amount: number,
     initialPaymentDate: Date,
     lastPaymentDate: Date
 }
@@ -127,8 +127,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
     render() {
         return <div className="m-4 w-auto">
                 <CreateAutomaticPaymentForm open={this.state.modals.openCreateAutomaticPaymentModal} onModalClose={this.closeCreateAutomaticPaymentModal}/>
-                <button className = "btn add_payment_button" onClick={ this.handleCreateAutomaticPayment}>
-                    <img title="Create Automatic Payment" className="add_payment_icon" src={add_payment} alt="Automatic Payment Button"></img>
+                <button className = "btn add-payment-button" onClick={ this.handleCreateAutomaticPayment}>
+                    <img title="Create Automatic Payment" className="add-payment-icon" src={addPaymentImg} alt="Automatic Payment Button"></img>
                 </button>
             {this.state.isThePaymentListEmpty?
                 <label className="payments-text centered-text">{this.state.emptyListMessage}</label> :

@@ -13,14 +13,14 @@
     right: 4%;
 }
 
-.add_payment_icon {
+.add-payment-icon {
     position: relative;
     border: none;
     padding: 0;
     width: 90%;
 }
 
-.add_payment_button {
+.add-payment-button {
     width: 75px;
     height: 75px;
     position: absolute;
@@ -28,7 +28,7 @@
     bottom: 85%;
 }
 
-.add_payment_button:focus,.add_payment_button:active {
+.add-payment-button:focus,.add-payment-button:active {
     outline: none;
     box-shadow: none;
  }
