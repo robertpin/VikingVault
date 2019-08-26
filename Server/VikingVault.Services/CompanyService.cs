@@ -47,7 +47,7 @@ namespace VikingVault.Services
                 _bankAccountService.CreateBankAccount(this.CreateBankAccount(companyUser, "Ron"));
 
                 _dbContext.SaveChanges();
-            } catch (Exception e)
+            } catch 
             {
                 throw new CompanyServiceException("Internal server error");
             }
