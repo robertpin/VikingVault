@@ -75,8 +75,7 @@ class AccountPage extends React.Component<any, IAccountState>{
                 redirect:true
             })
         }
-        else
-        {
+        else{
             this.setState({
                 loading:true
             })
