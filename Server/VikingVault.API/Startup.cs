@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,12 +54,16 @@ namespace VikingVault.API
             services.AddScoped<IExchangeService, ExchangeService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ICardService, CardService>();
+            services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
+            services.AddScoped<ICardService, CardService>();
             services.AddHostedService<TimedPaymentService>();
             services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<ITransferFundsService, TransferFundsService>();
             services.AddScoped<IUserCardService, UserCardService>();
             services.AddScoped<ITransferRequestService, TransferRequestService>();
+            services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

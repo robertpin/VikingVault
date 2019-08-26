@@ -7,6 +7,7 @@ import "../App.css"
 import { Dashboard } from "../Common/Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
 import { TransferFundsPage } from "../TransferFunds/TransferFundsPage";
+import { ViewAutomaticPayments } from "../UserDashboard/ViewAutomaticPayments";
 import { BlockedServices } from "../UserDashboard/BlockedServices";
 
 function Router(props: any) {
@@ -14,6 +15,8 @@ function Router(props: any) {
         <Route path="/register/" exact component={RegisterForm} />
         <Route path="/login" exact component={LoginForm} />
         <Route path="/" exact component={Dashboard}/>
+        <Route path="/automatic-debit" exact component={ViewAutomaticPayments}/>
+        <Route path="/exchange" exact component={ExchangeForm}/>
         <Route path="/exchange" exact render={() => {return <BlockedServices><ExchangeForm/></BlockedServices>;}}/>
         <Route path="/companies" exact component={Companies}/>
         <Route path="/transfer" exact render={() => {return <BlockedServices><TransferFundsPage/></BlockedServices>;}}/>

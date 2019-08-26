@@ -1,9 +1,11 @@
 import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import "./TransactionList.css";
+import '../UserDashboard/DownloadTypeForm.css'
 import shoppingCart from '../Resources/images/shoppingcart.png';
 import userIcon from '../Resources/images/profileWhite.png';
 import exchange from "../Resources/images/money-exchange.png";
+import DownloadDropdown from './DownloadTypeForm'
 
 const baseUrl = constants.baseUrl;
 
@@ -84,7 +86,7 @@ class TransactionList extends React.Component<any, IState> {
 
     private getTableRowFromTransaction(tran: ITransaction) {
         return <tr>
-            <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"} /></td>
+            <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"}/></td>
             <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.amount>0? `+${tran.currency.toUpperCase()}` : `-${tran.currency.toUpperCase()}`}</td>
@@ -103,6 +105,7 @@ class TransactionList extends React.Component<any, IState> {
     render() {
         return <div className="transactions">
             <h5 className="font-weight-bold">Transactions</h5>
+            <DownloadDropdown/>
             <table className="table">
                 {this.getTableBodyFromTransactionList()}
             </table>
