@@ -58,11 +58,12 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 
     private isCompanySelected = () => {
-        if(this.state.automaticPayment.companyName !== "")
+        if(this.state.automaticPayment.companyName !== "") {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
             }
+        }
         return  {
             message: "A company must be selected!",
             class: "alert alert-info"
@@ -70,11 +71,12 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 
     private amountMustBePositive = () => {
-        if(this.state.automaticPayment.amount.match(regexCheckIfPositiveFloat))
+        if(this.state.automaticPayment.amount.match(regexCheckIfPositiveFloat)) {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
             }
+        }
         return  {
             message: "The amount must be a positive number!",
             class: "alert alert-info"
@@ -82,11 +84,12 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 
     private initialPaymentDateIsAfterCurrentDate = () => {
-        if(this.state.automaticPayment.initialPaymentDate !== "" && new Date(this.state.automaticPayment.initialPaymentDate) >= currentDate)
+        if(this.state.automaticPayment.initialPaymentDate !== "" && new Date(this.state.automaticPayment.initialPaymentDate) >= currentDate) {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
             }
+        }
         return  {
             message: "Initial Payment Date must be after the current date!",
             class: "alert alert-info"
@@ -131,8 +134,8 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 
     getAllCompanies = () => {
-        var companies;
-        var token = sessionStorage.getItem("Authentication-Token");
+        let companies;
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null) {
             this.setState({
                 errorLabel: "Access Token Unavailable",
