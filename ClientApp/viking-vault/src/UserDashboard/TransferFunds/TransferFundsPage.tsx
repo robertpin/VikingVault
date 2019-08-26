@@ -1,13 +1,12 @@
 import React from 'react'
-import {constants, currencyEnum} from "../Resources/Constants";
-import { Redirect } from 'react-router-dom';
-import SideBar from '../Common/SideBar';
-import TopBar from '../Common/TopBar';
-import UserIcon from '../Common/UserIcon';
+import {constants, currencyEnum} from "../../Resources/Constants";
+import SideBar from '../../Common/SideBar';
+import TopBar from '../../Common/TopBar';
+import UserIcon from '../../Common/UserIcon';
 import './TransferFunds.css';
-import '../UserDashboard/ExchangeForm.css';
+import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
-import Toggle from '../Common/Toggle';
+import Toggle from '../../Common/Toggle';
 
 
 const transferUrl = `${constants.baseUrl}transferFunds`;
@@ -226,7 +225,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     render(){
         return(
             <div className = "transfer-funds-page">  
-                <SideBar userType = "admin"/>
+                <SideBar userType = "user"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
