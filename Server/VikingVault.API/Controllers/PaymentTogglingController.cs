@@ -24,18 +24,14 @@ namespace VikingVault.API.Controllers
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Boolean> Get(int id)
         {
-            Console.Write(id);
             bool? isPaymentEnabled = _paymentTogglingService.IsPaymentEnabled(id);
             if (isPaymentEnabled == null)
                 return StatusCode(500, "Internal Server Error");
-            if (isPaymentEnabled == true)
-                return Ok(true);
-            else
-                return Ok(false);
+            return Ok(isPaymentEnabled);
         }
         
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]bool value)
         {
             _paymentTogglingService.ChangePaymentState(id, value);
         }

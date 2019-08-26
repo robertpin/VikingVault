@@ -41,28 +41,24 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
       }
     })
       .then(response => {
-        if( response.status === 500)
-        {
+        if(response.status === 500){
             return null;
         }                    
         return response.json();
-      }).then( responseData =>{
+      }).then(responseData =>{
         console.log(responseData)
-            this.setState(
-                {
+            this.setState({
                   checked: responseData
-                })
+            })
       });
   }
 
   render(){
         return <label className="switch">
         <input type="checkbox" onChange={this.handleCheckBox} checked={this.state.checked}/>       
-        {console.log(this.state.checked+" "+this.props.paymentId)}
         <span className="slider round"></span>
       </label>
     }
 }
-
 
 export default ActivatePaymentToggle

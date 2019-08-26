@@ -15,10 +15,10 @@ namespace VikingVault.Services
             _context = context;
         }
 
-        public void ChangePaymentState(int id, string value)
+        public void ChangePaymentState(int id, bool value)
         {
             var automaticPayment = _context.AutomaticPayments.Find(id);
-            automaticPayment.IsEnabled = !bool.Parse(value);
+            automaticPayment.IsEnabled = !value;
             _context.Update(automaticPayment);
             _context.SaveChanges();
         }

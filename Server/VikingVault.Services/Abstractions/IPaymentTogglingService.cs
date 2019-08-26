@@ -3,6 +3,6 @@
     public interface IPaymentTogglingService
     {
         bool? IsPaymentEnabled(int id);
-        void ChangePaymentState(int id, string value);
+        void ChangePaymentState(int id, bool value);
     }
 }
