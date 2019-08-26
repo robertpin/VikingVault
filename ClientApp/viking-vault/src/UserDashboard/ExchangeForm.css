@@ -31,7 +31,6 @@
 }
 
 .total-balance-text {
-    z-index: 2;
     position: absolute;
     left: 50%;
     top: 66%;
