@@ -15,7 +15,5 @@ namespace VikingVault.DataAccess.Models
         public string Text { get; set; }
         [Required]
         public bool Read { get; set; }
-        [Required]
-        public bool Seen { get; set; }
     }
 }

@@ -13,26 +13,25 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    userId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Text = table.Column<string>(nullable: false),
-                    Read = table.Column<bool>(nullable: false),
-                    Seen = table.Column<bool>(nullable: false)
+                    Read = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notifications_User_userId",
-                        column: x => x.userId,
+                        name: "FK_Notifications_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_userId",
+                name: "IX_Notifications_UserId",
                 table: "Notifications",
-                column: "userId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

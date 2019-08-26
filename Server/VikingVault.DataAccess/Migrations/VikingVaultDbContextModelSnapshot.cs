@@ -100,16 +100,14 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<bool>("Read");
 
-                    b.Property<bool>("Seen");
-
                     b.Property<string>("Text")
                         .IsRequired();
 
-                    b.Property<int>("userId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
                 });
@@ -252,9 +250,9 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.Notification", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "user")
+                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
