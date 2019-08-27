@@ -3,12 +3,54 @@
     font-style: italic;
 }
 
+.payments-header {
+    font-family: Helvetica;
+    font-weight: 700;
+    color: #B0B2B6;
+}
+
 .centered-text {
     align-content: center;
     text-align: center;
 }
 
 .automatic-payments-list {
+    position: absolute;
+    left: 10%;
+    top: 7%;
+    border-radius: 2em;
+    padding: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.automatic-payments-background {
+    position: absolute;
+    background-color: #B0B2B6;
+    width: 100%;
+    height: 92%;
+}
+
+.add-payment-icon {
     position: relative;
-    right: 4%;
+    border: none;
+    padding: 0;
+    width: 90%;
+}
+
+.add-payment-button {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: 91%;
+    bottom: 70%;
+}
+
+.add-payment-button:focus,.add-payment-button:active {
+    outline: none;
+    box-shadow: none;
+ }
+
+.delete-automatic-payment-icon{
+    margin-bottom: 10px;
+    width: 40%;
 }

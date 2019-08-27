@@ -40,6 +40,7 @@ namespace VikingVault.Services
                     automaticPaymentData.Add(new AutomaticPaymentDTO
                     {
                         Id = payment.Id,
+                        CompanyId = company.Id,
                         CompanyName = company.FirstName,
                         Amount = payment.Amount,
                         InitialPaymentDate = payment.InitialPaymentDate,
@@ -53,6 +54,48 @@ namespace VikingVault.Services
             }
 
             return automaticPaymentData;
+        }
+
+        public AutomaticPayment CreateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO, string token)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            int userId = int.Parse(tokenObject.Payload["Id"].ToString());
+            AutomaticPayment automaticPaymentToBeCreated = new AutomaticPayment
+            {
+                ReceivingCompany = _dbContext.User.Find(automaticPaymentDTO.CompanyId),
+                Amount = automaticPaymentDTO.Amount,
+                InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate,
+                LastPaymentDate = automaticPaymentDTO.LastPaymentDate,
+                PayingUser = _dbContext.User.Find(userId)
+            };
+            try
+            {
+                _dbContext.Add(automaticPaymentToBeCreated);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new AutomaticPaymentServiceException("Database Error");
+            }
+            return automaticPaymentToBeCreated;
+        }
+
+		public void DeleteAutomaticPayment(int id)
+        {
+            try
+            {
+                AutomaticPayment automaticPaymentToDelete = _dbContext.AutomaticPayments.SingleOrDefault(automaticPayment => automaticPayment.Id == id);
+                if(automaticPaymentToDelete == null)
+                {
+                    throw new AutomaticPaymentException("The payment to be deleted doesn't exist in the database!");
+                }
+                _dbContext.Remove(automaticPaymentToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
+            {
+                throw new AutomaticPaymentException(e.Message);
+            }
         }
     }
 }

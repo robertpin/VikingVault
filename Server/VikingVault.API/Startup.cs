@@ -53,16 +53,16 @@ namespace VikingVault.API
             services.AddScoped<IBankAccountService, BankAccountService>();
             services.AddScoped<IExchangeService, ExchangeService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<ICardService, CardService>();
             services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
             services.AddScoped<ICardService, CardService>();
             services.AddHostedService<TimedPaymentService>();
-            services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
+            services.AddScoped<IScopedProcessingService, ExecutePaymentService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<ITransferFundsService, TransferFundsService>();
             services.AddScoped<IUserCardService, UserCardService>();
             services.AddScoped<ITransferRequestService, TransferRequestService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
             services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 

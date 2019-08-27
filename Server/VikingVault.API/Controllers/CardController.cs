@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services;
@@ -15,20 +16,19 @@ using VikingVault.Services.Exceptions.CardExceptions;
 
 namespace VikingVault.API.Controllers
 {
-
     [ApiController]
     public class CardController : ControllerBase
     {
         private ICardService _cardService;
 
-        public CardController(ICardService attachCardService)
+        public CardController(ICardService cardService)
         {
-            _cardService = attachCardService;
+            _cardService = cardService;
         }
 
+        [Authorization(Role = RoleEnum.Admin)]
         [AllowAnonymous]
-        [Route("attach")]
-        [Authorization(Role=DataAccess.Enums.RoleEnum.Admin)]
+        [Route("attachCard")]
         [HttpPost]
         public ActionResult<Card> AttachCard([FromBody]Card card)
         {
@@ -46,7 +46,22 @@ namespace VikingVault.API.Controllers
             }
         }
 
-        [Authorization(Role=DataAccess.Enums.RoleEnum.User)]
+        [Authorization(Role = RoleEnum.User)]
+        [Route("updateCard")]
+        [HttpPut]
+        public ActionResult<Card> UpdateCard([FromBody]Card cardToUpdate)
+        {
+            try
+            {
+                return Ok(_cardService.UpdateCard(cardToUpdate));
+            }
+            catch (DatabaseException de)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        
+        [Authorization(Role=RoleEnum.User)]
         [Route("card")]
         [HttpGet]
         public ActionResult<bool> CheckUserHasCard()
@@ -67,7 +82,7 @@ namespace VikingVault.API.Controllers
             }
         }
 
-        [Authorization(Role = DataAccess.Enums.RoleEnum.User)]
+        [Authorization(Role = RoleEnum.User)]
         [Route("blockedcard")]
         [HttpGet]
         public ActionResult<bool> CheckCardIsBlocked()

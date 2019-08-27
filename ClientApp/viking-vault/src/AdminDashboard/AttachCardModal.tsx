@@ -5,7 +5,7 @@ import './AttachCardModal.css';
 //const baseUrl = constants.baseUrl;
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 let currentYearValue = new Date().getFullYear();
-const url = constants.baseUrl+"attach";
+const url = constants.baseUrl+"attachCard";
 
 interface IModalProps {
     open: boolean;
