@@ -10,7 +10,6 @@ import DeleteUserModal from "./DeleteUserModal";
 import { AttachCardForm } from "./AttachCardModal";
 import UserIconAvatar from "../Common/UserIconAvatar"
 
-
 export interface IUserData{
     id: number;
     firstName: string;

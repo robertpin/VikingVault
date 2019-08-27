@@ -226,7 +226,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     render(){
         return(
             <div className = "transfer-funds-page">  
-                <SideBar userType = "admin"/>
+                <SideBar userType = "user"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />

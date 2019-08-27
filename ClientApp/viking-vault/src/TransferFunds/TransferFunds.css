@@ -8,8 +8,8 @@
     min-width: 5em;
     width:70%;
     height: 70%;
-    top: 1rem;
-    left: 15%;
+    margin-left: 15%;
+    margin-top: 15px;
     padding: 1rem;
     background-color: rgb(255, 255, 255);
     border-radius: 2em;

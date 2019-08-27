@@ -11,18 +11,13 @@ interface IUserIconAvatarState {
 }
  
 class UserIconAvatar extends React.Component<IUserIconAvatarProps, IUserIconAvatarState> {
-    constructor(props: any) {
-        super(props);
- 
-        this.state = {
-            isImageOk: true
-        };
-    }
+    state = {
+         isImageOk: true
+    };
  
     render() {
         const avatar = (this.state.isImageOk)
-            ? (<img
-                    onError={() => {
+            ? (<img onError={() => {
                         this.setState({
                             isImageOk: false
                         });
@@ -30,12 +25,7 @@ class UserIconAvatar extends React.Component<IUserIconAvatarProps, IUserIconAvat
                     className={this.props.pictureStyle}
                     src={this.props.pictureUri || ''}
                     alt=""
-                />
-            )
-            : (
-                <img
-                className={this.props.pictureStyle} src={this.props.defaultPicture} alt=""/>
-            );
+                /> ):(<img className={this.props.pictureStyle} src={this.props.defaultPicture} alt=""/>);
  
         return (
             <React.Fragment>

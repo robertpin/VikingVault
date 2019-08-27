@@ -37,8 +37,7 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
         }
     }
 
-    render()
-    {
+    render(){
         return (
             <div className = "profile-picture-container">
                 <UserIconAvatar pictureUri={this.state.userProfilePicture} pictureStyle="profile-picture" defaultPicture={profilePicture} />
