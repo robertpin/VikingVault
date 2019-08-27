@@ -38,8 +38,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             emptyListMessage: "",
             modals : {
                 openCreateAutomaticPaymentModal: false,
-            }
         }
+    }
     }
 
     getAutomaticPayments = () => {

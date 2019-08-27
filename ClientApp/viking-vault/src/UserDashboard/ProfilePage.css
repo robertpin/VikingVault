@@ -1,13 +1,12 @@
-.ProfilePage 
+.profile-page
 {
     position: absolute;
-    background-color: rgba(223, 219, 219, 0.945);
-    margin-top: 5%;
-    margin-left: 20%;
-    width: 70%;
+    background-color:white;
+    margin: 15px auto;
+    width: 65%;
     height: 60%;
     border-radius : 25px;
-    box-shadow: 0.2rem 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.10);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     font-size: 150%;
     overflow: hidden;
     display: inline-flex;
