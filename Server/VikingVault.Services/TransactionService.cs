@@ -13,6 +13,7 @@ namespace VikingVault.Services
 {
     public class TransactionService : ITransactionService
     {
+        const int numberOfTransactionsToTake = 5;
         private readonly VikingVaultDbContext _dbContext;
         private readonly IUserService _userService;
 
@@ -47,26 +48,16 @@ namespace VikingVault.Services
 
                 Transaction senderTransaction = new Transaction
                 {
-                    User = transferData.Sender,
+                    Sender = transferData.Sender,
                     Type = "Transfer",
                     Currency = transferData.Currency,
                     Date = DateTime.Now,
                     Amount = -transferData.AmountSent,
-                    OtherParty = reciever.FirstName + reciever.LastName
-                };
-
-                Transaction recieverTransaction = new Transaction
-                {
-                    User = reciever,
-                    Type = "Transfer",
-                    Currency = transferData.Currency,
-                    Date = DateTime.Now,
-                    Amount = transferData.AmountSent,
-                    OtherParty = transferData.Sender.FirstName + transferData.Sender.LastName
+                    Receiver = reciever,
+                    Details = transferData.TransferDetails
                 };
 
                 AddTransaction(senderTransaction);
-                AddTransaction(recieverTransaction);
             }
             catch
             {
@@ -74,14 +65,33 @@ namespace VikingVault.Services
             }
         }
 
-        public List<Transaction> GetTransactions(string userId)
+        public List<TransactionDTO> GetTransactions(string userId)
         {
             int uid = int.Parse(userId);
-            return _dbContext.Transactions
-                .Where(t => t.User.Id == uid)
+            var transactions =  _dbContext.Transactions
+                .Include(t => t.Sender)
+                .Include(t => t.Receiver)
+                .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
                 .OrderByDescending(t => t.Date)
-                .Take(5)
+                .Take(numberOfTransactionsToTake)
                 .ToList();
+            var transactionsDTO = new List<TransactionDTO>();
+            foreach(Transaction transaction in transactions)
+            {
+                transactionsDTO.Add(new TransactionDTO
+                {
+                    Id = transaction.Id,
+                    Sender = transaction.Sender,
+                    Receiver = transaction.Receiver,
+                    Type = transaction.Type,
+                    Amount = transaction.Amount,
+                    Details = transaction.Details,
+                    Currency = transaction.Currency,
+                    Date = transaction.Date,
+                    IsUserSender = (transaction.Sender.Id == uid)
+                });
+            }
+            return transactionsDTO;
         }
     }
 }

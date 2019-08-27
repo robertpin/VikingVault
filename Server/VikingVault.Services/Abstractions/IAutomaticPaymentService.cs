@@ -9,5 +9,6 @@ namespace VikingVault.Services.Abstractions
     {
         List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token);
         AutomaticPayment CreateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO, string token);
+		void DeleteAutomaticPayment(int id);
     }
 }

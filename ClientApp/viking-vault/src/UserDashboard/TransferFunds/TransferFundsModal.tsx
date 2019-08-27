@@ -1,5 +1,5 @@
 import React from 'react';
-import '../UserDashboard/ExchangeResponseModal.css';
+import '../ExchangeResponseModal.css';
 
 interface ITransferFundsModalProps{
     open: boolean;

@@ -44,7 +44,7 @@ namespace VikingVault.API.Controllers
                 _userService.DeleteUser(userEmail);
                 return Ok(true);
             }
-            catch
+            catch(UserServiceException e)
             {
                 return StatusCode(500, "Internal server error");
             }

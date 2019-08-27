@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace VikingVault.DataAccess.Models
 {
-    public class Transaction
+    public class TransactionDTO
     {
         public int Id { get; set; }
         public User Sender { get; set; }
@@ -15,5 +14,6 @@ namespace VikingVault.DataAccess.Models
         public float Amount { get; set; }
         public User Receiver { get; set; }
         public string Details { get; set; }
+        public bool IsUserSender { get; set; }
     }
 }
