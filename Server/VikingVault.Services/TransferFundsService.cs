@@ -38,9 +38,23 @@ namespace VikingVault.Services
             {
                 _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
                 _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
-
-                _transactionService.AddTransactionsForTransferFunds(transferData);          
+                _transactionService.AddTransactionsForTransferFunds(transferData);
+                AddReceivedNotification(transferData, idReciever);
             }
+        }
+
+        private void AddReceivedNotification(TransferFundsModel transferData, int? idReciever)
+        {
+            User receiver = _userService.GetById((int)idReciever);
+            Notification notification = new Notification
+            {
+                User = receiver,
+                Text = "Transfer received " + transferData.AmountSent + " " + transferData.Currency + " from " + transferData.Sender.FirstName,
+                Read = false
+            };
+
+            _dbContext.Notifications.Add(notification);
+            _dbContext.SaveChanges();
         }
 
         private bool AreDifferentUsers(int idSender, int idReciever)

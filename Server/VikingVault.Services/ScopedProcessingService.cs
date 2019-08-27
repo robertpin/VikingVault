@@ -46,6 +46,7 @@ namespace VikingVault.Services
                     automaticPayment.IsEnabled = false;
                     _dbContext.AutomaticPayments.Update(automaticPayment);
                     _dbContext.SaveChanges();
+                    AddFailedPaymentNotification(automaticPayment);
                 }
                 else
                 {
@@ -55,9 +56,34 @@ namespace VikingVault.Services
                         UpdatePayingUserBankAccount(automaticPayment.PayingUser, automaticPayment.Amount);
                         UpdateAutomaticPayment(automaticPayment, currentDateTime);
                         AddPayingUserAutomaticTransaction(automaticPayment, currentDateTime);
+                        AddSuccessfulPaymentNotification(automaticPayment);
                     }
                 }
             }
+        }
+
+        private void AddSuccessfulPaymentNotification(AutomaticPayment automaticPayment)
+        {
+            Notification notification = new Notification
+            {
+                User = automaticPayment.PayingUser,
+                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + " of " + automaticPayment.Amount + " RON successful!",
+                Read = false
+            };
+            _dbContext.Notifications.Add(notification);
+            _dbContext.SaveChanges();
+        }
+
+        private void AddFailedPaymentNotification(AutomaticPayment automaticPayment)
+        {
+            Notification notification = new Notification
+            {
+                User = automaticPayment.PayingUser,
+                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + " of " + automaticPayment.Amount + " RON was declined!",
+                Read = false
+            };
+            _dbContext.Notifications.Add(notification);
+            _dbContext.SaveChanges();
         }
 
         private void AddPayingUserAutomaticTransaction(AutomaticPayment automaticPayment, DateTime currentDateTime)
