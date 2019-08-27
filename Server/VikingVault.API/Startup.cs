@@ -62,6 +62,7 @@ namespace VikingVault.API
             services.AddScoped<IUserCardService, UserCardService>();
             services.AddScoped<ITransferRequestService, TransferRequestService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
             services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 
