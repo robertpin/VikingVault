@@ -47,7 +47,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           transferedAmount: 0,
           currency: "EUR",
           cardNumber: "Card Number",
-          transferDetails: "Trasnfer Details",
+          transferDetails: "Transfer Details",
           modalMessage: "",
           totalBalance: 0,
           openModal: false,
@@ -177,7 +177,6 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     transferMoney = () => {
-      
         let data = this.getDataForTransfer();
 
         if(this.isValidAmount(data)) {

@@ -50,7 +50,7 @@ namespace VikingVault.API.Controllers
                     return NotFound(e.Message);
                 }
 
-                return Ok("Server Error."); //TO BE CHANGED
+                return Ok("Server Error."); 
             }
         }
 
