@@ -23,7 +23,7 @@ namespace VikingVault.Services
         public List<AutomaticPaymentDTO> GetAllAutomaticPayments(string token)
         {
             var tokenObject = new JwtSecurityToken(token);
-            int userId = Int32.Parse(tokenObject.Payload["Id"].ToString());
+            int userId = int.Parse(tokenObject.Payload["Id"].ToString());
 
             var automaticPaymentData = new List<AutomaticPaymentDTO>();
             try
@@ -39,7 +39,8 @@ namespace VikingVault.Services
                     var company = _dbContext.User.SingleOrDefault(user => user.Id == payment.ReceivingCompany.Id);
                     automaticPaymentData.Add(new AutomaticPaymentDTO
                     {
-                        PaymentId = payment.Id,
+                        Id = payment.Id,
+                        CompanyId = company.Id,
                         CompanyName = company.FirstName,
                         Amount = payment.Amount,
                         InitialPaymentDate = payment.InitialPaymentDate,
@@ -53,6 +54,30 @@ namespace VikingVault.Services
             }
 
             return automaticPaymentData;
+        }
+
+        public AutomaticPayment CreateAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO, string token)
+        {
+            var tokenObject = new JwtSecurityToken(token);
+            int userId = int.Parse(tokenObject.Payload["Id"].ToString());
+            AutomaticPayment automaticPaymentToBeCreated = new AutomaticPayment
+            {
+                ReceivingCompany = _dbContext.User.Find(automaticPaymentDTO.CompanyId),
+                Amount = automaticPaymentDTO.Amount,
+                InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate,
+                LastPaymentDate = automaticPaymentDTO.LastPaymentDate,
+                PayingUser = _dbContext.User.Find(userId)
+            };
+            try
+            {
+                _dbContext.Add(automaticPaymentToBeCreated);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new AutomaticPaymentServiceException("Database Error");
+            }
+            return automaticPaymentToBeCreated;
         }
 
 		public void DeleteAutomaticPayment(int id)

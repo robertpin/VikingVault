@@ -7,6 +7,9 @@ namespace VikingVault.DataAccess.Models
 {
     public class AutomaticPaymentDTO
     {
+        public int Id { get; set; }
+        [Required]
+        public int CompanyId { get; set; }
         [Required]
         public int PaymentId { get; set; }
         [Required]
@@ -15,7 +18,6 @@ namespace VikingVault.DataAccess.Models
         public float Amount { get; set; }
         [Required]
         public DateTime InitialPaymentDate { get; set; }
-        [Required]
         public DateTime LastPaymentDate { get; set; }
     }
 }

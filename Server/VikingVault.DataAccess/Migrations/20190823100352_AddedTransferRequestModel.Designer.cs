@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190821134935_UpdatedModelMigration")]
-    partial class UpdatedModelMigration
+    [Migration("20190823100352_AddedTransferRequestModel")]
+    partial class AddedTransferRequestModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,6 +150,32 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Amount")
+                        .IsRequired();
+
+                    b.Property<string>("CardNumberReciever")
+                        .IsRequired();
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.Property<string>("Details");
+
+                    b.Property<int>("RequesterId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequesterId");
+
+                    b.ToTable("TransferRequests");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -235,6 +261,14 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Requester")
+                        .WithMany()
+                        .HasForeignKey("RequesterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

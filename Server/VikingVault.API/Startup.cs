@@ -58,13 +58,18 @@ namespace VikingVault.API
             services.AddHostedService<TimedPaymentService>();
             services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<ITransferFundsService, TransferFundsService>();
+            services.AddScoped<IUserCardService, UserCardService>();
+            services.AddScoped<ITransferRequestService, TransferRequestService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
+            services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, VikingVaultDbContext context)
         {
-	        context.Database.Migrate();
+	        //context.Database.Migrate();
 
 			if (env.IsDevelopment())
             {

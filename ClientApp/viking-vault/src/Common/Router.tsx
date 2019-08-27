@@ -6,8 +6,10 @@ import { ExchangeForm } from '../UserDashboard/ExchangeForm'
 import "../App.css"
 import { Dashboard } from "./Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
+import { TransferFundsPage } from "../TransferFunds/TransferFundsPage";
 import { ViewAutomaticPayments } from "../UserDashboard/ViewAutomaticPayments";
 import { BlockedServices } from "../UserDashboard/BlockedServices";
+import { Notifications } from "../UserDashboard/Notifications";
 
 function Router(props: any) {
     return <BrowserRouter>
@@ -18,6 +20,8 @@ function Router(props: any) {
         <Route path="/exchange" exact component={ExchangeForm}/>
         <Route path="/exchange" exact render={() => {return <BlockedServices><ExchangeForm/></BlockedServices>;}}/>
         <Route path="/companies" exact component={Companies}/>
+        <Route path="/notifications" exact component={Notifications}/>
+        <Route path="/transfer" exact render={() => {return <BlockedServices><TransferFundsPage/></BlockedServices>;}}/>
     </BrowserRouter>;
 }
 

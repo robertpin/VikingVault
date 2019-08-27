@@ -103,7 +103,7 @@ class AdminPage extends React.Component<any, IProfileData>{
     render(){
         return(
             <div className = "admin-page">
-                <SideBar />
+                <SideBar userType="admin"/>
                 <TopBar/>
                 <UserIcon/>
                 <div className = "display-users-container">
