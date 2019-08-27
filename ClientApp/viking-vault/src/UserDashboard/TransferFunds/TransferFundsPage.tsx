@@ -8,9 +8,9 @@ import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
 
-
-const transferUrl = `${constants.baseUrl}transferFunds`;
-const requestUrl = `${constants.baseUrl}transferRequests`;
+const transferFundsUrl = `${constants.baseUrl}transferFunds`;
+const transferRequestsUrl = `${constants.baseUrl}transferRequests`;
+const bankAccountUrl = `${constants.baseUrl}bankAccount`;
 const currencyMap = {
   [currencyEnum.ron]: 0,
   [currencyEnum.eur]: 1,
@@ -104,7 +104,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     getTotalBalance = () => {
       let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch(constants.baseUrl+"bankAccount", {
+            fetch(bankAccountUrl, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -149,7 +149,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           let token = sessionStorage.getItem('Authentication-Token');
           if(token !== null) {
             this.handleIsButtonDisabled();
-            fetch(transferUrl, {
+            fetch(transferFundsUrl, {
               method: "POST",
               headers: {
                 'Accept': 'application/json',
@@ -159,8 +159,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
               body: JSON.stringify(data)
               })
               .then(response => response.json())
-              .then( response => {
-                
+              .then( response => {            
                   this.setState({
                     openModal: true,
                     modalMessage: response
@@ -172,19 +171,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         }
     }
 
-    requestTransfer = () =>
-    {
+    requestTransfer = () => {
       let data = this.getTransferDataFromUI();
-
       if(this.isValidAmount(data)) {
-
         let token = sessionStorage.getItem('Authentication-Token');
-
          if(token !== null)
         {
           this.handleIsButtonDisabled();
-
-          fetch(requestUrl, {
+          fetch(transferRequestsUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -195,20 +189,17 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             })
             .then(response => response.json())
             .then( response => {
-              
                 this.setState({
                   openModal: true,
                   modalMessage: response
                 });
-
                 this.handleIsButtonDisabled();
             });
         } 
       }
     }
 
-    closeModal = () =>
-    {
+    closeModal = () => {
         this.setState({
           openModal: false,
           modalMessage: "",

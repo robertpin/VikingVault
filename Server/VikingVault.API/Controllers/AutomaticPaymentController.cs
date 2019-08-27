@@ -38,7 +38,7 @@ namespace VikingVault.API.Controllers
                 var token = Request.Headers["x-access-token"];
                 return Ok(_automaticPaymentService.CreateAutomaticPayment(automaticPayment, token));
             }
-            catch (AutomaticPaymentServiceException apse)
+            catch (AutomaticPaymentServiceException ex)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -51,7 +51,7 @@ namespace VikingVault.API.Controllers
             {
                 return Ok(_automaticPaymentService.EditAutomaticPayment(automaticPayment));
             }
-            catch (AutomaticPaymentServiceException apse)
+            catch (AutomaticPaymentServiceException ex)
             {
                 return StatusCode(500, "Internal server error");
             }

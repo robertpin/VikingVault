@@ -5,7 +5,7 @@ import { IAutomaticPayment } from './AutomaticPaymentList';
 import editPaymentImg from "../Resources/images/edit_payment.png";
 import "./EditAutomaticPaymentButton.css";
 
-interface IProps {
+interface IEditAutomaticPaymentProps {
     automaticPayment: IAutomaticPayment,
 }
 
@@ -13,8 +13,8 @@ interface IEditAutomaticPaymentModal {
     openEditAutomaticPaymentModal: boolean,
 }
 
-class EditAutomaticPaymentButton extends React.Component<IProps, IEditAutomaticPaymentModal> {
-    constructor(props: any) {
+class EditAutomaticPaymentButton extends React.Component<IEditAutomaticPaymentProps, IEditAutomaticPaymentModal> {
+    constructor(props: IEditAutomaticPaymentProps) {
         super(props);
         this.state = {
             openEditAutomaticPaymentModal: false,

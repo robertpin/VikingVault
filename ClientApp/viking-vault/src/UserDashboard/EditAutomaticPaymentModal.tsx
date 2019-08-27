@@ -7,7 +7,7 @@ const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
 let currentDate = new Date();
 currentDate.setHours(0);
 
-interface IModalProps {
+interface IEditAutomaticPaymentModalProps {
     open: boolean;
     onModalClose: any;
     automaticPayment: IAutomaticPayment;
@@ -18,15 +18,15 @@ interface IAutomaticPaymentProperties {
     initialPaymentDate: string;
 }
 
-interface IFormState {
+interface IEditAutomaticPaymentFormState {
     [key: string]: string | boolean | IAutomaticPaymentProperties | null;
     automaticPayment: IAutomaticPaymentProperties;
     valid: boolean | null;
     errorLabel: string;
 }
 
-class EditAutomaticPaymentForm extends React.Component<IModalProps, IFormState> {
-    constructor(props: IModalProps) {
+class EditAutomaticPaymentForm extends React.Component<IEditAutomaticPaymentModalProps, IEditAutomaticPaymentFormState> {
+    constructor(props: IEditAutomaticPaymentModalProps) {
         super(props);
         this.state = {
             automaticPayment: {
@@ -47,7 +47,7 @@ class EditAutomaticPaymentForm extends React.Component<IModalProps, IFormState> 
         });
     }
 
-    private amountMustBePositive = () => {
+    private isAmountPositive = () => {
         if(this.state.automaticPayment.amount.match(regexCheckIfPositiveFloat)) {
             return  {
                 message: "Ok",
@@ -60,7 +60,7 @@ class EditAutomaticPaymentForm extends React.Component<IModalProps, IFormState> 
         }
     }
 
-    private initialPaymentDateIsAfterCurrentDate = () => {
+    private isInitialPaymentDateAfterCurrentDate = () => {
         if(this.state.automaticPayment.initialPaymentDate !== "" && new Date(this.state.automaticPayment.initialPaymentDate) >= currentDate) {
             return  {
                 message: "Ok",
@@ -75,7 +75,7 @@ class EditAutomaticPaymentForm extends React.Component<IModalProps, IFormState> 
 
     private mandatoryFieldsCompletedCorrectly = () => {
         let val = false;
-        const validationFunctions = [this.amountMustBePositive, this.initialPaymentDateIsAfterCurrentDate];
+        const validationFunctions = [this.isAmountPositive, this.isInitialPaymentDateAfterCurrentDate];
         val = validationFunctions.every(functionItem => functionItem().message === "Ok");
         return val;
     }
@@ -156,17 +156,38 @@ class EditAutomaticPaymentForm extends React.Component<IModalProps, IFormState> 
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Amount</label>
-                                    <input type="text" value={this.state.automaticPayment.amount} onChange={(e) => this.handleChange(e.target.value, "amount")} required className="form-control attach-card"></input>
-                                    {this.amountMustBePositive().message !== "Ok" ? <pre className={this.amountMustBePositive().class}>{this.amountMustBePositive().message}</pre> : null}
+                                    <input
+                                        type="text"
+                                        value={this.state.automaticPayment.amount}
+                                        onChange={(e) => this.handleChange(e.target.value, "amount")}
+                                        required className="form-control attach-card">
+                                    </input>
+                                    {this.isAmountPositive().message !== "Ok" ?
+                                     <pre 
+                                        className={this.isAmountPositive().class}>{this.isAmountPositive().message}
+                                     </pre> : null}
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Initial Payment Date</label>
-                                    <input type="date" name="initialPaymentDate" value={this.state.automaticPayment.initialPaymentDate} onChange={(e) => this.handleChange(e.target.value, "initialPaymentDate")} required className="form-control attach-card"></input>
-                                    { this.initialPaymentDateIsAfterCurrentDate().message !== "Ok" ? <pre className={this.initialPaymentDateIsAfterCurrentDate().class}>{this.initialPaymentDateIsAfterCurrentDate().message}</pre> : null }
+                                    <input
+                                        type="date"
+                                        name="initialPaymentDate"
+                                        value={this.state.automaticPayment.initialPaymentDate} 
+                                        onChange={(e) => this.handleChange(e.target.value, "initialPaymentDate")} 
+                                        required className="form-control attach-card">
+                                     </input>
+                                    { this.isInitialPaymentDateAfterCurrentDate().message !== "Ok" ?
+                                     <pre 
+                                        className={this.isInitialPaymentDateAfterCurrentDate().class}>{this.isInitialPaymentDateAfterCurrentDate().message}
+                                     </pre> : null }
                                 </div>
                                 {this.state.errorLabel !== "" ? <div className="alert alert-warning"> {this.state.errorLabel} </div> : null }
                                 <div className="modal-footer attach-card">
-                                    <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary attach-card" : "btn btn-secondary attach-card"} onClick={() => this.sendDataAndShowResponse()}>Edit Automatic Payment</button>
+                                    <button
+                                        disabled={!this.mandatoryFieldsCompletedCorrectly()}
+                                        className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary attach-card" : "btn btn-secondary attach-card"} 
+                                        onClick={() => this.sendDataAndShowResponse()}>Edit Automatic Payment
+                                    </button>
                                     <button type="button" className="btn btn-default attach-card" onClick={this.closeModal}>Cancel</button>
                                 </div>
                             </div>
