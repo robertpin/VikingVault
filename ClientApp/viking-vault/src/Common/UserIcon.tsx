@@ -3,6 +3,7 @@ import icon from "../Resources/images/user.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
 import { constants } from "../Resources/Constants";
+import UserIconAvatar from "./UserIconAvatar"
 
 const API_URL = `${constants.baseUrl}userprofilepages`;
 
@@ -37,8 +38,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
     let token = sessionStorage.getItem("Authentication-Token");
 
-        if(token === null)
-        {
+        if(token === null) {
             this.setState({
                 redirect: true
             })
@@ -51,26 +51,19 @@ class UserIcon extends React.Component<any, IUserIconState> {
                 'Content-Type': 'application/json',
                 'x-access-token':  token.toString()
                 }})
-            .then( response => 
-                {
-                    if( response.status === 500)
-                    {
+            .then( response => {
+                    if( response.status === 500){
                         return null;
-                    }
-                    
+                    }                   
                     return response.json();
                 })
             .then( userData => {
-                if(userData != null && userData.pictureLink !== "")
-                {
-                    this.setState(
-                        {
-                           userImage: userData.pictureLink
-                        }
-                    )
-                }
-            });
-        }
+                  this.setState({
+                      userImage: userData.pictureLink
+                  });
+              }            
+          )       
+      }  
   }
 
   componentWillUnmount() {
@@ -100,13 +93,8 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   render() {
     return (
-      <div title="Profile" className="dropdown" ref={this.megaMenu}>
-        <img
-          className="user-icon img"
-          src={this.state.userImage}
-          alt=""
-          onClick={this.handleClick}
-        />
+      <div className="dropdown" ref={this.megaMenu} onClick={this.handleClick}>
+        <UserIconAvatar pictureUri={this.state.userImage} pictureStyle="user-icon img" defaultPicture={icon}/>
         <div className={`mega-menu ${this.state.clicked}`}>
           <div className="mega-menu-content">
             <button className="button-user-icon" onClick = {this.sendData}>View profile</button>

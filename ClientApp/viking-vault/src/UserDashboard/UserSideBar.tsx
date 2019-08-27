@@ -12,25 +12,25 @@ interface IUserSideBarProps {
 }
 
 function UserSideBar(props: IUserSideBarProps) {
-    const sideMenuVisibility: string = props.show ? "side-menu-hide" : "side-menu-show";
+    const sideMenuVisibility:string = props.show ? "side-menu-hide" : "side-menu-show";
     const spanVisibility: string = props.show ? "span-hide" : "span-show";
 
     return <React.Fragment>
-        <Link title="Transfer" className="redirect-symbols" to="/transfer"> 
-            <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={transferIcon} alt="Transfer"/>
-                <span className={spanVisibility}> Transfer </span>
+        <Link className="redirect-symbols" to="/transfer"> 
+            <div className = {sideMenuVisibility}>
+                <img className="menu-icon" src={transferIcon} alt="Transfer" title="Transfer"/>
+                <span className = {spanVisibility}> Transfer </span>
             </div>
         </Link>
-        <Link title="Exchange" className="redirect-symbols" to="/exchange">
-            <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={moneyExchangeIcon} alt="Exchange"/>
-                <span className={spanVisibility}> Exchange </span>
+        <Link className="redirect-symbols" to="/exchange">
+            <div className = {sideMenuVisibility}>
+                <img className="menu-icon" src={moneyExchangeIcon} alt="Exchange" title="Exchange"/>
+                <span className = {spanVisibility}> Exchange </span>
             </div>
         </Link>
-        <Link title="Automatic debit" className="redirect-symbols" to="/automatic-debit">
-            <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={paymentIcon} alt="Automatic debit"/>
+        <Link className="redirect-symbols" to="/automatic-debit">
+            <div className = {sideMenuVisibility}>
+                <img className="menu-icon" src={paymentIcon} alt="Automatic debit" title="Automatic debit"/>
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>

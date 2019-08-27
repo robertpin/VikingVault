@@ -66,7 +66,8 @@ namespace VikingVault.Services
                 Amount = automaticPaymentDTO.Amount,
                 InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate,
                 LastPaymentDate = automaticPaymentDTO.LastPaymentDate,
-                PayingUser = _dbContext.User.Find(userId)
+                PayingUser = _dbContext.User.Find(userId),
+                IsEnabled = true
             };
             try
             {
@@ -78,6 +79,40 @@ namespace VikingVault.Services
                 throw new AutomaticPaymentServiceException("Database Error");
             }
             return automaticPaymentToBeCreated;
+        }
+
+        public AutomaticPayment EditAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO)
+        {
+            try
+            {
+                AutomaticPayment automaticPayment = _dbContext.AutomaticPayments.SingleOrDefault(ap => ap.Id == automaticPaymentDTO.Id);
+                automaticPayment.Amount = automaticPaymentDTO.Amount;
+                automaticPayment.InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate;
+                _dbContext.SaveChanges();
+                return automaticPayment;
+            }
+            catch (DbUpdateException e)
+            {
+                throw new AutomaticPaymentServiceException("Database Error");
+            }
+        }
+
+		public void DeleteAutomaticPayment(int id)
+        {
+            try
+            {
+                AutomaticPayment automaticPaymentToDelete = _dbContext.AutomaticPayments.SingleOrDefault(automaticPayment => automaticPayment.Id == id);
+                if(automaticPaymentToDelete == null)
+                {
+                    throw new AutomaticPaymentException("The payment to be deleted doesn't exist in the database!");
+                }
+                _dbContext.Remove(automaticPaymentToDelete);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception e) when (e is DbUpdateException || e is DbUpdateConcurrencyException)
+            {
+                throw new AutomaticPaymentException(e.Message);
+            }
         }
     }
 }

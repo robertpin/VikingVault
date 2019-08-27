@@ -9,7 +9,7 @@ class ProfilePage extends React.Component<any, any>
     render ()
     { 
         return ( 
-            <div className = "ProfilePage">
+            <div className = "profile-page">
                 <ProfilePicture />
                 <ProfileData />
             </div>
