@@ -28,9 +28,14 @@
     <Compile Remove="Migrations\20190809095556_fullModelMigration.cs" />
     <Compile Remove="Migrations\20190813074007_DroppedProfilePages.cs" />
     <Compile Remove="Migrations\20190813101416_SeedAdmin.cs" />
+    <Compile Remove="Migrations\20190813112850_InitialMigration.cs" />
     <Compile Remove="Migrations\20190813112913_SeedAdmin.cs" />
     <Compile Remove="Migrations\20190819105929_fixedTransactionTable.cs" />
+    <Compile Remove="Migrations\20190820113259_addedRoleTableAndRefactoredUserTable.cs" />
     <Compile Remove="Migrations\20190820113438_addedBlockedAttributeForCard.cs" />
+    <Compile Remove="Migrations\20190820113653_changedRoleNameToString.cs" />
+    <Compile Remove="Migrations\20190820113900_notRequireRoleFieldInUserTable.cs" />
+    <Compile Remove="Migrations\20190820121451_updatedRoleTable.cs" />
     <Compile Remove="Migrations\20190821082859_setRoleToRequired.cs" />
     <Compile Remove="Migrations\20190821083601_ChangedTransactionsAndCardsTables.cs" />
     <Compile Remove="Migrations\20190821090534_addedAutomaticPaymentModel.cs" />
@@ -42,12 +47,32 @@
     <Compile Remove="Migrations\20190821125303_UpdatedColumnNameOnAutomaticPayment.cs" />
     <Compile Remove="Migrations\20190821125849_modifiedCardsAndTransactionsMigration.cs" />
     <Compile Remove="Migrations\20190821134529_automaticPaymentsAddedToPreviousMigration.cs" />
+    <Compile Remove="Migrations\20190821134935_UpdatedModelMigration.cs" />
+    <Compile Remove="Migrations\20190822074625_FixedAutomaticPaymentTableIssue.cs" />
+    <Compile Remove="Migrations\20190822104346_addedIsEnabledColumnAP.cs" />
+    <Compile Remove="Migrations\20190822105137_changedCompanyColumnName.cs" />
+    <Compile Remove="Migrations\20190823100352_AddedTransferRequestModel.cs" />
+    <Compile Remove="Migrations\20190823102752_ModifiedTransactionModel.cs" />
     <Compile Remove="Migrations\20190822120042_AddedTransferRequestModel.cs" />
     <Compile Remove="Migrations\20190822120314_UpdatedColumnNameTransferRequestsModel.cs" />
     <Compile Remove="Migrations\20190822140402_updated column in TransferRequestTable.cs" />
+    <Compile Remove="Migrations\20190823110153_ModifiedTransactionModel.cs" />
     <Compile Remove="Migrations\20190823121631_CreatedNotificationModel.cs" />
+    <Compile Remove="Migrations\20190826083956_ModifiedTransaction.cs" />
+    <Compile Remove="Migrations\20190826090009_ModifiedTransactionRequired.cs" />
+    <Compile Remove="Migrations\20190826100749_ModifiedTransactionsModel.cs" />
+    <Compile Remove="Migrations\20190826101842_InitialMigration.cs" />
     <Compile Remove="Migrations\20190821134935_UpdatedModelMigration.cs" />
     <Compile Remove="Migrations\20190822072748_UpdatedModelMigration.cs" />
+    <Compile Remove="Migrations\20190826102027_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827073426_UpdatedTrnsactionModel.cs" />
+    <Compile Remove="Migrations\20190827073613_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827073751_ModifiedTransactionTable.cs" />
+    <Compile Remove="Migrations\20190827074454_x.cs" />
+    <Compile Remove="Migrations\20190827074604_xa.cs" />
+    <Compile Remove="Migrations\20190827075155_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827075627_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827075735_InitialMigration.cs" />
   </ItemGroup>
 
   <ItemGroup>
