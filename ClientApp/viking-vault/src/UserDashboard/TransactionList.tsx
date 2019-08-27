@@ -53,18 +53,22 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
+        let otherUserInvoledInTransaction: string;
         if(transaction.type.toLowerCase() === transactionTypeEnum.transfer) {
             if(transaction.isUserSender) {
-                return `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
+                otherUserInvoledInTransaction = `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
             }
             else {
-                return `From ${transaction.sender.firstName} ${transaction.sender.lastName}`;
+                otherUserInvoledInTransaction = `From ${transaction.sender.firstName} ${transaction.sender.lastName}`;
             }
         }
-        if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
-            return `Exchanged ${transaction.details.toUpperCase()}`;
+        else if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
+            otherUserInvoledInTransaction = `Exchanged ${transaction.details.toUpperCase()}`;
         }
-        return transaction.receiver.firstName;
+        else {
+            otherUserInvoledInTransaction = transaction.receiver.firstName;
+        }
+        return otherUserInvoledInTransaction;
     }
 
     private formatDate(transactionDate: Date) {
@@ -91,20 +95,28 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatDetails(tranasction: ITransaction) {
+        let details: string;
         if(tranasction.type.toLowerCase() === transactionTypeEnum.exchange) {
-            return "Exchange";
+            details = "Exchange";
         }
-        return tranasction.details;
+        else {
+            details = tranasction.details
+        }
+        return details;
     }
 
     private formatAmount = (transation: ITransaction) => {
+        let amountString: string;
         if(transation.type === "payment") {
-            return -transation.amount;
+            amountString =  -transation.amount+"";
         }
-        if(transation.amount > 0) {
-            return `+${transation.amount}`;
+        else if(transation.amount > 0) {
+            amountString = `+${transation.amount}`;
         }
-        return transation.amount;
+        else {
+            amountString = transation.amount+"";
+        }
+        return amountString;
     }
 
     private getTableRowFromTransaction(tran: ITransaction) {

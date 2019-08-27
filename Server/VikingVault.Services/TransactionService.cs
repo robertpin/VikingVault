@@ -13,6 +13,7 @@ namespace VikingVault.Services
 {
     public class TransactionService : ITransactionService
     {
+        const int numberOfTransactionsToTake = 5;
         private readonly VikingVaultDbContext _dbContext;
         private readonly IUserService _userService;
 
@@ -72,7 +73,7 @@ namespace VikingVault.Services
                 .Include(t => t.Receiver)
                 .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
                 .OrderByDescending(t => t.Date)
-                .Take(5)
+                .Take(numberOfTransactionsToTake)
                 .ToList();
             var transactionsDTO = new List<TransactionDTO>();
             foreach(Transaction transaction in transactions)
