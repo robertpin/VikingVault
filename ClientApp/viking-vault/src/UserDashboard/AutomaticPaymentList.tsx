@@ -3,11 +3,10 @@ import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
 
-
 const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
 
 interface IAutomaticPayment {
-    id: Number,
+    id: number,
     companyName: string,
     amount: Number,
     initialPaymentDate: Date,

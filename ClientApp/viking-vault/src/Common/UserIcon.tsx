@@ -61,7 +61,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
                     return response.json();
                 })
             .then( userData => {
-                if(userData != null && userData.pictureLink !== "")
+                if(userData !== null && userData.pictureLink !== "")
                 {
                     this.setState(
                         {

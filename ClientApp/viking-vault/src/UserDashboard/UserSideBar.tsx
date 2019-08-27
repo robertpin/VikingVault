@@ -29,12 +29,6 @@ function UserSideBar(props: ISideBarProps) {
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/block-card">
-            <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={block}></img>
-                <span className = {spanVisibility}> Block card </span>
-            </div>
-        </Link>
     </React.Fragment>
 }
 

@@ -5,11 +5,11 @@
 }
 .transfer-funds-container{
     position: relative;
-    min-width: 25em;
-    width:60%;
+    min-width: 5em;
+    width:70%;
     height: 70%;
     top: 1rem;
-    left: 5rem;
+    left: 15%;
     padding: 1rem;
     background-color: rgb(255, 255, 255);
     border-radius: 2em;

@@ -6,7 +6,7 @@ import './toggle.css';
 const paymentTogglingURL = `${constants.baseUrl}PaymentToggling/`;
 
 interface IPaymentToggleProps{
-  paymentId: Number
+  paymentId: number
 }
 
 class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
