@@ -60,7 +60,7 @@ namespace VikingVault.Services
                 }
                 return userAccount;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

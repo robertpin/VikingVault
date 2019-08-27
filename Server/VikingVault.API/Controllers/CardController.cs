@@ -5,33 +5,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
 using VikingVault.DataAccess.Models;
 using VikingVault.DataAccess.Models.Exceptions;
+using VikingVault.Services;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
 using VikingVault.Services.Exceptions.CardExceptions;
 
 namespace VikingVault.API.Controllers
 {
-    [Authorize]
+
     [ApiController]
     public class CardController : ControllerBase
     {
-        private IAttachCardService _attachCardService;
+        private ICardService _cardService;
 
-        public CardController(IAttachCardService attachCardService)
+        public CardController(ICardService attachCardService)
         {
-            _attachCardService = attachCardService;
+            _cardService = attachCardService;
         }
 
         [AllowAnonymous]
         [Route("attach")]
+        [Authorization(Role=DataAccess.Enums.RoleEnum.Admin)]
         [HttpPost]
         public ActionResult<Card> AttachCard([FromBody]Card card)
         {
             try
             {
-                return Ok(_attachCardService.AttachCard(card));
+                return Ok(_cardService.AttachCard(card));
             }
             catch (CardNumberAlreadyExistsException cnaee)
             {
@@ -40,6 +43,43 @@ namespace VikingVault.API.Controllers
             catch (DatabaseException de)
             {
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Authorization(Role=DataAccess.Enums.RoleEnum.User)]
+        [Route("card")]
+        [HttpGet]
+        public ActionResult<bool> CheckUserHasCard()
+        {
+            string token = Request.Headers["x-access-token"];
+            try
+            {
+                Card card = _cardService.CheckUserHasCard(token);
+                if(card == null)
+                {
+                    return Ok(false);
+                }
+                return Ok(true);
+            }
+            catch(CardServiceException e)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorization(Role = DataAccess.Enums.RoleEnum.User)]
+        [Route("blockedcard")]
+        [HttpGet]
+        public ActionResult<bool> CheckCardIsBlocked()
+        {
+            string token = Request.Headers["x-access-token"];
+            try
+            {
+                return Ok(_cardService.CheckCardIsBlocked(token));
+            }
+            catch (CardServiceException e)
+            {
+                return StatusCode(500);
             }
         }
     }

@@ -4,7 +4,6 @@ import TopBar from '../Common/TopBar'
 import AccountPage from './AccountPage'
 import UserIcon from '../Common/UserIcon';
 import { ProfilePage } from "./ProfilePage";
-import { TransactionList } from "./TransactionList";
 
 interface IUserPageState {
     viewProfile:boolean;

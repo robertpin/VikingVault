@@ -53,7 +53,7 @@
     margin-top: 15px;
     width: 75%;
     margin-left:15%;
-    height: 550px;
+    height: 600px;
     border-radius : 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: inline-flex;
@@ -364,4 +364,21 @@
 
 .redirect-symbols:hover {
     text-decoration: none;
+}
+
+.message-container {
+    position: relative;
+    margin-top: 2%; 
+    margin-bottom: 10%;
+    height: 50%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 2%;
+}
+
+.dark-background {
+    background-color: rgb(200,200,200);
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
