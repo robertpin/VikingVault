@@ -390,6 +390,10 @@
     width: 100%;
 }
 
+.dashboard-icon:hover {
+    text-decoration: none;
+}
+
 .not-displayed-label{
     display: none;
 }

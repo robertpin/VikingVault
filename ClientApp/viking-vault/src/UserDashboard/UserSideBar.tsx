@@ -34,7 +34,7 @@ function UserSideBar(props: IUserSideBarProps) {
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/notifications">
+        <Link title="Notifications" className="redirect-symbols" to="/notifications">
             <div className={sideMenuVisibility}>
                 <img className="menu-icon" src={props.unreadNotification? unreadNotifications : notification}/>
                 <span className = {spanVisibility}> Notifications </span>
