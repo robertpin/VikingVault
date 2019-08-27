@@ -144,17 +144,11 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     transferMoney = () => {
-        
         let data = this.getTransferDataFromUI();
-
         if(this.isValidAmount(data)) {
-
           let token = sessionStorage.getItem('Authentication-Token');
-
           if(token !== null) {
-
             this.handleIsButtonDisabled();
-
             fetch(transferUrl, {
               method: "POST",
               headers: {

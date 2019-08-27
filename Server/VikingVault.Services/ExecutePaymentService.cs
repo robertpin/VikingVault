@@ -64,12 +64,12 @@ namespace VikingVault.Services
         {
             Transaction transaction = new Transaction
             {
-                User = automaticPayment.PayingUser,
+                Sender = automaticPayment.PayingUser,
                 Type = "Payment",
                 Date = currentDateTime,
                 Currency = "Ron",
                 Amount = automaticPayment.Amount,
-                Sender = automaticPayment.PayingUser,
+                //Sender = automaticPayment.PayingUser,
                 Receiver = automaticPayment.ReceivingCompany,
                 Details = "Automatic Payment"
             };

@@ -150,13 +150,12 @@ namespace VikingVault.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false),
+                    SenderId = table.Column<int>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Currency = table.Column<string>(nullable: true),
                     Amount = table.Column<float>(nullable: false),
-                    SenderId = table.Column<int>(nullable: false),
-                    ReceiverId = table.Column<int>(nullable: false),
+                    ReceiverId = table.Column<int>(nullable: true),
                     Details = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -167,19 +166,13 @@ namespace VikingVault.DataAccess.Migrations
                         column: x => x.ReceiverId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Transactions_User_SenderId",
                         column: x => x.SenderId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Transactions_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -260,11 +253,6 @@ namespace VikingVault.DataAccess.Migrations
                 name: "IX_Transactions_SenderId",
                 table: "Transactions",
                 column: "SenderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_UserId",
-                table: "Transactions",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransferRequests_RequesterId",

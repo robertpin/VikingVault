@@ -11,14 +11,14 @@ import DownloadDropdown from './DownloadTypeForm';
 const url = constants.baseUrl+"transaction";
 
 interface ITransaction {
-    user: IUserData;
     type: string;
     date: Date;
     amount: number;
     currency: string;
     sender: IUserData;
     receiver: IUserData;
-    details: string
+    details: string;
+    isUserSender: boolean;
 }
 
 interface IState {
@@ -53,12 +53,13 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
-        console.log(transaction);
         if(transaction.type.toLowerCase() === transactionTypeEnum.transfer) {
-            if(transaction.amount >= 0) {
+            if(transaction.isUserSender) {
+                return `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
+            }
+            else {
                 return `From ${transaction.sender.firstName} ${transaction.sender.lastName}`;
             }
-            return `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
         }
         if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
             return `Exchanged ${transaction.details.toUpperCase()}`;

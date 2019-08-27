@@ -47,28 +47,16 @@ namespace VikingVault.Services
 
                 Transaction senderTransaction = new Transaction
                 {
-                    User = transferData.Sender,
+                    Sender = transferData.Sender,
                     Type = "Transfer",
                     Currency = transferData.Currency,
                     Date = DateTime.Now,
                     Amount = -transferData.AmountSent,
-                    Sender = transferData.Sender,
-                    Receiver = reciever
-                };
-
-                Transaction recieverTransaction = new Transaction
-                {
-                    User = reciever,
-                    Type = "Transfer",
-                    Currency = transferData.Currency,
-                    Date = DateTime.Now,
-                    Amount = transferData.AmountSent,
-                    Sender = transferData.Sender,
-                    Receiver = reciever
+                    Receiver = reciever,
+                    Details = transferData.TransferDetails
                 };
 
                 AddTransaction(senderTransaction);
-                AddTransaction(recieverTransaction);
             }
             catch
             {
@@ -76,18 +64,33 @@ namespace VikingVault.Services
             }
         }
 
-        public List<Transaction> GetTransactions(string userId)
+        public List<TransactionDTO> GetTransactions(string userId)
         {
             int uid = int.Parse(userId);
             var transactions =  _dbContext.Transactions
-                .Include(t => t.User)
                 .Include(t => t.Sender)
                 .Include(t => t.Receiver)
-                .Where(t => t.User.Id == uid)
+                .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
                 .OrderByDescending(t => t.Date)
                 .Take(5)
                 .ToList();
-            return transactions;
+            var transactionsDTO = new List<TransactionDTO>();
+            foreach(Transaction transaction in transactions)
+            {
+                transactionsDTO.Add(new TransactionDTO
+                {
+                    Id = transaction.Id,
+                    Sender = transaction.Sender,
+                    Receiver = transaction.Receiver,
+                    Type = transaction.Type,
+                    Amount = transaction.Amount,
+                    Details = transaction.Details,
+                    Currency = transaction.Currency,
+                    Date = transaction.Date,
+                    IsUserSender = (transaction.Sender.Id == uid)
+                });
+            }
+            return transactionsDTO;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace VikingVault.DataAccess.Models
         public int Amount { get; set; }
         public string Currency { get; set; }
         public string CardNumberReciever { get; set; }
-        public string Details { get; set; }
+        public string TransferDetails { get; set; }
 
         public TransferFundsModel convertDTOtoTransferFundsModel(User sender)
         {
@@ -18,7 +18,7 @@ namespace VikingVault.DataAccess.Models
                 Sender = sender,
                 AmountSent = this.Amount,
                 CardNumberReciever = this.CardNumberReciever,
-                TransferDetails = this.Details,
+                TransferDetails = this.TransferDetails,
                 Currency = this.Currency
             };
         }

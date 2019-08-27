@@ -48,6 +48,7 @@
     <Compile Remove="Migrations\20190821125849_modifiedCardsAndTransactionsMigration.cs" />
     <Compile Remove="Migrations\20190821134529_automaticPaymentsAddedToPreviousMigration.cs" />
     <Compile Remove="Migrations\20190821134935_UpdatedModelMigration.cs" />
+    <Compile Remove="Migrations\20190822074625_FixedAutomaticPaymentTableIssue.cs" />
     <Compile Remove="Migrations\20190822104346_addedIsEnabledColumnAP.cs" />
     <Compile Remove="Migrations\20190822105137_changedCompanyColumnName.cs" />
     <Compile Remove="Migrations\20190823100352_AddedTransferRequestModel.cs" />
@@ -63,6 +64,15 @@
     <Compile Remove="Migrations\20190826101842_InitialMigration.cs" />
     <Compile Remove="Migrations\20190821134935_UpdatedModelMigration.cs" />
     <Compile Remove="Migrations\20190822072748_UpdatedModelMigration.cs" />
+    <Compile Remove="Migrations\20190826102027_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827073426_UpdatedTrnsactionModel.cs" />
+    <Compile Remove="Migrations\20190827073613_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827073751_ModifiedTransactionTable.cs" />
+    <Compile Remove="Migrations\20190827074454_x.cs" />
+    <Compile Remove="Migrations\20190827074604_xa.cs" />
+    <Compile Remove="Migrations\20190827075155_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827075627_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827075735_InitialMigration.cs" />
   </ItemGroup>
 
   <ItemGroup>

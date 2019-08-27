@@ -38,12 +38,11 @@ namespace VikingVault.Services
 
             Transaction transaction = new Transaction
             {
-                User = returnedUser,
+                Sender = returnedUser,
                 Type = "Exchange",
                 Currency = bankAccountBuy.CurrencyType,
                 Date = DateTime.Now,
                 Amount = exchangeInfo.Amount,
-                Sender = returnedUser,
                 Receiver = returnedUser,
                 Details = exchangeInfo.CurrencyType
             };

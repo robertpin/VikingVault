@@ -159,21 +159,17 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<string>("Details");
 
-                    b.Property<int>("ReceiverId");
+                    b.Property<int?>("ReceiverId");
 
-                    b.Property<int>("SenderId");
+                    b.Property<int?>("SenderId");
 
                     b.Property<string>("Type");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -297,17 +293,11 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("VikingVault.DataAccess.Models.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("VikingVault.DataAccess.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>

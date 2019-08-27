@@ -64,14 +64,9 @@ namespace VikingVault.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Sender)
-                .WithMany()
-                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
-
-            modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Receiver)
                 .WithMany()
-                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
+                .Metadata.DeleteBehavior = DeleteBehavior.SetNull;
 
             modelBuilder.Entity<User>()
                 .HasAlternateKey(c => c.Email)
