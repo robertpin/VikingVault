@@ -169,50 +169,50 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     private getDataForTransfer = () => {
-          return {
-              ...this.getTransferDataFromUI(),
-              isTransferRequested: this.state.isTransferRequested,
-              requestId: this.state.requestId
-          }
+      return {
+          ...this.getTransferDataFromUI(),
+          isTransferRequested: this.state.isTransferRequested,
+          requestId: this.state.requestId
+      }
     }
 
     transferMoney = () => {
-        let data = this.getDataForTransfer();
+      let data = this.getDataForTransfer();
 
-        if(this.isValidAmount(data)) {
+      if(this.isValidAmount(data)) {
 
-          let token = sessionStorage.getItem('Authentication-Token');
+        let token = sessionStorage.getItem('Authentication-Token');
 
-          if(token !== null) {
+        if(token !== null) {
 
-            this.handleIsButtonDisabled();
+          this.handleIsButtonDisabled();
 
-            fetch(transferUrl, {
-              method: "POST",
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': token.toString()
-              },
-              body: JSON.stringify(data)
-              })
-              .then(response => response.json())
-              .then( response => {
+          fetch(transferUrl, {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token.toString()
+            },
+            body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then( response => {
+              
+                this.setState({
+                  openModal: true,
+                  modalMessage: response
+                }); 
                 
-                  this.setState({
-                    openModal: true,
-                    modalMessage: response
-                  }); 
-                  
-                  if(this.state.isTransferRequested)
-                  {
-                      this.changeReloading(true);
-                  }
+                if(this.state.isTransferRequested)
+                {
+                    this.changeReloading(true);
+                }
 
-                  this.handleIsButtonDisabled(); 
-              });
-          }
+                this.handleIsButtonDisabled(); 
+            });
         }
+      }
     }
 
     requestTransfer = () =>
