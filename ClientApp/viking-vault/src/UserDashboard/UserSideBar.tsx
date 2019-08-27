@@ -1,9 +1,8 @@
 import  React  from 'react';
 import { Link } from 'react-router-dom';
-import paymentMethod from '../Resources/images/payment-method.png'
-import block from '../Resources/images/password.png'
-import moneyExchange from '../Resources/images/money-exchange.png'
-import transfer from '../Resources/images/transfer.png'
+import transferIcon from '../Resources/images/transfer.png'
+import moneyExchangeIcon from '../Resources/images/money-exchange.png'
+import paymentIcon from '../Resources/images/payment-method.png'
 import { ISideBarProps } from '../AdminDashboard/AdminSideBar';
 
 function UserSideBar(props: ISideBarProps) {
@@ -12,27 +11,21 @@ function UserSideBar(props: ISideBarProps) {
 
     return <React.Fragment>
         <Link className="redirect-symbols" to="/transfer"> 
-            <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={transfer} alt="Transfer" title="Transfer"></img>
-                <span className = {spanVisibility}> Transfer </span>
+            <div className={sideMenuVisibility}>
+                <img className="menu-icon" src={transferIcon} alt="Transfer" title="Transfer"/>
+                <span className={spanVisibility}> Transfer </span>
             </div>
         </Link>
         <Link className="redirect-symbols" to="/exchange">
-            <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={moneyExchange} alt="Exchange" title="Exchange"></img>
-                <span className = {spanVisibility}> Exchange </span>
+            <div className={sideMenuVisibility}>
+                <img className="menu-icon" src={moneyExchangeIcon} alt="Exchange" title="Exchange"/>
+                <span className={spanVisibility}> Exchange </span>
             </div>
         </Link>
         <Link className="redirect-symbols" to="/automatic-debit">
-            <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={paymentMethod} alt="Automatic debit" title="Automatic debit"></img>
+            <div className={sideMenuVisibility}>
+                <img className="menu-icon" src={paymentIcon} alt="Automatic debit" title="Automatic debit"/>
                 <span className = {spanVisibility}> Automatic debit </span>
-            </div>
-        </Link>
-        <Link className="redirect-symbols" to="/block-card">
-            <div className = {sideMenuVisibility}>
-                <img className="menu-icon" src={block} alt="Block card" title="Block card"></img>
-                <span className = {spanVisibility}> Block card </span>
             </div>
         </Link>
     </React.Fragment>
