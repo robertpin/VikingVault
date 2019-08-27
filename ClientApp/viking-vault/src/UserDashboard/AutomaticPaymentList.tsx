@@ -82,13 +82,9 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
     }
 
     deletePaymentFromList = (id : Number) =>{
-        let paymentList = this.state.payments.filter(payment => {
-            return payment.paymentId !== id
-          });
+        let paymentList = this.state.payments.filter(payment => payment.paymentId !== id);
 
-          this.setState({
-            payments : paymentList
-        });
+        this.setState({payments : paymentList});
     }
 
     getPaymentsTableBody() {
@@ -100,7 +96,9 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
                 <td className="payments-text centered-text">Cancel element here</td>
                 <td className="payments-text centered-text">Edit element here</td>
-                <td><DeleteAutomaticPayment automaticPaymentId = {payment.paymentId} deletePaymentFromList = {this.deletePaymentFromList}/></td>
+                <td>
+                    <DeleteAutomaticPayment automaticPaymentId = {payment.paymentId} deletePaymentFromList = {this.deletePaymentFromList}/>
+                </td>
             </tr>;
         })
     }

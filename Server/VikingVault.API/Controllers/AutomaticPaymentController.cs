@@ -36,7 +36,7 @@ namespace VikingVault.API.Controllers
             try
             {
                 _automaticPaymentService.DeleteAutomaticPayment(automaticPaymentToDelete.Id);
-                return Ok(true);
+                return Ok();
             }
             catch
             {

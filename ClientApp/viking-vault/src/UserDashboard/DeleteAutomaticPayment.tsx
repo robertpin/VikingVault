@@ -3,19 +3,19 @@ import deleteIcon from "../Resources/images/delete.png";
 import {constants} from "../Resources/Constants";
 import "./ViewAutomaticPayments.css";
 
-const url = constants.baseUrl+"automaticPayment/";
+const deleteAutomaticPaymentURL = constants.baseUrl+"automaticPayment/";
 
 interface IDeleteAutomaticPaymentProps {
     automaticPaymentId: number;
     deletePaymentFromList: (id: Number) => void;
 }
 
-function deleteAutomaticPaymentFromDb(automaticPaymentId: number, props: IDeleteAutomaticPaymentProps) {
+function deleteAutomaticPaymentRequest(automaticPaymentId: number, props: IDeleteAutomaticPaymentProps) {
     const token = sessionStorage.getItem("Authentication-Token");
     if(token === null) {
         return;
     }
-    fetch(url, {
+    fetch(deleteAutomaticPaymentURL, {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
@@ -33,7 +33,7 @@ function deleteAutomaticPaymentFromDb(automaticPaymentId: number, props: IDelete
 }
 
 function DeleteAutomaticPayment (props: IDeleteAutomaticPaymentProps) {
-    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteAutomaticPaymentFromDb(props.automaticPaymentId, props)}}><img className="delete-automatic-payment-icon" src={deleteIcon} /></button>
+    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteAutomaticPaymentRequest(props.automaticPaymentId, props)}}><img className="delete-automatic-payment-icon" src={deleteIcon} /></button>
 }
 
 export {DeleteAutomaticPayment};
