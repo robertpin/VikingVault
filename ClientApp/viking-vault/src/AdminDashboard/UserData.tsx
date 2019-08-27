@@ -8,6 +8,7 @@ import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
 import { AttachCardForm } from "./AttachCardModal";
+import UserIconAvatar from "../Common/UserIconAvatar"
 
 export interface IUserData{
     id: number;
@@ -239,8 +240,8 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         return( 
             <div className = "user-container"> 
                 <div className = "user-container-inside">
-                    <div className = "img-container">
-                         {this.state.user.pictureLink === "" ? <img src = {DefaultProfilePicture} className = "profile-img"/> : <img src = {this.state.user.pictureLink} className = "profile-img"/> }                 
+                    <div className = "img-container">  
+                        <UserIconAvatar pictureUri={this.state.user.pictureLink} pictureStyle="profile-img"  defaultPicture={DefaultProfilePicture}/>
                     </div>
                     
                     <div className = "profile-data-container">

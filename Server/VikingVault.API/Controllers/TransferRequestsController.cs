@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.DataAccess.Models.Exceptions;
 using VikingVault.Services.Abstractions;
@@ -25,6 +27,7 @@ namespace VikingVault.API.Controllers
             _userService = userService;
         }
 
+        [Authorization(Role = RoleEnum.User)]
         [HttpGet]
         public ActionResult<string> Get()
         {

@@ -51,6 +51,7 @@
 .account-view{
     background-color: white;
     margin-top: 15px;
+    min-width: 800px;
     width: 75%;
     margin-left:15%;
     height: 600px;
@@ -104,7 +105,7 @@
 
 .mega-menu-content {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: white;
     min-width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -368,8 +369,8 @@
 
 .block-card-toggle-position{
     position: absolute;
-    left: 225px;
-    top: 330px;
+    left: 230px;
+    top: 310px;
 }
 
 .message-container {
@@ -387,5 +388,26 @@
     position: absolute;
     height: 100%;
     width: 100%;
+}
 
+.not-displayed-label{
+    display: none;
+}
+
+.unblocked-card-label{
+    position: absolute;
+    left: 300px;
+    top: 315px;
+    color: #155764;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.blocked-card-label{
+    position: absolute;
+    top: 315px;
+    left: 90px;
+    color: grey;
+    font-weight: bold;
+    font-size: 13px;
 }

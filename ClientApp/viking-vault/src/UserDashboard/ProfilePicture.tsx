@@ -2,6 +2,7 @@ import * as React from "react";
 import profilePicture from "../Resources/images/user2.png";
 import './ProfilePicture.css';
 import { constants } from "../Resources/Constants";
+import UserIconAvatar from "../Common/UserIconAvatar"
 
 const API_URL = `${constants.baseUrl}userprofilepages`;
 
@@ -22,30 +23,24 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
                 'Content-Type': 'application/json',
                 'x-access-token':  token.toString()
                 }})
-            .then( response => 
-                {
-                    if( response.status === 500)
-                    {
+            .then( response => {
+                    if( response.status === 500){
                         return null;
                     }                    
                     return response.json();
                 })
             .then( userData => {
-                if(userData.pictureLink !== "")
-                {
-                    this.setState(
-                    {
-                        userProfilePicture: userData.pictureLink
-                    })
-                }
+                 this.setState({
+                    userProfilePicture: userData.pictureLink
+                });
             });
         }
-}
-    render()
-    {
+    }
+
+    render(){
         return (
             <div className = "profile-picture-container">
-                <img src = {this.state.userProfilePicture} alt = "Profile Picture To Be Loaded" id = "profile-picture" />
+                <UserIconAvatar pictureUri={this.state.userProfilePicture} pictureStyle="profile-picture" defaultPicture={profilePicture} />
             </div>
         );
     }
