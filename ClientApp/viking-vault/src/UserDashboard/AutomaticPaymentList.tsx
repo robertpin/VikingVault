@@ -2,6 +2,7 @@ import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
+import { DeleteAutomaticPayment } from './DeleteAutomaticPayment';
 import {CreateAutomaticPaymentForm} from "./CreateAutomaticPaymentModal"
 import addPaymentImg from "../Resources/images/add_payment.png"
 
@@ -92,6 +93,12 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.getAutomaticPayments();
     }
 
+    deletePaymentFromList = (id : Number) =>{
+        let paymentList = this.state.payments.filter(payment => payment.id !== id);
+
+        this.setState({payments : paymentList});
+    }
+
     getPaymentsTableBody() {
         return this.state.payments.map( (payment) => {
             return <tr>
@@ -101,7 +108,9 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
                 <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
                 <td className="payments-text centered-text">Edit element here</td>
-                <td className="payments-text centered-text">Delete element here</td>
+                <td>
+                    <DeleteAutomaticPayment automaticPaymentId = {payment.id} deletePaymentFromList = {this.deletePaymentFromList}/>
+                </td>
             </tr>;
         })
     }
