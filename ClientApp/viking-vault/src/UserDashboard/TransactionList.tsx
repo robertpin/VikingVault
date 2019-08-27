@@ -8,7 +8,7 @@ import exchange from "../Resources/images/money-exchange.png";
 import { IUserData } from './../AdminDashboard/UserData';
 import DownloadDropdown from './DownloadTypeForm';
 
-const url = constants.baseUrl+"transaction";
+const transactionUrl = constants.baseUrl+"transaction";
 
 interface ITransaction {
     type: string;
@@ -35,7 +35,7 @@ class TransactionList extends React.Component<any, IState> {
         if(token === null)  {
             return;
         }
-        fetch(url,{
+        fetch(transactionUrl,{
             method: "GET",
             headers: {
                 'Accept': 'application/json',
