@@ -1,14 +1,13 @@
 import React from 'react'
-import {constants, currencyEnum} from "../Resources/Constants";
-import { Redirect } from 'react-router-dom';
-import SideBar from '../Common/SideBar';
-import TopBar from '../Common/TopBar';
-import UserIcon from '../Common/UserIcon';
+import {constants, currencyEnum} from "../../Resources/Constants";
+import SideBar from '../../Common/SideBar';
+import TopBar from '../../Common/TopBar';
+import UserIcon from '../../Common/UserIcon';
 import './TransferFunds.css';
-import '../UserDashboard/ExchangeForm.css';
+import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
-import Toggle from '../Common/Toggle';
-import TransferRequests from '../UserDashboard/TransferRequests';
+import Toggle from '../../Common/Toggle';
+import TransferRequests from '../TransferRequests';
 
 const transferUrl = `${constants.baseUrl}transferFunds`;
 const requestUrl = `${constants.baseUrl}transferRequests`;
@@ -31,6 +30,7 @@ interface ITransferFundsState{
     isButtonDisabled: boolean;
     isTransferRequested: boolean;
     requestId: number;
+    reloadRequestsData: boolean;
 }
 
 interface ITransferDataDTO{
@@ -54,7 +54,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
           requestTransfer: false,
           isButtonDisabled: false,
           isTransferRequested: false,
-          requestId: -1
+          requestId: -1,
+          reloadRequestsData: false
         }
     }
 
@@ -136,7 +137,14 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         isTransferRequested: true,
         requestId: transferData.id
       })
-  }
+    }
+
+    changeReloading = (reload: boolean) =>
+    {
+      this.setState({
+        reloadRequestsData: reload
+      })
+    }
 
     private getTransferDataFromUI = ():ITransferDataDTO => {
         return {
@@ -197,6 +205,11 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                     modalMessage: response
                   }); 
                   
+                  if(this.state.isTransferRequested)
+                  {
+                      this.changeReloading(true);
+                  }
+
                   this.handleIsButtonDisabled(); 
               });
           }
@@ -303,7 +316,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     onChange={this.handleChangedCardNumber}/> 
                                     <input 
                                      className="form-control form-group text-center"
-                                     type="cardnumber"
+                                     type="text"
+                                     maxLength = {35}
                                      placeholder= {this.state.transferDetails}
                                      onChange={this.handleChangedTransferDetails}/>
                                 </form>
@@ -315,7 +329,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                     </div>
                     <div className = "transfer-funds-right-container">
                       <span className="transfer-requests-text-decoration">Transfer Requests</span>
-                      <span className="transfer-requests-table-container"><TransferRequests autoFillTransferRequest = {this.autoFillTransferRequest}/></span>
+                      <span className="transfer-requests-table-container"><TransferRequests reloadStatus = {this.state.reloadRequestsData} autoFillTransferRequest = {this.autoFillTransferRequest} changeReloading = {this.changeReloading} /></span>
                     </div> 
                 </div>
             </div>         

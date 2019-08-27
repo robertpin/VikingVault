@@ -80,7 +80,7 @@ namespace VikingVault.Services
                     transferRequestsDTO.Add(new TransferRequestRecieverDTO
                     {
                         Id = request.Id,
-                        Name = user.FirstName + user.LastName,
+                        Name = user.FirstName + " " + user.LastName,
                         Amount = request.Amount,
                         Currency = request.Currency,
                         Details = request.Details,
