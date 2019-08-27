@@ -365,3 +365,27 @@
 .redirect-symbols:hover {
     text-decoration: none;
 }
+
+.block-card-toggle-position{
+    position: absolute;
+    left: 225px;
+    top: 330px;
+}
+
+.message-container {
+    position: relative;
+    margin-top: 2%; 
+    margin-bottom: 10%;
+    min-height: 50%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 2%;
+}
+
+.dark-background {
+    background-color: rgb(200,200,200);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+}

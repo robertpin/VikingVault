@@ -58,6 +58,8 @@ namespace VikingVault.API
             services.AddScoped<IAttachCardService, AttachCardService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
+            services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
