@@ -38,14 +38,18 @@
 }
 
 .add-payment-button {
-    width: 75px;
-    height: 75px;
-    position: absolute;
-    left: 91%;
-    bottom: 70%;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: 90%;
 }
 
 .add-payment-button:focus,.add-payment-button:active {
     outline: none;
     box-shadow: none;
  }
+
+.delete-automatic-payment-icon{
+    margin-bottom: 10px;
+    width: 40%;
+}

@@ -4,7 +4,7 @@ import { RegisterForm } from "../RegisterForm";
 import { LoginForm } from "../Login";
 import { ExchangeForm } from '../UserDashboard/ExchangeForm'
 import "../App.css"
-import { Dashboard } from "../Common/Dashboard";
+import { Dashboard } from "./Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
 import { TransferFundsPage } from "../UserDashboard/TransferFunds/TransferFundsPage";
 import { ViewAutomaticPayments } from "../UserDashboard/ViewAutomaticPayments";

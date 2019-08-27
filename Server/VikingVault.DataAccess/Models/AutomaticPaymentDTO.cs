@@ -11,6 +11,8 @@ namespace VikingVault.DataAccess.Models
         [Required]
         public int CompanyId { get; set; }
         [Required]
+        public int PaymentId { get; set; }
+        [Required]
         public string CompanyName { get; set; }
         [Required]
         public float Amount { get; set; }
