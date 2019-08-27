@@ -41,5 +41,18 @@ namespace VikingVault.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPut]
+        public ActionResult<AutomaticPayment> Put([FromBody] AutomaticPaymentDTO automaticPayment)
+        {
+            try
+            {
+                return Ok(_automaticPaymentService.EditAutomaticPayment(automaticPayment));
+            }
+            catch (AutomaticPaymentServiceException apse)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

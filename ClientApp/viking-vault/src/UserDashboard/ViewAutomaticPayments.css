@@ -38,11 +38,10 @@
 }
 
 .add-payment-button {
-    width: 75px;
-    height: 75px;
-    position: absolute;
-    left: 91%;
-    bottom: 70%;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: 90%;
 }
 
 .add-payment-button:focus,.add-payment-button:active {
