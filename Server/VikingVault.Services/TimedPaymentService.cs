@@ -16,7 +16,7 @@ namespace VikingVault.Services
     {
         private Timer _timer;
         public IServiceProvider Services { get; }
-        public int PaymentCheckIntervalInSeconds = 5*60;
+        public int PaymentCheckIntervalInSeconds = 5 * 60;
 
         public TimedPaymentService(IServiceProvider services)
         {
