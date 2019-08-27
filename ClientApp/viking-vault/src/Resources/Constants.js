@@ -12,4 +12,11 @@ const currencyEnum = {
     yen: "YEN"
 }
 
-export {constants, currencyEnum};
+const transactionTypeEnum = {
+    transfer: "transfer",
+    exchange: "exchange",
+    payment: "payment"
+}
+
+export {constants, currencyEnum, transactionTypeEnum};
+

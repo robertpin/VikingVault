@@ -10,11 +10,11 @@ using VikingVault.Services.Abstractions;
 
 namespace VikingVault.Services
 {
-    public class ScopedProcessingService : IScopedProcessingService
+    public class ExecutePaymentService : IScopedProcessingService
     {
         private readonly VikingVaultDbContext _dbContext;
 
-        public ScopedProcessingService(VikingVaultDbContext dbContext)
+        public ExecutePaymentService(VikingVaultDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -64,12 +64,13 @@ namespace VikingVault.Services
         {
             Transaction transaction = new Transaction
             {
-                User = automaticPayment.PayingUser,
+                Sender = automaticPayment.PayingUser,
                 Type = "Payment",
                 Date = currentDateTime,
                 Currency = "Ron",
                 Amount = automaticPayment.Amount,
-                OtherParty = automaticPayment.ReceivingCompany.FirstName
+                Receiver = automaticPayment.ReceivingCompany,
+                Details = "Automatic Payment"
             };
 
             _dbContext.Transactions.Add(transaction);

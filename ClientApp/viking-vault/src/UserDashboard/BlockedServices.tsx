@@ -86,7 +86,7 @@ class BlockedServices extends React.Component<any, IBlockedServicesState> {
         if(this.state.userHasCard === false) {
             message = "There is no card attached to your account. Please contact your administrator to attach a card to your account";
         } else if(this.state.isCardBlocked) {
-            message = "Your card is currently blocked. Please unblock your card in order to use it";
+            message = "Your card is currently blocked. Please activate your card in order to use this feature!";
         }
         return <React.Fragment>
             <SideBar userType="user"/>
