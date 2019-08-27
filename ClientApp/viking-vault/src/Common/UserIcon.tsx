@@ -3,6 +3,7 @@ import icon from "../Resources/images/user.png";
 import "./styles.css";
 import {Redirect} from "react-router-dom";
 import { constants } from "../Resources/Constants";
+import UserIconAvatar from "./UserIconAvatar"
 
 const API_URL = `${constants.baseUrl}userprofilepages`;
 
@@ -57,20 +58,11 @@ class UserIcon extends React.Component<any, IUserIconState> {
                     return response.json();
                 })
             .then( userData => {
-                if(userData.pictureLink !== ""){
-                fetch(userData.pictureLink,{
-                   method: 'HEAD',
-                   mode: 'no-cors'
-                }).then(res => {
-                    if(res.status !== 404){
-                        this.setState({
-                            userImage: userData.pictureLink
-                        });
-                    }
-                  })
-              }
-            }
-          )        
+                  this.setState({
+                      userImage: userData.pictureLink
+                  });
+              }            
+          )       
       }  
   }
 
@@ -101,13 +93,8 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   render() {
     return (
-      <div className="dropdown" ref={this.megaMenu}>
-        <img
-          className="user-icon img"
-          src={this.state.userImage}
-          alt=""
-          onClick={this.handleClick}
-        />
+      <div className="dropdown" ref={this.megaMenu} onClick={this.handleClick}>
+        <UserIconAvatar pictureUri={this.state.userImage} pictureStyle="user-icon img" defaultPicture={icon}/>
         <div className={`mega-menu ${this.state.clicked}`}>
           <div className="mega-menu-content">
             <button className="button-user-icon" onClick = {this.sendData}>View profile</button>
