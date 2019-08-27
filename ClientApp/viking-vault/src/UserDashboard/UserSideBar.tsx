@@ -16,25 +16,25 @@ function UserSideBar(props: IUserSideBarProps) {
     const spanVisibility: string = props.show ? "span-hide" : "span-show";
 
     return <React.Fragment>
-        <Link className="redirect-symbols" to="/transfer"> 
+        <Link title="Transfer" className="redirect-symbols" to="/transfer"> 
             <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={transferIcon} alt="Transfer" title="Transfer"/>
+                <img className="menu-icon" src={transferIcon} alt="Transfer"/>
                 <span className={spanVisibility}> Transfer </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/exchange">
+        <Link title="Exchange" className="redirect-symbols" to="/exchange">
             <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={moneyExchangeIcon} alt="Exchange" title="Exchange"/>
+                <img className="menu-icon" src={moneyExchangeIcon} alt="Exchange"/>
                 <span className={spanVisibility}> Exchange </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/automatic-debit">
+        <Link title="Automatic debit" className="redirect-symbols" to="/automatic-debit">
             <div className={sideMenuVisibility}>
-                <img className="menu-icon" src={paymentIcon} alt="Automatic debit" title="Automatic debit"/>
+                <img className="menu-icon" src={paymentIcon} alt="Automatic debit"/>
                 <span className = {spanVisibility}> Automatic debit </span>
             </div>
         </Link>
-        <Link className="redirect-symbols" to="/notifications">
+        <Link title="Notifications" className="redirect-symbols" to="/notifications">
             <div className={sideMenuVisibility}>
                 <img className="menu-icon" src={props.unreadNotification? unreadNotifications : notification}/>
                 <span className = {spanVisibility}> Notifications </span>

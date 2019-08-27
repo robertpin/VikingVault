@@ -58,7 +58,7 @@ class Notifications extends React.Component<any, INotificationState> {
 
     updateNotificationFrontend = (notification: INotification) => {
         let allNotifications = this.state.notifications;
-        let notificationToUpdate = allNotifications.find(n => n.id == notification.id);
+        let notificationToUpdate = allNotifications.find(n => n.id === notification.id);
         if(notificationToUpdate === undefined) {
             return;
         }

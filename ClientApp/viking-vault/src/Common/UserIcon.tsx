@@ -100,7 +100,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
   render() {
     return (
-      <div className="dropdown" ref={this.megaMenu}>
+      <div title="Profile" className="dropdown" ref={this.megaMenu}>
         <img
           className="user-icon img"
           src={this.state.userImage}

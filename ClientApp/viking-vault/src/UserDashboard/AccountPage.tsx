@@ -271,7 +271,7 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                     {this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                 </div>
                 {this.state.redirect? <Redirect to="/login"/> : null}
-                <div className = "block-card-toggle-position"> {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} </div>
+                <div title="Block/unblock your card" className = "block-card-toggle-position"> {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} </div>
                 <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
 
             </div>

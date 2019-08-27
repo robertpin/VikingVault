@@ -389,3 +389,7 @@
     width: 100%;
 
 }
+
+.dashboard-icon:hover {
+    text-decoration: none;
+}
