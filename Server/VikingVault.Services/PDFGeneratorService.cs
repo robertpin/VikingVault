@@ -59,7 +59,7 @@ namespace VikingVault.Services
             graphics.DrawString("Today's date: " + DateTime.Today.Date.ToShortDateString(), fontDateText, brushDate, new PointF(380, 110));
         }
 
-        public List<Transaction> FilterTransactionsByTime(List<Transaction> transactionList, string timeFilter)
+        public List<TransactionDTO> FilterTransactionsByTime(List<TransactionDTO> transactionList, string timeFilter)
         {
             if (timeFilter == "day")
             {
@@ -78,7 +78,7 @@ namespace VikingVault.Services
         
         public void AddTransactionListIntoPDF(PdfPage page, string userId, string timeFilter)
         {
-            List<Transaction> transactionList = _transactionService.GetTransactions(userId);
+            List<TransactionDTO> transactionList = _transactionService.GetTransactions(userId);
             transactionList = FilterTransactionsByTime(transactionList, timeFilter);
 
             PdfStandardFont columnHeaderFont = new PdfStandardFont(PdfFontFamily.Helvetica, 15, PdfFontStyle.Bold);
@@ -95,12 +95,12 @@ namespace VikingVault.Services
             int x = 40;
             int y = 180;
 
-            foreach (Transaction transaction in transactionList)
+            foreach (TransactionDTO transaction in transactionList)
             {
                 graphics.DrawString(transaction.Date.ToShortDateString().ToString(), columnDataFont, columnDataBrush, new PointF(x, y));
                 graphics.DrawString(transaction.Currency.ToString(), columnDataFont, columnDataBrush, new PointF(x + 120, y));
                 graphics.DrawString(transaction.Amount.ToString(), columnDataFont, columnDataBrush, new PointF(x + 230, y));
-                graphics.DrawString(transaction.OtherParty.ToString(), columnDataFont, columnDataBrush, new PointF(x + 360, y));
+                graphics.DrawString(transaction.Details.ToString(), columnDataFont, columnDataBrush, new PointF(x + 360, y));
                 y = y + 25;
             }
         }

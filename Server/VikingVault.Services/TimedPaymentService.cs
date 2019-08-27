@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 using VikingVault.DataAccess;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using Microsoft.Extensions.Hosting;
 
 namespace VikingVault.Services
 {
