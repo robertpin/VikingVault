@@ -38,7 +38,6 @@ namespace VikingVault.API.Controllers
             }
         }
         
-        [Authorization(Role = RoleEnum.User)]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]bool value)
         {
