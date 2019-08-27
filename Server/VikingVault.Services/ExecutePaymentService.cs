@@ -43,9 +43,7 @@ namespace VikingVault.Services
 
                 if (payingUserAccount.Balance < automaticPayment.Amount)
                 {
-                    automaticPayment.IsEnabled = false;
-                    _dbContext.AutomaticPayments.Update(automaticPayment);
-                    _dbContext.SaveChanges();
+                    DisableAutomaticPayment(automaticPayment);
                     AddFailedPaymentNotification(automaticPayment);
                 }
                 else
@@ -60,6 +58,13 @@ namespace VikingVault.Services
                     }
                 }
             }
+        }
+
+        private void DisableAutomaticPayment(AutomaticPayment automaticPayment)
+        {
+            automaticPayment.IsEnabled = false;
+            _dbContext.AutomaticPayments.Update(automaticPayment);
+            _dbContext.SaveChanges();
         }
 
         private void AddSuccessfulPaymentNotification(AutomaticPayment automaticPayment)
