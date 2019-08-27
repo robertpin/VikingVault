@@ -10,7 +10,14 @@
     font-size: 1vw;
 }
 
-.transactions h5 {
+.transactions table td.details {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transactions .h5 {
     font-size: 1.5vw;
     color: #004450;
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
+using VikingVault.DataAccess.Enums;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
@@ -20,7 +22,7 @@ namespace VikingVault.API.Controllers
         {
             _automaticPaymentService = automaticPaymentService;
         }
-        
+
         [HttpGet]
         public List<AutomaticPaymentDTO> GetAllAutomaticPayments()
         {
@@ -50,6 +52,21 @@ namespace VikingVault.API.Controllers
                 return Ok(_automaticPaymentService.EditAutomaticPayment(automaticPayment));
             }
             catch (AutomaticPaymentServiceException apse)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete]
+        [Authorization(Role = RoleEnum.User)]
+        public ActionResult Delete(AutomaticPaymentId automaticPaymentToDelete)
+        {
+            try
+            {
+                _automaticPaymentService.DeleteAutomaticPayment(automaticPaymentToDelete.Id);
+                return Ok();
+            }
+            catch
             {
                 return StatusCode(500, "Internal server error");
             }

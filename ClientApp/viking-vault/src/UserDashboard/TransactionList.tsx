@@ -1,20 +1,24 @@
 import  React  from 'react';
-import {constants} from "../Resources/Constants";
+import {constants, transactionTypeEnum} from "../Resources/Constants";
 import "./TransactionList.css";
 import '../UserDashboard/DownloadTypeForm.css'
 import shoppingCart from '../Resources/images/shoppingcart.png';
 import userIcon from '../Resources/images/profileWhite.png';
 import exchange from "../Resources/images/money-exchange.png";
-import DownloadDropdown from './DownloadTypeForm'
+import { IUserData } from './../AdminDashboard/UserData';
+import DownloadDropdown from './DownloadTypeForm';
 
-const baseUrl = constants.baseUrl;
+const transactionUrl = constants.baseUrl+"transaction";
 
 interface ITransaction {
     type: string;
     date: Date;
     amount: number;
     currency: string;
-    otherParty: string;
+    sender: IUserData;
+    receiver: IUserData;
+    details: string;
+    isUserSender: boolean;
 }
 
 interface IState {
@@ -31,7 +35,7 @@ class TransactionList extends React.Component<any, IState> {
         if(token === null)  {
             return;
         }
-        fetch(baseUrl+"transaction",{
+        fetch(transactionUrl,{
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -49,16 +53,22 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private formatOtherPartyString(transaction: ITransaction) {
-        if(transaction.type === "transfer") {
-            if(transaction.amount >= 0) {
-                return `From ${transaction.otherParty}`;
+        let otherUserInvoledInTransaction: string;
+        if(transaction.type.toLowerCase() === transactionTypeEnum.transfer) {
+            if(transaction.isUserSender) {
+                otherUserInvoledInTransaction = `To ${transaction.receiver.firstName} ${transaction.receiver.lastName}`;
             }
-            return `To ${transaction.otherParty}`;
+            else {
+                otherUserInvoledInTransaction = `From ${transaction.sender.firstName} ${transaction.sender.lastName}`;
+            }
         }
-        if(transaction.type === "exchange") {
-            return `Exchanged ${transaction.otherParty.toUpperCase()}`;
+        else if(transaction.type.toLowerCase() === transactionTypeEnum.exchange) {
+            otherUserInvoledInTransaction = `Exchanged ${transaction.details.toUpperCase()}`;
         }
-        return transaction.otherParty;
+        else {
+            otherUserInvoledInTransaction = transaction.receiver.firstName;
+        }
+        return otherUserInvoledInTransaction;
     }
 
     private formatDate(transactionDate: Date) {
@@ -75,13 +85,38 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getImageForTransactionType(transactionType: string) {
-        if(transactionType.toLowerCase() === "transfer") {
+        if(transactionType.toLowerCase() === transactionTypeEnum.transfer) {
             return userIcon;
         }
-        if(transactionType.toLowerCase() === "exchange") {
+        if(transactionType.toLowerCase() === transactionTypeEnum.exchange) {
             return exchange;
         }
         return shoppingCart;
+    }
+
+    private formatDetails(tranasction: ITransaction) {
+        let details: string;
+        if(tranasction.type.toLowerCase() === transactionTypeEnum.exchange) {
+            details = "Exchange";
+        }
+        else {
+            details = tranasction.details
+        }
+        return details;
+    }
+
+    private formatAmount = (transation: ITransaction) => {
+        let amountString: string;
+        if(transation.type === "payment") {
+            amountString =  -transation.amount+"";
+        }
+        else if(transation.amount > 0) {
+            amountString = `+${transation.amount}`;
+        }
+        else {
+            amountString = transation.amount+"";
+        }
+        return amountString;
     }
 
     private getTableRowFromTransaction(tran: ITransaction) {
@@ -89,8 +124,9 @@ class TransactionList extends React.Component<any, IState> {
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"}/></td>
             <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
             <td>{this.formatDate(tran.date)}</td>
-            <td className="font-weight-bold">{tran.amount>0? `+${tran.currency.toUpperCase()}` : `-${tran.currency.toUpperCase()}`}</td>
-            <td className="font-weight-bold text-right">{tran.amount>0? tran.amount : -tran.amount}</td>
+            <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
+            <td className="font-weight-bold text-right">{this.formatAmount(tran)}</td>
+            <td className="details">{this.formatDetails(tran)}</td>
         </tr>
     }
 
@@ -104,9 +140,9 @@ class TransactionList extends React.Component<any, IState> {
     
     render() {
         return <div className="transactions">
-            <h5 className="font-weight-bold">Transactions</h5>
+            <h5 className="h5 font-weight-bold">Transactions</h5>
             <DownloadDropdown/>
-            <table className="table">
+            <table className="table table-hover">
                 {this.getTableBodyFromTransactionList()}
             </table>
         </div>
