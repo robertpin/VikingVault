@@ -15,7 +15,7 @@ interface INotificationState {
     notifications: INotification[];
 }
 
-const url = constants.baseUrl+"notifications";
+const notificationsUrl = constants.baseUrl+"notifications";
 
 class Notifications extends React.Component<any, INotificationState> {
     constructor(props: any) {
@@ -30,7 +30,7 @@ class Notifications extends React.Component<any, INotificationState> {
         if(token === null) {
             return;
         }
-        fetch(url, {
+        fetch(notificationsUrl, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -59,8 +59,9 @@ class Notifications extends React.Component<any, INotificationState> {
     updateNotificationFrontend = (notification: INotification) => {
         let allNotifications = this.state.notifications;
         let notificationToUpdate = allNotifications.find(n => n.id == notification.id);
-        if(notificationToUpdate === undefined)
+        if(notificationToUpdate === undefined) {
             return;
+        }
         notificationToUpdate.read = !notificationToUpdate.read;
         this.setState({
             notifications: allNotifications
@@ -72,7 +73,7 @@ class Notifications extends React.Component<any, INotificationState> {
         if(token === null) {
             return;
         }
-        fetch(url, {
+        fetch(notificationsUrl, {
             method: "PUT",
             headers: {
                 'Accept': 'application/json',

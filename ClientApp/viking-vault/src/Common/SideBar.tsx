@@ -7,7 +7,7 @@ import { AdminSideBar } from '../AdminDashboard/AdminSideBar';
 import { constants } from '../Resources/Constants';
 import { INotification } from './../UserDashboard/Notifications';
 
-const url = constants.baseUrl+"notifications";
+const notificationsUrl = constants.baseUrl+"notifications";
 
 interface ISideBarState{
     show: boolean;
@@ -46,7 +46,7 @@ class SideBar extends React.Component<ISideBarProps, ISideBarState> {
         if(token === null) {
             return;
         }
-        fetch(url, {
+        fetch(notificationsUrl, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',

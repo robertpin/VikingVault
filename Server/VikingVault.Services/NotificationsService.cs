@@ -55,7 +55,7 @@ namespace VikingVault.Services
             }
             catch(Exception e)
             {
-                throw new NotificationsServiceException();
+                throw new NotificationsServiceException(e.Message);
             }
         }
     }
