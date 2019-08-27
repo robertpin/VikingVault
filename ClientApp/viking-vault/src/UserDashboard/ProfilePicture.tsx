@@ -22,25 +22,30 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
                 'Content-Type': 'application/json',
                 'x-access-token':  token.toString()
                 }})
-            .then( response => 
-                {
-                    if( response.status === 500)
-                    {
+            .then( response => {
+                    if( response.status === 500){
                         return null;
                     }                    
                     return response.json();
                 })
             .then( userData => {
-                if(userData.pictureLink !== "")
-                {
-                    this.setState(
-                    {
-                        userProfilePicture: userData.pictureLink
-                    })
-                }
-            });
+                if(userData.pictureLink !== ""){
+                fetch(userData.pictureLink,{
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                  })
+                        .then(res => {
+                              if(res.status !== 404){
+                                   this.setState({
+                                        userProfilePicture: userData.pictureLink
+                                   });
+                              }
+                          })
+                    }
+                })
+            };
         }
-}
+
     render()
     {
         return (

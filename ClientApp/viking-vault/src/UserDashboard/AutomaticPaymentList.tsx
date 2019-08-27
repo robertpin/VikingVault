@@ -2,13 +2,20 @@ import  React  from 'react';
 import {constants} from "../Resources/Constants";
 import './ViewAutomaticPayments.css'
 import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
+import {CreateAutomaticPaymentForm} from "./CreateAutomaticPaymentModal"
+import addPaymentImg from "../Resources/images/add_payment.png"
 
 const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
 
+interface IModals {
+    openCreateAutomaticPaymentModal: boolean
+}
+
 interface IAutomaticPayment {
     id: number,
+    companyId: number,
     companyName: string,
-    amount: Number,
+    amount: number,
     initialPaymentDate: Date,
     lastPaymentDate: Date
 }
@@ -17,6 +24,7 @@ interface IAutomaticPaymentsState {
     payments: IAutomaticPayment[];
     isThePaymentListEmpty: boolean;
     emptyListMessage: string;
+    modals: IModals;
 }
 
 class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState> {
@@ -25,8 +33,11 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.state = {
             payments: [],
             isThePaymentListEmpty: false,
-            emptyListMessage: ""
+            emptyListMessage: "",
+            modals : {
+                openCreateAutomaticPaymentModal: false,
         }
+    }
     }
 
     getAutomaticPayments = () => {
@@ -54,7 +65,7 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             this.setState({
                 payments: result
             });
-            if(this.state.payments.length == 0){
+            if(this.state.payments.length === 0){
                 this.setState({
                     isThePaymentListEmpty: true,
                     emptyListMessage: "You don't have any automatic payment yet."
@@ -94,8 +105,30 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         })
     }
 
+    handleCreateAutomaticPayment = () => {
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openCreateAutomaticPaymentModal: true,
+            }
+        });
+    }
+
+    closeCreateAutomaticPaymentModal = () => {
+        this.setState({
+            modals: {
+                ...this.state.modals,
+                openCreateAutomaticPaymentModal: false,
+            }
+        });
+    }
+
     render() {
         return <div className="m-4 w-auto">
+                <CreateAutomaticPaymentForm open={this.state.modals.openCreateAutomaticPaymentModal} onModalClose={this.closeCreateAutomaticPaymentModal}/>
+                <button className = "btn add-payment-button" onClick={ this.handleCreateAutomaticPayment}>
+                    <img title="Create Automatic Payment" className="add-payment-icon" src={addPaymentImg} alt="Automatic Payment Button"></img>
+                </button>
             {this.state.isThePaymentListEmpty?
                 <label className="payments-text centered-text">{this.state.emptyListMessage}</label> :
                 <table className="table table-hover">

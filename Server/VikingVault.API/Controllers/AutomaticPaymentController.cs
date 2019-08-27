@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
+using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
@@ -25,6 +26,20 @@ namespace VikingVault.API.Controllers
         {
             var token = Request.Headers["x-access-token"];
             return _automaticPaymentService.GetAllAutomaticPayments(token);
+        }
+
+        [HttpPost]
+        public ActionResult<AutomaticPayment> Post([FromBody] AutomaticPaymentDTO automaticPayment)
+        {
+            try
+            {
+                var token = Request.Headers["x-access-token"];
+                return Ok(_automaticPaymentService.CreateAutomaticPayment(automaticPayment, token));
+            }
+            catch (AutomaticPaymentServiceException apse)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

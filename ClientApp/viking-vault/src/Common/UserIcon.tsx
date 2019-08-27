@@ -37,8 +37,7 @@ class UserIcon extends React.Component<any, IUserIconState> {
 
     let token = sessionStorage.getItem("Authentication-Token");
 
-        if(token === null)
-        {
+        if(token === null) {
             this.setState({
                 redirect: true
             })
@@ -51,26 +50,28 @@ class UserIcon extends React.Component<any, IUserIconState> {
                 'Content-Type': 'application/json',
                 'x-access-token':  token.toString()
                 }})
-            .then( response => 
-                {
-                    if( response.status === 500)
-                    {
+            .then( response => {
+                    if( response.status === 500){
                         return null;
-                    }
-                    
+                    }                   
                     return response.json();
                 })
             .then( userData => {
-                if(userData !== null && userData.pictureLink !== "")
-                {
-                    this.setState(
-                        {
-                           userImage: userData.pictureLink
-                        }
-                    )
-                }
-            });
-        }
+                if(userData.pictureLink !== ""){
+                fetch(userData.pictureLink,{
+                   method: 'HEAD',
+                   mode: 'no-cors'
+                }).then(res => {
+                    if(res.status !== 404){
+                        this.setState({
+                            userImage: userData.pictureLink
+                        });
+                    }
+                  })
+              }
+            }
+          )        
+      }  
   }
 
   componentWillUnmount() {
