@@ -128,7 +128,7 @@ class TransactionList extends React.Component<any, IState> {
     
     render() {
         return <div className="transactions">
-            <h5 className="font-weight-bold">Transactions</h5>
+            <h5 className="h5 font-weight-bold">Transactions</h5>
             <DownloadDropdown/>
             <table className="table table-hover">
                 {this.getTableBodyFromTransactionList()}
