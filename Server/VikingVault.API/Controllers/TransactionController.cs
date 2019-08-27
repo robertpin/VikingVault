@@ -22,7 +22,7 @@ namespace VikingVault.API.Controllers
 
         [HttpGet]
         [Authorization(Role = RoleEnum.User)]
-        public ActionResult<IEnumerable<Transaction>> Get()
+        public ActionResult<IEnumerable<TransactionDTO>> Get()
         {
             var token = Request.Headers["x-access-token"];
             var tokenObject = new JwtSecurityToken(token);
