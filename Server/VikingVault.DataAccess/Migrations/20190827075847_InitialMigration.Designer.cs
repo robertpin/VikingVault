@@ -10,8 +10,8 @@ using VikingVault.DataAccess;
 namespace VikingVault.DataAccess.Migrations
 {
     [DbContext(typeof(VikingVaultDbContext))]
-    [Migration("20190820113259_addedRoleTableAndRefactoredUserTable")]
-    partial class addedRoleTableAndRefactoredUserTable
+    [Migration("20190827075847_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,33 @@ namespace VikingVault.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Amount");
+
+                    b.Property<DateTime>("InitialPaymentDate");
+
+                    b.Property<bool>("IsEnabled");
+
+                    b.Property<DateTime>("LastPaymentDate");
+
+                    b.Property<int?>("PayingUserId");
+
+                    b.Property<int>("ReceivingCompanyId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PayingUserId");
+
+                    b.HasIndex("ReceivingCompanyId");
+
+                    b.ToTable("AutomaticPayments");
+                });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
                 {
@@ -47,6 +74,8 @@ namespace VikingVault.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Blocked");
+
                     b.Property<int>("CCV");
 
                     b.Property<string>("CardNumber")
@@ -67,33 +96,54 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Read");
+
+                    b.Property<string>("Text")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Type");
+                    b.Property<string>("Type")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Type = 0
+                            Type = "Admin"
                         },
                         new
                         {
                             Id = 2,
-                            Type = 1
+                            Type = "User"
                         },
                         new
                         {
                             Id = 3,
-                            Type = 2
+                            Type = "Company"
                         });
                 });
 
@@ -109,17 +159,47 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("OtherParty");
+                    b.Property<string>("Details");
+
+                    b.Property<int?>("ReceiverId");
+
+                    b.Property<int?>("SenderId");
 
                     b.Property<string>("Type");
 
-                    b.Property<int>("UserId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Amount")
+                        .IsRequired();
+
+                    b.Property<string>("CardNumberReciever")
+                        .IsRequired();
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.Property<string>("Details");
+
+                    b.Property<int>("RequesterId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("RequesterId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("TransferRequests");
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
@@ -174,6 +254,18 @@ namespace VikingVault.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
+                        .WithMany()
+                        .HasForeignKey("PayingUserId");
+
+                    b.HasOne("VikingVault.DataAccess.Models.User", "ReceivingCompany")
+                        .WithMany()
+                        .HasForeignKey("ReceivingCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
                 {
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
@@ -190,11 +282,31 @@ namespace VikingVault.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Notification", b =>
                 {
                     b.HasOne("VikingVault.DataAccess.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.Transaction", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Requester")
+                        .WithMany()
+                        .HasForeignKey("RequesterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

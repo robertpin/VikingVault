@@ -1,13 +1,12 @@
 import React from 'react'
-import {constants, currencyEnum} from "../Resources/Constants";
-import { Redirect } from 'react-router-dom';
-import SideBar from '../Common/SideBar';
-import TopBar from '../Common/TopBar';
-import UserIcon from '../Common/UserIcon';
+import {constants, currencyEnum} from "../../Resources/Constants";
+import SideBar from '../../Common/SideBar';
+import TopBar from '../../Common/TopBar';
+import UserIcon from '../../Common/UserIcon';
 import './TransferFunds.css';
-import '../UserDashboard/ExchangeForm.css';
+import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
-import Toggle from '../Common/Toggle';
+import Toggle from '../../Common/Toggle';
 
 
 const transferUrl = `${constants.baseUrl}transferFunds`;
@@ -145,17 +144,11 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     transferMoney = () => {
-        
         let data = this.getTransferDataFromUI();
-
         if(this.isValidAmount(data)) {
-
           let token = sessionStorage.getItem('Authentication-Token');
-
           if(token !== null) {
-
             this.handleIsButtonDisabled();
-
             fetch(transferUrl, {
               method: "POST",
               headers: {

@@ -63,7 +63,10 @@ namespace VikingVault.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Receiver)
+                .WithMany()
+                .Metadata.DeleteBehavior = DeleteBehavior.SetNull;
 
             modelBuilder.Entity<User>()
                 .HasAlternateKey(c => c.Email)
@@ -75,6 +78,8 @@ namespace VikingVault.DataAccess
             modelBuilder.Entity<Card>()
                 .HasAlternateKey(card => card.CardNumber)
                 .HasName("AlternateKey_CardNumber");
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

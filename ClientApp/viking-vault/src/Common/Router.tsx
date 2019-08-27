@@ -6,7 +6,7 @@ import { ExchangeForm } from '../UserDashboard/ExchangeForm'
 import "../App.css"
 import { Dashboard } from "./Dashboard";
 import { Companies } from "../AdminDashboard/CompanyComponents/Companies";
-import { TransferFundsPage } from "../TransferFunds/TransferFundsPage";
+import { TransferFundsPage } from "../UserDashboard/TransferFunds/TransferFundsPage";
 import { ViewAutomaticPayments } from "../UserDashboard/ViewAutomaticPayments";
 import { BlockedServices } from "../UserDashboard/BlockedServices";
 import { Notifications } from "../UserDashboard/Notifications";

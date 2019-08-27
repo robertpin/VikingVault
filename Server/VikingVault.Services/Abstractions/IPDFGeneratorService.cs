@@ -12,7 +12,7 @@ namespace VikingVault.Services.Abstractions
         FileStreamResult GetTransactionListAsPDF(string userId, string timeFilter);
         string GetTimeFilterHeaderText(string timeFilter);
         void CreatePDFHeader(PdfPage page, string timeFilter);
-        List<Transaction> FilterTransactionsByTime(List<Transaction> transactionList, string timeFilter);
+        List<TransactionDTO> FilterTransactionsByTime(List<TransactionDTO> transactionList, string timeFilter);
         void AddTransactionListIntoPDF(PdfPage page, string userId, string timeFilter);
     }
 }
