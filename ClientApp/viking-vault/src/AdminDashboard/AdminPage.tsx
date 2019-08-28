@@ -6,7 +6,7 @@ import './DisplayUsers.css';
 import { constants } from "../Resources/Constants";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
-import UserIcon from "../Common/UserIcon";
+import AdminIcon from "../Common/AdminIcon";
 
 const usersUrl = `${constants.baseUrl}admin/getAllUsers`;
 
@@ -94,7 +94,7 @@ class AdminPage extends React.Component<any, IProfileData>{
             <div className = "admin-page">
                 <SideBar userType="admin"/>
                 <TopBar/>
-                <UserIcon/>
+                <AdminIcon/>
                 <div className = "display-users-container">
                     { this.state.users.map( (user) => 
                         <UserData user = {user} 
