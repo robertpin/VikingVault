@@ -272,18 +272,17 @@ class AccountPage extends React.Component<any, IAccountPageState>{
     }
 
     returnCardClassName = () => {
-        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "base-blocked-card-label";
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "base-blocked-card-label");
     }
 
     returnLabelClassName = () => {
-        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label");
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "base-unblocked-card-label" : "unblocked-card-label");
     }
 
     render(){
         return(
-
             <div className="account-view"> 
-                {this.state.redirect? <Redirect to = "/login"  /> : null}       
+                {this.state.redirect? <Redirect to = "/login" /> : null}       
                 {this.returnCardMessage()}
                 <div className="accounts-information">
                     <div className="accounts-title">
