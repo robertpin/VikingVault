@@ -9,8 +9,9 @@ import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
 import TransferRequests from '../TransferRequests';
 
-const transferUrl = `${constants.baseUrl}transferFunds`;
-const requestUrl = `${constants.baseUrl}transferRequests`;
+const transferFundsUrl = `${constants.baseUrl}transferFunds`;
+const transferRequestsUrl = `${constants.baseUrl}transferRequests`;
+const bankAccountUrl = `${constants.baseUrl}bankAccount`;
 const currencyMap = {
   [currencyEnum.ron]: 0,
   [currencyEnum.eur]: 1,
@@ -121,7 +122,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     getTotalBalance = () => {
       let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch(constants.baseUrl+"bankAccount", {
+            fetch(bankAccountUrl, {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -150,8 +151,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       })
     }
 
-    changeReloading = (reload: boolean) =>
-    {
+    changeReloading = (reload: boolean) => {
       this.setState({
         reloadRequestsData: reload
       })
@@ -188,17 +188,17 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     transferMoney = () => {
-      let data = this.getDataForTransfer();
+      const data = this.getDataForTransfer();
 
       if(this.isValidAmount(data)) {
 
-        let token = sessionStorage.getItem('Authentication-Token');
+        const token = sessionStorage.getItem('Authentication-Token');
 
         if(token !== null) {
 
           this.handleIsButtonDisabled();
 
-          fetch(transferUrl, {
+          fetch(transferFundsUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -215,8 +215,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                   modalMessage: response
                 }); 
                 
-                if(this.state.isTransferRequested)
-                {
+                if(this.state.isTransferRequested) {
                     this.changeReloading(true);
                 }
 
@@ -226,19 +225,16 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       }
     }
 
-    requestTransfer = () =>
-    {
-      let data = this.getTransferDataFromUI();
+    requestTransfer = () => {
+      const data = this.getTransferDataFromUI();
 
       if(this.isValidAmount(data)) {
-
-        let token = sessionStorage.getItem('Authentication-Token');
+        const token = sessionStorage.getItem('Authentication-Token');
 
          if(token !== null)
         {
           this.handleIsButtonDisabled();
-          console.log("Started the shit");
-          fetch(requestUrl, {
+          fetch(transferRequestsUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -249,7 +245,6 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             })
             .then(response => response.json())
             .then( response => {
-              console.log("continued the shit");
                 this.setState({
                   openModal: true,
                   modalMessage: response
@@ -261,8 +256,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       }
     }
 
-    closeModal = () =>
-    {
+    closeModal = () => {
         this.setState({
           openModal: false,
           modalMessage: "",
