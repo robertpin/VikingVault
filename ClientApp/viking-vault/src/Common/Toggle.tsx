@@ -3,13 +3,14 @@ import './Toggle.css';
 import { constants } from "../Resources/Constants";
 
 interface IToggleState{
-    toggleSwitch: any
+    requestTransfer: boolean;
+    toggleSwitch: any;
 }
 
 function Toggle (props: IToggleState){
     return (
         <label className="common-toggle">
-            <input type="checkbox" onClick = {props.toggleSwitch}/>
+            <input type="checkbox" checked = {props.requestTransfer} onClick = {props.toggleSwitch}/>
             <span className="slider round"> </span>
         </label>
     );

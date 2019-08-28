@@ -125,9 +125,7 @@ class LoginForm extends React.Component<any, ILoginFormState> {
       else return "";
     })
     .then(result => {
-      if(result !== null)
-      {
-        // correct email + password => redirect to user/admin page 
+      if(result !== null) { 
         sessionStorage.setItem('Authentication-Token', result.token);
         if(result.email === "admin"){
           this.setState({
