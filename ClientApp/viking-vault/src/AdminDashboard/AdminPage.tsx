@@ -8,7 +8,7 @@ import { UserData }  from './UserData';
 import { IUserData } from './UserData';
 import UserIcon from "../Common/UserIcon";
 
-const API_URL = `${constants.baseUrl}admin/getAllUsers`;
+const usersUrl = `${constants.baseUrl}admin/getAllUsers`;
 
 interface IProfileData{
     id: number;
@@ -48,7 +48,7 @@ class AdminPage extends React.Component<any, IProfileData>{
             this.setState({
                 users: []
             });
-            fetch(API_URL, {
+            fetch(usersUrl, {
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',

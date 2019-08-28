@@ -4,7 +4,7 @@ import './AttachCardModal.css';
 
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 let currentYearValue = new Date().getFullYear();
-const url = constants.baseUrl+"attachCard";
+const attachCardUrl = constants.baseUrl+"attachCard";
 
 interface IModalProps {
     open: boolean;
@@ -126,7 +126,7 @@ class AttachCardForm extends React.Component<IModalProps, IFormState> {
             return;
         }
         const card = this.getCard(this.props.userId);
-        fetch(url, {
+        fetch(attachCardUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
