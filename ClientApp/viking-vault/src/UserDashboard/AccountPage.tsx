@@ -271,6 +271,14 @@ class AccountPage extends React.Component<any, IAccountPageState>{
         return !this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null;
     }
 
+    returnCardClassName = () => {
+        return this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "not-displayed-label";
+    }
+
+    returnLabelClassName = () => {
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label");
+    }
+
     render(){
         return(
             <div className="account-view"> 
@@ -282,11 +290,11 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                     </div>
                     {this.returnBalanceMessage()}
                 </div>
-                <label className={this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "not-displayed-label"}>Your card is blocked!</label>
+                <label className={this.returnCardClassName()}>Your card is blocked!</label>
                 <div className = "block-card-toggle-position"> 
                     {this.renderToggle()} 
                 </div>
-                <label className={this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label")}>Your card is unblocked!</label>
+                <label className={this.returnLabelClassName()}>Your card is unblocked!</label>
                 <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
             </div>
         )
