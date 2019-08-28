@@ -10,6 +10,8 @@ namespace VikingVault.DataAccess.Models
         public string Currency { get; set; }
         public string CardNumberReciever { get; set; }
         public string TransferDetails { get; set; }
+        public bool IsTransferRequested { get; set; }
+        public int RequestId { get; set; }
 
         public TransferFundsModel convertDTOtoTransferFundsModel(User sender)
         {

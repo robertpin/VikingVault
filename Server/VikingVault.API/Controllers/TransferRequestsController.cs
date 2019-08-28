@@ -28,6 +28,35 @@ namespace VikingVault.API.Controllers
         }
 
         [Authorization(Role = RoleEnum.User)]
+        [HttpGet]
+        public ActionResult<string> Get()
+        {
+            try
+            {
+                var token = Request.Headers["x-access-token"];
+                User requestReciever = _userService.GetUserFromToken(token);
+
+                if(requestReciever != null)
+                {
+                    var transferRequests = _transferRequestService.GetAllRequestsForUser(requestReciever);
+                    var transferRequestsDTO = _transferRequestService.ConvertTransferRequestsToTransferRequestsDTO(transferRequests);
+
+                    return Ok(transferRequestsDTO);
+                }
+
+                return Ok("Couldn't send data to server!");
+            }
+            catch(Exception e)
+            {
+                if(e is DatabaseException)
+                {
+                    return NotFound(e.Message);
+                }
+
+                return Ok("Server Error."); 
+            }
+        }
+
         [HttpPost]
         public ActionResult<string> Post([FromBody] TransferRequestDTO transferRequestDTO)
         {
