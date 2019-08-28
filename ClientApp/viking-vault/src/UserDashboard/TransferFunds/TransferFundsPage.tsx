@@ -7,10 +7,10 @@ import './TransferFunds.css';
 import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
+import TransferRequests from '../TransferRequests';
 
-const transferFundsUrl = `${constants.baseUrl}transferFunds`;
-const transferRequestsUrl = `${constants.baseUrl}transferRequests`;
-const bankAccountUrl = `${constants.baseUrl}bankAccount`;
+const transferUrl = `${constants.baseUrl}transferFunds`;
+const requestUrl = `${constants.baseUrl}transferRequests`;
 const currencyMap = {
   [currencyEnum.ron]: 0,
   [currencyEnum.eur]: 1,
@@ -28,6 +28,9 @@ interface ITransferFundsState{
     openModal: boolean;
     requestTransfer: boolean;
     isButtonDisabled: boolean;
+    isTransferRequested: boolean;
+    requestId: number;
+    reloadRequestsData: boolean;
 }
 
 interface ITransferDataDTO{
@@ -43,13 +46,16 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         this.state = {
           transferedAmount: 0,
           currency: "EUR",
-          cardNumber: "",
-          transferDetails: "",
+          cardNumber: "Card Number",
+          transferDetails: "Transfer Details",
           modalMessage: "",
           totalBalance: 0,
           openModal: false,
           requestTransfer: false,
-          isButtonDisabled: false
+          isButtonDisabled: false,
+          isTransferRequested: false,
+          requestId: -1,
+          reloadRequestsData: false
         }
     }
 
@@ -115,7 +121,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     getTotalBalance = () => {
       let token = sessionStorage.getItem('Authentication-Token');
         if(token != null) {
-            fetch(bankAccountUrl, {
+            fetch(constants.baseUrl+"bankAccount", {
                 method: "GET",
                 headers: {
                   'Accept': 'application/json',
@@ -130,6 +136,25 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
               });
             });
         }
+    }
+
+    autoFillTransferRequest = (transferData: any) => {
+      this.setState({
+        transferedAmount: transferData.amount,
+        currency: transferData.currency,
+        cardNumber: transferData.cardNumberRequester,
+        transferDetails: "Responding to your request to transfer money.",
+        requestTransfer: false,
+        isTransferRequested: true,
+        requestId: transferData.id
+      })
+    }
+
+    changeReloading = (reload: boolean) =>
+    {
+      this.setState({
+        reloadRequestsData: reload
+      })
     }
 
     private getTransferDataFromUI = ():ITransferDataDTO => {
@@ -154,42 +179,26 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
       return true;
     }
 
-    transferMoney = () => {
-        let data = this.getTransferDataFromUI();
-        if(this.isValidAmount(data)) {
-          let token = sessionStorage.getItem('Authentication-Token');
-          if(token !== null) {
-            this.handleIsButtonDisabled();
-            fetch(transferFundsUrl, {
-              method: "POST",
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': token.toString()
-              },
-              body: JSON.stringify(data)
-              })
-              .then(response => response.json())
-              .then( response => {            
-                  this.setState({
-                    openModal: true,
-                    modalMessage: response
-                  }); 
-                  
-                  this.handleIsButtonDisabled(); 
-              });
-          }
-        }
+    private getDataForTransfer = () => {
+      return {
+          ...this.getTransferDataFromUI(),
+          isTransferRequested: this.state.isTransferRequested,
+          requestId: this.state.requestId
+      }
     }
 
-    requestTransfer = () => {
-      let data = this.getTransferDataFromUI();
+    transferMoney = () => {
+      let data = this.getDataForTransfer();
+
       if(this.isValidAmount(data)) {
+
         let token = sessionStorage.getItem('Authentication-Token');
-         if(token !== null)
-        {
+
+        if(token !== null) {
+
           this.handleIsButtonDisabled();
-          fetch(transferRequestsUrl, {
+
+          fetch(transferUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -200,17 +209,60 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             })
             .then(response => response.json())
             .then( response => {
+              
+                this.setState({
+                  openModal: true,
+                  modalMessage: response
+                }); 
+                
+                if(this.state.isTransferRequested)
+                {
+                    this.changeReloading(true);
+                }
+
+                this.handleIsButtonDisabled(); 
+            });
+        }
+      }
+    }
+
+    requestTransfer = () =>
+    {
+      let data = this.getTransferDataFromUI();
+
+      if(this.isValidAmount(data)) {
+
+        let token = sessionStorage.getItem('Authentication-Token');
+
+         if(token !== null)
+        {
+          this.handleIsButtonDisabled();
+          console.log("Started the shit");
+          fetch(requestUrl, {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token.toString()
+            },
+            body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then( response => {
+              console.log("continued the shit");
                 this.setState({
                   openModal: true,
                   modalMessage: response
                 });
+
                 this.handleIsButtonDisabled();
             });
         } 
       }
     }
 
-    closeModal = () => {
+    closeModal = () =>
+    {
         this.setState({
           openModal: false,
           modalMessage: "",
@@ -219,6 +271,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     render(){
+        
         return(
             <div className = "transfer-funds-page">  
                 <SideBar userType = "user"/>
@@ -237,10 +290,10 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                             <div className="transfer-data-left-container">
                                <div>
                                   <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
-                                        <option value="EUR">EUR</option>
-                                        <option value="RON">RON</option>
-                                        <option value="YEN">YEN</option>
-                                        <option value="USD">USD</option>
+                                        <option selected = {this.state.currency === "EUR"} value="EUR">EUR</option>
+                                        <option selected = {this.state.currency === "RON"} value="RON">RON</option>
+                                        <option selected = {this.state.currency === "YEN"} value="YEN">YEN</option>
+                                        <option selected = {this.state.currency === "USD"} value="USD">USD</option>
                                     </select>
                                     <div>
                                         <p className="total-balance">{this.state.totalBalance}</p>
@@ -269,12 +322,13 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     <input 
                                     className="form-control form-group text-center"
                                     type="text"
-                                    placeholder="Card Number"
+                                    placeholder= {this.state.cardNumber}
                                     onChange={this.handleChangedCardNumber}/> 
                                     <input 
                                      className="form-control form-group text-center"
-                                     type="cardnumber"
-                                     placeholder="Transfer Details"
+                                     type="text"
+                                     maxLength = {35}
+                                     placeholder= {this.state.transferDetails}
                                      onChange={this.handleChangedTransferDetails}/>
                                 </form>
 
@@ -282,6 +336,10 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     {this.state.requestTransfer == true ? "Request Now" : "Transfer Now"}
                                 </button>   
                             </div>
+                    </div>
+                    <div className = "transfer-funds-right-container">
+                      <span className="transfer-requests-text-decoration">Transfer Requests</span>
+                      <span className="transfer-requests-table-container"><TransferRequests reloadStatus = {this.state.reloadRequestsData} autoFillTransferRequest = {this.autoFillTransferRequest} changeReloading = {this.changeReloading} /></span>
                     </div> 
                 </div>
             </div>         
