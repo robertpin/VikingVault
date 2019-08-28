@@ -17,9 +17,9 @@ function Router(props: any) {
         <Route path="/login" exact component={LoginForm} />
         <Route path="/" exact component={Dashboard}/>
         <Route path="/companies" exact component={Companies}/>
-        <Route path="/transfer" exact render={() => {return <BlockedServices><TransferFundsPage/></BlockedServices>;}}/>
-        <Route path="/exchange" exact render={() => {return <BlockedServices><ExchangeForm/></BlockedServices>;}}/>
-        <Route path="/automatic-debit" exact render={() => {return <BlockedServices><ViewAutomaticPayments/></BlockedServices>;}}/>
+        <Route path="/transfer" exact render={() => <BlockedServices><TransferFundsPage/></BlockedServices>}/>
+        <Route path="/exchange" exact render={() => <BlockedServices><ExchangeForm/></BlockedServices>}/>
+        <Route path="/automatic-debit" exact render={() => <BlockedServices><ViewAutomaticPayments/></BlockedServices>}/>
         <Route path="/notifications" exact component={Notifications}/>
     </BrowserRouter>;
 }
