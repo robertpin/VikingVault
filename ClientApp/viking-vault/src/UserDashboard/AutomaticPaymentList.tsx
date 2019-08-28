@@ -107,7 +107,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{payment.companyName}</td>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
-                <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
+                <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== "01/01/2000, 10:00 PM" ?
+                    this.formatDate(payment.lastPaymentDate) : " " }</td>
                 <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
                 <td className="payments-text centered-text"><EditAutomaticPaymentButton automaticPayment={payment} /></td>
                 <td>
