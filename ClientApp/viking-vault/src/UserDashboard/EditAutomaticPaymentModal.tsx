@@ -3,7 +3,7 @@ import { constants } from "../Resources/Constants.js";
 import '../AdminDashboard/AttachCardModal.css';
 import { IAutomaticPayment } from "./AutomaticPaymentList.jsx";
 
-const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
+const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$";
 let currentDate = new Date();
 currentDate.setHours(0);
 
@@ -11,7 +11,7 @@ interface IEditAutomaticPaymentModalProps {
     open: boolean;
     onModalClose: any;
     automaticPayment: IAutomaticPayment;
-    changeReloading: (reloading: boolean) => void;
+    reload: () => void;
 }
 
 interface IAutomaticPaymentProperties {
@@ -140,7 +140,7 @@ class EditAutomaticPaymentForm extends React.Component<IEditAutomaticPaymentModa
             .then(result => {
                 if (this.state.errorLabel === "") {
                     this.closeModal();
-                    this.props.changeReloading(true);
+                    this.props.reload();
                 }
             });
         }

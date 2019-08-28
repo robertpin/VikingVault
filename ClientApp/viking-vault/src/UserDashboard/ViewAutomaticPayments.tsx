@@ -6,20 +6,20 @@ import UserIcon from "../Common/UserIcon";
 import { AutomaticPaymentList } from "./AutomaticPaymentList";
 import "../Common/styles.css";
 
-export interface IAutomaticPaymentsState {
-    reload: boolean;
-}
+// export interface IAutomaticPaymentsState {
+//     reload: boolean;
+// }
 
-class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState> {
-    state = {
-        reload: false
-    }
+class ViewAutomaticPayments extends React.Component<any, any> {
+    // state = {
+    //     reload: false
+    // }
 
-    changeReloadingAutomaticPaymentsList = (reloading: boolean) => {
-        this.setState({
-            reload: reloading
-        });
-    }
+    // changeReloadingAutomaticPaymentsList = (reloading: boolean) => {
+    //     this.setState({
+    //         reload: reloading
+    //     });
+    // }
 
     render() {
         return <div>
@@ -30,7 +30,8 @@ class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState
                 <div className="feature-container mr-auto ml-auto w-75 bg-white">
                     <div className="p-4">
                         <h4 className="payments-header">My payments</h4>
-                        <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/>
+                        <AutomaticPaymentList/>
+                        {/* <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/> */}
                     </div>
                 </div>
             </div>

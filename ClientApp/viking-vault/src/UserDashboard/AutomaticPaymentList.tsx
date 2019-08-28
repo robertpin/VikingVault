@@ -30,13 +30,8 @@ interface IAutomaticPaymentsState {
     modals: IModals;
 }
 
-interface IAutomaticPaymentListProps {
-    reload: boolean;
-    changeReloading: (reloading: boolean) => void;
-}
-
-class AutomaticPaymentList extends React.Component<IAutomaticPaymentListProps, IAutomaticPaymentsState> {
-    constructor(props: IAutomaticPaymentListProps){
+class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState> {
+    constructor(props: any){
         super(props);
         this.state = {
             payments: [],
@@ -115,8 +110,12 @@ class AutomaticPaymentList extends React.Component<IAutomaticPaymentListProps, I
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
                 <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== defaultDate ?
                     this.formatDate(payment.lastPaymentDate) : " " }</td>
-                <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
-                <td className="payments-text centered-text"><EditAutomaticPaymentButton automaticPayment={payment} changeReloading={this.props.changeReloading} /></td>
+                <td className="payments-text centered-text">
+                    <ActivatePaymentToggle paymentId={payment.id} />
+                </td>
+                <td className="payments-text centered-text">
+                    <EditAutomaticPaymentButton automaticPayment={payment} reload={this.getAutomaticPayments}/>
+                </td>
                 <td>
                     <DeleteAutomaticPayment automaticPaymentId = {payment.id} deletePaymentFromList = {this.deletePaymentFromList}/>
                 </td>
@@ -142,19 +141,13 @@ class AutomaticPaymentList extends React.Component<IAutomaticPaymentListProps, I
         });
     }
 
-    reloadData = () => {
-        this.getAutomaticPayments();
-        this.props.changeReloading(false);
-    }
-
     render() {
         return <div className="m-4 w-auto">
-                 {this.props.reload? this.reloadData() : null}
-                <CreateAutomaticPaymentForm open={this.state.modals.openCreateAutomaticPaymentModal} onModalClose={this.closeCreateAutomaticPaymentModal} changeReloading={this.props.changeReloading}/>
+                <CreateAutomaticPaymentForm open={this.state.modals.openCreateAutomaticPaymentModal} onModalClose={this.closeCreateAutomaticPaymentModal} reload={this.getAutomaticPayments}/>
                 <button className = "btn add-payment-button" onClick={ this.handleCreateAutomaticPayment}>
                     <img title="Create Automatic Payment" className="add-payment-icon" src={addPaymentImg} alt="Automatic Payment Button"></img>
                 </button>
-            {this.state.isThePaymentListEmpty?
+            {this.state.payments.length === 0?
                 <label className="payments-text centered-text">{this.state.emptyListMessage}</label> :
                 <table className="table table-hover">
                     <thead>

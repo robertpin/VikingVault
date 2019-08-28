@@ -33,7 +33,7 @@ function deleteAutomaticPaymentRequest(automaticPaymentId: number, props: IDelet
 }
 
 function DeleteAutomaticPayment (props: IDeleteAutomaticPaymentProps) {
-    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteAutomaticPaymentRequest(props.automaticPaymentId, props)}}><img className="delete-automatic-payment-icon" src={deleteIcon} /></button>
+    return <button className="btn btn-link m-0 p-0" onClick={() => {deleteAutomaticPaymentRequest(props.automaticPaymentId, props)}}><img className="delete-automatic-payment-icon" src={deleteIcon} title = "Delete Automatic Payment"/></button>
 }
 
 export {DeleteAutomaticPayment};
