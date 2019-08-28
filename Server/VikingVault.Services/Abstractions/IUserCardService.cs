@@ -10,6 +10,7 @@ namespace VikingVault.Services.Abstractions
         Card FindCardByUserId(int id);
         int? FindUserIdByCardNumber(string cardNumber);
         bool HasCardAttached(int userId);
+        string GetCardNumberFromUser(User user);
     }
 
 

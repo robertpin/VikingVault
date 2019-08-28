@@ -48,6 +48,19 @@ namespace VikingVault.Services
             }
         }
 
+        public string GetCardNumberFromUser(User user)
+        {
+            try
+            {
+                var cardNumber = _dbContext.Cards.SingleOrDefault(card => card.UserId == user.Id).CardNumber;
+                return cardNumber;
+            }
+            catch
+            {
+                throw new DatabaseException("Server error.");
+            }
+        }
+
         public bool HasCardAttached(int userId)
         {
             if (FindCardByUserId(userId) == null)
@@ -57,5 +70,6 @@ namespace VikingVault.Services
 
             return true;
         }
+
     }
 }
