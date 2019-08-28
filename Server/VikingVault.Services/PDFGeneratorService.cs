@@ -111,7 +111,7 @@ namespace VikingVault.Services
                 }
                 else
                 {
-                    string transferText = "";
+                    string transferText = string.Empty;
                     string transactionDetails = TrimmTransactionDetails(transaction);
 
                     if (transaction.IsUserSender == true)
@@ -132,10 +132,11 @@ namespace VikingVault.Services
 
         public string TrimmTransactionDetails (TransactionDTO transaction)
         {
-            string transactionDetails = transaction.Details.ToString();
-            if (transactionDetails.Length > 23)
+            var transactionDetails = transaction.Details.ToString();
+            var maximumTextLength = 23;
+            if (transactionDetails.Length > maximumTextLength)
             {
-                transactionDetails = transactionDetails.Substring(0, 23) + "...";
+                transactionDetails = transactionDetails.Substring(0, maximumTextLength) + "...";
             }
             return transactionDetails;
         }
