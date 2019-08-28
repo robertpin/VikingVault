@@ -7,6 +7,7 @@ import "./EditAutomaticPaymentButton.css";
 
 interface IEditAutomaticPaymentProps {
     automaticPayment: IAutomaticPayment,
+    changeReloading: (reloading: boolean) => void;
 }
 
 interface IEditAutomaticPaymentModal {
@@ -36,7 +37,11 @@ class EditAutomaticPaymentButton extends React.Component<IEditAutomaticPaymentPr
     render() {
         return (
             <div>
-                <EditAutomaticPaymentForm open={this.state.openEditAutomaticPaymentModal} onModalClose={this.closeEditAutomaticPaymentModal} automaticPayment={this.props.automaticPayment} />
+                <EditAutomaticPaymentForm 
+                    open={this.state.openEditAutomaticPaymentModal} 
+                    onModalClose={this.closeEditAutomaticPaymentModal} 
+                    automaticPayment={this.props.automaticPayment} 
+                    changeReloading={this.props.changeReloading} />
                 <button className = "btn edit-payment-button" onClick={ this.handleEditAutomaticPayment}>
                     <img title="Edit Automatic Payment" className="edit-payment-icon" src={editPaymentImg} alt="Edit Payment Button"></img>
                 </button>
