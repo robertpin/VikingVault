@@ -263,7 +263,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
         
         return(
             <div className = "transfer-funds-page">  
-                <SideBar userType = "admin"/>
+                <SideBar userType = "user"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
@@ -271,7 +271,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                     <div className = "transfer-funds-left-container"> 
 
                             <div className = "transfer-request-toggle-container">
-                                <span  className ="toggle-positioning"><Toggle toggleSwitch = {this.handleChangeRequestTransferState}/></span> 
+                                <span  className ="toggle-positioning"><Toggle requestTransfer = {this.state.requestTransfer} toggleSwitch = {this.handleChangeRequestTransferState}/></span> 
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>
