@@ -18,11 +18,13 @@ namespace VikingVault.API.Controllers
     {
         ITransferFundsService _transferFundsService;
         IUserService _userService;
+        ITransferRequestService _transferRequestService;
 
-        public TransferFundsController(ITransferFundsService transferFundsService, IUserService userService)
+        public TransferFundsController(ITransferFundsService transferFundsService, IUserService userService, ITransferRequestService transferRequestService)
         {
             _transferFundsService = transferFundsService;
             _userService = userService;
+            _transferRequestService = transferRequestService;
         }
 
         [HttpPost]
@@ -38,6 +40,12 @@ namespace VikingVault.API.Controllers
                     TransferFundsModel transferFundsData = transferFundsDTO.convertDTOtoTransferFundsModel(sender);
 
                     _transferFundsService.TransferFunds(transferFundsData);
+
+                    if(transferFundsDTO.IsTransferRequested)
+                    {
+                        _transferRequestService.DeleteRequest(transferFundsDTO.RequestId);
+                    }
+
                     return Ok("Succesfully transfered " + transferFundsData.AmountSent + "!");
                 }
                 else
