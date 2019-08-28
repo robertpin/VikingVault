@@ -58,7 +58,7 @@ class Notifications extends React.Component<any, INotificationState> {
 
     updateNotificationFrontend = (notification: INotification) => {
         let allNotifications = this.state.notifications;
-        let notificationToUpdate = allNotifications.find(n => n.id == notification.id);
+        let notificationToUpdate = allNotifications.find(n => n.id === notification.id);
         if(notificationToUpdate === undefined) {
             return;
         }
@@ -100,7 +100,7 @@ class Notifications extends React.Component<any, INotificationState> {
     returnTableRows = () => {
         return this.state.notifications.map(notification => {
             return <tr key={notification.id}>
-                <td className="notification-text">
+                <td className="notification-text" title={notification.text}>
                     <span className={notification.read? "" : "font-weight-bold"}>{notification.text}</span>
                 </td>
                 <td>
@@ -113,11 +113,11 @@ class Notifications extends React.Component<any, INotificationState> {
     }
 
     render() {
-        return <div className="dark-background">
+        return <div className="page-background">
             <SideBar userType="user"/>
             <TopBar />
             <UserIcon />
-            <div className="notifications-container w-75 mr-auto ml-auto bg-white">
+            <div className="feature-container p-5 w-75 mr-auto ml-auto bg-white">
             <h5 className="font-weight-bold">Notifications</h5>
                 <table className="table table-hover">
                     <tbody>

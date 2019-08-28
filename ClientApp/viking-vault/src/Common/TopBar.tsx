@@ -42,7 +42,7 @@ class TopBar extends React.Component<any, IState>{
     render(){
         return(
             <div className="top-bar">
-                <Link to="/"><img className="img viking-logo" src={logo} alt=''></img></Link>
+                <Link to="/"><img className="img viking-logo" src={logo} alt="Logo"/></Link>
             </div>
         )
     }

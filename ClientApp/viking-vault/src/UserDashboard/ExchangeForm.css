@@ -1,10 +1,3 @@
-.exchange-page-background {
-    position: absolute;
-    background-color: #B0B2B6;
-    height: 100%;
-    width: 100%;
-}
-
 .input-field {
     width: 50%;
     padding: 0;
@@ -20,14 +13,14 @@
 
 .left-column {
     position: absolute;
-    top: 11%;
-    left: 14%;
+    top: 10%;
+    left: 5%;
 }
 
 .right-column {
     position: absolute;
-    left: 55%;
-    top: 16%;
+    left: 50%;
+    top: 14%;
 }
 
 .total-balance-text {

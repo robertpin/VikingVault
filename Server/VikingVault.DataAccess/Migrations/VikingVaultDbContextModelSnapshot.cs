@@ -27,19 +27,21 @@ namespace VikingVault.DataAccess.Migrations
 
                     b.Property<float>("Amount");
 
-                    b.Property<int>("CompanyId");
-
                     b.Property<DateTime>("InitialPaymentDate");
+
+                    b.Property<bool>("IsEnabled");
 
                     b.Property<DateTime>("LastPaymentDate");
 
                     b.Property<int?>("PayingUserId");
 
+                    b.Property<int>("ReceivingCompanyId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("PayingUserId");
+
+                    b.HasIndex("ReceivingCompanyId");
 
                     b.ToTable("AutomaticPayments");
                 });
@@ -172,6 +174,32 @@ namespace VikingVault.DataAccess.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Amount")
+                        .IsRequired();
+
+                    b.Property<string>("CardNumberReciever")
+                        .IsRequired();
+
+                    b.Property<string>("Currency")
+                        .IsRequired();
+
+                    b.Property<string>("Details");
+
+                    b.Property<int>("RequesterId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequesterId");
+
+                    b.ToTable("TransferRequests");
+                });
+
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -226,14 +254,14 @@ namespace VikingVault.DataAccess.Migrations
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.AutomaticPayment", b =>
                 {
-                    b.HasOne("VikingVault.DataAccess.Models.User", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("VikingVault.DataAccess.Models.User", "PayingUser")
                         .WithMany()
                         .HasForeignKey("PayingUserId");
+
+                    b.HasOne("VikingVault.DataAccess.Models.User", "ReceivingCompany")
+                        .WithMany()
+                        .HasForeignKey("ReceivingCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.BankAccount", b =>
@@ -270,6 +298,14 @@ namespace VikingVault.DataAccess.Migrations
                     b.HasOne("VikingVault.DataAccess.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("VikingVault.DataAccess.Models.TransferRequest", b =>
+                {
+                    b.HasOne("VikingVault.DataAccess.Models.User", "Requester")
+                        .WithMany()
+                        .HasForeignKey("RequesterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VikingVault.DataAccess.Models.User", b =>

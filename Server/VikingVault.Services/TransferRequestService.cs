@@ -14,11 +14,13 @@ namespace VikingVault.Services
     {
         private readonly VikingVaultDbContext _dbContext;
         private readonly IUserCardService _userCardService;
+        private readonly IUserService _userService;
 
-        public TransferRequestService(VikingVaultDbContext dbContext, IUserCardService userCardService)
+        public TransferRequestService(VikingVaultDbContext dbContext, IUserCardService userCardService, IUserService userService)
         {
             _dbContext = dbContext;
             _userCardService = userCardService;
+            _userService = userService;
         }
 
         public TransferRequest AddTransferRequest(TransferRequest transferRequestData)
@@ -27,12 +29,31 @@ namespace VikingVault.Services
             {
                 _dbContext.Add(transferRequestData);
                 _dbContext.SaveChanges();
+                AddRequestNotification(transferRequestData);
             }
             catch (Exception e)
             {
                 throw new DatabaseException();
             }
             return transferRequestData;
+        }
+
+        private void AddRequestNotification(TransferRequest transferRequestData)
+        {
+            int? idReceiver = _userCardService.FindUserIdByCardNumber(transferRequestData.CardNumberReciever);
+            if (idReceiver != null)
+            {
+                User receiver = _userService.GetById((int)idReceiver);
+                Notification notification = new Notification
+                {
+                    User = receiver,
+                    Text = $"Transfer requested {transferRequestData.Amount} {transferRequestData.Currency} from {transferRequestData.Requester.FirstName}",
+                    Read = false
+                };
+                _dbContext.Notifications.Add(notification);
+                _dbContext.SaveChanges();
+
+            }
         }
 
         public void DeleteRequest(int requestId)
@@ -45,7 +66,7 @@ namespace VikingVault.Services
             }
             catch (Exception e)
             {
-                throw new DatabaseException();
+                    throw new DatabaseException();
             }
         }
 
@@ -95,6 +116,5 @@ namespace VikingVault.Services
                 throw new DatabaseException();
             }
         }
-
     }
 }
