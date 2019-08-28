@@ -1,20 +1,20 @@
 import * as React from "react";
-import { render } from "react-dom";
 import './ProfilePage.css';
 import { ProfilePicture } from './ProfilePicture';
 import { ProfileData } from './ProfileData';
+import "../Common/styles.css";
 
-class ProfilePage extends React.Component<any, any>
-{
-    render ()
-    { 
-        return ( 
-            <div className = "profile-page">
-                <ProfilePicture />
-                <ProfileData />
+function ProfilePage(props: any) {
+    return (
+        <div className="page-background">
+            <div className = "feature-container w-75 bg-white mr-auto ml-auto">
+                <div className="profile-page">
+                    <ProfilePicture />
+                    <ProfileData />
+                </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export { ProfilePage }
