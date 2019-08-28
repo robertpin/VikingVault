@@ -5,8 +5,8 @@
 }
 .transfer-funds-container{
     position: relative;
-    min-width: 5em;
-    width:70%;
+    min-width: 30em;
+    width:60%;
     height: 70%;
     margin-left: 15%;
     margin-top: 15px;
@@ -16,8 +16,20 @@
     overflow: auto;
 }
 .transfer-funds-left-container{
+    position: relative;
+    float:left;
     min-width: 15em;
     width: 30%;
+    height: 100%;
+    padding: 1em;
+}
+
+.transfer-funds-right-container{
+    position: relative;
+    float: left;
+    margin-left: 15%;
+    min-width: 15em;
+    width: 50%;
     height: 100%;
     padding: 1em;
 }
@@ -77,4 +89,43 @@
     top: 5%;
     left: 70%;
 }
+
+.transfer-requests-text-decoration{
+    position: relative;
+    color:#09424d;
+    font-weight: 350;
+    font-size: 1.5rem;  
+    border-style: solid;
+    border-color: #09424d;
+    border-width: 0px 0px 0px 2px;
+    padding-left: 2%;
+}
+
+.transfer-requests-table-container{
+    position: relative;
+    display: block;
+    margin-top: 7%;
+    margin-bottom: 5%;
+    max-width: 100%;
+    max-height: 80%;
+    overflow: auto;
+}
+
+.transfer-request-table-align{
+    text-align: center;
+}
+
+.transfer-details-decoration{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 6em;
+}
+
+.requests-table-row{
+    max-height: 20px;
+}
+
+
+
 
