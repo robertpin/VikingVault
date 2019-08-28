@@ -41,7 +41,7 @@ class TransactionList extends React.Component<any, IState> {
         transactions: []
     }
 
-    private checkIfUserNull(result:ITransaction[]) {
+    private changeNullUsersToDeleted(result:ITransaction[]): ITransaction[] {
         let transactions = result.map((transaction:ITransaction) => {
             if(transaction.sender === null){
                 transaction.sender = deletedUser;
@@ -56,7 +56,7 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getTransactions() {
-        let token = sessionStorage.getItem("Authentication-Token");
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null)  {
             return;
         }
@@ -69,7 +69,7 @@ class TransactionList extends React.Component<any, IState> {
             }
         }).then(response => response.json())
         .then(result => {
-            result = this.checkIfUserNull(result);
+            result = this.changeNullUsersToDeleted(result);
             this.setState({
                 transactions: result
             })
