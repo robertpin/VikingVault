@@ -14,11 +14,13 @@ namespace VikingVault.Services
     {
         private readonly VikingVaultDbContext _dbContext;
         private readonly IUserCardService _userCardService;
+        private readonly IUserService _userService;
 
-        public TransferRequestService(VikingVaultDbContext dbContext, IUserCardService userCardService)
+        public TransferRequestService(VikingVaultDbContext dbContext, IUserCardService userCardService, IUserService userService)
         {
             _dbContext = dbContext;
             _userCardService = userCardService;
+            _userService = userService;
         }
 
         public TransferRequest AddTransferRequest(TransferRequest transferRequestData)
@@ -36,10 +38,10 @@ namespace VikingVault.Services
             return transferRequestData;
         }
 
-        public void DeleteRequest(int requestId)
+        private void AddRequestNotification(TransferRequest transferRequestData)
         {
             int? idReceiver = _userCardService.FindUserIdByCardNumber(transferRequestData.CardNumberReciever);
-            if(idReceiver != null)
+            if (idReceiver != null)
             {
                 User receiver = _userService.GetById((int)idReceiver);
                 Notification notification = new Notification
@@ -52,9 +54,19 @@ namespace VikingVault.Services
                 _dbContext.SaveChanges();
 
             }
+        }
+
+        public void DeleteRequest(int requestId)
+        {
+            try
+            {
+                TransferRequest request = _dbContext.TransferRequests.SingleOrDefault(r => r.Id == requestId);
+                _dbContext.Remove(request);
+                _dbContext.SaveChanges();
+            }
             catch (Exception e)
             {
-                throw new DatabaseException();
+                    throw new DatabaseException();
             }
         }
 
