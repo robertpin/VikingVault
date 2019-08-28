@@ -79,7 +79,7 @@ class CompaniesList extends React.Component<ICompaniesListProps, ICompaniesListS
                 </thead>
                 <tbody>
                     {this.state.companies.map( (company) => {
-                        return <tr key={company.id} className="">
+                        return <tr key={company.id}>
                             <td className="company-field">{company.name}</td>
                             <td className="company-field">{company.address}</td>
                             <td>{`${company.balance} RON`}</td>
