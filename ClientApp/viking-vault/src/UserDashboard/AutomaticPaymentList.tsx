@@ -8,6 +8,7 @@ import addPaymentImg from "../Resources/images/add_payment.png"
 import { EditAutomaticPaymentButton } from './EditAutomaticPaymentButton';
 
 const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
+const defaultDate = "01/01/2000, 10:00 PM";
 
 interface IModals {
     openCreateAutomaticPaymentModal: boolean,
@@ -107,7 +108,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{payment.companyName}</td>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
-                <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
+                <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== defaultDate ?
+                    this.formatDate(payment.lastPaymentDate) : " " }</td>
                 <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
                 <td className="payments-text centered-text"><EditAutomaticPaymentButton automaticPayment={payment} /></td>
                 <td>
