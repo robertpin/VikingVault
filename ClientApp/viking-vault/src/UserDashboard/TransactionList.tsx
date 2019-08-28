@@ -151,13 +151,15 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getTableRowFromTransaction(tran: ITransaction) {
+        const otherPartyString = this.formatOtherPartyString(tran);
+        const detailsString = this.formatDetails(tran);
         return <tr>
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"}/></td>
-            <td className="font-weight-bold details" title={this.formatOtherPartyString(tran)}>{this.formatOtherPartyString(tran)}</td>
+            <td className="font-weight-bold details" title={otherPartyString}>{otherPartyString}</td>
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
             <td className="font-weight-bold text-right">{this.formatAmount(tran)}</td>
-            <td className="details" title={this.formatDetails(tran)}>{this.formatDetails(tran)}</td>
+            <td className="details" title={detailsString}>{detailsString}</td>
         </tr>
     }
 
