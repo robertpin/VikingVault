@@ -66,7 +66,8 @@ namespace VikingVault.Services
                 Amount = automaticPaymentDTO.Amount,
                 InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate,
                 LastPaymentDate = automaticPaymentDTO.LastPaymentDate,
-                PayingUser = _dbContext.User.Find(userId)
+                PayingUser = _dbContext.User.Find(userId),
+                IsEnabled = true
             };
             try
             {
@@ -78,6 +79,22 @@ namespace VikingVault.Services
                 throw new AutomaticPaymentServiceException("Database Error");
             }
             return automaticPaymentToBeCreated;
+        }
+
+        public AutomaticPayment EditAutomaticPayment(AutomaticPaymentDTO automaticPaymentDTO)
+        {
+            try
+            {
+                AutomaticPayment automaticPayment = _dbContext.AutomaticPayments.SingleOrDefault(ap => ap.Id == automaticPaymentDTO.Id);
+                automaticPayment.Amount = automaticPaymentDTO.Amount;
+                automaticPayment.InitialPaymentDate = automaticPaymentDTO.InitialPaymentDate;
+                _dbContext.SaveChanges();
+                return automaticPayment;
+            }
+            catch (DbUpdateException e)
+            {
+                throw new AutomaticPaymentServiceException("Database Error");
+            }
         }
 
 		public void DeleteAutomaticPayment(int id)
