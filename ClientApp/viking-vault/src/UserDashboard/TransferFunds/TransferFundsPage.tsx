@@ -68,10 +68,21 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     setAmountToBeTransfered = (e : any) => {
-        if((Number (e.target.value) <= this.state.totalBalance) && (Number (e.target.value) >= 0)) {
-          this.setState({
-            transferedAmount: e.target.value
-          });
+
+        if(this.state.requestTransfer) {
+            if(Number (e.target.value) >= 0) {
+                this.setState({
+                  transferedAmount: e.target.value
+                });
+            }            
+        }
+        else
+        {
+          if((Number (e.target.value) <= this.state.totalBalance) && (Number (e.target.value) >= 0)) {
+            this.setState({
+              transferedAmount: e.target.value
+            });
+          }
         }
     }
 
