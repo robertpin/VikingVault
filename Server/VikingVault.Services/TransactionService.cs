@@ -78,6 +78,11 @@ namespace VikingVault.Services
             var transactionsDTO = new List<TransactionDTO>();
             foreach(Transaction transaction in transactions)
             {
+                var isUserSender = false;
+                if(transaction.Sender != null)
+                {
+                    isUserSender = (transaction.Sender.Id == uid);
+                }
                 transactionsDTO.Add(new TransactionDTO
                 {
                     Id = transaction.Id,
@@ -88,7 +93,7 @@ namespace VikingVault.Services
                     Details = transaction.Details,
                     Currency = transaction.Currency,
                     Date = transaction.Date,
-                    IsUserSender = (transaction.Sender.Id == uid)
+                    IsUserSender = isUserSender
                 });
             }
             return transactionsDTO;

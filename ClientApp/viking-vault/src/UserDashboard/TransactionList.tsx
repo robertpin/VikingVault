@@ -21,6 +21,17 @@ interface ITransaction {
     isUserSender: boolean;
 }
 
+const deletedUser : IUserData = {
+    id: 0,
+    firstName: "DeletedUser",
+    lastName: "",
+    address: "",
+    email: "",
+    pictureLink: "",
+    cardNumber: "",
+    expirationDate: ""
+}
+
 interface IState {
     transactions: ITransaction[];
 }
@@ -30,8 +41,22 @@ class TransactionList extends React.Component<any, IState> {
         transactions: []
     }
 
+    private adaptTransactionUsers(result:ITransaction[]): ITransaction[] {
+        let transactions = result.map((transaction:ITransaction) => {
+            if(transaction.sender === null){
+                transaction.sender = deletedUser;
+            }
+
+            if(transaction.receiver === null){
+                transaction.receiver = deletedUser;
+            }
+            return transaction;
+        });
+        return transactions;
+    }
+
     private getTransactions() {
-        let token = sessionStorage.getItem("Authentication-Token");
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null)  {
             return;
         }
@@ -43,9 +68,12 @@ class TransactionList extends React.Component<any, IState> {
                 'x-access-token': token
             }
         }).then(response => response.json())
-        .then(result => this.setState({
-            transactions: result
-        }));
+        .then(result => {
+            result = this.adaptTransactionUsers(result);
+            this.setState({
+                transactions: result
+            })
+        });
     }
 
     componentDidMount() {
@@ -107,7 +135,7 @@ class TransactionList extends React.Component<any, IState> {
 
     private formatAmount = (transation: ITransaction) => {
         let amountString: string;
-        if(transation.type === "payment") {
+        if(transation.type.toLowerCase() === "payment") {
             amountString =  -transation.amount+"";
         }
         else if(!transation.isUserSender) {

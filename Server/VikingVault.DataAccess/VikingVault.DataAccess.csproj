@@ -73,6 +73,12 @@
     <Compile Remove="Migrations\20190827075155_InitialMigration.cs" />
     <Compile Remove="Migrations\20190827075627_InitialMigration.cs" />
     <Compile Remove="Migrations\20190827075735_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190827075847_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190828073407_fixedTransaction.cs" />
+    <Compile Remove="Migrations\20190828073803_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190828074617_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190828075201_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190828080457_InitialMigration.cs" />
   </ItemGroup>
 
   <ItemGroup>

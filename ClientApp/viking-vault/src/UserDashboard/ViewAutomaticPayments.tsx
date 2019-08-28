@@ -4,6 +4,7 @@ import TopBar from "../Common/TopBar";
 import SideBar from "../Common/SideBar";
 import UserIcon from "../Common/UserIcon";
 import { AutomaticPaymentList } from "./AutomaticPaymentList";
+import "../Common/styles.css";
 
 export interface IAutomaticPaymentsState {
     reload: boolean;
@@ -25,10 +26,12 @@ class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState
             <SideBar userType="user"/>
             <TopBar/>
             <UserIcon/>
-            <div className="automatic-payments-background w-100">
-                <div className="automatic-payments-list w-75 bg-white">
-                    <h4 className="payments-header">My payments</h4>
-                    <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/>
+            <div className="page-background">
+                <div className="feature-container mr-auto ml-auto w-75 bg-white">
+                    <div className="p-4">
+                        <h4 className="payments-header">My payments</h4>
+                        <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/>
+                    </div>
                 </div>
             </div>
         </div>
