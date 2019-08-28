@@ -40,7 +40,7 @@ namespace VikingVault.API.Controllers
                 return StatusCode(500);
             }
         }
-
+        
         [HttpGet]
         public ActionResult<List<CompanyDataDTO>> Get()
         {

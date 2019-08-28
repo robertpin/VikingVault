@@ -3,7 +3,8 @@ import { constants } from "../Resources/Constants.js";
 import '../AdminDashboard/AttachCardModal.css';
 
 const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
-const currentDate = new Date();
+let currentDate = new Date();
+currentDate.setHours(0);
 
 interface IModalProps {
     open: boolean;

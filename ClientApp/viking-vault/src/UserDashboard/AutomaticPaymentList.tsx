@@ -5,15 +5,16 @@ import ActivatePaymentToggle from "../AdminDashboard/ActivatePaymentToggle"
 import { DeleteAutomaticPayment } from './DeleteAutomaticPayment';
 import {CreateAutomaticPaymentForm} from "./CreateAutomaticPaymentModal"
 import addPaymentImg from "../Resources/images/add_payment.png"
-
+import { EditAutomaticPaymentButton } from './EditAutomaticPaymentButton';
 
 const automaticPaymentBaseUrl = constants.baseUrl + "AutomaticPayment";
+const defaultDate = "01/01/2000, 10:00 PM";
 
 interface IModals {
-    openCreateAutomaticPaymentModal: boolean
+    openCreateAutomaticPaymentModal: boolean,
 }
 
-interface IAutomaticPayment {
+export interface IAutomaticPayment {
     id: number,
     companyId: number,
     companyName: string,
@@ -38,8 +39,8 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             emptyListMessage: "",
             modals : {
                 openCreateAutomaticPaymentModal: false,
-            }
         }
+    }
     }
 
     getAutomaticPayments = () => {
@@ -48,32 +49,35 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
             return;
         }
         else {
-        fetch(automaticPaymentBaseUrl, {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-access-token': token.toString()
-            }
-        }).then(response => {
-            if(response.status !== 200) {
-                return null;
-            }
-            return response.json();
-        }).then(result => {
-            if(result === null) {
-                return;
-            }
-            this.setState({
-                payments: result
-            });
-            if(this.state.payments.length === 0){
+            fetch(automaticPaymentBaseUrl, {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-token': token.toString()
+                }
+            })
+            .then(response => {
+                if(response.status !== 200) {
+                    return null;
+                }
+                return response.json();
+            })
+            .then(result => {
+                if(result === null) {
+                    return;
+                }
                 this.setState({
-                    isThePaymentListEmpty: true,
-                    emptyListMessage: "You don't have any automatic payment yet."
-                })
-            }
-        });}
+                    payments: result
+                });
+                if(this.state.payments.length === 0){
+                    this.setState({
+                        isThePaymentListEmpty: true,
+                        emptyListMessage: "You don't have any automatic payment yet."
+                    })
+                }
+            });
+        }
     }
 
     formatDate(transactionDate: Date) {
@@ -95,7 +99,6 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
 
     deletePaymentFromList = (id : Number) =>{
         let paymentList = this.state.payments.filter(payment => payment.id !== id);
-
         this.setState({payments : paymentList});
     }
 
@@ -105,9 +108,10 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
                 <td className="payments-text centered-text">{payment.companyName}</td>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
-                <td className="payments-text centered-text">{this.formatDate(payment.lastPaymentDate)}</td>
+                <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== defaultDate ?
+                    this.formatDate(payment.lastPaymentDate) : " " }</td>
                 <td className="payments-text centered-text"><ActivatePaymentToggle paymentId={payment.id} /></td>
-                <td className="payments-text centered-text">Edit element here</td>
+                <td className="payments-text centered-text"><EditAutomaticPaymentButton automaticPayment={payment} /></td>
                 <td>
                     <DeleteAutomaticPayment automaticPaymentId = {payment.id} deletePaymentFromList = {this.deletePaymentFromList}/>
                 </td>

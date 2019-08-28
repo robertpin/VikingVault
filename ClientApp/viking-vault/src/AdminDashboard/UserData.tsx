@@ -8,6 +8,7 @@ import AddMoneyModal from "./AddMoneyModal";
 import ResponseModal from "./ResponseModal";
 import DeleteUserModal from "./DeleteUserModal";
 import { AttachCardForm } from "./AttachCardModal";
+import UserIconAvatar from "../Common/UserIconAvatar"
 
 export interface IUserData{
     id: number;
@@ -23,6 +24,7 @@ export interface IUserData{
 interface IUserDataProp{
     user: IUserData;
     deleteUserFromComponent: (email: string) => void;
+    reloadUsers: () => void;
 }
 
 interface IPageState{
@@ -52,12 +54,9 @@ const defaultUser = {
 };
 
 class UserData extends React.Component<IUserDataProp, IPageState>{
-    
-    constructor(props: IUserDataProp)
-    {
+    constructor(props: IUserDataProp) {
         super(props);
-        if(props !== null)
-        {
+        if(props !== null) {
             this.state = {
                 user : {
                     id: props.user.id,
@@ -78,18 +77,17 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                 addMoneyResponseMessage: "",
             };
         }
-        else
-        {
+        else {
             this.state = {
-                        user : {...defaultUser},
-                        modals : {
-                            openDeleteUserModal: false,
-                            openAddMoneyFormModal : false,
-                            openAddMoneyResponseModal: false,
-                            openAttachCardModal: false,
-                        },
-                        addMoneyResponseMessage: "",
-                    };
+                user : {...defaultUser},
+                modals : {
+                    openDeleteUserModal: false,
+                    openAddMoneyFormModal : false,
+                    openAddMoneyResponseModal: false,
+                    openAttachCardModal: false,
+                },
+                addMoneyResponseMessage: "",
+            };
         }        
     }
 
@@ -97,20 +95,19 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         return this.state.user.cardNumber.substring(begin, end);
     }
 
-    formatCardNumber(cardNumber: string)
-    {
+    formatCardNumber(cardNumber: string) {
         return <span>{this.splitCardNumber(0,4)}  {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
     }
 
-    renderUserCard()
-    {
-        if(this.state.user.cardNumber !== "")
+    renderUserCard() {
+        if(this.state.user.cardNumber !== "") {
             return <div className = "card-data-style">
                         <img src = {CardImg} className = "card-img"></img>
                         <p className = "name-on-card">{this.state.user.firstName} {this.state.user.lastName}</p>
                         <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
                         <p className = "card-number-on-card">{this.formatCardNumber(this.state.user.cardNumber)}</p>
-                   </div>;
+            </div>;
+        }
         return null; 
     }
     
@@ -239,8 +236,8 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
         return( 
             <div className = "user-container"> 
                 <div className = "user-container-inside">
-                    <div className = "img-container">
-                         {this.state.user.pictureLink === "" ? <img src = {DefaultProfilePicture} className = "profile-img"/> : <img src = {this.state.user.pictureLink} className = "profile-img"/> }                 
+                    <div className = "img-container">  
+                        <UserIconAvatar pictureUri={this.state.user.pictureLink} pictureStyle="profile-img"  defaultPicture={DefaultProfilePicture}/>
                     </div>
                     
                     <div className = "profile-data-container">
@@ -254,7 +251,13 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     </div>
 
                     <div className = "button-container">
-                        <AttachCardForm open={this.state.modals.openAttachCardModal} onModalClose={this.closeAttachCardModal} firstName={this.state.user.firstName} lastName={this.state.user.lastName} userId={this.state.user.id} />
+                        <AttachCardForm open={this.state.modals.openAttachCardModal} 
+                            onModalClose={this.closeAttachCardModal} 
+                            firstName={this.state.user.firstName} 
+                            lastName={this.state.user.lastName} 
+                            userId={this.state.user.id}
+                            reloadUsers={this.props.reloadUsers}
+                        />
                         <button className = "button-style" onClick={ this.handleAttachCard}>Attach Card</button>
                         <button className = "button-style" onClick = {this.handleDeleteUser}>Delete</button>
                         <button className = "button-style" onClick = {this.handleAddMoney}>Add Money</button>

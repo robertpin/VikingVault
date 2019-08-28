@@ -110,6 +110,9 @@ class TransactionList extends React.Component<any, IState> {
         if(transation.type === "payment") {
             amountString =  -transation.amount+"";
         }
+        else if(!transation.isUserSender) {
+            amountString = `+${-transation.amount}`;
+        }
         else if(transation.amount > 0) {
             amountString = `+${transation.amount}`;
         }
