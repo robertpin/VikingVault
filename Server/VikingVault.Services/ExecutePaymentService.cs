@@ -22,42 +22,46 @@ namespace VikingVault.Services
         public void PayCompanies()
         {
             var currentDateTime = DateTime.Now;
-            IList<AutomaticPayment> automaticPayments = _dbContext
-                                                        .AutomaticPayments
-                                                        .Include(automaticPayment => automaticPayment.PayingUser)
-                                                        .Include(automaticPayment => automaticPayment.ReceivingCompany)
-                                                        .Where(automaticPayment => automaticPayment
-                                                                                   .InitialPaymentDate
-                                                                                   .Day
-                                                                                   .Equals(currentDateTime.Day)
-                                                                                    && automaticPayment.IsEnabled)
-                                                                                   .ToList();
+            IList<AutomaticPayment> automaticPayments = CurrentPayments(currentDateTime);
+
             foreach (AutomaticPayment automaticPayment in automaticPayments)
             {
                 var lastPaymentDate = automaticPayment.LastPaymentDate.Date;
                 var payingUserCard = _dbContext.Cards.SingleOrDefault(card => card.UserId == automaticPayment.PayingUser.Id);
                 var payingUserAccount = _dbContext.BankAccount
                                         .Include(bankAccount => bankAccount.User)
-                                        .SingleOrDefault(bankAccount => bankAccount.User.Id == automaticPayment.PayingUser.Id 
-                                                                                           && bankAccount.CurrencyType.Equals("Ron"));
-
+                                        .SingleOrDefault(bankAccount => IsDecreasingBankAccount(bankAccount, automaticPayment));
+               
                 if (payingUserAccount.Balance < automaticPayment.Amount)
                 {
                     DisableAutomaticPayment(automaticPayment);
                     AddFailedPaymentNotification(automaticPayment);
                 }
-                else
+                else if (!lastPaymentDate.Equals(currentDateTime.Date) && !payingUserCard.Blocked)
                 {
-                    if (!lastPaymentDate.Equals(currentDateTime.Date) && !payingUserCard.Blocked)
-                    {
-                        UpdateCompanyBankAccount(automaticPayment.ReceivingCompany, automaticPayment.Amount);
-                        UpdatePayingUserBankAccount(automaticPayment.PayingUser, automaticPayment.Amount);
-                        UpdateAutomaticPayment(automaticPayment, currentDateTime);
-                        AddPayingUserAutomaticTransaction(automaticPayment, currentDateTime);
-                        AddSuccessfulPaymentNotification(automaticPayment);
-                    }
+                    UpdatePaymentInvolvedAccounts(automaticPayment, currentDateTime);
+                    AddPayingUserAutomaticTransaction(automaticPayment, currentDateTime);
+                    AddSuccessfulPaymentNotification(automaticPayment);
                 }
             }
+        }
+
+        private IList<AutomaticPayment> CurrentPayments(DateTime currentDateTime)
+        {
+           return _dbContext.AutomaticPayments.Include(automaticPayment => automaticPayment.PayingUser)
+                                              .Include(automaticPayment => automaticPayment.ReceivingCompany)
+                                              .Where(automaticPayment => IsPaymentEligible(automaticPayment, currentDateTime))
+                                              .ToList();
+        }
+
+        private bool IsPaymentEligible(AutomaticPayment automaticPayment, DateTime currentDateTime)
+        {
+            return automaticPayment.InitialPaymentDate.Day.Equals(currentDateTime.Day) && automaticPayment.IsEnabled;
+        }
+
+        private bool IsDecreasingBankAccount(BankAccount bankAccount, AutomaticPayment automaticPayment)
+        {
+            return bankAccount.User.Id == automaticPayment.PayingUser.Id && bankAccount.CurrencyType.Equals("Ron");
         }
 
         private void DisableAutomaticPayment(AutomaticPayment automaticPayment)
@@ -72,7 +76,8 @@ namespace VikingVault.Services
             Notification notification = new Notification
             {
                 User = automaticPayment.PayingUser,
-                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + " of " + automaticPayment.Amount + " RON successful!",
+                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName +
+                       " of " + automaticPayment.Amount + " RON successful!",
                 Read = false
             };
             _dbContext.Notifications.Add(notification);
@@ -84,7 +89,8 @@ namespace VikingVault.Services
             Notification notification = new Notification
             {
                 User = automaticPayment.PayingUser,
-                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + " of " + automaticPayment.Amount + " RON was declined!",
+                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + 
+                       " of " + automaticPayment.Amount + " RON was declined!",
                 Read = false
             };
             _dbContext.Notifications.Add(notification);
@@ -106,6 +112,13 @@ namespace VikingVault.Services
 
             _dbContext.Transactions.Add(transaction);
             _dbContext.SaveChanges();
+        }
+
+        private void UpdatePaymentInvolvedAccounts(AutomaticPayment automaticPayment, DateTime currentDateTime)
+        {
+            UpdateCompanyBankAccount(automaticPayment.ReceivingCompany, automaticPayment.Amount);
+            UpdatePayingUserBankAccount(automaticPayment.PayingUser, automaticPayment.Amount);
+            UpdateAutomaticPayment(automaticPayment, currentDateTime);
         }
 
         private void UpdateAutomaticPayment(AutomaticPayment automaticPayment, DateTime date)
