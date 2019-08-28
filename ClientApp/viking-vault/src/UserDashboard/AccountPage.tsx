@@ -272,17 +272,17 @@ class AccountPage extends React.Component<any, IAccountPageState>{
     }
 
     returnCardClassName = () => {
-        return this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "not-displayed-label";
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "base-blocked-card-label");
     }
 
     returnLabelClassName = () => {
-        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label");
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "base-unblocked-card-label" : "unblocked-card-label");
     }
 
     render(){
         return(
             <div className="account-view"> 
-                {this.state.redirect? <Redirect to = "/login"  /> : null}       
+                {this.state.redirect? <Redirect to = "/login" /> : null}       
                 {this.returnCardMessage()}
                 <div className="accounts-information">
                     <div className="accounts-title">
@@ -290,11 +290,11 @@ class AccountPage extends React.Component<any, IAccountPageState>{
                     </div>
                     {this.returnBalanceMessage()}
                 </div>
-                <label className={this.returnCardClassName()}>Your card is blocked!</label>
+                <label className={this.returnCardClassName()}>Blocked</label>
                 <div className = "block-card-toggle-position"> 
                     {this.renderToggle()} 
                 </div>
-                <label className={this.returnLabelClassName()}>Your card is unblocked!</label>
+                <label className={this.returnLabelClassName()}>Active</label>
                 <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
             </div>
         )
