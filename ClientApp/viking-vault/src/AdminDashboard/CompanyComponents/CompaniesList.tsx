@@ -1,6 +1,7 @@
 import React from "react";
 import { constants } from "../../Resources/Constants";
 import { DeleteCompany } from "./DeleteCompany";
+import "./Companies.css";
 
 interface ICompanyData {
     id: number;
@@ -64,7 +65,7 @@ class CompaniesList extends React.Component<ICompaniesListProps, ICompaniesListS
     }
 
     render() {
-        return <div className="m-4 w-auto">
+        return <div className="m-5 companies-list">
             {this.props.reload? this.reloadData() : null}
             {this.state.error !== ""? <p className="alert alert-danger">{this.state.error}</p> : null}
             <table className="table table-hover w-100">
@@ -78,9 +79,9 @@ class CompaniesList extends React.Component<ICompaniesListProps, ICompaniesListS
                 </thead>
                 <tbody>
                     {this.state.companies.map( (company) => {
-                        return <tr key={company.id}>
-                            <td>{company.name}</td>
-                            <td>{company.address}</td>
+                        return <tr key={company.id} className="">
+                            <td className="company-field">{company.name}</td>
+                            <td className="company-field">{company.address}</td>
                             <td>{`${company.balance} RON`}</td>
                             <td><DeleteCompany companyId = {company.id} changeReloading = {this.props.changeReloading}/></td>
                         </tr>;

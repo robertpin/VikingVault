@@ -5,16 +5,11 @@
     background-color:#B0B2B6;
 }
 
-.display-users-container{
+.display-entities-container{
     position: relative;
-    margin-top: 1%; 
-    margin-bottom: 10%;
-    margin-left: 13%;
-    float: left;
-    width: 80%;
-    height: 90%;
-    overflow-y: scroll;
-    background-color: rgb(255, 255, 255);
+    margin-top: 1%;
+    height: 85%;
+    overflow-y: auto;
     border-radius: 2em;
 }
 
@@ -27,7 +22,6 @@
     margin: 2% auto;
     background-color: rgba(0, 0, 0, 0.137);
     border-radius: 2em;
-    
     overflow: hidden;
 }
 

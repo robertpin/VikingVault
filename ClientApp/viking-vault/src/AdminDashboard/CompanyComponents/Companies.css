@@ -1,0 +1,11 @@
+.companies-list {
+    max-width: 95%;
+    overflow: hidden;
+}
+
+.company-field {
+    max-width: 25em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
