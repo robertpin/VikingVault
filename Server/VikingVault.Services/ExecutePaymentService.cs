@@ -72,8 +72,7 @@ namespace VikingVault.Services
             Notification notification = new Notification
             {
                 User = automaticPayment.PayingUser,
-                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName +
-                       " of " + automaticPayment.Amount + " RON successful!",
+                Text = $"Payment to {automaticPayment.ReceivingCompany.FirstName} of {automaticPayment.Amount} RON successful",
                 Read = false
             };
             _dbContext.Notifications.Add(notification);
@@ -85,8 +84,7 @@ namespace VikingVault.Services
             Notification notification = new Notification
             {
                 User = automaticPayment.PayingUser,
-                Text = "Payment to " + automaticPayment.ReceivingCompany.FirstName + 
-                       " of " + automaticPayment.Amount + " RON was declined!",
+                Text = $"Payment to {automaticPayment.ReceivingCompany.FirstName} of {automaticPayment.Amount} RON was declined",
                 Read = false
             };
             _dbContext.Notifications.Add(notification);

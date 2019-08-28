@@ -39,15 +39,19 @@ namespace VikingVault.Services
         private void AddRequestNotification(TransferRequest transferRequestData)
         {
             int? idReceiver = _userCardService.FindUserIdByCardNumber(transferRequestData.CardNumberReciever);
-            User receiver = _userService.GetById((int)idReceiver);
-            Notification notification = new Notification
+            if(idReceiver != null)
             {
-                User = receiver,
-                Text = "Transfer requested " + transferRequestData.Amount + " " + transferRequestData.Currency + " from " + transferRequestData.Requester.FirstName,
-                Read = false
-            };
-            _dbContext.Notifications.Add(notification);
-            _dbContext.SaveChanges();
+                User receiver = _userService.GetById((int)idReceiver);
+                Notification notification = new Notification
+                {
+                    User = receiver,
+                    Text = $"Transfer requested {transferRequestData.Amount} {transferRequestData.Currency} from {transferRequestData.Requester.FirstName}",
+                    Read = false
+                };
+                _dbContext.Notifications.Add(notification);
+                _dbContext.SaveChanges();
+
+            }
         }
     }
 }

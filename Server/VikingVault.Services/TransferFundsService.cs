@@ -33,28 +33,32 @@ namespace VikingVault.Services
         {
             int idSender = transferData.Sender.Id;
             int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
-
-            if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
-            {
-                _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
-                _transactionService.AddTransactionsForTransferFunds(transferData);
-                AddReceivedNotification(transferData, idReciever);
+            if(idReciever != null) {
+                if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
+                {
+                    _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                    _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                    _transactionService.AddTransactionsForTransferFunds(transferData);
+                    AddReceivedNotification(transferData, idReciever);
+                }
             }
         }
 
         private void AddReceivedNotification(TransferFundsModel transferData, int? idReciever)
         {
-            User receiver = _userService.GetById((int)idReciever);
-            Notification notification = new Notification
+            if (idReciever != null)
             {
-                User = receiver,
-                Text = "Transfer received " + transferData.AmountSent + " " + transferData.Currency + " from " + transferData.Sender.FirstName,
-                Read = false
-            };
+                User receiver = _userService.GetById((int)idReciever);
+                Notification notification = new Notification
+                {
+                    User = receiver,
+                    Text = $"Transfer received {transferData.AmountSent} {transferData.Currency} from {transferData.Sender.FirstName}",
+                    Read = false
+                };
 
-            _dbContext.Notifications.Add(notification);
-            _dbContext.SaveChanges();
+                _dbContext.Notifications.Add(notification);
+                _dbContext.SaveChanges();
+            }
         }
 
         private bool AreDifferentUsers(int idSender, int idReciever)
