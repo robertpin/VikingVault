@@ -21,6 +21,17 @@ interface ITransaction {
     isUserSender: boolean;
 }
 
+const deletedUser : IUserData = {
+    id: 0,
+    firstName: "DeletedUser",
+    lastName: "",
+    address: "DeletedUser",
+    email: "DeletedUser",
+    pictureLink: "DeletedUser",
+    cardNumber: "DeletedUser",
+    expirationDate: "DeletedUser"
+}
+
 interface IState {
     transactions: ITransaction[];
 }
@@ -30,6 +41,21 @@ class TransactionList extends React.Component<any, IState> {
         transactions: []
     }
 
+    private checkIfUserNull(result:ITransaction[]) {
+        console.log("Hello,world!");
+        let transactionList = result.map((t:ITransaction) => {
+            if(t.sender === null){
+                t.sender = deletedUser;
+            }
+
+            if(t.receiver === null){
+                t.receiver = deletedUser;
+            }
+            return t;
+        });
+
+        return transactionList;
+    }
     private getTransactions() {
         let token = sessionStorage.getItem("Authentication-Token");
         if(token === null)  {
@@ -43,9 +69,12 @@ class TransactionList extends React.Component<any, IState> {
                 'x-access-token': token
             }
         }).then(response => response.json())
-        .then(result => this.setState({
-            transactions: result
-        }));
+        .then(result => {
+            result = this.checkIfUserNull(result);
+            this.setState({
+                transactions: result
+            })
+        });
     }
 
     componentDidMount() {
