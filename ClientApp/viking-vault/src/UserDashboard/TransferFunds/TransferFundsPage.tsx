@@ -77,8 +77,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                 });
             }            
         }
-        else
-        {
+        else {
           if((Number (e.target.value) <= this.state.totalBalance) && (Number (e.target.value) >= 0)) {
             this.setState({
               transferedAmount: e.target.value
@@ -189,15 +188,10 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
     transferMoney = () => {
       const data = this.getDataForTransfer();
-
       if(this.isValidAmount(data)) {
-
         const token = sessionStorage.getItem('Authentication-Token');
-
         if(token !== null) {
-
           this.handleIsButtonDisabled();
-
           fetch(transferFundsUrl, {
             method: "POST",
             headers: {
@@ -208,8 +202,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then( response => {
-              
+            .then( response => {              
                 this.setState({
                   openModal: true,
                   modalMessage: response
@@ -265,7 +258,6 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     }
 
     render(){
-        
         return(
             <div className = "transfer-funds-page">  
                 <SideBar userType = "user"/>
