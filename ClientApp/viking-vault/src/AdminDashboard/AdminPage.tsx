@@ -95,7 +95,7 @@ class AdminPage extends React.Component<any, IProfileData>{
                 <SideBar userType="admin"/>
                 <TopBar/>
                 <UserIcon/>
-                <div className = "display-users-container">
+                <div className = "display-entities-container">
                     { this.state.users.map( (user) => 
                         <UserData user = {user} 
                             key = {user.id} 
