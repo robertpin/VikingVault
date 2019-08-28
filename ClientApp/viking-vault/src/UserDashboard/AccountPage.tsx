@@ -259,26 +259,44 @@ class AccountPage extends React.Component<any, IAccountPageState>{
         });
     }
 
+    returnCardMessage = () => {
+        return this.state.accountInfo.isPresent ?  this.showUnavailableCard() : this.showCardInformations();
+    }
+
+    returnBalanceMessage = () => {
+        return this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation();
+    }
+
+    renderToggle = () => {
+        return !this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null;
+    }
+
+    returnCardClassName = () => {
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "base-blocked-card-label";
+    }
+
+    returnLabelClassName = () => {
+        return this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label");
+    }
+
     render(){
         return(
-            <div className="page-background">
-                <div className="account-view"> 
-                    { this.state.redirect? <Redirect to = "/login"  /> : null}       
-                    {this.state.accountInfo.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
-                    <div className="accounts-information">
-                        <div className="accounts-title">
-                            <h2 className="accounts-header">Accounts</h2>
-                        </div>
-                        {this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
+
+            <div className="account-view"> 
+                {this.state.redirect? <Redirect to = "/login"  /> : null}       
+                {this.returnCardMessage()}
+                <div className="accounts-information">
+                    <div className="accounts-title">
+                        <h2 className="accounts-header">Accounts</h2>
                     </div>
-                    {this.state.redirect? <Redirect to="/login"/> : null}
-                    <label className={this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "base-blocked-card-label")}>Blocked</label>
-                    <div className = "block-card-toggle-position"> 
-                        {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} 
-                    </div>
-                    <label className={this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "base-unblocked-card-label" : "unblocked-card-label")}>Active</label>
-                    <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
+                    {this.returnBalanceMessage()}
                 </div>
+                <label className={this.returnCardClassName()}>Blocked</label>
+                <div className = "block-card-toggle-position"> 
+                    {this.renderToggle()} 
+                </div>
+                <label className={this.returnLabelClassName()}>Active</label>
+                <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
             </div>
         )
     }
