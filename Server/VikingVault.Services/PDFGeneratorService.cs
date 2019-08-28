@@ -81,28 +81,63 @@ namespace VikingVault.Services
             List<TransactionDTO> transactionList = _transactionService.GetTransactions(userId);
             transactionList = FilterTransactionsByTime(transactionList, timeFilter);
 
-            PdfStandardFont columnHeaderFont = new PdfStandardFont(PdfFontFamily.Helvetica, 15, PdfFontStyle.Bold);
+            PdfStandardFont columnHeaderFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
             PdfSolidBrush columnHeaderBrush = new PdfSolidBrush(new PdfColor(13, 68, 80));
-            PdfStandardFont columnDataFont = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Italic);
+            PdfStandardFont columnDataFont = new PdfStandardFont(PdfFontFamily.Helvetica, 7, PdfFontStyle.Italic);
             PdfSolidBrush columnDataBrush = new PdfSolidBrush(new PdfColor(70, 77, 79));
             PdfGraphics graphics = page.Graphics;
 
-            graphics.DrawString("Date", columnHeaderFont, columnHeaderBrush, new PointF(40, 150));
-            graphics.DrawString("Currency", columnHeaderFont, columnHeaderBrush, new PointF(160, 150));
-            graphics.DrawString("Amount", columnHeaderFont, columnHeaderBrush, new PointF(270, 150));
-            graphics.DrawString("Other Party", columnHeaderFont, columnHeaderBrush, new PointF(400, 150));
+            graphics.DrawString("Date", columnHeaderFont, columnHeaderBrush, new PointF(15, 150));
+            graphics.DrawString("Type", columnHeaderFont, columnHeaderBrush, new PointF(75, 150));
+            graphics.DrawString("Amount", columnHeaderFont, columnHeaderBrush, new PointF(125, 150));
+            graphics.DrawString("Currency", columnHeaderFont, columnHeaderBrush, new PointF(195, 150));
+            graphics.DrawString("Details", columnHeaderFont, columnHeaderBrush, new PointF(256, 150));
+            graphics.DrawString("Description", columnHeaderFont, columnHeaderBrush, new PointF(407, 150));
 
-            int x = 40;
+            int x = 15;
             int y = 180;
 
             foreach (TransactionDTO transaction in transactionList)
             {
-                graphics.DrawString(transaction.Date.ToShortDateString().ToString(), columnDataFont, columnDataBrush, new PointF(x, y));
-                graphics.DrawString(transaction.Currency.ToString(), columnDataFont, columnDataBrush, new PointF(x + 120, y));
-                graphics.DrawString(transaction.Amount.ToString(), columnDataFont, columnDataBrush, new PointF(x + 230, y));
-                graphics.DrawString(transaction.Details.ToString(), columnDataFont, columnDataBrush, new PointF(x + 360, y));
+                graphics.DrawString(transaction.Date.ToShortDateString(), columnDataFont, columnDataBrush, new PointF(x, y));
+                graphics.DrawString(transaction.Type, columnDataFont, columnDataBrush, new PointF(x + 60, y));
+                graphics.DrawString(transaction.Amount.ToString().Trim('-'), columnDataFont, columnDataBrush, new PointF(x + 110, y));
+                graphics.DrawString(transaction.Currency.ToUpper(), columnDataFont, columnDataBrush, new PointF(x + 180, y));
+
+                if (transaction.Type == "Exchange")
+                {
+                    graphics.DrawString("Exchanged into " + transaction.Details.ToString(), columnDataFont, columnDataBrush, new PointF(x + 240, y));
+                    graphics.DrawString("Money Exchange", columnDataFont, columnDataBrush, new PointF(x + 390, y));
+                }
+                else
+                {
+                    string transferText = "";
+                    string transactionDetails = TrimmTransactionDetails(transaction);
+
+                    if (transaction.IsUserSender == true)
+                    {
+                        transferText = "Sent to " + transaction.Receiver.FirstName.ToString() + " " + transaction.Receiver.LastName.ToString();
+                    }
+                    else
+                    {
+                        transferText = "Received from " + transaction.Sender.FirstName.ToString() + " " + transaction.Sender.LastName.ToString();
+                    }
+
+                    graphics.DrawString(transferText, columnDataFont, columnDataBrush, new PointF(x + 240, y));
+                    graphics.DrawString(transactionDetails, columnDataFont, columnDataBrush, new PointF(x + 390, y));
+                }
                 y = y + 25;
             }
+        }
+
+        public string TrimmTransactionDetails (TransactionDTO transaction)
+        {
+            string transactionDetails = transaction.Details.ToString();
+            if (transactionDetails.Length > 23)
+            {
+                transactionDetails = transactionDetails.Substring(0, 23) + "...";
+            }
+            return transactionDetails;
         }
 
         public FileStreamResult GetTransactionListAsPDF(string userId, string timeFilter)
