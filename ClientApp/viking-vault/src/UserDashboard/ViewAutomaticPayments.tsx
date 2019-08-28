@@ -22,11 +22,11 @@ class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState
     }
 
     render() {
-        return <div>
+        return <div className="page-background">
             <SideBar userType="user"/>
             <TopBar/>
             <UserIcon/>
-            <div className="page-background">
+            <div>
                 <div className="feature-container mr-auto ml-auto w-75 bg-white">
                     <div className="p-4">
                         <h4 className="payments-header">My payments</h4>
