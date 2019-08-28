@@ -5,7 +5,7 @@ import {Redirect} from "react-router-dom";
 import { constants } from "../Resources/Constants";
 import UserIconAvatar from "./UserIconAvatar"
 
-const API_URL = `${constants.baseUrl}userprofilepages`;
+const adminProfileDataURL = `${constants.baseUrl}userprofilepages`;
 
 interface IAdminIconState {
   clicked: boolean;
@@ -35,16 +35,14 @@ class AdminIcon extends React.Component<any, IAdminIconState> {
 
   componentDidMount() {
     document.addEventListener("click", this.handleOutsideClick, false);
-
-    let token = sessionStorage.getItem("Authentication-Token");
-
+    const token = sessionStorage.getItem("Authentication-Token");
         if(token === null) {
             this.setState({
                 redirect: true
             })
         }
         else{         
-            fetch(API_URL, {
+            fetch(adminProfileDataURL, {
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
@@ -75,8 +73,7 @@ class AdminIcon extends React.Component<any, IAdminIconState> {
   }
 
   handleOutsideClick = (event: Event) => {
-    if(this.megaMenu == null || this.megaMenu.current == null)
-      return;
+    if(this.megaMenu == null || this.megaMenu.current == null) return;
     if (!this.megaMenu.current.contains(event.target)) {
       this.setState({
         clicked: false
