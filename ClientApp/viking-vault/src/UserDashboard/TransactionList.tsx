@@ -107,7 +107,7 @@ class TransactionList extends React.Component<any, IState> {
 
     private formatAmount = (transation: ITransaction) => {
         let amountString: string;
-        if(transation.type === "payment") {
+        if(transation.type.toLowerCase() === "payment") {
             amountString =  -transation.amount+"";
         }
         else if(!transation.isUserSender) {

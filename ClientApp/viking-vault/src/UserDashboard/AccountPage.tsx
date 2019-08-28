@@ -260,23 +260,25 @@ class AccountPage extends React.Component<any, IAccountPageState>{
     }
 
     render(){
-        return(            
-            <div className="account-view"> 
-                { this.state.redirect? <Redirect to = "/login"  /> : null}       
-                {this.state.accountInfo.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
-                <div className="accounts-information">
-                    <div className="accounts-title">
-                        <h2 className="accounts-header">Accounts</h2>
+        return(
+            <div className="page-background">
+                <div className="account-view"> 
+                    { this.state.redirect? <Redirect to = "/login"  /> : null}       
+                    {this.state.accountInfo.isPresent ?  this.showUnavailableCard() : this.showCardInformations()}
+                    <div className="accounts-information">
+                        <div className="accounts-title">
+                            <h2 className="accounts-header">Accounts</h2>
+                        </div>
+                        {this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
                     </div>
-                    {this.state.accountInfo.isPresent ? this.inexistentCardNotification() : this.accountsInformation()}
+                    {this.state.redirect? <Redirect to="/login"/> : null}
+                    <label className={this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "not-displayed-label"}>Your card is blocked!</label>
+                    <div className = "block-card-toggle-position"> 
+                        {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} 
+                    </div>
+                    <label className={this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label")}>Your card is unblocked!</label>
+                    <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
                 </div>
-                {this.state.redirect? <Redirect to="/login"/> : null}
-                <label className={this.state.accountInfo.isCardBlocked ? "blocked-card-label" : "not-displayed-label"}>Your card is blocked!</label>
-                <div className = "block-card-toggle-position"> 
-                    {!this.state.accountInfo.isPresent ? <ToggleBlockCard toggleSwitch = {this.blockCard} isCardBlocked = {this.state.accountInfo.isCardBlocked}/> : null} 
-                </div>
-                <label className={this.state.accountInfo.isPresent ? "not-displayed-label" : (this.state.accountInfo.isCardBlocked ? "not-displayed-label" : "unblocked-card-label")}>Your card is unblocked!</label>
-                <ResponseModal open = {this.state.openBlockCardResponseModal}  closeModal = {this.closeBlockCardModal} message = {this.state.blockCardResponseMessage}/>
             </div>
         )
     }

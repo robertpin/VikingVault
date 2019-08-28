@@ -1,3 +1,21 @@
+.page-background{
+    display: block;
+    height: 100vh;
+    overflow: hidden;
+    background-color:rgb(226, 226, 226);
+}
+
+.feature-container{
+    position: relative;
+    margin-top: 1%;
+    max-height: 85%;
+    min-height: 60%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .sidebar{
     background-color: white;
     color: #09424d;
@@ -50,11 +68,12 @@
 
 .account-view{
     background-color: white;
-    margin-top: 15px;
-    min-width: 800px;
+    margin-top: 1%;
+    min-width: 600px;
     width: 75%;
     margin-left:15%;
-    height: 600px;
+    max-height: 85%;
+    min-height: 65%;
     border-radius : 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: inline-flex;

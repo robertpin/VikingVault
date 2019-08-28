@@ -3,6 +3,7 @@ import SideBar from '../Common/SideBar'
 import TopBar from '../Common/TopBar'
 import '../Common/styles.css';
 import './DisplayUsers.css';
+import "../Common/styles.css";
 import { constants } from "../Resources/Constants";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
@@ -91,11 +92,11 @@ class AdminPage extends React.Component<any, IProfileData>{
 
     render(){
         return (
-            <div className = "admin-page">
+            <div className = "page-background">
                 <SideBar userType="admin"/>
                 <TopBar/>
                 <UserIcon/>
-                <div className = "display-users-container">
+                <div className = "feature-container w-75 mr-auto ml-auto bg-white">
                     { this.state.users.map( (user) => 
                         <UserData user = {user} 
                             key = {user.id} 

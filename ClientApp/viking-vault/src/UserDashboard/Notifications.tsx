@@ -113,11 +113,11 @@ class Notifications extends React.Component<any, INotificationState> {
     }
 
     render() {
-        return <div className="dark-background">
+        return <div className="page-background">
             <SideBar userType="user"/>
             <TopBar />
             <UserIcon />
-            <div className="notifications-container w-75 mr-auto ml-auto bg-white">
+            <div className="feature-container p-5 w-75 mr-auto ml-auto bg-white">
             <h5 className="font-weight-bold">Notifications</h5>
                 <table className="table table-hover">
                     <tbody>
