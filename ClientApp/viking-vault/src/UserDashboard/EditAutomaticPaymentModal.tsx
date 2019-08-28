@@ -11,6 +11,7 @@ interface IEditAutomaticPaymentModalProps {
     open: boolean;
     onModalClose: any;
     automaticPayment: IAutomaticPayment;
+    changeReloading: (reloading: boolean) => void;
 }
 
 interface IAutomaticPaymentProperties {
@@ -138,7 +139,8 @@ class EditAutomaticPaymentForm extends React.Component<IEditAutomaticPaymentModa
             })
             .then(result => {
                 if (this.state.errorLabel === "") {
-                    this.closeModal()
+                    this.closeModal();
+                    this.props.changeReloading(true);
                 }
             });
         }

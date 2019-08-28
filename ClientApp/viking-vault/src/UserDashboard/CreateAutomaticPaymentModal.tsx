@@ -9,6 +9,7 @@ currentDate.setHours(0);
 interface IModalProps {
     open: boolean;
     onModalClose: any;
+    changeReloading: (reloading: boolean) => void;
 }
 
 interface IAutomaticPaymentProperties {
@@ -208,7 +209,8 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
             })
             .then(result => {
                 if (this.state.errorLabel === "") {
-                    this.closeModal()
+                    this.closeModal();
+                    this.props.changeReloading(true);
                 }
         });
     }
