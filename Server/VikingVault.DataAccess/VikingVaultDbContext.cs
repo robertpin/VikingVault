@@ -63,6 +63,7 @@ namespace VikingVault.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Receiver)
                 .WithMany()

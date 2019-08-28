@@ -1,21 +1,5 @@
-.admin-page{
-    display: block;
-    height: 100vh;
-    overflow: hidden;
-    background-color:#B0B2B6;
-}
-
-.display-entities-container{
-    position: relative;
-    margin-top: 1%;
-    height: 85%;
-    overflow-y: auto;
-    border-radius: 2em;
-}
-
 .user-container{
     position: relative;
-    clear: right;
     width: 90%;
     height: 29%;
     min-height: 14em;

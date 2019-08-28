@@ -1,6 +1,9 @@
 .payments-text {
     font-family: Helvetica;
     font-style: italic;
+    max-width: 15em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .payments-header {

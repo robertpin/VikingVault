@@ -105,10 +105,14 @@ namespace VikingVault.Services
             try
             {
                 User userToDelete = _dbContext.User.SingleOrDefault(user => user.Email == userEmail.Email);
-                if(userToDelete == null)
+                if (userToDelete == null)
                 {
                     throw new UserServiceException("The user to be deleted doesn't exist in the database!");
                 }
+
+                _dbContext.Transactions.Where(transaction => transaction.Sender.Id == userToDelete.Id).Load();
+                _dbContext.Transactions.Where(transaction => transaction.Receiver.Id == userToDelete.Id).Load();
+
                 _dbContext.Remove(userToDelete);
                 _dbContext.SaveChanges();
             }
