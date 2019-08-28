@@ -65,7 +65,7 @@ class CompaniesList extends React.Component<ICompaniesListProps, ICompaniesListS
     }
 
     render() {
-        return <div className="m-5 companies-list">
+        return <div className="m-4 companies-list">
             {this.props.reload? this.reloadData() : null}
             {this.state.error !== ""? <p className="alert alert-danger">{this.state.error}</p> : null}
             <table className="table table-hover w-100">

@@ -92,7 +92,7 @@ class AddCompany extends React.Component<IAddCompanyProps, ICompanyState> {
     }
 
     render() {
-        return <div className="w-50 m-5">
+        return <div className="w-50 m-4">
             {this.state.message !== ""? <p className={this.state.messageClass}>{this.state.message}</p>: null}
             <div className="form-group">
                 <label>Company name</label>
