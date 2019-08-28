@@ -142,6 +142,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             .then(result => {
                 this.setState({
                     availableAmountFromCurrency: result[currencyMap[this.state.fromCurrency]].balance
+                }, () => {
+                    this.calculateExchangedAmount();
                 });
             });
         }

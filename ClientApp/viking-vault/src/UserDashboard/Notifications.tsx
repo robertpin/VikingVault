@@ -100,7 +100,7 @@ class Notifications extends React.Component<any, INotificationState> {
     returnTableRows = () => {
         return this.state.notifications.map(notification => {
             return <tr key={notification.id}>
-                <td className="notification-text">
+                <td className="notification-text" title={notification.text}>
                     <span className={notification.read? "" : "font-weight-bold"}>{notification.text}</span>
                 </td>
                 <td>

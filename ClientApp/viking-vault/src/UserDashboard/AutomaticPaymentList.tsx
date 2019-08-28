@@ -110,7 +110,7 @@ class AutomaticPaymentList extends React.Component<IAutomaticPaymentListProps, I
     getPaymentsTableBody() {
         return this.state.payments.map( (payment) => {
             return <tr>
-                <td className="payments-text centered-text">{payment.companyName}</td>
+                <td className="payments-text centered-text" title={payment.companyName}>{payment.companyName}</td>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
                 <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== defaultDate ?
