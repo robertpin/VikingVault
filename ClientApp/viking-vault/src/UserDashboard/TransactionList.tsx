@@ -25,11 +25,11 @@ const deletedUser : IUserData = {
     id: 0,
     firstName: "DeletedUser",
     lastName: "",
-    address: "DeletedUser",
-    email: "DeletedUser",
-    pictureLink: "DeletedUser",
-    cardNumber: "DeletedUser",
-    expirationDate: "DeletedUser"
+    address: "",
+    email: "",
+    pictureLink: "",
+    cardNumber: "",
+    expirationDate: ""
 }
 
 interface IState {
