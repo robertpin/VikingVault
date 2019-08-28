@@ -41,7 +41,7 @@ class TransactionList extends React.Component<any, IState> {
         transactions: []
     }
 
-    private changeNullUsersToDeleted(result:ITransaction[]): ITransaction[] {
+    private adaptTransactionUsers(result:ITransaction[]): ITransaction[] {
         let transactions = result.map((transaction:ITransaction) => {
             if(transaction.sender === null){
                 transaction.sender = deletedUser;
@@ -69,7 +69,7 @@ class TransactionList extends React.Component<any, IState> {
             }
         }).then(response => response.json())
         .then(result => {
-            result = this.changeNullUsersToDeleted(result);
+            result = this.adaptTransactionUsers(result);
             this.setState({
                 transactions: result
             })
