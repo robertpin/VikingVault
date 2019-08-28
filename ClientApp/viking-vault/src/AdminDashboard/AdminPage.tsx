@@ -3,12 +3,13 @@ import SideBar from '../Common/SideBar'
 import TopBar from '../Common/TopBar'
 import '../Common/styles.css';
 import './DisplayUsers.css';
+import "../Common/styles.css";
 import { constants } from "../Resources/Constants";
 import { UserData }  from './UserData';
 import { IUserData } from './UserData';
-import UserIcon from "../Common/UserIcon";
+import AdminIcon from "../Common/AdminIcon";
 
-const API_URL = `${constants.baseUrl}admin/getAllUsers`;
+const usersUrl = `${constants.baseUrl}admin/getAllUsers`;
 
 interface IProfileData{
     id: number;
@@ -22,11 +23,8 @@ interface IProfileData{
 }
 
 class AdminPage extends React.Component<any, IProfileData>{
-    
-    constructor(props: any)
-    {
+    constructor(props: any) {
         super(props);
-
         this.state = {
             id: 0,
             firstName: "no-data",
@@ -39,78 +37,76 @@ class AdminPage extends React.Component<any, IProfileData>{
         }
     }
 
-    getAllUsers ()
-    {
-        var users;
+    getAllUsers = () => {
         var token = sessionStorage.getItem("Authentication-Token");
-        
-        if(token === null)
-        {
+        if(token === null) {
             this.setState({
                 errorLabel: "Access Token Unavailable",
             })
-
             return [];
         }
-
-        else{
-            fetch(API_URL, {
+        else {
+            this.setState({
+                users: []
+            });
+            fetch(usersUrl, {
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'x-access-token' : token.toString()
                 }})
-            .then( response => 
-                {
-                    if( response.status === 500)
-                    {
-                        this.setState({
-                            errorLabel: "Internal Server Error"
-                        })
-
-                        return null;
-                    }
-                    
-                    return response.json();
-                })
+            .then( response => {
+                if( response.status === 500) {
+                    this.setState({
+                        errorLabel: "Internal Server Error"
+                    });
+                    return null;
+                }
+                return response.json();
+            })
             .then( usersData => {
+                if(usersData === null) {
+                    return;
+                }
                 this.setState({
                     users: usersData
-                })
+                });
             })
             .catch( error => this.setState({ errorLabel: "Something went wrong" }));
-
-            return users;
         }
     }
 
     private deleteUserFromComponent = (email : string) =>{
         let userList = this.state.users.filter(user => {
             return user.email !== email
-          });
-
-          this.setState({
+        });
+        this.setState({
             users : userList
         });
     }
 
-    componentDidMount()
-    {
+    componentDidMount() {
         this.getAllUsers();
     }
 
     render(){
-        return(
-            <div className = "admin-page">
+        return (
+            <div className = "page-background">
                 <SideBar userType="admin"/>
                 <TopBar/>
-                <UserIcon/>
-                <div className = "display-users-container">
-                     { this.state.users.map( (user) => <UserData user = {user} key = {user.id} deleteUserFromComponent = {this.deleteUserFromComponent}/>) }
+                <AdminIcon/>
+                <div className = "feature-container w-75 mr-auto ml-auto bg-white users-container">
+                    { this.state.users.map( (user) => 
+                        <UserData user = {user} 
+                            key = {user.id} 
+                            deleteUserFromComponent = {this.deleteUserFromComponent}
+                            reloadUsers={this.getAllUsers}
+                        />)
+                    }
                 </div>
             </div>
-         );   
+        );   
     }
 }
 

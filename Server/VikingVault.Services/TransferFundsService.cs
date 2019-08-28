@@ -33,13 +33,31 @@ namespace VikingVault.Services
         {
             int idSender = transferData.Sender.Id;
             int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+            if(idReciever != null) {
+                if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
+                {
+                    _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                    _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                    _transactionService.AddTransactionsForTransferFunds(transferData);
+                    AddReceivedNotification(transferData, idReciever);
+                }
+            }
+        }
 
-            if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
+        private void AddReceivedNotification(TransferFundsModel transferData, int? idReciever)
+        {
+            if (idReciever != null)
             {
-                _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                User receiver = _userService.GetById((int)idReciever);
+                Notification notification = new Notification
+                {
+                    User = receiver,
+                    Text = $"Transfer received {transferData.AmountSent} {transferData.Currency} from {transferData.Sender.FirstName}",
+                    Read = false
+                };
 
-                _transactionService.AddTransactionsForTransferFunds(transferData);          
+                _dbContext.Notifications.Add(notification);
+                _dbContext.SaveChanges();
             }
         }
 

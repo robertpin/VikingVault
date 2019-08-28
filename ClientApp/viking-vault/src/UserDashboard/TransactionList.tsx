@@ -21,6 +21,17 @@ interface ITransaction {
     isUserSender: boolean;
 }
 
+const deletedUser : IUserData = {
+    id: 0,
+    firstName: "DeletedUser",
+    lastName: "",
+    address: "",
+    email: "",
+    pictureLink: "",
+    cardNumber: "",
+    expirationDate: ""
+}
+
 interface IState {
     transactions: ITransaction[];
 }
@@ -30,8 +41,22 @@ class TransactionList extends React.Component<any, IState> {
         transactions: []
     }
 
+    private adaptTransactionUsers(result:ITransaction[]): ITransaction[] {
+        let transactions = result.map((transaction:ITransaction) => {
+            if(transaction.sender === null){
+                transaction.sender = deletedUser;
+            }
+
+            if(transaction.receiver === null){
+                transaction.receiver = deletedUser;
+            }
+            return transaction;
+        });
+        return transactions;
+    }
+
     private getTransactions() {
-        let token = sessionStorage.getItem("Authentication-Token");
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null)  {
             return;
         }
@@ -43,9 +68,12 @@ class TransactionList extends React.Component<any, IState> {
                 'x-access-token': token
             }
         }).then(response => response.json())
-        .then(result => this.setState({
-            transactions: result
-        }));
+        .then(result => {
+            result = this.adaptTransactionUsers(result);
+            this.setState({
+                transactions: result
+            })
+        });
     }
 
     componentDidMount() {
@@ -107,8 +135,11 @@ class TransactionList extends React.Component<any, IState> {
 
     private formatAmount = (transation: ITransaction) => {
         let amountString: string;
-        if(transation.type === "payment") {
+        if(transation.type.toLowerCase() === "payment") {
             amountString =  -transation.amount+"";
+        }
+        else if(!transation.isUserSender) {
+            amountString = `+${-transation.amount}`;
         }
         else if(transation.amount > 0) {
             amountString = `+${transation.amount}`;
@@ -120,13 +151,15 @@ class TransactionList extends React.Component<any, IState> {
     }
 
     private getTableRowFromTransaction(tran: ITransaction) {
+        const otherPartyString = this.formatOtherPartyString(tran);
+        const detailsString = this.formatDetails(tran);
         return <tr>
             <td><img src={this.getImageForTransactionType(tran.type)} className={"other-party-image"}/></td>
-            <td className="font-weight-bold">{this.formatOtherPartyString(tran)}</td>
+            <td className="font-weight-bold details" title={otherPartyString}>{otherPartyString}</td>
             <td>{this.formatDate(tran.date)}</td>
             <td className="font-weight-bold">{tran.currency.toUpperCase()}</td>
             <td className="font-weight-bold text-right">{this.formatAmount(tran)}</td>
-            <td className="details">{this.formatDetails(tran)}</td>
+            <td className="details" title={detailsString}>{detailsString}</td>
         </tr>
     }
 

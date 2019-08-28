@@ -1,3 +1,25 @@
+.page-background{
+    display: block;
+    height: 100vh;
+    overflow: hidden;
+    background-color:rgb(226, 226, 226);
+}
+
+.feature-container{
+    position: relative;
+    margin-top: 1%;
+    max-height: 85%;
+    min-height: 60%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.users-container {
+    height: 85%;
+}
+
 .sidebar{
     background-color: white;
     color: #09424d;
@@ -50,11 +72,12 @@
 
 .account-view{
     background-color: white;
-    margin-top: 15px;
-    min-width: 800px;
+    margin-top: 1%;
+    min-width: 600px;
     width: 75%;
     margin-left:15%;
-    height: 600px;
+    max-height: 85%;
+    min-height: 65%;
     border-radius : 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: inline-flex;
@@ -369,7 +392,7 @@
 
 .block-card-toggle-position{
     position: absolute;
-    left: 230px;
+    left: 240px;
     top: 310px;
 }
 
@@ -390,24 +413,44 @@
     width: 100%;
 }
 
+.dashboard-icon:hover {
+    text-decoration: none;
+}
+
 .not-displayed-label{
     display: none;
 }
 
+.base-unblocked-card-label{
+    position: absolute;
+    left: 315px;
+    top: 316px;
+    color: grey;
+    font-size: 13px;
+}
+
+.base-blocked-card-label{
+    position: absolute;
+    top: 316px;
+    left: 178px;
+    color: grey;
+    font-size: 13px;
+}
+
 .unblocked-card-label{
     position: absolute;
-    left: 300px;
+    left: 310px;
     top: 315px;
     color: #155764;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .blocked-card-label{
     position: absolute;
     top: 315px;
-    left: 90px;
+    left: 175px;
     color: grey;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
 }

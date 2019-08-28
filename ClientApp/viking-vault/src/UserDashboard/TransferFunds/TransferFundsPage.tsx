@@ -5,6 +5,7 @@ import TopBar from '../../Common/TopBar';
 import UserIcon from '../../Common/UserIcon';
 import './TransferFunds.css';
 import '../ExchangeForm.css';
+import "../../Common/styles.css";
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
 import TransferRequests from '../TransferRequests';
@@ -267,22 +268,20 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
     render(){
         
         return(
-            <div className = "transfer-funds-page">  
+            <div className = "page-background">  
                 <SideBar userType = "user"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
-                <div className = "transfer-funds-container">
-                    <div className = "transfer-funds-left-container"> 
-
+                <div className = "feature-container w-75 mr-auto ml-auto bg-white">
+                    <div className = "transfer-funds-left-container m-3"> 
                             <div className = "transfer-request-toggle-container">
                                 <span  className ="toggle-positioning"><Toggle requestTransfer = {this.state.requestTransfer} toggleSwitch = {this.handleChangeRequestTransferState}/></span> 
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
                                 <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>
-
                             <div className="transfer-data-left-container">
-                               <div>
+                              <div>
                                   <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
                                         <option selected = {this.state.currency === "EUR"} value="EUR">EUR</option>
                                         <option selected = {this.state.currency === "RON"} value="RON">RON</option>
@@ -292,7 +291,6 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     <div>
                                         <p className="total-balance">{this.state.totalBalance}</p>
                                     </div>
-                               
                                     <div className = "amount-container-position">
                                         <p className="text-decoration">Amount</p>
                                         <input
@@ -306,8 +304,8 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                                 onChange={this.setAmountToBeTransfered}
                                                 value={this.state.transferedAmount}
                                         />
-                                   </div>
-                               </div>
+                                  </div>
+                              </div>
                             </div>
                       
                             <div className="transfer-details-container">

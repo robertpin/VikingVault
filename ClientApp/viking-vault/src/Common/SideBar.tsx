@@ -6,10 +6,11 @@ import { UserSideBar } from '../UserDashboard/UserSideBar';
 import { AdminSideBar } from '../AdminDashboard/AdminSideBar';
 import { constants } from '../Resources/Constants';
 import { INotification } from './../UserDashboard/Notifications';
+import { Link } from 'react-router-dom';
 
 const notificationsUrl = constants.baseUrl+"notifications";
 
-interface ISideBarState{
+interface ISideBarState {
     show: boolean;
     unreadNotifications: boolean;
 }
@@ -73,13 +74,15 @@ class SideBar extends React.Component<ISideBarProps, ISideBarState> {
         const dashboardVisibility: string = this.state.show ? "dashboard-hide" : "dashboard-show";
         return(
             <div className={sidebarVisibility}>
+            <Link title="Dashboard" className="dashboard-icon" to="/">
                 <div className="dashboard-title-container">
-                        <img className="menu-icon" src={dashboard} /> 
-                        &nbsp;
-                        <span className = {dashboardVisibility}> Dashboard </span>
+                    <img className="menu-icon" src={dashboard}/> 
+                    &nbsp;
+                    <span className = {dashboardVisibility}> Dashboard </span>
                 </div>
+            </Link>
                 {this.props.userType === "user"? <UserSideBar show = {this.state.show} unreadNotification={this.state.unreadNotifications}/> : <AdminSideBar show={this.state.show}/>}
-                <img src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} alt="" onClick={this.clickHandler}/>
+                <img title="Dashboard Options" src={arrow} className = {this.state.show ? "transform-none menu-icon" : "transform-reverse menu-icon"} onClick={this.clickHandler}/>
             </div>
         )
     }

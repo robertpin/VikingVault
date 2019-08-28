@@ -2,10 +2,9 @@ import React from "react";
 import { constants } from "../Resources/Constants.js";
 import './AttachCardModal.css';
 
-//const baseUrl = constants.baseUrl;
 let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
 let currentYearValue = new Date().getFullYear();
-const url = constants.baseUrl+"attachCard";
+const attachCardUrl = constants.baseUrl+"attachCard";
 
 interface IModalProps {
     open: boolean;
@@ -13,6 +12,7 @@ interface IModalProps {
     firstName: string;
     lastName: string;
     userId: number;
+    reloadUsers: () => void;
 }
 
 interface ICardProperties {
@@ -28,7 +28,7 @@ interface IFormState {
     errorLabel: string;
 }
 
-class AttachCardForm extends React.Component<any, IFormState> {
+class AttachCardForm extends React.Component<IModalProps, IFormState> {
     constructor(props: IModalProps) {
         super(props);
         this.state = {
@@ -126,7 +126,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
             return;
         }
         const card = this.getCard(this.props.userId);
-        fetch(url, {
+        fetch(attachCardUrl, {
             method: "POST",
             headers: {
               'Accept': 'application/json',
@@ -163,6 +163,7 @@ class AttachCardForm extends React.Component<any, IFormState> {
           })
           .then(result => {
             if (this.state.errorLabel === "") {
+                this.props.reloadUsers();
                 this.closeModal()
             }
     });
