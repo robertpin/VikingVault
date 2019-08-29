@@ -1,5 +1,6 @@
 import React from 'react';
 import './AddMoney.css';
+import { constants } from '../Resources/Constants';
 
 interface IAddMoneyModalProps{
     open: boolean;
@@ -56,7 +57,7 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
     private validateAmount(){
         const isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
         const isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
-        const isAmountValid = (this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"));
+        const isAmountValid = (this.state.amount.match(constants.regexCheckIfPositiveFloat));
         if(isAmountSmallerThanLimit || isAmountLargerThanLimit || !isAmountValid){
             return false;
         }

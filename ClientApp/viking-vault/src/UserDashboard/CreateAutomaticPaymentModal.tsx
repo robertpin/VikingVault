@@ -2,14 +2,13 @@ import React from "react";
 import { constants } from "../Resources/Constants.js";
 import '../AdminDashboard/AttachCardModal.css';
 
-const regexCheckIfPositiveFloat = "^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$";
 let currentDate = new Date();
 currentDate.setHours(0);
 
 interface IModalProps {
     open: boolean;
     onModalClose: any;
-    changeReloading: (reloading: boolean) => void;
+    reload: () => void;
 }
 
 interface IAutomaticPaymentProperties {
@@ -73,7 +72,7 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
     }
 
     private amountMustBePositive = () => {
-        if(this.state.automaticPayment.amount.match(regexCheckIfPositiveFloat)) {
+        if(this.state.automaticPayment.amount.match(constants.regexCheckIfPositiveFloat)) {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
@@ -210,7 +209,7 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
             .then(result => {
                 if (this.state.errorLabel === "") {
                     this.closeModal();
-                    this.props.changeReloading(true);
+                    this.props.reload();
                 }
         });
     }

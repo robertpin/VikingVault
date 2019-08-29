@@ -1,13 +1,11 @@
 .edit-payment-icon {
-    position: relative;
-    border: none;
-    padding: 0;
+    margin-bottom: 10px;
     width: 100%;
-    margin: 0;
 }
 
 .edit-payment-button {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 15px;
     padding: 0;
 }
