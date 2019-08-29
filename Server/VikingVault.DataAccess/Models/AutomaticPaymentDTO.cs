@@ -19,5 +19,6 @@ namespace VikingVault.DataAccess.Models
         [Required]
         public DateTime InitialPaymentDate { get; set; }
         public DateTime LastPaymentDate { get; set; }
+        public Boolean IsActive { get; set; }
     }
 }

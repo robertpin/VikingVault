@@ -20,7 +20,8 @@ export interface IAutomaticPayment {
     companyName: string,
     amount: number,
     initialPaymentDate: Date,
-    lastPaymentDate: Date
+    lastPaymentDate: Date,
+    isActive: boolean
 }
 
 interface IAutomaticPaymentsState {
@@ -102,16 +103,30 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.setState({payments : paymentList});
     }
 
+    toggleAutomaticPaymentState = (id: number, state:boolean) =>{
+        let automaticPayments = this.state.payments.map((automaticPayment:IAutomaticPayment) => {
+            if(automaticPayment.id === id){
+                automaticPayment.isActive = state;
+                return automaticPayment;
+            }
+            return automaticPayment;
+        });
+
+        this.setState({
+            payments: automaticPayments
+        });
+    }
+
     getPaymentsTableBody() {
-        return this.state.payments.map( (payment) => {
-            return <tr>
+        return this.state.payments.map( (payment) => { 
+            return <tr key = {payment.id} className={payment.isActive ? "" : "grayed-out-row"}>
                 <td className="payments-text centered-text" title={payment.companyName}>{payment.companyName}</td>
                 <td className="payments-text centered-text">{payment.amount}</td>
                 <td className="payments-text centered-text">{this.formatDate(payment.initialPaymentDate)}</td>
                 <td className="payments-text centered-text"> {this.formatDate(payment.lastPaymentDate) !== defaultDate ?
                     this.formatDate(payment.lastPaymentDate) : " " }</td>
                 <td className="payments-text centered-text">
-                    <ActivatePaymentToggle paymentId={payment.id} />
+                    <ActivatePaymentToggle paymentId={payment.id} toggleAutomaticPaymentState={this.toggleAutomaticPaymentState} />
                 </td>
                 <td className="payments-text centered-text">
                     <EditAutomaticPaymentButton automaticPayment={payment} reload={this.getAutomaticPayments}/>

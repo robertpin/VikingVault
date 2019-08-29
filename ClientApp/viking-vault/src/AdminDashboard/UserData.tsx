@@ -243,7 +243,6 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
                     <div className = "profile-data-container">
                         <span className = "profile-data-text user-name"> {this.state.user.firstName} {this.state.user.lastName} </span>
                         <span className = "profile-data-text"> {this.state.user.address} </span>
-                        <span className = "profile-data-text card-number"> {this.formatCardNumber(this.state.user.cardNumber)} </span>
                     </div>
 
                     <div className = "card-container-admin-display">
