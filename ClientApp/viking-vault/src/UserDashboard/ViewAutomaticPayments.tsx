@@ -26,8 +26,8 @@ class ViewAutomaticPayments extends React.Component<any, IAutomaticPaymentsState
             <SideBar userType="user"/>
             <TopBar/>
             <UserIcon/>
-            <div>
-                <div className="feature-container mr-auto ml-auto w-75 bg-white">
+            <div className="feature-container mr-auto ml-auto w-75 bg-white">
+                <div>
                     <div className="p-4">
                         <h4 className="payments-header">My payments</h4>
                         <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/>

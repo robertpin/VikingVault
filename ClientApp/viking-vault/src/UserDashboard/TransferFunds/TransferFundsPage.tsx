@@ -8,6 +8,7 @@ import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
 import TransferRequests from '../TransferRequests';
+import "../../Common/styles.css";
 
 const transferFundsUrl = `${constants.baseUrl}transferFunds`;
 const transferRequestsUrl = `${constants.baseUrl}transferRequests`;
@@ -259,12 +260,12 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
     render(){
         return(
-            <div className = "transfer-funds-page">  
+            <div className = "page-background">  
                 <SideBar userType = "user"/>
                 <TopBar/>
                 <UserIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
-                <div className = "transfer-funds-container">
+                <div className = "feature-container w-75 bg-white mr-auto ml-auto">
                     <div className = "transfer-funds-left-container"> 
 
                             <div className = "transfer-request-toggle-container">
