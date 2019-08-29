@@ -112,6 +112,7 @@ namespace VikingVault.Services
 
                 _dbContext.Transactions.Where(transaction => transaction.Sender.Id == userToDelete.Id).Load();
                 _dbContext.Transactions.Where(transaction => transaction.Receiver.Id == userToDelete.Id).Load();
+                _dbContext.AutomaticPayments.Where(automaticPayment => automaticPayment.PayingUser.Id == userToDelete.Id).Load();
 
                 _dbContext.Remove(userToDelete);
                 _dbContext.SaveChanges();
