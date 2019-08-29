@@ -37,12 +37,12 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
 
     private checkAmountValid = () =>{
         if(!this.validateAmount()){
-            return  {
+            return {
                 message: "Amount should be between 0.1-5000 RON",
                 class: "alert alert-danger"
             }
         }
-        return{
+        return {
             message: "",
             class: ""
         }
@@ -54,7 +54,10 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
     }
 
     private validateAmount(){
-        if(Number(this.state.amount) < this.state.minAmount || Number(this.state.amount) > this.state.maxAmount || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"))){
+        let isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
+        let isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
+        let isAmountValid = (this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"));
+        if(isAmountSmallerThanLimit || isAmountLargerThanLimit || !isAmountValid){
             return false;
         }
         return true;
