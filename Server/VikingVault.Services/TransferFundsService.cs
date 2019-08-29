@@ -33,6 +33,10 @@ namespace VikingVault.Services
         {
             int idSender = transferData.Sender.Id;
             int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+            if(idReciever == null)
+            {
+                throw new NoCardAttachedToUserException("Invalid card!");
+            }
             if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
             {
                 _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
