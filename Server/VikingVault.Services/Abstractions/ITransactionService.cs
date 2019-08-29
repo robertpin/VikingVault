@@ -10,5 +10,6 @@ namespace VikingVault.Services.Abstractions
         Transaction AddTransaction(Transaction tran);
         void AddTransactionsForTransferFunds(TransferFundsModel transferData);
         List<TransactionDTO> GetTransactions(string userId);
+        List<TransactionDTO> GetAllTransactions(string userId);
     }
 }

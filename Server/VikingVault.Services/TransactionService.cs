@@ -67,34 +67,82 @@ namespace VikingVault.Services
 
         public List<TransactionDTO> GetTransactions(string userId)
         {
-            int uid = int.Parse(userId);
-            var transactions =  _dbContext.Transactions
-                .Include(t => t.Sender)
-                .Include(t => t.Receiver)
-                .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
-                .OrderByDescending(t => t.Date)
-                .Take(numberOfTransactionsToTake)
-                .ToList();
             var transactionsDTO = new List<TransactionDTO>();
-            foreach(Transaction transaction in transactions)
+            try
             {
-                var isUserSender = false;
-                if(transaction.Sender != null)
+                int uid = int.Parse(userId);
+                var transactions = _dbContext.Transactions
+                    .Include(t => t.Sender)
+                    .Include(t => t.Receiver)
+                    .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
+                    .OrderByDescending(t => t.Date)
+                    .Take(numberOfTransactionsToTake)
+                    .ToList();
+                foreach (Transaction transaction in transactions)
                 {
-                    isUserSender = (transaction.Sender.Id == uid);
+                    var isUserSender = false;
+                    if (transaction.Sender != null)
+                    {
+                        isUserSender = (transaction.Sender.Id == uid);
+                    }
+                    transactionsDTO.Add(new TransactionDTO
+                    {
+                        Id = transaction.Id,
+                        Sender = transaction.Sender,
+                        Receiver = transaction.Receiver,
+                        Type = transaction.Type,
+                        Amount = transaction.Amount,
+                        Details = transaction.Details,
+                        Currency = transaction.Currency,
+                        Date = transaction.Date,
+                        IsUserSender = isUserSender
+                    });
                 }
-                transactionsDTO.Add(new TransactionDTO
+            }
+            catch(Exception e)
+            {
+                throw new TransactionException(e.Message);
+            }
+           
+            return transactionsDTO;
+        }
+
+        public List<TransactionDTO> GetAllTransactions(string userId)
+        {
+            var transactionsDTO = new List<TransactionDTO>();
+            try
+            {
+                int uid = int.Parse(userId);
+                var transactions = _dbContext.Transactions
+                    .Include(t => t.Sender)
+                    .Include(t => t.Receiver)
+                    .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
+                    .OrderByDescending(t => t.Date)
+                    .ToList();
+                foreach (Transaction transaction in transactions)
                 {
-                    Id = transaction.Id,
-                    Sender = transaction.Sender,
-                    Receiver = transaction.Receiver,
-                    Type = transaction.Type,
-                    Amount = transaction.Amount,
-                    Details = transaction.Details,
-                    Currency = transaction.Currency,
-                    Date = transaction.Date,
-                    IsUserSender = isUserSender
-                });
+                    var isUserSender = false;
+                    if (transaction.Sender != null)
+                    {
+                        isUserSender = (transaction.Sender.Id == uid);
+                    }
+                    transactionsDTO.Add(new TransactionDTO
+                    {
+                        Id = transaction.Id,
+                        Sender = transaction.Sender,
+                        Receiver = transaction.Receiver,
+                        Type = transaction.Type,
+                        Amount = transaction.Amount,
+                        Details = transaction.Details,
+                        Currency = transaction.Currency,
+                        Date = transaction.Date,
+                        IsUserSender = isUserSender
+                    });
+                }
+            }
+            catch(Exception e)
+            {
+                throw new TransactionException(e.Message);
             }
             return transactionsDTO;
         }
