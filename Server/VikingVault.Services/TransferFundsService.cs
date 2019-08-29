@@ -31,18 +31,18 @@ namespace VikingVault.Services
 
         public void TransferFunds(TransferFundsModel transferData)
         {
-            int idSender = transferData.Sender.Id;
-            int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
-            if(idReciever == null)
+            int senderId = transferData.Sender.Id;
+            int? receiverId = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+            if(receiverId == null)
             {
                 throw new NoCardAttachedToUserException("Invalid card!");
             }
-            if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
+            if (UsersHaveCardsAttached(senderId, receiverId) && AreDifferentUsers(senderId, (int)receiverId))
             {
-                _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                _bankAccountService.RetractMoneyFromUser(_userService.GetById(senderId), transferData.Currency, transferData.AmountSent);
+                _bankAccountService.AddMoneyToUser(_userService.GetById((int)receiverId), transferData.Currency, transferData.AmountSent);
                 _transactionService.AddTransactionsForTransferFunds(transferData);
-                AddReceivedNotification(transferData, idReciever);
+                AddReceivedNotification(transferData, receiverId);
             }
         }
 
