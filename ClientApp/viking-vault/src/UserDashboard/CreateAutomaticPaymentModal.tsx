@@ -71,8 +71,8 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
         }
     }
 
-    private amountMustBePositive = () => {
-        if(this.state.automaticPayment.amount.match(constants.regexCheckIfPositiveFloat)) {
+    private isAmountPositive = () => {
+        if(constants.regexCheckIfPositiveFloat.test(this.state.automaticPayment.amount)) {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
@@ -84,7 +84,7 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
         }
     }
 
-    private initialPaymentDateIsAfterCurrentDate = () => {
+    private isInitialPaymentDateAfterCurrentDate = () => {
         if(this.state.automaticPayment.initialPaymentDate !== "" && new Date(this.state.automaticPayment.initialPaymentDate) >= currentDate) {
             return  {
                 message: "Ok",
@@ -99,7 +99,7 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
 
     private mandatoryFieldsCompletedCorrectly = () => {
         let val = false;
-        const validationFunctions = [this.isCompanySelected, this.amountMustBePositive, this.initialPaymentDateIsAfterCurrentDate];
+        const validationFunctions = [this.isCompanySelected, this.isAmountPositive, this.isInitialPaymentDateAfterCurrentDate];
         val = validationFunctions.every(functionItem => functionItem().message === "Ok");
         return val;
     }
@@ -236,12 +236,12 @@ class CreateAutomaticPaymentForm extends React.Component<any, IFormState> {
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Amount</label>
                                     <input type="text" value={this.state.automaticPayment.amount} onChange={(e) => this.handleChange(e.target.value, "amount")} required className="form-control attach-card"></input>
-                                    {this.amountMustBePositive().message !== "Ok" ? <pre className={this.amountMustBePositive().class}>{this.amountMustBePositive().message}</pre> : null}
+                                    {this.isAmountPositive().message !== "Ok" ? <pre className={this.isAmountPositive().class}>{this.isAmountPositive().message}</pre> : null}
                                 </div>
                                 <div className="form-group attach-card">
                                     <label className="form-label attach-card">Initial Payment Date</label>
                                     <input type="date" name="initialPaymentDate" value={this.state.automaticPayment.initialPaymentDate} onChange={(e) => this.handleChange(e.target.value, "initialPaymentDate")} required className="form-control attach-card"></input>
-                                    { this.initialPaymentDateIsAfterCurrentDate().message !== "Ok" ? <pre className={this.initialPaymentDateIsAfterCurrentDate().class}>{this.initialPaymentDateIsAfterCurrentDate().message}</pre> : null }
+                                    { this.isInitialPaymentDateAfterCurrentDate().message !== "Ok" ? <pre className={this.isInitialPaymentDateAfterCurrentDate().class}>{this.isInitialPaymentDateAfterCurrentDate().message}</pre> : null }
                                 </div>
                                 {this.state.errorLabel !== "" ? <div className="alert alert-warning"> {this.state.errorLabel} </div> : null }
                                 <div className="modal-footer attach-card">

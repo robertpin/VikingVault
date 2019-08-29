@@ -48,7 +48,7 @@ class EditAutomaticPaymentForm extends React.Component<IEditAutomaticPaymentModa
     }
 
     private isAmountPositive = () => {
-        if(this.state.automaticPayment.amount.match(constants.regexCheckIfPositiveFloat)) {
+        if(constants.regexCheckIfPositiveFloat.test(this.state.automaticPayment.amount)) {
             return  {
                 message: "Ok",
                 class: "alert alert-success"
