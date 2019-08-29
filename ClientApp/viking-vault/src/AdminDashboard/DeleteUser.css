@@ -17,7 +17,7 @@
     height: 50px;
   }
   
-  .btn-primary.delete-user-button {
+  .btn-default.delete-user-button {
     width: 100%;
     min-height: 100%;
     background-color: white;
@@ -29,26 +29,22 @@
     border-color: #990909;
   }
   
-   .btn-primary:hover.delete-user-button {
+   .btn-default:hover.delete-user-button {
     background-color: #d90d0d;
     color: white;
-    border-color: #09424D;
   }
   
-  .btn-primary.cancel-delete-user-button {
+  .btn-default.cancel-delete-user-button {
     width: 100%;
     min-height: 100%;
     background-color: white;
     border-radius: 0;
     border-bottom-right-radius: 0.9rem;
     margin-left: 0rem;
-    color: white;
-    background-color:  #09424D;
-    border-color: #09424D;
+    color: #000;
+    border: 0;
   }
   
-   .btn-primary:hover.cancel-delete-user-button {
-    background-color: #11768a;
-    color: white;
-    border-color: #09424D;
-  } 
+   .btn-default:hover.cancel-delete-user-button {
+    background-color: #d6d6d6;
+  }

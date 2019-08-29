@@ -86,8 +86,8 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
                         </div>
 
                         <div className="modal-footer add-money">
-                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-primary add-money-button" : "btn btn-secondary add-money-button"} onClick={this.handleAddMoney}>Confirm</button>
-                            <button type="button" className="btn btn-primary cancel-add-money-button" onClick={this.closeModal}>Cancel</button>
+                            <button disabled={!this.validateAmount()} className={this.validateAmount()? "btn btn-default add-money-button" : "btn btn-secondary add-money-button"} onClick={this.handleAddMoney}>Confirm</button>
+                            <button type="button" className="btn btn-default cancel-add-money-button" onClick={this.closeModal}>Cancel</button>
                         </div>
                     </div>
                 </div>

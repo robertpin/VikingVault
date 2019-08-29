@@ -40,6 +40,10 @@
     left: 14%;
 }
 
+.font-750 {
+    font-weight: 750;
+}
+
 .amount-input-field{
     min-width: 5rem;
 }

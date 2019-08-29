@@ -17,7 +17,7 @@
     height: 50px;
   }
 
-  .btn-primary.response-button {
+  .btn-default.response-button {
     width: 100%;
     margin-left: 0;
     border-radius: 0;
@@ -30,7 +30,7 @@
     border-color: #09424D;
   }
 
-  .btn-primary:hover.response-button {
+  .btn-default:hover.response-button {
     background-color: #0d6e82;
     color: white;
     border-color: #09424D;

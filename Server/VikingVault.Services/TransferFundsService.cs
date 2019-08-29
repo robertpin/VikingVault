@@ -33,14 +33,12 @@ namespace VikingVault.Services
         {
             int idSender = transferData.Sender.Id;
             int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
-            if(idReciever != null) {
-                if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
-                {
-                    _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                    _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
-                    _transactionService.AddTransactionsForTransferFunds(transferData);
-                    AddReceivedNotification(transferData, idReciever);
-                }
+            if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
+            {
+                _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
+                _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
+                _transactionService.AddTransactionsForTransferFunds(transferData);
+                AddReceivedNotification(transferData, idReciever);
             }
         }
 
@@ -80,7 +78,7 @@ namespace VikingVault.Services
 
             if(idReciever == null || _userCardService.HasCardAttached((int)idReciever) == false)
             {
-                throw new NoCardAttachedToUserException("No user found with the specified card number!");
+                throw new NoCardAttachedToUserException("Invalid card number!");
             }
 
             return true;
