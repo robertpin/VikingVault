@@ -121,7 +121,7 @@
 
 .card-number-on-card{
     position: absolute;
-    font-size: 20px;
+    font-size: 1.1vw;
     margin-top: 115px;
     margin-left: 32px;
     user-select: none;

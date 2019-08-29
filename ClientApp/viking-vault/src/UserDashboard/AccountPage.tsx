@@ -181,7 +181,7 @@ class AccountPage extends React.Component<any, IAccountPageState>{
     }
 
     accountsInformation(){
-        return <div>  
+        return <div className="user-page-container">  
             <div className="balance-container">
                 <p className="balance-header">RON <span className="balance-value">{this.state.loading ? "Loading..." : this.state.accountInfo.totalBalance.toFixed(2)}</span></p> 
                 <p className="balance-information">Total balance</p>
@@ -189,10 +189,10 @@ class AccountPage extends React.Component<any, IAccountPageState>{
             <br/>
             <div className="balance-container">
                 <p className="accounts-container">
-                    RON <span className="account-value">{this.state.accountInfo.accountsBalances.ronBalance}</span> &nbsp; &nbsp; 
-                    EUR <span className="account-value">{this.state.accountInfo.accountsBalances.eurBalance}</span> &nbsp; &nbsp; 
-                    USD <span className="account-value">{this.state.accountInfo.accountsBalances.usdBalance}</span> &nbsp; &nbsp; 
-                    YEN <span className="account-value">{this.state.accountInfo.accountsBalances.yenBalance}</span> </p> 
+                    RON <span className="account-value">{this.state.accountInfo.accountsBalances.ronBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    EUR <span className="account-value">{this.state.accountInfo.accountsBalances.eurBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    USD <span className="account-value">{this.state.accountInfo.accountsBalances.usdBalance.toFixed(2)}</span> &nbsp; &nbsp; 
+                    YEN <span className="account-value">{this.state.accountInfo.accountsBalances.yenBalance.toFixed(2)}</span> </p> 
             </div>
             <br/>
             <TransactionList />
