@@ -7,7 +7,7 @@ const paymentTogglingURL = `${constants.baseUrl}PaymentToggling/`;
 
 interface IPaymentToggleProps{
   paymentId: number
-  toggleAutomaticPaymentState: (id: number, state:boolean) => void
+  toggleAutomaticPaymentState: (id: number, automaticPaymentState:boolean) => void
 }
 
 class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
@@ -55,7 +55,7 @@ class ActivatePaymentToggle extends React.Component<IPaymentToggleProps, any>{
   }
 
   render(){
-        return <label className="switch scaled toggle-automatic-payment-icon">
+        return <label className="switch scaled-down toggle-automatic-payment-icon">
         <input type="checkbox" onChange={this.handleCheckBox} checked={this.state.checked}/>       
         <span className="slider round"></span>
       </label>

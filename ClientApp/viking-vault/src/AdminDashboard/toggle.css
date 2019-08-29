@@ -58,6 +58,6 @@
     border-radius: 50%;
   }
 
-  .scaled{
+  .scaled-down{
     transform: scale(0.6)
   }

@@ -103,18 +103,14 @@ class AutomaticPaymentList extends React.Component<any, IAutomaticPaymentsState>
         this.setState({payments : paymentList});
     }
 
-    toggleAutomaticPaymentState = (id: number, state:boolean) =>{
-        let automaticPayments = this.state.payments.map((automaticPayment:IAutomaticPayment) => {
+    toggleAutomaticPaymentState = (id: number, state:boolean) : void =>{
+        this.state.payments.forEach(automaticPayment => {
             if(automaticPayment.id === id){
                 automaticPayment.isActive = state;
-                return automaticPayment;
             }
-            return automaticPayment;
-        });
+        })
 
-        this.setState({
-            payments: automaticPayments
-        });
+        this.setState(this.state);
     }
 
     getPaymentsTableBody() {
