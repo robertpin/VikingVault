@@ -44,7 +44,8 @@ namespace VikingVault.Services
                         CompanyName = company.FirstName,
                         Amount = payment.Amount,
                         InitialPaymentDate = payment.InitialPaymentDate,
-                        LastPaymentDate = payment.LastPaymentDate
+                        LastPaymentDate = payment.LastPaymentDate,
+                        IsActive = payment.IsEnabled
                     });
                 }
             }

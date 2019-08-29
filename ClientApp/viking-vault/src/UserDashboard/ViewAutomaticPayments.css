@@ -54,5 +54,15 @@
 
 .delete-automatic-payment-icon{
     margin-bottom: 10px;
-    width: 40%;
+    width: 36%;
+}
+
+.toggle-automatic-payment-icon{
+    bottom: 6px;
+    left: 38px;
+}
+
+.grayed-out-row{
+    background-color: rgb(184, 184, 184);
+    color: black;
 }
