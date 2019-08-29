@@ -6,21 +6,7 @@ import UserIcon from "../Common/UserIcon";
 import { AutomaticPaymentList } from "./AutomaticPaymentList";
 import "../Common/styles.css";
 
-// export interface IAutomaticPaymentsState {
-//     reload: boolean;
-// }
-
 class ViewAutomaticPayments extends React.Component<any, any> {
-    // state = {
-    //     reload: false
-    // }
-
-    // changeReloadingAutomaticPaymentsList = (reloading: boolean) => {
-    //     this.setState({
-    //         reload: reloading
-    //     });
-    // }
-
     render() {
         return <div>
             <SideBar userType="user"/>
@@ -31,7 +17,6 @@ class ViewAutomaticPayments extends React.Component<any, any> {
                     <div className="p-4">
                         <h4 className="payments-header">My payments</h4>
                         <AutomaticPaymentList/>
-                        {/* <AutomaticPaymentList reload = {this.state.reload} changeReloading={this.changeReloadingAutomaticPaymentsList}/> */}
                     </div>
                 </div>
             </div>
