@@ -34,7 +34,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(8, 73, 85, 0.651);;
+    background-color: rgba(8, 73, 85, 0.651);
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -59,6 +59,7 @@
   
   .slider.round {
     border-radius: 34px;
+    background-color: rgb(8, 73, 85);
   }
   
   .slider.round:before {

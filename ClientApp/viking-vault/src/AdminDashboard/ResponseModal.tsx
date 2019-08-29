@@ -22,7 +22,7 @@ class ResponseModal extends React.Component<IResponseModalProps, any>{
                         <h4 className="modal-title">{this.props.message}</h4>
                     </div>
                     <div className="modal-footer response-modal">
-                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-primary response-button" : "btn btn-primary response-button"} onClick={this.closeModal}>OK</button>
+                        <button type="button" className= {this.props.message === "Something wrong happened. Try again later!" ? "btn btn-default response-button" : "btn btn-default response-button"} onClick={this.closeModal}>OK</button>
                     </div>
                 </div>
             </div>

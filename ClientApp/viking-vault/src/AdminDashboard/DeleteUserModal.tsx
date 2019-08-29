@@ -17,8 +17,8 @@ const DeleteUserModal = (props : IDeleteUserModalProps) =>{
                         <h4 className="modal-title">Are you sure you want to delete {props.deletedUserName}?</h4>
                     </div>
                     <div className="modal-footer delete-user">
-                        <button type="button" className="btn btn-primary delete-user-button" onClick={props.deleteUser}>Yes</button>
-                        <button type="button" className="btn btn-primary cancel-delete-user-button" onClick={props.closeModal}>No</button>
+                        <button type="button" className="btn btn-default delete-user-button" onClick={props.deleteUser}>Yes</button>
+                        <button type="button" className="btn btn-default cancel-delete-user-button" onClick={props.closeModal}>No</button>
                     </div>
                 </div>
             </div>

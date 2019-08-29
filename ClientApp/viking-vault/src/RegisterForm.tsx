@@ -7,6 +7,7 @@ import {constants} from "./Resources/Constants";
 
 const baseUrl = constants.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const cnpRegex = /[0-9]+/;
 
 interface IUserProperties {
     email: string;
@@ -153,6 +154,9 @@ class RegisterForm extends React.Component<any, IFormState> {
         }
         if(!(["address", "cnp", "firstName", "lastName", "password"].every(keyName => this.state.user[keyName] !== ""))) {
                 val = false;
+        }
+        if(!cnpRegex.test(this.state.user.cnp)) {
+            val = false;
         }
         return val;
     }

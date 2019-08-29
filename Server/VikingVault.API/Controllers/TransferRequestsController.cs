@@ -68,6 +68,10 @@ namespace VikingVault.API.Controllers
                 {
                     var requester = _userService.GetUserFromToken(token);
                     var reciever = _userService.GetUserFromCardNumber(transferRequestDTO.CardNumberReciever);
+                    if(reciever == null)
+                    {
+                        throw new NoCardAttachedToUserException("Invalid card number");
+                    }
 
                     if(requester.Id != reciever.Id)
                     {

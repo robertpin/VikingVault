@@ -270,13 +270,13 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
 
                             <div className = "transfer-request-toggle-container">
                                 <span  className ="toggle-positioning"><Toggle requestTransfer = {this.state.requestTransfer} toggleSwitch = {this.handleChangeRequestTransferState}/></span> 
-                                <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
-                                <p className= {"toggle-text-container text-decoration " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
+                                <p className= {"toggle-text-container text-decoration font-750 " + (this.state.requestTransfer == true ? "toggle-deactivated-text-decoration" : "toggle-activated-text-decoration") }>Transfer</p>
+                                <p className= {"toggle-text-container text-decoration font-750 " + (this.state.requestTransfer == true ? "toggle-activated-text-decoration" : "toggle-deactivated-text-decoration")}>Request</p>
                             </div>
 
                             <div className="transfer-data-left-container">
                                <div>
-                                  <select className="form-control form-control-currency input-field" onChange={this.setCurrency}>
+                                  <select className="form-control form-control-currency input-field font-750" onChange={this.setCurrency}>
                                         <option selected = {this.state.currency === "EUR"} value="EUR">EUR</option>
                                         <option selected = {this.state.currency === "RON"} value="RON">RON</option>
                                         <option selected = {this.state.currency === "YEN"} value="YEN">YEN</option>
@@ -287,7 +287,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
                                     </div>
                                
                                     <div className = "amount-container-position">
-                                        <p className="text-decoration">Amount</p>
+                                        <p className="text-decoration font-750">Amount</p>
                                         <input
                                                 className="form-control form-control-currency input-shadow underlineIt amount-input-field"
                                                 placeholder=""

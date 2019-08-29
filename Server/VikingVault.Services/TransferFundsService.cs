@@ -31,16 +31,18 @@ namespace VikingVault.Services
 
         public void TransferFunds(TransferFundsModel transferData)
         {
-            int idSender = transferData.Sender.Id;
-            int? idReciever = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
-            if(idReciever != null) {
-                if (UsersHaveCardsAttached(idSender, idReciever) && AreDifferentUsers(idSender, (int)idReciever))
-                {
-                    _bankAccountService.RetractMoneyFromUser(_userService.GetById(idSender), transferData.Currency, transferData.AmountSent);
-                    _bankAccountService.AddMoneyToUser(_userService.GetById((int)idReciever), transferData.Currency, transferData.AmountSent);
-                    _transactionService.AddTransactionsForTransferFunds(transferData);
-                    AddReceivedNotification(transferData, idReciever);
-                }
+            int senderId = transferData.Sender.Id;
+            int? receiverId = _userCardService.FindUserIdByCardNumber(transferData.CardNumberReciever);
+            if(receiverId == null)
+            {
+                throw new NoCardAttachedToUserException("Invalid card!");
+            }
+            if (UsersHaveCardsAttached(senderId, receiverId) && AreDifferentUsers(senderId, (int)receiverId))
+            {
+                _bankAccountService.RetractMoneyFromUser(_userService.GetById(senderId), transferData.Currency, transferData.AmountSent);
+                _bankAccountService.AddMoneyToUser(_userService.GetById((int)receiverId), transferData.Currency, transferData.AmountSent);
+                _transactionService.AddTransactionsForTransferFunds(transferData);
+                AddReceivedNotification(transferData, receiverId);
             }
         }
 
@@ -80,7 +82,7 @@ namespace VikingVault.Services
 
             if(idReciever == null || _userCardService.HasCardAttached((int)idReciever) == false)
             {
-                throw new NoCardAttachedToUserException("No user found with the specified card number!");
+                throw new NoCardAttachedToUserException("Invalid card number!");
             }
 
             return true;

@@ -24,7 +24,7 @@
     min-height: 100%;
   }
   
-  .btn-primary.add-money-button {
+  .btn-default.add-money-button {
     width: 100%;
     border-radius: 0;
     border-bottom-left-radius: 0.9rem;
@@ -35,13 +35,13 @@
     border-color: #09424D;
   }
 
-  .btn-primary:hover.add-money-button {
+  .btn-default:hover.add-money-button {
     background-color: #0d6e82;
     color: white;
     border-color: #09424D;
   } 
   
-  .btn-primary.cancel-add-money-button {
+  .btn-default.cancel-add-money-button {
     width: 100%;
     margin-left: 0;
     border-radius: 0;
@@ -53,7 +53,7 @@
     border-color: grey;
   }
   
-  .btn-primary:hover.cancel-add-money-button {
+  .btn-default:hover.cancel-add-money-button {
     background-color: #d6d6d6;
     color: black;
     border-color: grey;
