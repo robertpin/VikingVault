@@ -98,5 +98,38 @@ namespace VikingVault.Services
             }
             return transactionsDTO;
         }
+
+        public List<TransactionDTO> GetAllTransactions(string userId)
+        {
+            int uid = int.Parse(userId);
+            var transactions = _dbContext.Transactions
+                .Include(t => t.Sender)
+                .Include(t => t.Receiver)
+                .Where(t => t.Sender.Id == uid || t.Receiver.Id == uid)
+                .OrderByDescending(t => t.Date)
+                .ToList();
+            var transactionsDTO = new List<TransactionDTO>();
+            foreach (Transaction transaction in transactions)
+            {
+                var isUserSender = false;
+                if (transaction.Sender != null)
+                {
+                    isUserSender = (transaction.Sender.Id == uid);
+                }
+                transactionsDTO.Add(new TransactionDTO
+                {
+                    Id = transaction.Id,
+                    Sender = transaction.Sender,
+                    Receiver = transaction.Receiver,
+                    Type = transaction.Type,
+                    Amount = transaction.Amount,
+                    Details = transaction.Details,
+                    Currency = transaction.Currency,
+                    Date = transaction.Date,
+                    IsUserSender = isUserSender
+                });
+            }
+            return transactionsDTO;
+        }
     }
 }

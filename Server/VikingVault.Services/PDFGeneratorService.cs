@@ -78,7 +78,7 @@ namespace VikingVault.Services
         
         public void AddTransactionListIntoPDF(PdfPage page, string userId, string timeFilter)
         {
-            List<TransactionDTO> transactionList = _transactionService.GetTransactions(userId);
+            List<TransactionDTO> transactionList = _transactionService.GetAllTransactions(userId);
             transactionList = FilterTransactionsByTime(transactionList, timeFilter);
 
             PdfStandardFont columnHeaderFont = new PdfStandardFont(PdfFontFamily.Helvetica, 11, PdfFontStyle.Bold);
