@@ -9,8 +9,7 @@ interface IProfileDataState {
     redirect: boolean;
 }
 
-class ProfileData extends React.Component<IUser, IProfileDataState> 
-{
+class ProfileData extends React.Component<IUser, IProfileDataState> {
     state = {
         redirect: false
     }

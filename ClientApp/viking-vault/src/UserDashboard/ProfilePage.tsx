@@ -30,29 +30,29 @@ class ProfilePage extends React.Component<any, IProfileState> {
         super(props);
         this.state = {
             currentUser: {
-                email: "",
-                firstName: "",
-                lastName: "",
-                address: "",
-                cnp: "",
-                pictureLink: ""
+                ...this.getUserFromFields("","","","","","")
             },
             updatedUser: {
-                email: "",
-                firstName: "",
-                lastName: "",
-                address: "",
-                cnp: "",
-                pictureLink: ""
+                ...this.getUserFromFields("","","","","","")
             },
             showEdit: false,
             reloadPicture: false
         }
     }
     
+    getUserFromFields = (email: string, firstName: string, lastName: string, address: string, cnp: string, pictureLink: string) => {
+        return {
+            "email": email,
+            "firstName": firstName,
+            "lastName" : lastName,
+            "address": address,
+            "cnp": cnp,
+            "pictureLink": pictureLink
+        }
+    }
 
     getData = () => {
-        let token = sessionStorage.getItem("Authentication-Token");
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null) {
             return;
         }
@@ -64,36 +64,22 @@ class ProfilePage extends React.Component<any, IProfileState> {
                 'x-access-token':  token.toString()
         }})
         .then( response => {
-                    if( response.status === 500)
-                    {
-                        
-
-                        return null;
-                    }
-                    
-                    return response.json();
+            if( response.status === 500) {
+                return null;
+            }
+            return response.json();
         })
         .then( userData => {
-                if(userData != null) {
-                    this.setState({
-                        currentUser: {
-                            email: userData.email,
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            address: userData.address,
-                            cnp: userData.cnp,
-                            pictureLink: userData.pictureLink
-                        },
-                        updatedUser: {
-                            email: userData.email,
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            address: userData.address,
-                            cnp: userData.cnp,
-                            pictureLink: userData.pictureLink
-                        }
-                    })
-                }
+            if(userData != null) {
+                this.setState({
+                    currentUser: {
+                        ...this.getUserFromFields(userData.email, userData.firstName, userData.lastName, userData.address, userData.cnp, userData.pictureLink)
+                    },
+                    updatedUser: {
+                        ...this.getUserFromFields(userData.email, userData.firstName, userData.lastName, userData.address, userData.cnp, userData.pictureLink)
+                    }
+                })
+            }
             });
     }
 
@@ -111,7 +97,7 @@ class ProfilePage extends React.Component<any, IProfileState> {
     }
 
     updateProfileData = () => {
-        let token = sessionStorage.getItem("Authentication-Token");
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token === null) {
             return;
         }
@@ -134,20 +120,10 @@ class ProfilePage extends React.Component<any, IProfileState> {
                 if(userData != null) {
                     this.setState({
                         currentUser: {
-                            email: userData.email,
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            address: userData.address,
-                            cnp: userData.cnp,
-                            pictureLink: userData.pictureLink
+                            ...this.getUserFromFields(userData.email, userData.firstName, userData.lastName, userData.address, userData.cnp, userData.pictureLink)
                         },
                         updatedUser: {
-                            email: userData.email,
-                            firstName: userData.firstName,
-                            lastName: userData.lastName,
-                            address: userData.address,
-                            cnp: userData.cnp,
-                            pictureLink: userData.pictureLink
+                            ...this.getUserFromFields(userData.email, userData.firstName, userData.lastName, userData.address, userData.cnp, userData.pictureLink)
                         },
                         reloadPicture: true
                     })
