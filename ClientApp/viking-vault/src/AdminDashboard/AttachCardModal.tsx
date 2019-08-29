@@ -2,7 +2,7 @@ import React from "react";
 import { constants } from "../Resources/Constants.js";
 import './AttachCardModal.css';
 
-let regexCheckIfOnlyDigits = /^([+-]?[1-9]\d*|0)$/;
+let regexCheckIfOnlyDigits = /^([1-9][0-9]*|0)$/;
 let currentYearValue = new Date().getFullYear();
 const attachCardUrl = constants.baseUrl+"attachCard";
 
