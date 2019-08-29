@@ -54,6 +54,11 @@
     border-bottom-left-radius: 0.9rem;
 }
 
+.btn-primary:hover.attach-card {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+  } 
 
 .btn-default.attach-card:hover{
     background-color: #d6d6d6;

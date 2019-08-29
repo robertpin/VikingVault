@@ -35,10 +35,29 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
         this.props.addMoney(Number(this.state.amount));
     }
 
-    private handleAmountChange = (e:any) => this.setState({ amount: e.target.value });
+    private checkAmountValid = () =>{
+        if(!this.validateAmount()){
+            return {
+                message: "Amount should be between 0.1-5000 RON",
+                class: "alert alert-danger"
+            }
+        }
+        return {
+            message: "",
+            class: ""
+        }
+    }
+
+    private handleAmountChange = (e:any) => {
+        this.setState({ amount: e.target.value 
+        }, this.checkAmountValid);
+    }
 
     private validateAmount(){
-        if(Number(this.state.amount) < this.state.minAmount || Number(this.state.amount) > this.state.maxAmount || !(this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$"))){
+        const isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
+        const isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
+        const isAmountValid = (this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"));
+        if(isAmountSmallerThanLimit || isAmountLargerThanLimit || !isAmountValid){
             return false;
         }
         return true;
@@ -60,8 +79,8 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
                                 min = {this.state.minAmount}
                                 max = {this.state.maxAmount}
                                 value = {this.state.amount} 
-                                onChange = {this.handleAmountChange}></input>
-                                {!this.validateAmount() ? <p className="alert alert-danger">Amount should be between 0.1-5000 RON</p> : null}
+                                onChange = {this.handleAmountChange} />
+                                {this.state.amount!=="" ? <pre className={this.checkAmountValid().class}>{this.checkAmountValid().message}</pre> : null}
                             </div>
                         </div>
 
