@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
@@ -47,6 +48,20 @@ namespace VikingVault.API.Controllers
             catch(UserServiceException e)
             {
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Authorization(Role=DataAccess.Enums.RoleEnum.User)]
+        [HttpPut]
+        public ActionResult<UpdateUserDTO> Update([FromBody] UpdateUserDTO user)
+        {
+            try
+            {
+                return Ok(_userService.UpdateUser(user));
+            }
+            catch(UserServiceException e)
+            {
+                return StatusCode(500);
             }
         }
 

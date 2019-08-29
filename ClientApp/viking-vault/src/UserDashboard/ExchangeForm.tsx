@@ -3,9 +3,9 @@ import React from "react";
 import SideBar from '../Common/SideBar';
 import TopBar from '../Common/TopBar';
 import ExchangeResponseModal from './ExchangeResponseModal';
-import UserIcon from '../Common/UserIcon';
 import {constants, currencyEnum} from '../Resources/Constants';
 import "../Common/styles.css";
+import AdminIcon from '../Common/AdminIcon';
 
 const EXCHANGE_URL = `${constants.baseUrl}exchange`;
 const BANK_ACCOUNT_URL = `${constants.baseUrl}bankAccount`;
@@ -298,7 +298,7 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             <div className="page-background">
                 <SideBar userType = "user"/>
                 <TopBar />
-                <UserIcon />
+                <AdminIcon />
                 <ExchangeResponseModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className="feature-container w-75 mr-auto ml-auto bg-white">
                     <div className="row"> 

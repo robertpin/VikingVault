@@ -13,5 +13,6 @@ namespace VikingVault.Services.Abstractions
         int GetIdFromToken(string token);
         User GetUserFromToken(string token);
         User GetUserFromCardNumber(string cardNumber);
+        UpdateUserDTO UpdateUser(UpdateUserDTO user);
     }
 }

@@ -13,7 +13,8 @@ interface IProfilePicture{
 class ProfilePicture extends React.Component<any, IProfilePicture> 
 {
     state = { userProfilePicture: profilePicture }
-    componentDidMount(){
+
+    getPictureLink = () => {
         let token = sessionStorage.getItem("Authentication-Token");
         if(token!==null){
             fetch(API_URL, {
@@ -37,9 +38,19 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
         }
     }
 
+    componentDidMount(){
+        this.getPictureLink();
+    }
+
+    reloadPicture = () => {
+        this.getPictureLink();
+        this.props.stopReload();
+    }
+
     render(){
         return (
             <div className = "profile-picture-container">
+                {this.props.reload? this.reloadPicture() : null}
                 <UserIconAvatar pictureUri={this.state.userProfilePicture} pictureStyle="profile-picture" defaultPicture={profilePicture} />
             </div>
         );

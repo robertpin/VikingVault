@@ -2,13 +2,13 @@ import React from 'react'
 import {constants, currencyEnum} from "../../Resources/Constants";
 import SideBar from '../../Common/SideBar';
 import TopBar from '../../Common/TopBar';
-import UserIcon from '../../Common/UserIcon';
 import './TransferFunds.css';
 import '../ExchangeForm.css';
 import TransferFundsModal from './TransferFundsModal';
 import Toggle from '../../Common/Toggle';
 import TransferRequests from '../TransferRequests';
 import "../../Common/styles.css";
+import AdminIcon from './../../Common/AdminIcon';
 
 const transferFundsUrl = `${constants.baseUrl}transferFunds`;
 const transferRequestsUrl = `${constants.baseUrl}transferRequests`;
@@ -263,7 +263,7 @@ class TransferFundsPage extends React.Component<any, ITransferFundsState>{
             <div className = "page-background">  
                 <SideBar userType = "user"/>
                 <TopBar/>
-                <UserIcon/>
+                <AdminIcon/>
                 <TransferFundsModal open={this.state.openModal} closeModal={this.closeModal} message={this.state.modalMessage} />
                 <div className = "feature-container w-75 bg-white mr-auto ml-auto">
                     <div className = "transfer-funds-left-container"> 
