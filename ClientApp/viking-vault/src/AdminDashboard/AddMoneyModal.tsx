@@ -54,9 +54,9 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
     }
 
     private validateAmount(){
-        let isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
-        let isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
-        let isAmountValid = (this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"));
+        const isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
+        const isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
+        const isAmountValid = (this.state.amount.match("^[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]+)?$"));
         if(isAmountSmallerThanLimit || isAmountLargerThanLimit || !isAmountValid){
             return false;
         }
