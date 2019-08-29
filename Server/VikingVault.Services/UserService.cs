@@ -122,5 +122,29 @@ namespace VikingVault.Services
                 throw new DatabaseException(e.Message);
             }
         }
+
+        public UpdateUserDTO UpdateUser(UpdateUserDTO user)
+        {
+            try
+            {
+                User userToUpdate = _dbContext.User.SingleOrDefault(u => u.Email == user.Email);
+                if(userToUpdate == null)
+                {
+                    throw new UserServiceException("User not found");
+                }
+                userToUpdate.FirstName = user.FirstName;
+                userToUpdate.LastName = user.LastName;
+                userToUpdate.Address = user.Address;
+                userToUpdate.Cnp = user.Cnp;
+                userToUpdate.PictureLink = user.PictureLink;
+                _dbContext.Update(userToUpdate);
+                _dbContext.SaveChanges();
+                return user;
+            }
+            catch(Exception e)
+            {
+                throw new UserServiceException(e.Message);
+            }
+        }
     }
 }

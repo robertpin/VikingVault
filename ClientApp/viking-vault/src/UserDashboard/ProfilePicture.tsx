@@ -4,19 +4,19 @@ import './ProfilePicture.css';
 import { constants } from "../Resources/Constants";
 import UserIconAvatar from "../Common/UserIconAvatar"
 
-const API_URL = `${constants.baseUrl}userprofilepages`;
+const profileDataUrl = `${constants.baseUrl}userprofilepages`;
 
 interface IProfilePicture{
     userProfilePicture: string
 }
 
-class ProfilePicture extends React.Component<any, IProfilePicture> 
-{
+class ProfilePicture extends React.Component<any, IProfilePicture> {
     state = { userProfilePicture: profilePicture }
-    componentDidMount(){
-        let token = sessionStorage.getItem("Authentication-Token");
+
+    getPictureLink = () => {
+        const token = sessionStorage.getItem("Authentication-Token");
         if(token!==null){
-            fetch(API_URL, {
+            fetch(profileDataUrl, {
                 method: "GET",
                 headers: {
                 'Accept': 'application/json',
@@ -37,9 +37,19 @@ class ProfilePicture extends React.Component<any, IProfilePicture>
         }
     }
 
+    componentDidMount(){
+        this.getPictureLink();
+    }
+
+    reloadPicture = () => {
+        this.getPictureLink();
+        this.props.stopReload();
+    }
+
     render(){
         return (
             <div className = "profile-picture-container">
+                {this.props.reload? this.reloadPicture() : null}
                 <UserIconAvatar pictureUri={this.state.userProfilePicture} pictureStyle="profile-picture" defaultPicture={profilePicture} />
             </div>
         );
