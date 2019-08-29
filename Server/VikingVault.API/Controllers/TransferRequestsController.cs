@@ -53,7 +53,7 @@ namespace VikingVault.API.Controllers
                     return NotFound(e.Message);
                 }
 
-                return Ok("Server Error."); 
+                return StatusCode(500, "Internal Server Error"); 
             }
         }
 

@@ -88,12 +88,12 @@ class TransferRequests extends React.Component<ITransferRequestsListProps, ITran
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.transferRequests.map( (transferRequest) => {
+                    {this.state.transferRequests.map( (transferRequest: ITransferRequestData) => {
                         return <tr className="requests-table-row" key={transferRequest.id} onClick = {() => this.props.autoFillTransferRequest(transferRequest)}>
-                            <td>{transferRequest.name}</td>
+                            <td title={transferRequest.name}>{transferRequest.name}</td>
                             <td>{transferRequest.amount}</td>
                             <td>{transferRequest.currency}</td>
-                            <td className = "transfer-details-decoration">{transferRequest.details}</td>
+                            <td className = "transfer-details-decoration" title={transferRequest.details}>{transferRequest.details}</td>
                         </tr>;
                     })}
                 </tbody>

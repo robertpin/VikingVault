@@ -96,17 +96,17 @@ class UserData extends React.Component<IUserDataProp, IPageState>{
     }
 
     formatCardNumber(cardNumber: string) {
-        return <span>{this.splitCardNumber(0,4)}  {this.splitCardNumber(4,8)}   {this.splitCardNumber(8,12)}   {this.splitCardNumber(12,16)}</span>;
+        return <span>{this.splitCardNumber(0,4)} &nbsp;{this.splitCardNumber(4,8)} &nbsp;{this.splitCardNumber(8,12)} &nbsp;{this.splitCardNumber(12,16)}</span>;
     }
 
     renderUserCard() {
         if(this.state.user.cardNumber !== "") {
             return <div className = "card-data-style">
                         <img src = {CardImg} className = "card-img"></img>
-                        <p className = "name-on-card">{this.state.user.firstName} {this.state.user.lastName}</p>
-                        <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
                         <p className = "card-number-on-card">{this.formatCardNumber(this.state.user.cardNumber)}</p>
-            </div>;
+                        <p className = "expiration-date-on-card">{this.state.user.expirationDate}</p>
+                        <p className = "name-on-card">{this.state.user.firstName} {this.state.user.lastName}</p>
+                   </div>;
         }
         return null; 
     }

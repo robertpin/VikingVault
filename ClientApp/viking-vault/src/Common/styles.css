@@ -9,7 +9,7 @@
     position: relative;
     margin-top: 1%;
     max-height: 85%;
-    min-height: 60%;
+    min-height: 65%;
     overflow-y: auto;
     border-radius: 2em;
     padding: 1%;
@@ -326,20 +326,25 @@
 
 .balance-container{
     border-bottom: 1px solid #09424d;
-    width:80%;
+    width:100%;
+}
+
+.user-page-container {
+    width: 95%;
+    position: relative;
 }
 
 .accounts-container{
     font-family: Arial, Helvetica, sans-serif;
     color:#155764;
-    font-size:1.4vw;
+    font-size:1.3vw;
     font-weight: 775;
 }
 
 .account-value{
     font-family: Arial, Helvetica, sans-serif;
     color:#7a8080;
-    font-size:1.4vw;
+    font-size:1.3vw;
     font-weight: 775;
 }
 
@@ -392,7 +397,7 @@
 
 .block-card-toggle-position{
     position: absolute;
-    left: 230px;
+    left: 240px;
     top: 310px;
 }
 
@@ -421,20 +426,36 @@
     display: none;
 }
 
+.base-unblocked-card-label{
+    position: absolute;
+    left: 315px;
+    top: 316px;
+    color: grey;
+    font-size: 13px;
+}
+
+.base-blocked-card-label{
+    position: absolute;
+    top: 316px;
+    left: 178px;
+    color: grey;
+    font-size: 13px;
+}
+
 .unblocked-card-label{
     position: absolute;
-    left: 300px;
+    left: 310px;
     top: 315px;
     color: #155764;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .blocked-card-label{
     position: absolute;
     top: 315px;
-    left: 90px;
+    left: 175px;
     color: grey;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
 }

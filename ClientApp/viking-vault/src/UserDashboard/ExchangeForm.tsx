@@ -142,6 +142,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
             .then(result => {
                 this.setState({
                     availableAmountFromCurrency: result[currencyMap[this.state.fromCurrency]].balance
+                }, () => {
+                    this.calculateExchangedAmount();
                 });
             });
         }
@@ -344,8 +346,8 @@ class ExchangeForm extends React.Component<any, IExchangeFormState> {
                                     />
                                     <p className="d-inline exchanged-amount font-750">&emsp;&emsp;{` =       ${this.state.exchangedAmount}`}</p>
                                 </div>
-                                <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
                                 <button id="exchange-button" className="btn btn-primary font-750" onClick={this.exchange}>Exchange!</button>
+                                <span className="badge badge-info fee-text">Fee today: {this.state.fee}%</span>
                             </div>
                         </div>
                         <div className="col-4 right-column">  {/* Right column */}

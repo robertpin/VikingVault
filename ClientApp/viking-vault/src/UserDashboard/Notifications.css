@@ -5,4 +5,8 @@
 
 .notification-text {
     width: 80%;
+    white-space: nowrap;
+    max-width: 25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
