@@ -58,7 +58,6 @@ class AddMoneyModal extends React.Component<IAddMoneyModalProps, IAddMoneyModalS
         const isAmountSmallerThanLimit = Number(this.state.amount) < this.state.minAmount;
         const isAmountLargerThanLimit = Number(this.state.amount) > this.state.maxAmount;
         const isAmountValid = constants.regexCheckIfPositiveFloat.test(this.state.amount);
-        console.log(isAmountValid);
         if(isAmountSmallerThanLimit || isAmountLargerThanLimit || !isAmountValid){
             return false;
         }
