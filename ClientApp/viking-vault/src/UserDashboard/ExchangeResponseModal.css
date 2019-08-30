@@ -8,17 +8,24 @@
     padding: 0;
     position: relative;
     width: 100%;
+    border-bottom-right-radius: 0.9rem;
+    border-bottom-left-radius: 0.9rem;
+    color: #fff;
 }
 
 .exchange-done-button:hover{
-    background-color:  rgb(29, 84, 95);
+    background-color: rgb(29, 84, 95);
+    color: #fff;
 }
 
 .exchange-modal-footer {
     background-color: rgb(29, 84, 95);
     margin: 0;
     padding: 2%;
+    border-bottom-right-radius: 0.9rem;
+    border-bottom-left-radius: 0.9rem;
 }
+
 
 .exchange-modal-text {
     color: rgb(29, 84, 95);
@@ -33,4 +40,7 @@
     border-radius: 15px;
     border:none;
     text-align: center;
+    border-bottom: 0;
+    border-bottom-right-radius: 0.9rem;
+    border-bottom-left-radius: 0.9rem;
 }

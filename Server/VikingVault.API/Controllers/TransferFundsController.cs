@@ -46,7 +46,7 @@ namespace VikingVault.API.Controllers
                         _transferRequestService.DeleteRequest(transferFundsDTO.RequestId);
                     }
 
-                    return Ok("Succesfully transfered " + transferFundsData.AmountSent + "!");
+                    return Ok("Succesfully transfered " + transferFundsData.AmountSent + " " + transferFundsData.Currency + "!");
                 }
                 else
                 {

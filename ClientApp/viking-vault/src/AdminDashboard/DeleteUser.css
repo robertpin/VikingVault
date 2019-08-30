@@ -10,6 +10,7 @@
   
   .modal-content{
     border-radius: 0.95rem;
+    border-bottom: 0;
   }
   
   .modal-footer.delete-user{

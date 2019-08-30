@@ -16,6 +16,17 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.edit-container .btn-default {
+    background-color: #09424d;
+    color: #fff;
+}
+
+.edit-container .btn-default:hover {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+}
+
 .users-container {
     height: 85%;
 }

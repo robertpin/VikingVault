@@ -59,6 +59,9 @@
   
   .slider.round {
     border-radius: 34px;
+  }
+
+  .slider.round.transfer {
     background-color: rgb(8, 73, 85);
   }
   

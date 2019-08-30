@@ -26,6 +26,13 @@ namespace VikingVault.Services
 
             foreach (AutomaticPayment automaticPayment in automaticPayments)
             {
+                if (automaticPayment.PayingUser == null)
+                {
+                    _dbContext.AutomaticPayments.Remove(automaticPayment);
+                    _dbContext.SaveChanges();
+                    continue;
+                }
+
                 var lastPaymentDate = automaticPayment.LastPaymentDate.Date;
                 var payingUserCard = _dbContext.Cards.SingleOrDefault(card => card.UserId == automaticPayment.PayingUser.Id);
                 var payingUserAccount = _dbContext.BankAccount
@@ -57,7 +64,7 @@ namespace VikingVault.Services
 
         private bool IsPaymentEligible(AutomaticPayment automaticPayment, DateTime currentDateTime)
         {
-            return automaticPayment.InitialPaymentDate.Day.Equals(currentDateTime.Day) && automaticPayment.IsEnabled;
+            return automaticPayment.InitialPaymentDate.Day.Equals(currentDateTime.Day) && automaticPayment.IsEnabled && currentDateTime.Month >= automaticPayment.InitialPaymentDate.Month;
         }
 
         private void DisableAutomaticPayment(AutomaticPayment automaticPayment)
