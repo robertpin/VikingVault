@@ -20,7 +20,7 @@ class ExchangeResponseModal extends React.Component<IExchangeResponseModalProps,
                         <p className="modal-title exchange-modal-text">{this.props.message}</p>
                     </div>
                     <div className="modal-footer exchange-modal-footer">
-                        <button type="button" className="btn btn-primary exchange-done-button" onClick={this.closeModal}>Done</button>
+                        <button type="button" className="btn btn-default exchange-done-button" onClick={this.closeModal}>Done</button>
                     </div>
                 </div>
             </div>

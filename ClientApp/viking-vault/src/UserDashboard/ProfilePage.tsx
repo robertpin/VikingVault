@@ -156,7 +156,7 @@ class ProfilePage extends React.Component<any, IProfileState> {
                     
                     <div className="edit-container">
                         <div className="text-center d-block">
-                            <button className={"btn btn-primary " + (this.state.showEdit? "" : "edit-button")} onClick={this.handleEditClick}>Edit profile</button>
+                            <button className={"btn btn-default " + (this.state.showEdit? "" : "edit-button")} onClick={this.handleEditClick}>Edit profile</button>
                         </div>
                         <div className={this.state.showEdit? "": "d-none"}>
                             <br/>
@@ -180,7 +180,7 @@ class ProfilePage extends React.Component<any, IProfileState> {
                                 <label>ID (CNP)</label>
                                 <input type="text" value={this.state.updatedUser.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
                             </div>
-                            <button onClick={this.updateProfileData} className="btn btn-primary">Update Profile</button>
+                            <button onClick={this.updateProfileData} className="btn btn-default">Update Profile</button>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ const TransferFundsModal = (props: ITransferFundsModalProps) =>
                             <p className="modal-title exchange-modal-text">{props.message}</p>
                         </div>
                         <div className="modal-footer exchange-modal-footer">
-                            <button type="button" className="btn btn-primary exchange-done-button" onClick={props.closeModal}>Done</button>
+                            <button type="button" className="btn btn-default exchange-done-button" onClick={props.closeModal}>Done</button>
                         </div>
                     </div>
                 </div>

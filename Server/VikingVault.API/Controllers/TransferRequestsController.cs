@@ -78,7 +78,7 @@ namespace VikingVault.API.Controllers
                         var transferRequestData = transferRequestDTO.ConvertDTOtoTransferRequest(requester);
                         _transferRequestService.AddTransferRequest(transferRequestData);
 
-                        return Ok("Succesfully requested " + transferRequestData.Amount + "!");
+                        return Ok("Succesfully requested " + transferRequestData.Amount + " " + transferRequestData.Currency + "!");
                     }
                     else
                     {
