@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace VikingVault.Services
         public User Authenticate(string email, string password)
         {
             try {
+                //8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918 must be added as password for admin
                 string hashedPassword = PasswordEncryption.ComputeSha256Hash(password);
 
                 var user = _context.User.SingleOrDefault(u => u.Email == email && u.Password == hashedPassword);

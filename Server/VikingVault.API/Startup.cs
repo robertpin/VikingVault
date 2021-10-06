@@ -16,9 +16,12 @@ namespace VikingVault.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+	    private readonly IHostingEnvironment _environment;
+
+	    public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+	        _environment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -29,8 +32,10 @@ namespace VikingVault.API
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<VikingVaultDbContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+	        var connectionString = _environment.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") : Configuration.GetConnectionString("LiveDbConnection");
+
+			services.AddDbContext<VikingVaultDbContext>
+                (options => options.UseSqlServer(connectionString));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -38,21 +43,37 @@ namespace VikingVault.API
             services.AddCors();
 
             ConfigureJWTAuthentication(appSettingsSection, services);
-
+            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserProfilePageService, UserProfilePageService>();
             services.AddScoped<IUniqueEmailService, UniqueEmailService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IBankAccountService, BankAccountService>();
+            services.AddScoped<IExchangeService, ExchangeService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IPDFGeneratorService, PDFGeneratorService>();
+            services.AddScoped<ICardService, CardService>();
+            services.AddHostedService<TimedPaymentService>();
+            services.AddScoped<IScopedProcessingService, ExecutePaymentService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<ITransferFundsService, TransferFundsService>();
+            services.AddScoped<IUserCardService, UserCardService>();
+            services.AddScoped<ITransferRequestService, TransferRequestService>();
+            services.AddScoped<IAutomaticPaymentService, AutomaticPaymentService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
+            services.AddScoped<IPaymentTogglingService, PaymentTogglingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, VikingVaultDbContext context)
         {
-            if (env.IsDevelopment())
+	        context.Database.Migrate();
+
+			if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            
             }
             else
             {
@@ -64,8 +85,8 @@ namespace VikingVault.API
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
-                
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
 

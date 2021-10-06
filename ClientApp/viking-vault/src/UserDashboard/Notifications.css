@@ -1,0 +1,12 @@
+.feature-container h5 {
+    font-size: 2em;
+    color: #004450;
+}
+
+.notification-text {
+    width: 80%;
+    white-space: nowrap;
+    max-width: 25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,63 @@
+.modal.open {
+    display: block;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal-content{
+    border-radius: 0.95rem;
+    border-bottom: 0;
+  }
+  
+  .modal.close {
+    display: none;
+  }
+  
+  .modal-footer.add-money {
+    padding: 0;
+    height: 50px;
+  }
+  
+  .btn-secondary.add-money-button {
+    width: 100%;
+    border-radius: 0;
+    border-bottom-left-radius: 0.9rem;
+    margin-right: 0;
+    min-height: 100%;
+  }
+  
+  .btn-default.add-money-button {
+    width: 100%;
+    border-radius: 0;
+    border-bottom-left-radius: 0.9rem;
+    margin-right: 0;
+    min-height: 100%;
+    background-color: #09424D;
+    color: white;
+    border-color: #09424D;
+  }
+
+  .btn-default:hover.add-money-button {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+  } 
+  
+  .btn-default.cancel-add-money-button {
+    width: 100%;
+    margin-left: 0;
+    border-radius: 0;
+    border-bottom-right-radius: 0.9rem;
+    min-height: 100%;
+    background-color: white;
+    color: black;
+    border-bottom-right-radius: 0.9rem;
+    border-color: grey;
+  }
+  
+  .btn-default:hover.cancel-add-money-button {
+    background-color: #d6d6d6;
+    color: black;
+    border-color: grey;
+  }
+
+  

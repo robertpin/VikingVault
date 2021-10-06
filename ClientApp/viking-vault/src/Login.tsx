@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Redirect, Link} from 'react-router-dom';
-import { FooterForm } from "./FooterForm";
-import { HeaderForm } from "./HeaderForm";
-import {variables} from "./ConstantVariables";
+import { FooterForm } from "./Common/FooterForm";
+import { HeaderForm } from "./Common/HeaderForm";
+import { constants } from "./Resources/Constants";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 
 interface ILoginFormState {
   email: string;
@@ -108,7 +108,6 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         }, 1500);
         return null;
       }
-
       if(response.status === 500) {
         this.setState({
           errorLabel: "Error. Please try again later!"
@@ -120,16 +119,14 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         }, 2500);
         return null;
       }
-
-      return response.json();
-
+      if(response !== null) {
+        return response.json();
+      }
+      else return "";
     })
     .then(result => {
-      if(result !== null)
-      {
-        // correct email + password => redirect to user/admin page 
+      if(result !== null) { 
         sessionStorage.setItem('Authentication-Token', result.token);
-
         if(result.email === "admin"){
           this.setState({
             redirect: true,
@@ -187,8 +184,8 @@ class LoginForm extends React.Component<any, ILoginFormState> {
           <br/>
           {this.state.errorLabel !== "" ? <div className="alert alert-danger"> {this.state.errorLabel} </div> : null }
         </div>
-        <FooterForm class="footer-login"></FooterForm>
-        {this.state.redirect? <Redirect to={this.state.userType}/> : null}
+        <FooterForm class="footer-login"/>
+        {this.state.redirect? <Redirect to="/"/> : null}
       </div>
     );
   }

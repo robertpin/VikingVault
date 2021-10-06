@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VikingVault.API.SecurityFilters;
 using VikingVault.DataAccess.Models;
 using VikingVault.Services.Abstractions;
 using VikingVault.Services.Exceptions;
 
 namespace VikingVault.API.Controllers
 {
-    
-    [ApiController]
-    public class UserController : ControllerBase
+	[Route("[controller]")]
+	[ApiController]
+	public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -21,9 +22,9 @@ namespace VikingVault.API.Controllers
             _userService = userService;
         }
 
-        [Route("api/register")]
+        [Route("register")]
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult<User> Post([FromBody] UserDTO user)
         {
             try
             {
@@ -34,5 +35,35 @@ namespace VikingVault.API.Controllers
                return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public ActionResult Delete([FromBody] UserEmail userEmail)
+        {
+            try
+            {
+                _userService.DeleteUser(userEmail);
+                return Ok(true);
+            }
+            catch(UserServiceException e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Authorization(Role=DataAccess.Enums.RoleEnum.User)]
+        [HttpPut]
+        public ActionResult<UpdateUserDTO> Update([FromBody] UpdateUserDTO user)
+        {
+            try
+            {
+                return Ok(_userService.UpdateUser(user));
+            }
+            catch(UserServiceException e)
+            {
+                return StatusCode(500);
+            }
+        }
+
     }
 }

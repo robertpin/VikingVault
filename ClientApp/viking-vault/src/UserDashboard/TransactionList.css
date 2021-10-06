@@ -1,0 +1,28 @@
+.transactions {
+    width:90%;
+    right: 5%;
+    bottom: 5%;
+    top: 5%;
+}
+
+.transactions table {
+    color: #58595B;
+    font-size: 1vw;
+}
+
+.transactions table td.details {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.transactions .h5 {
+    font-size: 1.5vw;
+    color: #004450;
+}
+
+.transactions .other-party-image {
+    max-width: 30px;
+    max-height: 30px;
+}

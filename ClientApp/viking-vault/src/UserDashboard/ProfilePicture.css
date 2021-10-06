@@ -1,0 +1,14 @@
+.profile-picture-container
+{ 
+    position: relative;
+    margin-left: 9%;
+    margin-top: 3%;
+}
+
+.profile-picture
+{
+    height: 175px;
+    width: 175px;
+    margin-left: -20%;
+    border-radius: 50%;
+}

@@ -1,0 +1,51 @@
+.modal.open {
+    display: block;
+    opacity: 1;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal.close {
+    display: none;
+  }
+  
+  .modal-content{
+    border-radius: 0.95rem;
+    border-bottom: 0;
+  }
+  
+  .modal-footer.delete-user{
+    padding: 0rem;
+    height: 50px;
+  }
+  
+  .btn-default.delete-user-button {
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    border-radius: 0;
+    border-bottom-left-radius: 0.9rem;
+    margin-right: 0rem;
+    color: white;
+    background-color: #990909;
+    border-color: #990909;
+  }
+  
+   .btn-default:hover.delete-user-button {
+    background-color: #d90d0d;
+    color: white;
+  }
+  
+  .btn-default.cancel-delete-user-button {
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    border-radius: 0;
+    border-bottom-right-radius: 0.9rem;
+    margin-left: 0rem;
+    color: #000;
+    border: 0;
+  }
+  
+   .btn-default:hover.cancel-delete-user-button {
+    background-color: #d6d6d6;
+  }

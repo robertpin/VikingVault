@@ -1,0 +1,472 @@
+.page-background{
+    display: block;
+    height: 100vh;
+    overflow: hidden;
+    background-color:rgb(226, 226, 226);
+}
+
+.feature-container{
+    position: relative;
+    margin-top: 1%;
+    max-height: 85%;
+    min-height: 60%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.edit-container .btn-default {
+    background-color: #09424d;
+    color: #fff;
+}
+
+.edit-container .btn-default:hover {
+    background-color: #0d6e82;
+    color: white;
+    border-color: #09424D;
+}
+
+.users-container {
+    height: 85%;
+}
+
+.sidebar{
+    background-color: white;
+    color: #09424d;
+    font-weight: bold;
+    font-size: 13px;
+    height: 100%;
+    transition: 0.5s;
+    position: absolute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 2;
+}
+
+.collapsed{
+    width: 60px;
+}
+
+.expanded{
+    width: 200px;
+}
+
+.top-bar{
+    background-color: #09424d;
+    font-weight: bold;
+    font-size: 13px;
+    height: 60px;
+    width: 100%; 
+    align-items: center;
+    vertical-align: middle;
+}
+
+.dashboard-title-container{
+    padding-top: 15px;
+    padding-left: 18px;
+    border-bottom: 1px solid #09424d;
+    height:60px;
+}
+
+.menu-icon{
+    width:20px;
+    height:20px;
+}
+
+.img.viking-logo{
+    width: 224px;
+    height: 55px;
+    position: absolute;
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
+.account-view{
+    background-color: white;
+    margin-top: 1%;
+    min-width: 600px;
+    width: 75%;
+    margin-left:15%;
+    max-height: 85%;
+    min-height: 65%;
+    border-radius : 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: inline-flex;
+    position: relative;
+}
+
+.card-unavailable{
+    min-width:400px;
+    width:400px;
+    height:250px;
+    box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(7, 7, 7, 0.19);
+    border-radius: 15px;
+}
+
+.accounts-information{
+    margin-left:5%;
+    color: dimgray;
+    font-size: 16px;
+    width:100%;
+}
+
+.no-card-text{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    width: 70%;
+    font-size:15px;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.dropdown {
+    float: right;
+    margin-right: 5%;
+    margin-top: -50px;
+}
+  
+.mega-menu {
+    display: none;
+}
+
+.mega-menu.true {
+    display: block;
+}
+
+.mega-menu-content {
+    position: absolute;
+    background-color: white;
+    min-width: 90px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.side-menu-hide {
+    padding: 20% 30%;
+    align-items: center;
+}
+
+.side-menu-hide:hover{
+    background-color: #09424d;
+    transition: 0.5s;
+}
+
+.side-menu-hide:hover .menu-icon{
+    filter: brightness(0) invert(1);
+    transition: 0.5s;
+}
+
+.side-menu-show{
+    padding: 7% 20%;
+}
+
+.side-menu-show:hover{
+    background-color: #09424d;
+    transition: 0.4s;
+}
+
+.side-menu-show:hover .menu-icon{
+    filter: brightness(0) invert(1);
+    transition: 0.5s;
+}
+
+.side-menu-show:hover .span-show{
+    color: white;
+    transition: 0.5s;
+}
+
+.span-hide{
+    display:none;
+}
+
+.span-show{
+    color: #09424d;
+    font-weight: lighter;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { 
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dashboard-hide{
+    display:none;
+}
+
+.dashboard-show{
+    color: #09424d;
+    font-weight: bold;
+    animation: fadein 2s;
+}
+
+.user-page{
+    width:100%;
+    height:100%;
+}
+
+.transform-none{
+    transform: none;
+    margin-left:30%;
+    position:absolute;
+    bottom:3%;
+}
+
+.transform-reverse{
+    transform: scaleX(-1);
+    align-self: center;
+    position:absolute; 
+    bottom:3%;
+    margin-left:80%;
+}
+
+.button-user-icon{
+    width:100%;
+    background-color: white;
+    border: none;
+    color: #09424d;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600
+}
+
+.button-user-icon:hover{
+    background-color: #09424d;
+    color: white;
+    transition: 0.4s;
+}
+
+.accounts-header{
+    margin-top: 15px;
+    font-size: 1vw;
+    font-weight: bolder;
+}
+
+.accounts-title{
+    width:100%;
+}
+
+.balance-header{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#09424d;
+    font-size:2vw;
+    font-weight: 790;
+}
+
+.balance-value{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#505353;
+    font-size:2vw;
+    font-weight: 775;
+}
+
+.balance-information{
+    font-size: 10px;
+    margin-top: -20px;
+}
+
+.balance-container{
+    border-bottom: 1px solid #09424d;
+    width:100%;
+}
+
+.user-page-container {
+    width: 95%;
+    position: relative;
+}
+
+.accounts-container{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#155764;
+    font-size:1.3vw;
+    font-weight: 775;
+}
+
+.account-value{
+    font-family: Arial, Helvetica, sans-serif;
+    color:#7a8080;
+    font-size:1.3vw;
+    font-weight: 775;
+}
+
+.card-available{
+    min-width:400px;
+    width:400px;
+    height:250px;
+    box-shadow: 1px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(7, 7, 7, 0.19);
+    position: relative;
+    border-radius: 15px;
+}
+
+.card-picture-container{
+    margin-top: 3%;
+    margin-left: 5%;
+}
+
+.card-number-large{
+    position: absolute;
+    z-index: 1;
+    margin-top: 145px;
+    margin-left: 45px;
+    font-size: 23px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
+.card-expiration-date{
+    position: absolute;
+    z-index: 1;
+    margin-top: 181px;
+    margin-left: 165px;
+    user-select: none;
+}
+
+.card-owner-name{
+    position: absolute; 
+    z-index: 1;
+    margin-top: 210px;
+    margin-left:40px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    user-select: none;
+}
+
+.redirect-symbols:hover {
+    text-decoration: none;
+}
+
+.block-card-toggle-position{
+    position: absolute;
+    left: 240px;
+    top: 310px;
+}
+
+.message-container {
+    position: relative;
+    margin-top: 2%; 
+    margin-bottom: 10%;
+    min-height: 50%;
+    overflow-y: auto;
+    border-radius: 2em;
+    padding: 2%;
+}
+
+.dark-background {
+    background-color: rgb(200,200,200);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.dashboard-icon:hover {
+    text-decoration: none;
+}
+
+.not-displayed-label{
+    display: none;
+}
+
+.base-unblocked-card-label{
+    position: absolute;
+    left: 315px;
+    top: 316px;
+    color: grey;
+    font-size: 13px;
+}
+
+.base-blocked-card-label{
+    position: absolute;
+    top: 316px;
+    left: 178px;
+    color: grey;
+    font-size: 13px;
+}
+
+.unblocked-card-label{
+    position: absolute;
+    left: 310px;
+    top: 315px;
+    color: #155764;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.blocked-card-label{
+    position: absolute;
+    top: 315px;
+    left: 175px;
+    color: grey;
+    font-weight: bold;
+    font-size: 15px;
+}

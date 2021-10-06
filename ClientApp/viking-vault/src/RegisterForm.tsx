@@ -1,12 +1,13 @@
 import React from "react";
 import {ResponseModal} from "./ReponseModal";
 import {Redirect} from "react-router-dom";
-import { HeaderForm } from './HeaderForm';
-import { FooterForm } from './FooterForm';
-import {variables} from "./ConstantVariables";
+import { HeaderForm } from './Common/HeaderForm';
+import { FooterForm } from './Common/FooterForm';
+import {constants} from "./Resources/Constants";
 
-const baseUrl = variables.baseUrl;
+const baseUrl = constants.baseUrl;
 const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const cnpRegex = /[0-9]+/;
 
 interface IUserProperties {
     email: string;
@@ -54,17 +55,14 @@ class RegisterForm extends React.Component<any, IFormState> {
     }
 
     private validateEmail = () => {
-        fetch(baseUrl+"UniqueEmail", {
-            method: "POST",
+        fetch(baseUrl+"UniqueEmail/"+this.state.user.email, {
+            method: "GET",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.state.user.email,
-            })
+            }
         }).then(response => response.json()).then(result => {
-            if(result === true) { // email is unique
+            if(result === true) {
                 this.setState({
                     valid: true
                 })
@@ -157,6 +155,9 @@ class RegisterForm extends React.Component<any, IFormState> {
         if(!(["address", "cnp", "firstName", "lastName", "password"].every(keyName => this.state.user[keyName] !== ""))) {
                 val = false;
         }
+        if(!cnpRegex.test(this.state.user.cnp)) {
+            val = false;
+        }
         return val;
     }
 
@@ -189,14 +190,14 @@ class RegisterForm extends React.Component<any, IFormState> {
     private sendDataAndShowResponse = async () => {
         this.setLoadingState();
         const user = this.getUser();
-        fetch(baseUrl+"register", {
+        fetch(baseUrl+"user/register", {
             method: "POST",
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
-        },).then(response => {
+        }).then(response => {
             if(response.status !== 200) {
                 this.openModalWithMessage("Error. Please Try again");
             }
@@ -221,44 +222,44 @@ class RegisterForm extends React.Component<any, IFormState> {
         return (
             <div>
                 <HeaderForm/>
-        <div className="container col-md-6">
-            <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
-            <div className="form-group">
-                <label>Email*</label>
-                <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control accent-color"></input>
-                <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre>
-            </div>
-            <div className="form-group">
-                <label>Password*</label>
-                <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control accent-color"></input>
-                <label>Confirm Password*</label>
-                <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control accent-color"></input>
-                <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre>
-            </div>
-            <div className="form-group">
-                <label>First Name*</label>
-                <input type="text" value={this.state.user.firstName} onChange={(e) => this.handleChange(e.target.value, "firstName")} required className="form-control accent-color"></input>
-            </div>
-            <div className="form-group">
-                <label>Last Name*</label>
-                <input type="text" value={this.state.user.lastName} onChange={(e) => this.handleChange(e.target.value, "lastName")} required className="form-control accent-color"></input>
-            </div>
-            <div className="form-group">
-                <label>Picture Link</label>
-                <input type="text" value={this.state.user.pictureLink} onChange={(e) => this.handleChange(e.target.value, "pictureLink")} className="form-control accent-color"></input>
-            </div>
-            <div className="form-group">
-                <label>Address*</label>
-                <input type="text" value={this.state.user.address} onChange={(e) => this.handleChange(e.target.value, "address")} required className="form-control accent-color"></input>
-            </div>
-            <div className="form-group">
-                <label>ID (CNP)*</label>
-                <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
-            </div>
-            <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
-            {this.state.redirect? <Redirect to="/login" /> : null}
-        </div>
-        <FooterForm class="footer-register"/>
+                <div className="container col-md-6">
+                    <ResponseModal text={this.state.response} open={this.state.openModal} modalClose={this.closeModal}/>
+                    <div className="form-group">
+                        <label>Email*</label>
+                        <input type="email" value={this.state.user.email} onChange={this.handleEmailChange} required className="form-control accent-color"></input>
+                        {this.state.user.email!=="" ? <pre className={this.returnEmailValidationMessageAndStyle().class}>{this.returnEmailValidationMessageAndStyle().message}</pre> : null}
+                    </div>
+                    <div className="form-group">
+                        <label>Password*</label>
+                        <input type="password" value={this.state.user.password} onChange={(e) => this.handleChange(e.target.value, "password")} required className="form-control accent-color"></input>
+                        <label>Confirm Password*</label>
+                        <input type="password" value={this.state.user.confirmPassword} onChange={this.handleConfirmPasswordChange} required className="form-control accent-color"></input>
+                        {this.state.user.password!=="" ? <pre className={this.checkPasswordMatch().class}>{this.checkPasswordMatch().message}</pre> : null}
+                    </div>
+                    <div className="form-group">
+                        <label>First Name*</label>
+                        <input type="text" value={this.state.user.firstName} onChange={(e) => this.handleChange(e.target.value, "firstName")} required className="form-control accent-color"></input>
+                    </div>
+                    <div className="form-group">
+                        <label>Last Name*</label>
+                        <input type="text" value={this.state.user.lastName} onChange={(e) => this.handleChange(e.target.value, "lastName")} required className="form-control accent-color"></input>
+                    </div>
+                    <div className="form-group">
+                        <label>Picture Link</label>
+                        <input type="text" value={this.state.user.pictureLink} onChange={(e) => this.handleChange(e.target.value, "pictureLink")} className="form-control accent-color"></input>
+                    </div>
+                    <div className="form-group">
+                        <label>Address*</label>
+                        <input type="text" value={this.state.user.address} onChange={(e) => this.handleChange(e.target.value, "address")} required className="form-control accent-color"></input>
+                    </div>
+                    <div className="form-group">
+                        <label>ID (CNP)*</label>
+                        <input type="text" value={this.state.user.cnp} onChange={(e) => this.handleChange(e.target.value, "cnp")} required className="form-control accent-color"></input>
+                    </div>
+                    <button disabled={!this.mandatoryFieldsCompletedCorrectly()} className={this.mandatoryFieldsCompletedCorrectly()? "btn btn-primary" : "btn btn-secondary"} onClick={() => this.sendDataAndShowResponse()}>Create account</button>
+                    {this.state.redirect? <Redirect to="/login" /> : null}
+                </div>
+            <FooterForm class="footer-register"/>
             </div>
             );
     }
